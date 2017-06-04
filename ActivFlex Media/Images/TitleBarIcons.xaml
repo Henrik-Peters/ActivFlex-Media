@@ -1,0 +1,248 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Colors for the title bar buttons -->
+    <SolidColorBrush x:Key="TitleBarButton.DefaultColor" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="TitleBarButton.HoverColor" Color="#6EC8FF"/>
+    <SolidColorBrush x:Key="TitleBarButton.PressedColor" Color="Red"/>
+
+    <!-- CloseIcon definitions -->
+    <Viewbox x:Key="CloseIcon" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources/>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.3" Stroke="{StaticResource TitleBarButton.DefaultColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="M 8.7946405 8.7130833 55.110134 55.02858" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.3" Stroke="{StaticResource TitleBarButton.DefaultColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="M 55.110134 8.7130833 8.7946405 55.02858" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+    <Viewbox x:Key="CloseIconHover" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources/>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.3" Stroke="{StaticResource TitleBarButton.HoverColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="M 8.7946405 8.7130833 55.110134 55.02858" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.3" Stroke="{StaticResource TitleBarButton.HoverColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="M 55.110134 8.7130833 8.7946405 55.02858" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+    <Viewbox x:Key="CloseIconPressed" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources/>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.3" Stroke="{StaticResource TitleBarButton.PressedColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="M 8.7946405 8.7130833 55.110134 55.02858" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.3" Stroke="{StaticResource TitleBarButton.PressedColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="M 55.110134 8.7130833 8.7946405 55.02858" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+
+    <!-- MinimizeIcon definitions -->
+    <Viewbox x:Key="MinimizeIcon" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources/>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.30173228" Stroke="{StaticResource TitleBarButton.DefaultColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="m 7.7500003 32.249999 48.0625017 0.125" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+    <Viewbox x:Key="MinimizeIconHover" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources/>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.30173228" Stroke="{StaticResource TitleBarButton.HoverColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="m 7.7500003 32.249999 48.0625017 0.125" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+    <Viewbox x:Key="MinimizeIconPressed" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources/>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.30173228" Stroke="{StaticResource TitleBarButton.PressedColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="m 7.7500003 32.249999 48.0625017 0.125" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+
+    <!-- RestoreIcon definitions -->
+    <Viewbox x:Key="RestoreIcon" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources/>
+            <Canvas>
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="8.9006281" Canvas.Top="22.341806" Width="42.001598" Height="27.0016" StrokeThickness="2.30013371" Stroke="{StaticResource TitleBarButton.DefaultColor}" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.10765433" Stroke="{StaticResource TitleBarButton.DefaultColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="M 9.3511194 24.309635 50.47761 24.340887" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.30013371" Stroke="{StaticResource TitleBarButton.DefaultColor}" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1">
+                    <Path.Data>
+                        <PathGeometry Figures="M 13.142578 14.607422 L 13.142578 22.341797 L 50.902344 22.341797 L 50.902344 41.609375 L 55.144531 41.609375 L 55.144531 14.607422 L 13.142578 14.607422 z " FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.11159182" Stroke="{StaticResource TitleBarButton.DefaultColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="m 13.624947 16.575655 41.282867 0.03125" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+    <Viewbox x:Key="RestoreIconHover" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources/>
+            <Canvas>
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="8.9006281" Canvas.Top="22.341806" Width="42.001598" Height="27.0016" StrokeThickness="2.30013371" Stroke="{StaticResource TitleBarButton.HoverColor}" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.10765433" Stroke="{StaticResource TitleBarButton.HoverColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="M 9.3511194 24.309635 50.47761 24.340887" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.30013371" Stroke="{StaticResource TitleBarButton.HoverColor}" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1">
+                    <Path.Data>
+                        <PathGeometry Figures="M 13.142578 14.607422 L 13.142578 22.341797 L 50.902344 22.341797 L 50.902344 41.609375 L 55.144531 41.609375 L 55.144531 14.607422 L 13.142578 14.607422 z " FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.11159182" Stroke="{StaticResource TitleBarButton.HoverColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="m 13.624947 16.575655 41.282867 0.03125" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+    <Viewbox x:Key="RestoreIconPressed" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources/>
+            <Canvas>
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="8.9006281" Canvas.Top="22.341806" Width="42.001598" Height="27.0016" StrokeThickness="2.30013371" Stroke="{StaticResource TitleBarButton.PressedColor}" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.10765433" Stroke="{StaticResource TitleBarButton.PressedColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="M 9.3511194 24.309635 50.47761 24.340887" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.30013371" Stroke="{StaticResource TitleBarButton.PressedColor}" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1">
+                    <Path.Data>
+                        <PathGeometry Figures="M 13.142578 14.607422 L 13.142578 22.341797 L 50.902344 22.341797 L 50.902344 41.609375 L 55.144531 41.609375 L 55.144531 14.607422 L 13.142578 14.607422 z " FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.11159182" Stroke="{StaticResource TitleBarButton.PressedColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="m 13.624947 16.575655 41.282867 0.03125" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+
+    <!-- MaximizeIcon definitions -->
+    <Viewbox x:Key="MaximizeIcon" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources/>
+            <Canvas>
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="6.4069824" Canvas.Top="15.53566" Width="51.363892" Height="33.020344" StrokeThickness="2.81284094" Stroke="{StaticResource TitleBarButton.DefaultColor}" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="4.20198298" Stroke="{StaticResource TitleBarButton.DefaultColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="m 7.0112071 18.064316 50.2754699 0.05899" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+    <Viewbox x:Key="MaximizeIconHover" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources/>
+            <Canvas>
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="6.4069824" Canvas.Top="15.53566" Width="51.363892" Height="33.020344" StrokeThickness="2.81284094" Stroke="{StaticResource TitleBarButton.HoverColor}" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="4.20198298" Stroke="{StaticResource TitleBarButton.HoverColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="m 7.0112071 18.064316 50.2754699 0.05899" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+    <Viewbox x:Key="MaximizeIconPressed" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources/>
+            <Canvas>
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="6.4069824" Canvas.Top="15.53566" Width="51.363892" Height="33.020344" StrokeThickness="2.81284094" Stroke="{StaticResource TitleBarButton.PressedColor}" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="4.20198298" Stroke="{StaticResource TitleBarButton.PressedColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="m 7.0112071 18.064316 50.2754699 0.05899" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+
+</ResourceDictionary>
