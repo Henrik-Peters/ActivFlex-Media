@@ -23,7 +23,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ActivFlex_Media
+namespace ActivFlex
 {
     /// <summary>
     /// Interaktionslogik für "App.xaml"

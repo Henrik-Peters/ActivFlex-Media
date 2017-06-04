@@ -30,7 +30,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ActivFlex_Media
+namespace ActivFlex
 {
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml

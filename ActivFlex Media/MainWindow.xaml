@@ -1,9 +1,9 @@
-﻿<Window x:Class="ActivFlex_Media.MainWindow"
+﻿<Window x:Class="ActivFlex.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ActivFlex_Media"
+        xmlns:local="clr-namespace:ActivFlex"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
