@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525"
         WindowStyle="None" AllowsTransparency="True"
-        WindowStartupLocation="CenterScreen" FontSize="16">
+        WindowStartupLocation="CenterScreen" FontSize="16" StateChanged="Window_StateChanged">
 
     <WindowChrome.WindowChrome>
         <!-- Height for the drag area of window title bar -->
