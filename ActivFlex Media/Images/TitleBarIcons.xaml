@@ -4,7 +4,7 @@
     <!-- Colors for the title bar buttons -->
     <SolidColorBrush x:Key="TitleBarButton.DefaultColor" Color="#FFFFFFFF"/>
     <SolidColorBrush x:Key="TitleBarButton.HoverColor" Color="#6EC8FF"/>
-    <SolidColorBrush x:Key="TitleBarButton.PressedColor" Color="Red"/>
+    <SolidColorBrush x:Key="TitleBarButton.PressedColor" Color="#0064FF"/>
 
     <!-- CloseIcon definitions -->
     <Viewbox x:Key="CloseIcon" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">

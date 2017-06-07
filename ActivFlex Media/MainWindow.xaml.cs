@@ -37,9 +37,46 @@ namespace ActivFlex
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Will be true when the window 
+        /// was set into fullscreen state
+        /// </summary>
+        private bool Fullscreen { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
+
+            //titlebar button events
+            btnMinimize.Click += (s, e) => this.WindowState = WindowState.Minimized;
+            btnMaximize.Click += (s, e) =>
+            {
+                if (this.WindowState == WindowState.Maximized && Fullscreen)
+                    Fullscreen = false;
+
+                this.WindowState = (this.WindowState == WindowState.Maximized
+                                                        ? WindowState.Normal
+                                                        : WindowState.Maximized);
+
+            };
+            btnClose.Click += (s, e) => this.Close();
+
+            //fullscreen key bindings
+            this.PreviewKeyDown += (s, e) =>
+            {
+                if (e.Key == Key.F11 || (e.SystemKey == Key.Enter && (Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt))
+                {
+                    Fullscreen = !Fullscreen;
+
+                    if (this.WindowState == WindowState.Maximized && Fullscreen)
+                        this.WindowState = WindowState.Normal;
+                    
+                    //toggle the window state
+                    this.WindowState = (Fullscreen ? WindowState.Maximized : WindowState.Normal);
+                }
+            };
         }
+
+
     }
 }
