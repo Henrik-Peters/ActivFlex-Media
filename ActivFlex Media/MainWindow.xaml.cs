@@ -78,8 +78,9 @@ namespace ActivFlex
                 }
             };
 
-            //window size limits
+            //other window properties
             this.SourceInitialized += new EventHandler(Window_SourceInitialized);
+            Window_StateChanged(this, null);
         }
 
         private void Window_StateChanged(object sender, EventArgs e)
@@ -89,11 +90,13 @@ namespace ActivFlex
                 this.btnMaximize.ContentDefault = FindResource("MaximizeIcon");
                 this.btnMaximize.ContentHover   = FindResource("MaximizeIconHover");
                 this.btnMaximize.ContentPressed = FindResource("MaximizeIconPressed");
+                this.outerBorder.Visibility = Visibility.Visible;
 
             } else {
                 this.btnMaximize.ContentDefault = FindResource("RestoreIcon");
                 this.btnMaximize.ContentHover   = FindResource("RestoreIconHover");
                 this.btnMaximize.ContentPressed = FindResource("RestoreIconPressed");
+                this.outerBorder.Visibility = Visibility.Collapsed;
             }
         }
 

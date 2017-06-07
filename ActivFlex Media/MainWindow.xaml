@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ActivFlex"
         xmlns:Controls="clr-namespace:ActivFlex.Controls" x:Class="ActivFlex.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525"
+        Title="ActivFlex Media" Height="835" Width="1640"
         WindowStyle="None" AllowsTransparency="True"
         WindowStartupLocation="CenterScreen" FontSize="16" StateChanged="Window_StateChanged">
 
@@ -24,12 +24,12 @@
                              ContentDefault="{StaticResource MinimizeIcon}" 
                              ContentHover="{StaticResource MinimizeIconHover}" 
                              ContentPressed="{StaticResource MinimizeIconPressed}"/>
-                
+
                 <Controls:IconButton Width="30" x:Name="btnMaximize" 
                              ContentDefault="{StaticResource MaximizeIcon}" 
                              ContentHover="{StaticResource MaximizeIconHover}" 
                              ContentPressed="{StaticResource MaximizeIconPressed}"/>
-                
+
                 <Controls:IconButton Width="30" x:Name="btnClose" 
                              ContentDefault="{StaticResource CloseIcon}" 
                              ContentHover="{StaticResource CloseIconHover}" 
@@ -38,10 +38,10 @@
         </Grid>
 
         <!-- Window border -->
-        <Border x:Name="outerBorder" BorderThickness="2"
-            BorderBrush="Blue">
+        <Border x:Name="outerBorder" BorderThickness="1"
+            BorderBrush="LightGray">
         </Border>
-        
+
 
     </Grid>
 </Window>
