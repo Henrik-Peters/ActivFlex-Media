@@ -18,7 +18,12 @@
     <Grid>
         <!-- Titlebar grid area -->
         <Grid VerticalAlignment="Top" Background="DarkGray">
-            <!-- IsHitTestVisibleInChrome will prevent dragging on a click -->
+            <!-- Left StackPanel: IsHitTestVisibleInChrome will prevent dragging on a click -->
+            <StackPanel Height="35" WindowChrome.IsHitTestVisibleInChrome="True" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
+                <Label x:Name="lblTitleHeader" Content="ActivFlex Media" Style="{StaticResource Orkney}" FontSize="22" HorizontalAlignment="Left" Margin="5,2,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+            </StackPanel>
+            
+            <!-- Right StackPanel: IsHitTestVisibleInChrome will prevent dragging on a click -->
             <StackPanel Height="35" WindowChrome.IsHitTestVisibleInChrome="True" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
                 <Controls:IconButton Width="30" x:Name="btnMinimize" 
                              ContentDefault="{StaticResource MinimizeIcon}" 
@@ -41,8 +46,6 @@
         <Border x:Name="outerBorder" BorderThickness="1"
             BorderBrush="LightGray">
         </Border>
-        <Label Content="ActivFlex Media" Style="{StaticResource Orkney}" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="22"/>
-
-
+        
     </Grid>
 </Window>
