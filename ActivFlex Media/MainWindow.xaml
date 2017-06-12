@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="ActivFlex Media" Height="835" Width="1640"
         WindowStyle="None" AllowsTransparency="True"
-        WindowStartupLocation="CenterScreen" FontSize="16" StateChanged="Window_StateChanged">
+        WindowStartupLocation="CenterScreen" FontSize="18" StateChanged="Window_StateChanged">
 
     <WindowChrome.WindowChrome>
         <!-- Height for the drag area of window title bar -->
@@ -41,6 +41,7 @@
         <Border x:Name="outerBorder" BorderThickness="1"
             BorderBrush="LightGray">
         </Border>
+        <Label Content="ActivFlex Media" Style="{StaticResource Orkney}" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="22"/>
 
 
     </Grid>

@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Orkney - Copyright (c) 2015, Alfredo Marco Pradil, Samuel Oakes, Cristiano Sobral, with Reserved Font Name Orkney.
+         Open Font License (OFL) - https://fontlibrary.org/de/font/orkney -->
+    <Style x:Key="Orkney">
+        <Setter Property="TextElement.FontFamily" Value="pack://application:,,,/Fonts/#Orkney" />
+    </Style>
+
+    <!-- Jellee Roman - Copyright (c) 2015, Alfredo Marco Pradil, with Reserved Font Name Jellee.
+         Open Font License (OFL) - https://fontlibrary.org/de/font/jellee-typeface -->
+    <Style x:Key="Jellee-Roman">
+        <Setter Property="TextElement.FontFamily" Value="pack://application:,,,/Fonts/#Jellee Roman" />
+    </Style>
+    
+</ResourceDictionary>
