@@ -22,7 +22,7 @@
             <StackPanel Height="35" WindowChrome.IsHitTestVisibleInChrome="True" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
                 <Label x:Name="lblTitleHeader" Content="ActivFlex Media" Style="{StaticResource Orkney}" FontSize="22" HorizontalAlignment="Left" Margin="5,2,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
             </StackPanel>
-            
+
             <!-- Right StackPanel: IsHitTestVisibleInChrome will prevent dragging on a click -->
             <StackPanel Height="35" WindowChrome.IsHitTestVisibleInChrome="True" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
                 <Controls:IconButton Width="30" x:Name="btnMinimize" 
@@ -46,6 +46,10 @@
         <Border x:Name="outerBorder" BorderThickness="1"
             BorderBrush="LightGray">
         </Border>
-        
+
+        <!-- Navigation area -->
+        <TreeView x:Name="NavView" Background="Transparent" Height="Auto" Margin="32,68,1304,77.2" Width="304" HorizontalContentAlignment="Stretch">
+        </TreeView>
+
     </Grid>
 </Window>
