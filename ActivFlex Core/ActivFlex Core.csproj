@@ -40,7 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileSystem\DirectoryItem.cs" />
+    <Compile Include="FileSystem\FileItem.cs" />
+    <Compile Include="FileSystem\FileSystemBrowser.cs" />
+    <Compile Include="FileSystem\FileSystemItem.cs" />
+    <Compile Include="FileSystem\LogicalDriveItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
