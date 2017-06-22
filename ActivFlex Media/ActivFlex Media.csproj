@@ -120,5 +120,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ActivFlex Core\ActivFlex Core.csproj">
+      <Project>{4e64bb08-3850-40e4-bdf0-2d6a21e62537}</Project>
+      <Name>ActivFlex Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
