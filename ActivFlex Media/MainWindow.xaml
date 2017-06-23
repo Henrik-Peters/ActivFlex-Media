@@ -48,13 +48,13 @@
         </Border>
 
         <!-- Navigation area -->
-        <TreeView x:Name="NavView" Background="Transparent" Height="Auto" Margin="32,68,1304,77.2" Width="304" HorizontalContentAlignment="Stretch">
+        <TreeView x:Name="NavView" ItemsSource="{Binding NavItems}" Background="Transparent" Height="Auto" Margin="32,68,1304,77.2" Width="304" HorizontalContentAlignment="Stretch">
             <TreeView.ItemTemplate>
                 <!-- Bind the children of each item to create a recursive pattern -->
                 <HierarchicalDataTemplate ItemsSource="{Binding NavChildren}">
                     
                     <StackPanel Orientation="Horizontal">
-                        <Image Width="30" Margin="10"/>
+                        <Image Width="10" Margin="10"/>
                         <TextBlock VerticalAlignment="Center" Text="{Binding DisplayName}"/>
                     </StackPanel>
                     

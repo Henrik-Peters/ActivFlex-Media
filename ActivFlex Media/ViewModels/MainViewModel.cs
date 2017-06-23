@@ -15,7 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
+using System.Linq;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using ActivFlex.FileSystem;
 
 namespace ActivFlex.ViewModels
 {
@@ -24,8 +27,8 @@ namespace ActivFlex.ViewModels
     /// </summary>
     public class MainViewModel : ViewModel
     {
-        private ObservableCollection<string> _navItems;
-        public ObservableCollection<string> NavItems {
+        private ObservableCollection<NavItem> _navItems;
+        public ObservableCollection<NavItem> NavItems {
             get => _navItems;
             set => SetProperty(ref _navItems, value);
         }
@@ -36,7 +39,13 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public MainViewModel()
         {
+            this.NavItems = new ObservableCollection<NavItem>(
+                new List<NavItem>(new[] { new GroupNavItem("My Computer") })
+            );
 
+            this.NavItems[0].NavChildren = new ObservableCollection<NavItem>(
+                                FileSystemBrowser.GetLogicalDrives()
+                                .Select(drive => new FileSystemNavItem(drive)));
         }
     }
 }

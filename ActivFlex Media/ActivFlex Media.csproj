@@ -55,6 +55,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\NavItemViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Page Include="Controls\IconButton.xaml">
       <SubType>Designer</SubType>
