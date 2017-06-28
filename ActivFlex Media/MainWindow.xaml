@@ -3,12 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ActivFlex"
-        xmlns:Controls="clr-namespace:ActivFlex.Controls" x:Class="ActivFlex.MainWindow"
+        xmlns:Controls="clr-namespace:ActivFlex.Controls"
+        xmlns:Converters="clr-namespace:ActivFlex.Converters" x:Class="ActivFlex.MainWindow"
         mc:Ignorable="d"
         Title="ActivFlex Media" Height="835" Width="1640"
         WindowStyle="None" AllowsTransparency="True"
         WindowStartupLocation="CenterScreen" FontSize="18" StateChanged="Window_StateChanged">
+
+    <!-- Converter instances -->
+    <Window.Resources>
+        <Converters:NavItemIconConverter x:Key="NavIconConverter"/>
+    </Window.Resources>
 
     <WindowChrome.WindowChrome>
         <!-- Height for the drag area of window title bar -->
@@ -52,12 +57,12 @@
             <TreeView.ItemTemplate>
                 <!-- Bind the children of each item to create a recursive pattern -->
                 <HierarchicalDataTemplate ItemsSource="{Binding NavChildren}">
-                    
+
                     <StackPanel Orientation="Horizontal">
-                        <Image Width="10" Margin="10"/>
-                        <TextBlock VerticalAlignment="Center" Text="{Binding DisplayName}"/>
+                        <ContentPresenter Height="20" Width="20" Content="{Binding Converter={StaticResource NavIconConverter}}"/>
+                        <TextBlock VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding DisplayName}"/>
                     </StackPanel>
-                    
+
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>

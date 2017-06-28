@@ -6,6 +6,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Images/TitleBarIcons.xaml"/>
+                <ResourceDictionary Source="Images/NavIcons.xaml"/>
                 <ResourceDictionary Source="Styles/Fonts.xaml"/>
                 <ResourceDictionary Source="Styles/TreeViewItem.xaml"/>
             </ResourceDictionary.MergedDictionaries>

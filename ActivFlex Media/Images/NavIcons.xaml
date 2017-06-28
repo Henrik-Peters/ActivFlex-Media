@@ -1,0 +1,76 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- FileSystem icons for the navigation treeview -->
+    <Viewbox x:Key="HardDiskIcon" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas Opacity="1">
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#F4FFFFFF" StrokeThickness="0" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="m 8.11394 48.703387 2.497254 -36.685714 1.520874 -2.453564 3.489684 -1.4701586 33.196856 0.1428529 2.524931 1.4197117 1.496461 2.596284 2.260271 36.758681 -1.219574 3.31142 -2.398318 1.324338 -39.597425 0.02546 -3.4097191 -2.662194 z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.16599989" Stroke="#FF877D7D" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                    <Path.Data>
+                        <PathGeometry Figures="M 9.0961227 49.703387 10.314241 14.593123 C 10.504906 11.55068 12.768378 9.0905743 15.81679 9.0905743 h 31.741588 c 3.048412 0 5.327314 2.4591767 5.502548 5.5025487 l 1.039345 35.418357" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="8.0961227" Canvas.Top="45.542149" Width="47.005421" Height="9.164422" RadiusX="4.3190432" RadiusY="4.582211" StrokeThickness="2.16599989" Stroke="#FF877D7D" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1"/>
+                <Ellipse xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="46.2" Canvas.Top="48.4" Width="3.6" Height="3.6" Fill="#FF877D7D" StrokeThickness="0" Stroke="#FF877D7D" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+    <Viewbox x:Key="DiskDriveIcon" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources>
+            </Canvas.Resources>
+            <Canvas Opacity="1">
+                <Ellipse xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="6.5" Canvas.Top="6.5" Width="51.1" Height="51.1" Fill="#FFE6E6E6" StrokeThickness="0" Stroke="#FF877D7D" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                <Ellipse xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="23.5" Canvas.Top="23.5" Width="16.9" Height="16.9" Fill="#FFAAAAAA" StrokeThickness="0" Stroke="#FF877D7D" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#FF2D2D2D" StrokeThickness="0" Stroke="#FF877D7D" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                    <Path.Data>
+                        <PathGeometry Figures="M 32 22 A 10 10 0 0 0 22 32 10 10 0 0 0 32 42 10 10 0 0 0 42 32 10 10 0 0 0 32 22 Z m 0 1.534391 A 8.4656086 8.4656086 0 0 1 40.465609 32 8.4656086 8.4656086 0 0 1 32 40.465609 8.4656086 8.4656086 0 0 1 23.534391 32 8.4656086 8.4656086 0 0 1 32 23.534391 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Ellipse xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="26" Canvas.Top="26" Width="12" Height="12" Fill="#FF232323" StrokeThickness="0" Stroke="#FF877D7D" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#FFAAAAAA" StrokeThickness="0" Stroke="#FF877D7D" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.972">
+                    <Path.Data>
+                        <PathGeometry Figures="M 32 5.75 A 26.249998 26.249998 0 0 0 5.75 32 A 26.249998 26.249998 0 0 0 32 58.25 A 26.249998 26.249998 0 0 0 58.25 32 A 26.249998 26.249998 0 0 0 32 5.75 z M 32 6.75 A 25.249998 25.249998 0 0 1 57.25 32 A 25.249998 25.249998 0 0 1 32 57.25 A 25.249998 25.249998 0 0 1 6.75 32 A 25.249998 25.249998 0 0 1 32 6.75 z " FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#FFAAAAAA" StrokeThickness="0" Stroke="#FF877D7D" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                    <Path.Data>
+                        <PathGeometry Figures="M 32 5.75 A 26.249998 26.249998 0 0 0 5.75 32 A 26.249998 26.249998 0 0 0 32 58.25 A 26.249998 26.249998 0 0 0 58.25 32 A 26.249998 26.249998 0 0 0 32 5.75 z M 32 6.75 A 25.249998 25.249998 0 0 1 57.25 32 A 25.249998 25.249998 0 0 1 32 57.25 A 25.249998 25.249998 0 0 1 6.75 32 A 25.249998 25.249998 0 0 1 32 6.75 z " FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Ellipse xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="28.5" Canvas.Top="28.5" Width="7" Height="7" Fill="#FFAAAAAA" StrokeThickness="0" Stroke="#FF877D7D" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+    <Viewbox x:Key="GeneralIcon" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources>
+            </Canvas.Resources>
+            <Canvas Opacity="1">
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="4.5" Canvas.Top="13.783468" Width="55" Height="47.9375" RadiusX="2.5" RadiusY="1.9973958" Fill="#FFB4B4B4" StrokeThickness="0" Stroke="#FF877D7D" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#FF8C8C8C" StrokeThickness="0" Stroke="#FF877D7D" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                    <Path.Data>
+                        <PathGeometry Figures="M 59.5 16 V 5.802734 C 59.5 4.042361 58.385 2.625 57 2.625 H 7 c -1.385 0 -2.5 1.417361 -2.5 3.177734 V 16 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="8.28125" Canvas.Top="46.642159" Width="47.4375" Height="10.747559" RadiusX="2.9648438" RadiusY="2.9648438" Fill="#FF8C8C8C" StrokeThickness="0" Stroke="#FF877D7D" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="18.788544" Canvas.Top="22.125" Width="26.422911" Height="18.181089" RadiusX="2.5" RadiusY="2.5" Fill="#FF8C8C8C" StrokeThickness="0" Stroke="#FF877D7D" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+
+</ResourceDictionary>
