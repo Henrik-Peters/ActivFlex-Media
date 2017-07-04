@@ -16,6 +16,7 @@
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Data;
 using System.Globalization;
@@ -33,11 +34,32 @@ namespace ActivFlex.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            string resourceIdentifier = "GeneralIcon";
+
             var item = value as NavItem;
             if (item == null)
-                return Application.Current.Resources["GeneralIcon"];
+                return Application.Current.Resources[resourceIdentifier];
 
-            return Application.Current.Resources["HardDiskIcon"];
+            //Load the correct resource by the type of the nav item
+            if (item.GetType() == typeof(GroupNavItem)) {
+                resourceIdentifier = ((GroupNavItem)item).IconResource;
+
+            } else if (item.GetType() == typeof(LogicalDriveNavItem)) {
+
+                //Use the drive type to load the resource
+                switch (((LogicalDriveNavItem)item).DriveType) {
+                    case DriveType.Fixed:
+                        resourceIdentifier = "HardDiskIcon";
+                        break;
+
+                    case DriveType.CDRom:
+                    case DriveType.Unknown:
+                        resourceIdentifier = "DiskDriveIcon";
+                        break;
+                }
+            }
+
+            return Application.Current.Resources[resourceIdentifier];
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

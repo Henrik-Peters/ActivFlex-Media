@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
+using System.IO;
 using System.Collections.ObjectModel;
 using ActivFlex.FileSystem;
 
@@ -48,35 +49,71 @@ namespace ActivFlex.ViewModels
     public class GroupNavItem : NavItem
     {
         private string _displayName;
+        private string _iconResource;
 
+        /// <summary>
+        /// Text that represents the item.
+        /// </summary>
         public override string DisplayName {
             get => _displayName;
             set => SetProperty(ref _displayName, value);
         }
 
-        public GroupNavItem(string DisplayName)
+        /// <summary>
+        /// Resource key identifier to load the
+        /// icon from the resource dictionary.
+        /// </summary>
+        public string IconResource {
+            get => _iconResource;
+            set => SetProperty(ref _iconResource, value);
+        }
+
+        /// <summary>
+        /// Create a nav item to group other items together.
+        /// This should be used to represent a navigation category.
+        /// </summary>
+        /// <param name="DisplayName">Text to display for the group</param>
+        /// <param name="IconResource">Key of the resource for the icon</param>
+        public GroupNavItem(string DisplayName, string IconResource)
         {
             this.DisplayName = DisplayName;
+            this.IconResource = IconResource;
         }
     }
 
     /// <summary>
     /// ViewModel implementation for a file system related nav item.
     /// </summary>
-    public class FileSystemNavItem : NavItem
+    public class LogicalDriveNavItem : NavItem
     {
         private string _displayName;
-        private FileSystemItem _fileItem;
+        private LogicalDriveItem _driveItem;
 
+        /// <summary>
+        /// Text that represents the item.
+        /// </summary>
         public override string DisplayName {
             get => _displayName;
             set => SetProperty(ref _displayName, value);
         }
 
-        public FileSystemNavItem(FileSystemItem fileItem)
+        /// <summary>
+        /// Get the type of the represented drive.
+        /// </summary>
+        public DriveType DriveType {
+            get => _driveItem.DriveType;
+        }
+
+        /// <summary>
+        /// Create a nav item to represent a logical drive.
+        /// This should be used as an entry point for the
+        /// file browsing system (no tree children).
+        /// </summary>
+        /// <param name="driveItem"></param>
+        public LogicalDriveNavItem(LogicalDriveItem driveItem)
         {
-            this._fileItem = fileItem;
-            this.DisplayName = fileItem.FullPath;
+            this._driveItem = driveItem;
+            this.DisplayName = driveItem.FullPath;
         }
     }
 }

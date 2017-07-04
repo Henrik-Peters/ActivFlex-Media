@@ -40,12 +40,12 @@ namespace ActivFlex.ViewModels
         public MainViewModel()
         {
             this.NavItems = new ObservableCollection<NavItem>(
-                new List<NavItem>(new[] { new GroupNavItem("My Computer") })
+                new List<NavItem>(new[] { new GroupNavItem("My Computer", "MyComputerIcon") })
             );
 
             this.NavItems[0].NavChildren = new ObservableCollection<NavItem>(
                                 FileSystemBrowser.GetLogicalDrives()
-                                .Select(drive => new FileSystemNavItem(drive)));
+                                .Select(drive => new LogicalDriveNavItem(drive)));
         }
     }
 }

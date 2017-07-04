@@ -62,7 +62,7 @@ namespace ActivFlex.FileSystem
         public long TotalSize { get; private set; }
 
         /// <summary>
-        /// Gets the drive type, such as CD-ROM, removabsle, network, or fixed.
+        /// Gets the drive type, such as CD-ROM, removable, network, or fixed.
         /// </summary>
         public DriveType DriveType { get; private set; }
         
