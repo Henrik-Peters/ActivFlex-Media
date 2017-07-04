@@ -49,7 +49,12 @@ namespace ActivFlex.Converters
                 //Use the drive type to load the resource
                 switch (((LogicalDriveNavItem)item).DriveType) {
                     case DriveType.Fixed:
+                    case DriveType.Network:
                         resourceIdentifier = "HardDiskIcon";
+                        break;
+
+                    case DriveType.Removable:
+                        resourceIdentifier = "HardDiskUSBIcon";
                         break;
 
                     case DriveType.CDRom:

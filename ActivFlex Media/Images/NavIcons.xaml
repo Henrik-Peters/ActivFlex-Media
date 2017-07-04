@@ -240,5 +240,31 @@
             <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="9.886508" Canvas.Top="14.049355" Width="0.58590347" Height="35.459148" Fill="#FF787878" StrokeThickness="0.14211023" Stroke="#FF1B1917" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
         </Canvas>
     </Viewbox>
+    <Viewbox x:Key="HardDiskUSBIcon" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas Opacity="1">
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#F4FFFFFF" StrokeThickness="0" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="m 8.11394 48.703387 2.497254 -36.685714 1.520874 -2.453564 3.489684 -1.4701586 33.196856 0.1428529 2.524931 1.4197117 1.496461 2.596284 2.260271 36.758681 -1.219574 3.31142 -2.398318 1.324338 -39.597425 0.02546 -3.4097191 -2.662194 z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.16599989" Stroke="#FF877D7D" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                    <Path.Data>
+                        <PathGeometry Figures="M 9.0961227 49.703387 10.314241 14.593123 C 10.504906 11.55068 12.768378 9.0905743 15.81679 9.0905743 h 31.741588 c 3.048412 0 5.327314 2.4591767 5.502548 5.5025487 l 1.039345 35.418357" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="8.0961227" Canvas.Top="45.542149" Width="47.005421" Height="9.164422" RadiusX="4.3190432" RadiusY="4.582211" StrokeThickness="2.16599989" Stroke="#FF877D7D" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1"/>
+                <Ellipse xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="46.2" Canvas.Top="48.4" Width="3.6" Height="3.6" Fill="#FF877D7D" StrokeThickness="0" Stroke="#FF877D7D" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+            </Canvas>
+            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#FF877D7D" StrokeThickness="0.08898139">
+                <Path.Data>
+                    <PathGeometry Figures="m 31.607884 10.936182 -2.571206 4.452359 h 1.834173 v 15.994676 l -4.681488 -4.431093 c -0.302271 -0.377109 -0.514313 -0.870507 -0.526059 -1.378059 0 -2.053248 -5.34e-4 -2.916634 -0.0014 -3.365451 0.866768 -0.304229 1.492396 -1.121437 1.492396 -2.092932 0 -1.229015 -0.997304 -2.226408 -2.22676 -2.226408 -1.229989 0 -2.226939 0.997305 -2.226939 2.226408 0 0.971495 0.625269 1.788703 1.491331 2.092932 l -6.23e-4 3.32185 c 0 0.996767 0.546879 2.041238 1.18799 2.706014 -0.01904 -0.01814 -0.03933 -0.03701 3.56e-4 8.03e-4 0.01584 0.01405 4.966407 4.701242 4.966407 4.701242 0.301826 0.376306 0.512533 0.86944 0.524635 1.37663 v 1.999892 c -1.700702 0.341239 -2.982033 1.843069 -2.982033 3.644584 0 2.053954 1.66493 3.718886 3.718265 3.718886 2.053957 0 3.718977 -1.664932 3.718977 -3.718886 0 -1.801876 -1.2824 -3.303698 -2.984525 -3.644946 V 34.35991 c 0 -0.0064 3.56e-4 -0.013 0 -0.01959 v -5.594348 c 0.0129 -0.506219 0.223877 -0.998726 0.526058 -1.374671 0 0 4.950213 -4.686117 4.96623 -4.700624 0.03977 -0.03757 0.01904 -0.01887 3.55e-4 -3.54e-4 0.641023 -0.664784 1.187547 -1.709688 1.187547 -2.70664 l -8.02e-4 -1.052828 H 40.51361 V 14.45734 h -4.453074 v 4.453515 h 1.490884 c 0 0 -0.0017 -1.557971 -0.0017 1.096253 -0.01166 0.50764 -0.223432 1.001576 -0.525702 1.3785 l -4.682379 4.432073 V 15.38826 h 1.837127 z" FillRule="NonZero"/>
+                </Path.Data>
+            </Path>
+        </Canvas>
+    </Viewbox>
 
 </ResourceDictionary>
