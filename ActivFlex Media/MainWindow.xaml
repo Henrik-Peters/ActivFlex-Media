@@ -22,7 +22,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="240" />
+            <ColumnDefinition Width="240"/>
             <ColumnDefinition Width="5" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -82,5 +82,6 @@
 
         <!-- Splitter between the navigation tree view and the presentation area -->
         <GridSplitter Grid.Row="1" Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
+        <Button Command="{Binding ToggleNavVisibility}" Grid.Row="1" Grid.Column="1" Content="" Height="40"/>
     </Grid>
 </Window>

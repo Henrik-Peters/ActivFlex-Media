@@ -16,6 +16,7 @@
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
 using System.Linq;
+using System.Windows.Input;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ActivFlex.FileSystem;
@@ -32,6 +33,17 @@ namespace ActivFlex.ViewModels
             get => _navItems;
             set => SetProperty(ref _navItems, value);
         }
+        
+        private bool _navVisible;
+        public bool NavVisible {
+            get => _navVisible;
+            set => SetProperty(ref _navVisible, value);
+        }
+
+        /// <summary>
+        /// Toggle the NavVisible property
+        /// </summary>
+        public ICommand ToggleNavVisibility { get; set; }
 
         /// <summary>
         /// Creates a new ViewModel for the MainArea
@@ -39,6 +51,8 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public MainViewModel()
         {
+            //Navigation items
+            this.NavVisible = true;
             this.NavItems = new ObservableCollection<NavItem>(
                 new List<NavItem>(new[] { new GroupNavItem("My Computer", "MyComputerIcon") })
             );
@@ -46,6 +60,9 @@ namespace ActivFlex.ViewModels
             this.NavItems[0].NavChildren = new ObservableCollection<NavItem>(
                                 FileSystemBrowser.GetLogicalDrives()
                                 .Select(drive => new LogicalDriveNavItem(drive)));
+            
+            //Commands
+            this.ToggleNavVisibility = new RelayCommand(() => NavVisible = !NavVisible);
         }
     }
 }
