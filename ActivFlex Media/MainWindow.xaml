@@ -10,9 +10,10 @@
         WindowStyle="None" AllowsTransparency="True"
         WindowStartupLocation="CenterScreen" FontSize="18" StateChanged="Window_StateChanged">
 
-    <!-- Converter instances -->
+    <!-- Converter instances and window specific styles -->
     <Window.Resources>
         <Converters:NavItemIconConverter x:Key="NavIconConverter"/>
+        <KeyTime x:Key="NavTreeFadeTime">0:0:0.2</KeyTime>
     </Window.Resources>
 
     <WindowChrome.WindowChrome>
@@ -22,7 +23,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="240"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="5" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -66,7 +67,7 @@
 
         <!-- Navigation area -->
         <TreeView x:Name="NavView" Grid.Row="1" ItemsSource="{Binding NavItems}" Margin="10,10,0,0" Background="Transparent" 
-                  Height="Auto" Width="Auto" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                  Height="Auto" Width="240" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <TreeView.ItemTemplate>
                 <!-- Bind the children of each item to create a recursive pattern -->
                 <HierarchicalDataTemplate ItemsSource="{Binding NavChildren}">
@@ -78,6 +79,42 @@
 
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
+
+            <!-- TreeView visibility toggle animation -->
+            <TreeView.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding NavVisible}" Value="true">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Width" BeginTime="00:00:00">
+                                            <SplineDoubleKeyFrame KeyTime="{StaticResource NavTreeFadeTime}" Value="240"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00">
+                                            <SplineThicknessKeyFrame KeyTime="{StaticResource NavTreeFadeTime}" Value="10,10,0,0"/>
+                                        </ThicknessAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Width" BeginTime="00:00:00">
+                                            <SplineDoubleKeyFrame KeyTime="{StaticResource NavTreeFadeTime}" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00">
+                                            <SplineThicknessKeyFrame KeyTime="{StaticResource NavTreeFadeTime}" Value="0,10,0,0"/>
+                                        </ThicknessAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TreeView.Style>
         </TreeView>
 
         <!-- Splitter between the navigation tree view and the presentation area -->
