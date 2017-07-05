@@ -21,8 +21,19 @@
     </WindowChrome.WindowChrome>
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+        
         <!-- Titlebar grid area -->
-        <Grid VerticalAlignment="Top" Background="DarkGray">
+        <Grid Grid.ColumnSpan="3" VerticalAlignment="Top" Background="DarkGray">
             <!-- Left StackPanel: IsHitTestVisibleInChrome will prevent dragging on a click -->
             <StackPanel Height="35" WindowChrome.IsHitTestVisibleInChrome="True" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
                 <Label x:Name="lblTitleHeader" Content="ActivFlex Media" Style="{StaticResource Orkney}" FontSize="22" HorizontalAlignment="Left" Margin="5,2,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
@@ -46,14 +57,16 @@
                              ContentPressed="{StaticResource CloseIconPressed}"/>
             </StackPanel>
         </Grid>
-
+        
         <!-- Window border -->
-        <Border x:Name="outerBorder" BorderThickness="1"
-            BorderBrush="LightGray">
+        <Border x:Name="outerBorder" Grid.RowSpan="3" Grid.ColumnSpan="3" 
+                BorderThickness="1"
+                BorderBrush="LightGray">
         </Border>
 
         <!-- Navigation area -->
-        <TreeView x:Name="NavView" ItemsSource="{Binding NavItems}" Background="Transparent" Height="Auto" Margin="32,68,1304,77.2" Width="304" HorizontalContentAlignment="Stretch">
+        <TreeView x:Name="NavView" Grid.Row="1" ItemsSource="{Binding NavItems}" Margin="10,10,0,0" Background="Transparent" 
+                  Height="Auto" Width="Auto" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <TreeView.ItemTemplate>
                 <!-- Bind the children of each item to create a recursive pattern -->
                 <HierarchicalDataTemplate ItemsSource="{Binding NavChildren}">
@@ -67,5 +80,7 @@
             </TreeView.ItemTemplate>
         </TreeView>
 
+        <!-- Splitter between the navigation tree view and the presentation area -->
+        <GridSplitter Grid.Row="1" Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
     </Grid>
 </Window>
