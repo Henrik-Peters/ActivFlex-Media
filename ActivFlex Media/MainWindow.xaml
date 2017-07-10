@@ -24,7 +24,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="10" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -117,8 +117,7 @@
             </TreeView.Style>
         </TreeView>
 
-        <!-- Splitter between the navigation tree view and the presentation area -->
-        <GridSplitter Grid.Row="1" Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
-        <Button Command="{Binding ToggleNavVisibility}" Grid.Row="1" Grid.Column="1" Content="" Height="40"/>
+        <!-- Split area between the navigation tree view and the presentation area -->
+        <Button Command="{Binding ToggleNavVisibility}" Style="{StaticResource toggleNavButton}" Grid.Row="1" Grid.Column="1" Width="10" Height="40"/>
     </Grid>
 </Window>
