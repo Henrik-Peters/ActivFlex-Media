@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -38,6 +39,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileSystem\DirectoryItem.cs" />
@@ -45,6 +47,10 @@
     <Compile Include="FileSystem\FileSystemBrowser.cs" />
     <Compile Include="FileSystem\FileSystemItem.cs" />
     <Compile Include="FileSystem\LogicalDriveItem.cs" />
+    <Compile Include="Media\ImageLoadState.cs" />
+    <Compile Include="Media\IMediaObject.cs" />
+    <Compile Include="Media\MediaImage.cs" />
+    <Compile Include="Media\MediaObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
