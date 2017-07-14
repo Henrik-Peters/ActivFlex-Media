@@ -113,7 +113,7 @@ namespace ActivFlex.ViewModels
         public LogicalDriveNavItem(LogicalDriveItem driveItem)
         {
             this._driveItem = driveItem;
-            this.DisplayName = driveItem.FullPath;
+            this.DisplayName = driveItem.Path;
         }
     }
 }

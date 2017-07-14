@@ -25,8 +25,6 @@ namespace ActivFlex.FileSystem
     /// </summary>
     public class DirectoryItem : FileSystemItem
     {
-        private string _name;
-
         /// <summary>
         /// Create a representation of a file system directory.
         /// The constructor will try to create a complete directory info.
@@ -40,25 +38,20 @@ namespace ActivFlex.FileSystem
                 this.Name = directoryInfo.Name;
 
             } catch {
-                _name = FullPath;
+                Name = FullPath;
             }
         }
 
         /// <summary>
         /// The name of the directory (includes any extensions).
         /// </summary>
-        public override string Name {
-            get { return _name; }
-            protected set { _name = value; }
-        }
-
+        public override string Name { get; set; }
+        
         /// <summary>
         /// Check if the directory still exists on the file system.
         /// </summary>
         public override bool Exists {
-            get {
-                return Directory.Exists(FullPath);
-            }
+            get => Directory.Exists(Path);
         }
     }
 }

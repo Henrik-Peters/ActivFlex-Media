@@ -46,6 +46,7 @@
     <Compile Include="FileSystem\FileItem.cs" />
     <Compile Include="FileSystem\FileSystemBrowser.cs" />
     <Compile Include="FileSystem\FileSystemItem.cs" />
+    <Compile Include="FileSystem\IFileObject.cs" />
     <Compile Include="FileSystem\LogicalDriveItem.cs" />
     <Compile Include="Media\ImageLoadState.cs" />
     <Compile Include="Media\IMediaObject.cs" />

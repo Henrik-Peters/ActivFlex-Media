@@ -23,18 +23,18 @@ namespace ActivFlex.FileSystem
     /// The base class for objects in the filesystem.
     /// Every subclass has to pass the full path.
     /// </summary>
-    public abstract class FileSystemItem
+    public abstract class FileSystemItem : IFileObject
     {
         /// <summary>
         /// The complete path identifier.
         /// </summary>
-        public String FullPath { get; private set; }
+        public String Path { get; private set; }
 
         /// <summary>
         /// The short name of the object. It does 
         /// not contain path elements or extensions.
         /// </summary>
-        public abstract String Name { get; protected set; }
+        public abstract String Name { get; set; }
 
         /// <summary>
         /// Check if the object still exists.
@@ -48,7 +48,7 @@ namespace ActivFlex.FileSystem
         /// <param name="FullPath">The complete path identifier</param>
         protected FileSystemItem(String FullPath)
         {
-            this.FullPath = FullPath;
+            this.Path = FullPath;
         }
     }
 }

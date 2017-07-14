@@ -24,8 +24,6 @@ namespace ActivFlex.FileSystem
     /// </summary>
     public class FileItem : FileSystemItem
     {
-        private string _name;
-
         /// <summary>
         /// Create a representation of a file.
         /// The constructor will try to create a complete file info.
@@ -41,7 +39,7 @@ namespace ActivFlex.FileSystem
                 this.Extension = fileInfo.Extension;
 
             } catch {
-                _name = FullPath;
+                Name = FullPath;
             }
         }
 
@@ -53,18 +51,13 @@ namespace ActivFlex.FileSystem
         /// <summary>
         /// The name of the file (without extension).
         /// </summary>
-        public override string Name {
-            get { return _name; }
-            protected set { _name = value; }
-        }
+        public override string Name { get; set; }
 
         /// <summary>
         /// Check if the file still exists on the file system.
         /// </summary>
         public override bool Exists {
-            get {
-                return File.Exists(FullPath);
-            }
+            get => File.Exists(Path);
         }
     }
 }

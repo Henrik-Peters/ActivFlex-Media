@@ -1,5 +1,5 @@
 ﻿#region License
-// ActivFlex Media - Manage your media libraries
+// ActivFlex Core - Core logic module for ActivFlex
 // Copyright(C) 2017 Henrik Peters
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -15,22 +15,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
-using System.Windows.Media.Imaging;
-using ActivFlex.FileSystem;
-
-namespace ActivFlex.Media
+namespace ActivFlex.FileSystem
 {
     /// <summary>
-    /// Defines methods for abstract media objects.
+    /// Defines the basic information for an object in
+    /// the filesystem by the path and a custom name.
     /// </summary>
-    public interface IMediaObject : IFileObject
+    public interface IFileObject
     {
         /// <summary>
-        /// Load a thumbnail image representing the
-        /// content of the media object by the path.
+        /// Text to describe the object.
+        /// Most likely the filename.
         /// </summary>
-        /// <param name="DecodePixelWidth">Width in pixels to decode the thumbnail</param>
-        /// <returns>The loaded bitmap image instance</returns>
-        BitmapImage LoadThumbnail(int DecodePixelWidth);
+        string Name { get; set; }
+
+        /// <summary>
+        /// Location of the object in the filesystem.
+        /// This should be a full path (absolute).
+        /// </summary>
+        string Path { get; }
     }
 }

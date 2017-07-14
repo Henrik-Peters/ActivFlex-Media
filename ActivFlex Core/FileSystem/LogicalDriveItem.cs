@@ -26,8 +26,6 @@ namespace ActivFlex.FileSystem
     /// </summary>
     public class LogicalDriveItem : FileSystemItem
     {
-        private string _name;
-
         /// <summary>
         /// Create a representation of a logical file system drive.
         /// The constructor will try to create a complete drive info.
@@ -44,7 +42,7 @@ namespace ActivFlex.FileSystem
                 this.AvailableFreeSpace = driveInfo.AvailableFreeSpace;
 
             } catch {
-                _name = FullPath;
+                Name = FullPath;
                 this.TotalSize = 0;
                 this.AvailableFreeSpace = 0;
                 this.DriveType = DriveType.Unknown;
@@ -69,10 +67,7 @@ namespace ActivFlex.FileSystem
         /// <summary>
         /// The volume-label of the logical drive.
         /// </summary>
-        public override string Name {
-            get { return _name; }
-            protected set { _name = value; }
-        }
+        public override string Name { get; set; }
 
         /// <summary>
         /// Check if the drive is still registered in the system.
@@ -81,7 +76,7 @@ namespace ActivFlex.FileSystem
             get {
                 try {
                     return DriveInfo.GetDrives()
-                            .Where(drive => drive.Name == FullPath)
+                            .Where(drive => drive.Name == Path)
                             .Count()
                             .Equals(1);
                 } catch {
