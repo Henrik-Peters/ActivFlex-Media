@@ -6,11 +6,14 @@
     <SolidColorBrush x:Key="Thumbnail.Border.Color" Color="Black"/>
     <SolidColorBrush x:Key="Thumbnail.Border.Color.Hover" Color="#6EC8FF"/>
     <SolidColorBrush x:Key="Thumbnail.Border.Color.Pressed" Color="#408CFE"/>
+    <SolidColorBrush x:Key="Thumbnail.Border.Color.Selected" Color="#408CFE"/>
     <Thickness x:Key="Thumbnail.Border.Thickness">2</Thickness>
     <SolidColorBrush x:Key="Thumbnail.Text.Color" Color="#F0F0F0"/>
     <SolidColorBrush x:Key="Thumbnail.Text.Color.Hover" Color="#F0F0F0"/>
+    <SolidColorBrush x:Key="Thumbnail.Text.Color.Selected" Color="#F0F0F0"/>
     <SolidColorBrush x:Key="Thumbnail.Rectangle.Color" Color="Transparent"/>
     <SolidColorBrush x:Key="Thumbnail.Rectangle.Color.Hover" Color="#3682F4"/>
+    <SolidColorBrush x:Key="Thumbnail.Rectangle.Color.Selected" Color="#3783F5"/>
 
     <!-- Style definitions for the simple thumbnail button -->
     <Style x:Key="thumbnailButton" TargetType="{x:Type Button}">
@@ -36,7 +39,7 @@
     </Style>
 
     <!-- Style definitions for the named image thumbnail control -->
-    <Style x:Key="ImageThumbnailStyle" TargetType="{x:Type Grid}">
+    <Style x:Key="TextThumbnailStyle" TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="{StaticResource Thumbnail.Background.Color}"/>
         <Style.Resources>
 
@@ -50,7 +53,11 @@
                             </Border>
 
                             <!-- Thumbnail trigger definitions -->
+                            <!-- Change the order of the triggers to prevent hovering on a selected state -->
                             <ControlTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsSelected, ElementName=imgThumbnail}" Value="True">
+                                    <Setter Property="BorderBrush" TargetName="bd" Value="{StaticResource Thumbnail.Border.Color.Selected}"/>
+                                </DataTrigger>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="BorderBrush" TargetName="bd" Value="{StaticResource Thumbnail.Border.Color.Hover}"/>
                                 </Trigger>
@@ -67,9 +74,17 @@
             <Style TargetType="Rectangle">
                 <Setter Property="Fill" Value="{StaticResource Thumbnail.Rectangle.Color}"/>
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding ElementName=btnThumbnail, Path=IsMouseOver}" Value="True">
-                        <Setter Property="Fill" Value="{StaticResource Thumbnail.Rectangle.Color.Hover}"/>
+                    <DataTrigger Binding="{Binding IsSelected, ElementName=imgThumbnail}" Value="True">
+                        <Setter Property="Fill" Value="{StaticResource Thumbnail.Rectangle.Color.Selected}"/>
                     </DataTrigger>
+
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding ElementName=btnThumbnail, Path=IsMouseOver}" Value="True"/>
+                            <Condition Binding="{Binding IsSelected, ElementName=imgThumbnail}" Value="False"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Fill" Value="{StaticResource Thumbnail.Rectangle.Color.Hover}"/>
+                    </MultiDataTrigger>
                 </Style.Triggers>
             </Style>
 
@@ -78,12 +93,20 @@
                 <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, 
                                                               Path=(TextElement.Foreground)}"/>
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding ElementName=btnThumbnail, Path=IsMouseOver}" Value="True">
-                        <Setter Property="Foreground" Value="{StaticResource Thumbnail.Text.Color.Hover}"/>
+                    <DataTrigger Binding="{Binding IsSelected, ElementName=imgThumbnail}" Value="True">
+                        <Setter Property="Foreground" Value="{StaticResource Thumbnail.Text.Color.Selected}"/>
                     </DataTrigger>
+
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding ElementName=btnThumbnail, Path=IsMouseOver}" Value="True"/>
+                            <Condition Binding="{Binding IsSelected, ElementName=imgThumbnail}" Value="False"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Foreground" Value="{StaticResource Thumbnail.Text.Color.Hover}"/>
+                    </MultiDataTrigger>
                 </Style.Triggers>
             </Style>
-            
+
         </Style.Resources>
     </Style>
 

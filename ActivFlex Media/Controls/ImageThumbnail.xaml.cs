@@ -37,13 +37,25 @@ namespace ActivFlex.Controls
         /// Identifies the ClickCommand dependency property
         /// </summary>
         public static readonly DependencyProperty ClickCommandProperty = DependencyProperty.Register(
-            "Click", typeof(ICommand), typeof(SimpleThumbnail), new PropertyMetadata(null));
+            "Click", typeof(ICommand), typeof(ImageThumbnail), new PropertyMetadata(null));
 
         /// <summary>
         /// Identifies the DoubleClickCommand dependency property
         /// </summary>
         public static readonly DependencyProperty DoubleClickCommandProperty = DependencyProperty.Register(
-            "DoubleClick", typeof(ICommand), typeof(SimpleThumbnail), new PropertyMetadata(null));
+            "DoubleClick", typeof(ICommand), typeof(ImageThumbnail), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Identifies the IsSelectedProperty dependency property
+        /// </summary>
+        public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register(
+            "IsSelected", typeof(bool), typeof(ImageThumbnail), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Identifies the CanSelect dependency property
+        /// </summary>
+        public static readonly DependencyProperty CanSelectProperty = DependencyProperty.Register(
+            "CanSelect", typeof(bool), typeof(ImageThumbnail), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the command to be execute
@@ -65,6 +77,33 @@ namespace ActivFlex.Controls
             set => this.SetValue(DoubleClickCommandProperty, value);
         }
 
+        /// <summary>
+        /// Gets or sets the selected value of the control.
+        /// The thumbnail will be highlighted when selected.
+        /// </summary>
+        [Bindable(true)]
+        public bool IsSelected {
+            get => (bool)this.GetValue(IsSelectedProperty);
+            set {
+                if (CanSelect)
+                    this.SetValue(IsSelectedProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Enables or disables the select ability. When set
+        /// to false on an active selection, the selection
+        /// will be lost (IsSelected will be set to false).
+        /// </summary>
+        [Bindable(true)]
+        public bool CanSelect {
+            get => (bool)this.GetValue(CanSelectProperty);
+            set {
+                if (!value && IsSelected) IsSelected = false;
+                this.SetValue(CanSelectProperty, value);
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -82,9 +121,11 @@ namespace ActivFlex.Controls
         /// to set the thumbnail image data.
         /// </summary>
         /// <param name="proxy">Represented object of the thumbnail</param>
-        public ImageThumbnail(IMediaObject proxy)
+        /// <param name="CanSelect">Enables or disables the select ability</param>
+        public ImageThumbnail(IMediaObject proxy, bool CanSelect = false)
         {
             InitializeComponent();
+            this.CanSelect = CanSelect;
             this.Proxy = proxy;
 
             SetText(proxy != null ? proxy.Name : "");
