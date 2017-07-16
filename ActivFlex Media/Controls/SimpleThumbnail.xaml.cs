@@ -37,13 +37,13 @@ namespace ActivFlex.Controls
         /// Identifies the ClickCommand dependency property
         /// </summary>
         public static readonly DependencyProperty ClickCommandProperty = DependencyProperty.Register(
-            "Click", typeof(object), typeof(SimpleThumbnail), new PropertyMetadata(null));
+            "Click", typeof(ICommand), typeof(SimpleThumbnail), new PropertyMetadata(null));
 
         /// <summary>
         /// Identifies the DoubleClickCommand dependency property
         /// </summary>
         public static readonly DependencyProperty DoubleClickCommandProperty = DependencyProperty.Register(
-            "DoubleClick", typeof(object), typeof(SimpleThumbnail), new PropertyMetadata(null));
+            "DoubleClick", typeof(ICommand), typeof(SimpleThumbnail), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the command to be execute
