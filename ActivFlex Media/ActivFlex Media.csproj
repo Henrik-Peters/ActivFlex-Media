@@ -54,6 +54,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\ImageThumbnail.xaml.cs">
+      <DependentUpon>ImageThumbnail.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\IThumbnail.cs" />
     <Compile Include="Controls\SimpleThumbnail.xaml.cs">
       <DependentUpon>SimpleThumbnail.xaml</DependentUpon>
@@ -64,6 +67,10 @@
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Page Include="Controls\IconButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ImageThumbnail.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

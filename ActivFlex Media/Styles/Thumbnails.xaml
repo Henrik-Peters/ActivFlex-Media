@@ -7,6 +7,10 @@
     <SolidColorBrush x:Key="Thumbnail.Border.Color.Hover" Color="#6EC8FF"/>
     <SolidColorBrush x:Key="Thumbnail.Border.Color.Pressed" Color="#408CFE"/>
     <Thickness x:Key="Thumbnail.Border.Thickness">2</Thickness>
+    <SolidColorBrush x:Key="Thumbnail.Text.Color" Color="#F0F0F0"/>
+    <SolidColorBrush x:Key="Thumbnail.Text.Color.Hover" Color="#F0F0F0"/>
+    <SolidColorBrush x:Key="Thumbnail.Rectangle.Color" Color="Transparent"/>
+    <SolidColorBrush x:Key="Thumbnail.Rectangle.Color.Hover" Color="#3682F4"/>
 
     <!-- Style definitions for the simple thumbnail button -->
     <Style x:Key="thumbnailButton" TargetType="{x:Type Button}">
@@ -29,6 +33,58 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <!-- Style definitions for the named image thumbnail control -->
+    <Style x:Key="ImageThumbnailStyle" TargetType="{x:Type Grid}">
+        <Setter Property="Background" Value="{StaticResource Thumbnail.Background.Color}"/>
+        <Style.Resources>
+
+            <!-- Style definitions for buttons -->
+            <Style TargetType="Button">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Name="bd" BorderThickness="{StaticResource Thumbnail.Border.Thickness}" BorderBrush="{StaticResource Thumbnail.Border.Color}">
+                                <Image Name="imgDisplay" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                            </Border>
+
+                            <!-- Thumbnail trigger definitions -->
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderBrush" TargetName="bd" Value="{StaticResource Thumbnail.Border.Color.Hover}"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="BorderBrush" TargetName="bd" Value="{StaticResource Thumbnail.Border.Color.Pressed}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Style definitions for the text background rectangle -->
+            <Style TargetType="Rectangle">
+                <Setter Property="Fill" Value="{StaticResource Thumbnail.Rectangle.Color}"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=btnThumbnail, Path=IsMouseOver}" Value="True">
+                        <Setter Property="Fill" Value="{StaticResource Thumbnail.Rectangle.Color.Hover}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <!-- Inherit the foreground property instead of the default override -->
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, 
+                                                              Path=(TextElement.Foreground)}"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=btnThumbnail, Path=IsMouseOver}" Value="True">
+                        <Setter Property="Foreground" Value="{StaticResource Thumbnail.Text.Color.Hover}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            
+        </Style.Resources>
     </Style>
 
 </ResourceDictionary>
