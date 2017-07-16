@@ -15,20 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.ComponentModel;
 using ActivFlex.FileSystem;
 using ActivFlex.Media;
 
@@ -37,11 +29,102 @@ namespace ActivFlex.Controls
     /// <summary>
     /// Viewlogic for SimpleThumbnail.xaml
     /// </summary>
-    public partial class SimpleThumbnail : UserControl
+    public partial class SimpleThumbnail : UserControl, IThumbnail
     {
-        public SimpleThumbnail()
+        #region DependencyProperties
+
+        /// <summary>
+        /// Identifies the ClickCommand dependency property
+        /// </summary>
+        public static readonly DependencyProperty ClickCommandProperty = DependencyProperty.Register(
+            "Click", typeof(object), typeof(SimpleThumbnail), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Identifies the DoubleClickCommand dependency property
+        /// </summary>
+        public static readonly DependencyProperty DoubleClickCommandProperty = DependencyProperty.Register(
+            "DoubleClick", typeof(object), typeof(SimpleThumbnail), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the command to be execute
+        /// when the user clicks the thumbnail image
+        /// </summary>
+        [Bindable(true)]
+        public ICommand Click {
+            get => (ICommand)this.GetValue(ClickCommandProperty);
+            set => this.SetValue(ClickCommandProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the command to be execute
+        /// when the user double clicks the thumbnail
+        /// </summary>
+        [Bindable(true)]
+        public ICommand DoubleClick {
+            get => (ICommand)this.GetValue(DoubleClickCommandProperty);
+            set => this.SetValue(DoubleClickCommandProperty, value);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Gets or sets the represented object for this
+        /// thumbnail control. The proxy object should never
+        /// be empty and will be set by the constructor.
+        /// The proxy will be passed as a command parameter.
+        /// </summary>
+        public IFileObject Proxy { get; set; }
+
+        /// <summary>
+        /// Create a new control to display a simple thumbnail
+        /// image. The image itself will not be set by the
+        /// constructor. Use <see cref="SetThumbnail(BitmapSource)"/>
+        /// to set the thumbnail image data.
+        /// </summary>
+        /// <param name="proxy">Represented object of the thumbnail</param>
+        public SimpleThumbnail(IMediaObject proxy)
         {
             InitializeComponent();
+            this.Proxy = proxy;
         }
+
+        /// <summary>
+        /// Change the rendering options of the image control.
+        /// </summary>
+        /// <param name="scalingMode">Image rendering mode</param>
+        public void SetRenderOptions(BitmapScalingMode scalingMode)
+        {
+            RenderOptions.SetBitmapScalingMode(GetImageControl(), scalingMode);
+        }
+
+        /// <summary>
+        /// Change the content of the image inside
+        /// the thumbnail control to a specific source.
+        /// </summary>
+        /// <param name="image">Data of the thumbnail image</param>
+        public void SetThumbnail(BitmapSource image)
+        {
+            GetImageControl().Source = image;
+        }
+
+        #region Helper Functions
+
+        private Image GetImageControl()
+        {
+            return (Image)btnThumbnail.Template.FindName("imgDisplay", btnThumbnail);
+        }
+
+        private void Thumbnail_Click(object sender, RoutedEventArgs e)
+        {
+            Click?.Execute(Proxy);
+        }
+
+        private void Thumbnail_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DoubleClick?.Execute(Proxy);
+            e.Handled = true;
+        }
+
+        #endregion
     }
 }
