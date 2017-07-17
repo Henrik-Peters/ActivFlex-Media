@@ -67,7 +67,8 @@
 
         <!-- Navigation area -->
         <TreeView x:Name="NavView" Grid.Row="1" ItemsSource="{Binding NavItems}" Margin="10,10,0,0" Background="Transparent" 
-                  Height="Auto" Width="240" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                  Height="Auto" Width="240" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                  SelectedItemChanged="NavView_SelectedItemChanged">
             <TreeView.ItemTemplate>
                 <!-- Bind the children of each item to create a recursive pattern -->
                 <HierarchicalDataTemplate ItemsSource="{Binding NavChildren}">

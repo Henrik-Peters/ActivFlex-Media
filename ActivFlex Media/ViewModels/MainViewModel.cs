@@ -40,10 +40,22 @@ namespace ActivFlex.ViewModels
             set => SetProperty(ref _navVisible, value);
         }
 
+        private ObservableCollection<IFileObject> _fileSystemItems;
+        public ObservableCollection<IFileObject> FileSystemItems {
+            get => _fileSystemItems;
+            set => SetProperty(ref _fileSystemItems, value);
+        }
+
         /// <summary>
         /// Toggle the NavVisible property
         /// </summary>
         public ICommand ToggleNavVisibility { get; set; }
+
+        /// <summary>
+        /// Run the file system browser with the
+        /// passed path. Requires a path as argument.
+        /// </summary>
+        public ICommand BrowseFileSystem { get; set; }
 
         /// <summary>
         /// Creates a new ViewModel for the MainArea
@@ -63,6 +75,9 @@ namespace ActivFlex.ViewModels
             
             //Commands
             this.ToggleNavVisibility = new RelayCommand(() => NavVisible = !NavVisible);
+            this.BrowseFileSystem = new RelayCommand<string>(path => {
+                FileSystemItems = new ObservableCollection<IFileObject>(FileSystemBrowser.Browse(path));
+            });
         }
     }
 }

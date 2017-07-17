@@ -31,6 +31,11 @@ namespace ActivFlex
     public partial class MainWindow : Window
     {
         /// <summary>
+        /// View model instance for this window
+        /// </summary>
+        private MainViewModel vm;
+
+        /// <summary>
         /// Will be true when the window
         /// was set into fullscreen state
         /// </summary>
@@ -69,7 +74,8 @@ namespace ActivFlex
             };
 
             //other window properties
-            this.DataContext = new MainViewModel();
+            this.vm = new MainViewModel();
+            this.DataContext = vm;
             this.SourceInitialized += new EventHandler(Window_SourceInitialized);
             Window_StateChanged(this, null);
         }
@@ -88,6 +94,16 @@ namespace ActivFlex
                 this.btnMaximize.ContentHover   = FindResource("RestoreIconHover");
                 this.btnMaximize.ContentPressed = FindResource("RestoreIconPressed");
                 this.outerBorder.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void NavView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            var item = NavView.SelectedItem;
+
+            if (item is LogicalDriveNavItem) {
+                var driveItem = item as LogicalDriveNavItem;
+                vm.BrowseFileSystem.Execute(driveItem.DisplayName);
             }
         }
 
