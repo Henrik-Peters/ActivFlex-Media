@@ -18,6 +18,7 @@
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using ActivFlex.Media;
 
 namespace ActivFlex.FileSystem
 {
@@ -36,6 +37,57 @@ namespace ActivFlex.FileSystem
             return Directory.GetLogicalDrives()
                 .Select(drive => new LogicalDriveItem(drive))
                 .ToList();
+        }
+
+        /// <summary>
+        /// Create a list of all files, media objects and directories
+        /// that can be found via the path (does not work recursively).
+        /// If the Path is not valid or an error occurs the list will
+        /// be empty. Media Objects are detected by the file extension.
+        /// </summary>
+        /// <param name="Path">Location in the file system to browse</param>
+        /// <returns>List of all objects located at the path</returns>
+        public static List<IFileObject> Browse(string Path)
+        {
+            List<IFileObject> list = new List<IFileObject>();
+
+            if (Directory.Exists(Path)) {
+                string[] files = new string[0];
+                string[] directories = new string[0];
+
+                try {
+                    files = Directory.GetFiles(Path);
+                } catch { }
+
+                try {
+                    directories = Directory.GetDirectories(Path);
+                } catch { }
+                
+                list.AddRange(files
+                    .Where(file => MediaImage.ImageExtensions.Contains(GetExtension(file)))
+                    .Select(file => new MediaImage(file))
+                    .ToList());
+
+                list.AddRange(files
+                    .Where(file => !MediaImage.ImageExtensions.Contains(GetExtension(file)))
+                    .Select(file => new FileItem(file))
+                    .ToList());
+
+                list.AddRange(directories
+                    .Select(directory => new DirectoryItem(directory))
+                    .ToList());
+            }
+
+            return list
+                .OrderBy(entry => entry.Name)
+                .ToList();
+        }
+
+        private static string GetExtension(string Path)
+        {
+            return System.IO.Path.GetExtension(Path)
+                .Replace(".", "")
+                .ToLower();
         }
     }
 }

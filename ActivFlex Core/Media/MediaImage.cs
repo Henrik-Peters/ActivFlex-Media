@@ -31,6 +31,13 @@ namespace ActivFlex.Media
     public class MediaImage : MediaObject
     {
         /// <summary>
+        /// All file extensions that are valid for the
+        /// creation and display of a media image.
+        /// </summary>
+        public static readonly string[] ImageExtensions = new string[] {
+            "bmp", "jpg", "png" };
+
+        /// <summary>
         /// The current loading state of the image data.
         /// </summary>
         public ImageLoadState LoadState { get; private set; }
@@ -44,7 +51,7 @@ namespace ActivFlex.Media
         /// The thumbnail data of the image itself.
         /// </summary>
         public BitmapImage Thumbnail { get; private set; }
-
+        
         /// <summary>
         /// Create a new image only by the filesystem path.
         /// The file name will be used to generate the name.
