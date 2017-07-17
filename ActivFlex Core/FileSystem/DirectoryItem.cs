@@ -20,26 +20,20 @@ using System.IO;
 namespace ActivFlex.FileSystem
 {
     /// <summary>
-    /// Provides the data of a directory. This can 
+    /// Provides the data of a directory. This can
     /// represent a root-directory or sub-directory.
     /// </summary>
     public class DirectoryItem : FileSystemItem
     {
         /// <summary>
         /// Create a representation of a file system directory.
-        /// The constructor will try to create a complete directory info.
+        /// The constructor will create a directory name by the path.
         /// Examples of valid FullPaths: "C:\\folder" or "C:/folder".
         /// </summary>
         /// <param name="FullPath">The path of the directory.</param>
         public DirectoryItem(string FullPath) : base(FullPath)
         {
-            try {
-                DirectoryInfo directoryInfo = new DirectoryInfo(FullPath);
-                this.Name = directoryInfo.Name;
-
-            } catch {
-                Name = FullPath;
-            }
+            this.Name = System.IO.Path.GetFileName(FullPath);
         }
 
         /// <summary>

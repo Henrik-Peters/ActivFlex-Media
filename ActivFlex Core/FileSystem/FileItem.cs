@@ -26,21 +26,14 @@ namespace ActivFlex.FileSystem
     {
         /// <summary>
         /// Create a representation of a file.
-        /// The constructor will try to create a complete file info.
+        /// The constructor will create the name and extension by the path.
         /// Examples of valid FullPaths: "C:\\text.txt" or "C:/text.txt".
         /// </summary>
         /// <param name="FullPath">The path of the file.</param>
         public FileItem(string FullPath) : base(FullPath)
         {
-            try {
-                FileInfo fileInfo = new FileInfo(FullPath);
-
-                this.Name = fileInfo.Name;
-                this.Extension = fileInfo.Extension;
-
-            } catch {
-                Name = FullPath;
-            }
+            this.Name = System.IO.Path.GetFileName(FullPath);
+            this.Extension = System.IO.Path.GetExtension(FullPath);
         }
 
         /// <summary>
