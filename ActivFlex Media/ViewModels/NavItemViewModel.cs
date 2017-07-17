@@ -26,20 +26,43 @@ namespace ActivFlex.ViewModels
     /// </summary>
     public abstract class NavItem : ViewModel
     {
+        private bool _isExpanded;
+        private ObservableCollection<NavItem> _navChildren;
+
         /// <summary>
         /// Text that represents the item.
         /// </summary>
         public abstract string DisplayName { get; set; }
-        
-        private ObservableCollection<NavItem> _navChildren = new ObservableCollection<NavItem>();
+
+        /// <summary>
+        /// Current expand state of the item.
+        /// </summary>
+        public bool IsExpanded {
+            get => _isExpanded;
+            set => SetProperty(ref _isExpanded, value);
+        }
+
+        /// <summary>
+        /// The navigation children of the item.
+        /// This property is used to build up the
+        /// navigation tree recursively.
+        /// </summary>
         public ObservableCollection<NavItem> NavChildren {
             get => _navChildren;
             set => SetProperty(ref _navChildren, value);
         }
 
-        public NavItem(ObservableCollection<NavItem> Children = null)
+        /// <summary>
+        /// This constructor will initialize the children
+        /// collection. You may just use the default parameters.
+        /// </summary>
+        /// <param name="Children">The navigation children of the item</param>
+        /// <param name="IsExpanded">The startup expand state of the item</param>
+        protected NavItem(ObservableCollection<NavItem> Children = null, bool IsExpanded = false)
         {
+            this._navChildren = new ObservableCollection<NavItem>();
             this.NavChildren = Children ?? _navChildren;
+            this.IsExpanded = IsExpanded;
         }
     }
 
@@ -74,10 +97,12 @@ namespace ActivFlex.ViewModels
         /// </summary>
         /// <param name="DisplayName">Text to display for the group</param>
         /// <param name="IconResource">Key of the resource for the icon</param>
-        public GroupNavItem(string DisplayName, string IconResource)
+        /// <param name="IsExpanded">The startup expand state of the group</param>
+        public GroupNavItem(string DisplayName, string IconResource, bool IsExpanded = false) : base()
         {
             this.DisplayName = DisplayName;
             this.IconResource = IconResource;
+            this.IsExpanded = IsExpanded;
         }
     }
 
@@ -110,7 +135,7 @@ namespace ActivFlex.ViewModels
         /// file browsing system (no tree children).
         /// </summary>
         /// <param name="driveItem"></param>
-        public LogicalDriveNavItem(LogicalDriveItem driveItem)
+        public LogicalDriveNavItem(LogicalDriveItem driveItem) : base()
         {
             this._driveItem = driveItem;
             this.DisplayName = driveItem.Path;

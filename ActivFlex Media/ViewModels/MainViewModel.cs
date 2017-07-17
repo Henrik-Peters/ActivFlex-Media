@@ -66,7 +66,7 @@ namespace ActivFlex.ViewModels
             //Navigation items
             this.NavVisible = true;
             this.NavItems = new ObservableCollection<NavItem>(
-                new List<NavItem>(new[] { new GroupNavItem("My Computer", "MyComputerIcon") })
+                new List<NavItem>(new[] { new GroupNavItem("My Computer", "MyComputerIcon", true) })
             );
 
             this.NavItems[0].NavChildren = new ObservableCollection<NavItem>(
