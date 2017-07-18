@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:ActivFlex.Controls"
+        xmlns:Media="clr-namespace:ActivFlex.Media;assembly=ActivFlex-Core"
+        xmlns:FileSystem="clr-namespace:ActivFlex.FileSystem;assembly=ActivFlex-Core"
         xmlns:Converters="clr-namespace:ActivFlex.Converters" x:Class="ActivFlex.MainWindow"
         mc:Ignorable="d"
         Title="ActivFlex Media" Height="835" Width="1640"
@@ -29,6 +31,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="35" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="*" />
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
@@ -66,7 +69,7 @@
         </Border>
 
         <!-- Navigation area -->
-        <TreeView x:Name="NavView" Grid.Row="1" ItemsSource="{Binding NavItems}" Margin="10,10,0,0" Background="Transparent" 
+        <TreeView x:Name="NavView" Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding NavItems}" Margin="10,10,0,0" Background="Transparent" 
                   Height="Auto" Width="240" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                   SelectedItemChanged="NavView_SelectedItemChanged">
             <TreeView.ItemTemplate>
@@ -119,6 +122,34 @@
         </TreeView>
 
         <!-- Split area between the navigation tree view and the presentation area -->
-        <Button Command="{Binding ToggleNavVisibility}" Style="{StaticResource toggleNavButton}" Grid.Row="1" Grid.Column="1" Width="10" Height="40"/>
+        <Button Command="{Binding ToggleNavVisibility}" Style="{StaticResource toggleNavButton}" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Width="10" Height="40"/>
+
+        <!-- Media presentation area -->
+        <ScrollViewer x:Name="MediaScrollViewer" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="3">
+            <ItemsControl ItemsSource="{Binding FileSystemItems}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel x:Name="MediaWrapPanel" FlowDirection="LeftToRight"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.Resources>
+
+                    <DataTemplate DataType="{x:Type FileSystem:FileItem}">
+                        <Controls:ImageThumbnail Proxy="{Binding}" Margin="20" Width="150" Height="150" CanSelect="False"/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type FileSystem:DirectoryItem}">
+                        <Controls:ImageThumbnail Proxy="{Binding}" Margin="20" Width="150" Height="150" CanSelect="False"/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type Media:MediaImage}">
+                        <Controls:ImageThumbnail Proxy="{Binding}" Margin="20" Width="150" Height="150" CanSelect="False"/>
+                    </DataTemplate>
+
+                </ItemsControl.Resources>
+            </ItemsControl>
+        </ScrollViewer>
+
+
     </Grid>
 </Window>

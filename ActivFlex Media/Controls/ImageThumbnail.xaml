@@ -16,6 +16,6 @@
 
         <Button x:Name="btnThumbnail" Grid.Row="0" Click="Thumbnail_Click" MouseDoubleClick="Thumbnail_DoubleClick"/>
         <Rectangle x:Name="nameBackground" Grid.Row="1" Height="25" Width="{Binding Path=ActualWidth, ElementName=nameDisplay}" RadiusX="7" RadiusY="7"/>
-        <Label x:Name="nameDisplay" Content="No Name" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
+        <Label x:Name="nameDisplay" Content="{Binding Text, ElementName=imgThumbnail}" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
     </Grid>
 </UserControl>

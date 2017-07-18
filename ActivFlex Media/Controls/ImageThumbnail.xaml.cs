@@ -58,6 +58,18 @@ namespace ActivFlex.Controls
             "CanSelect", typeof(bool), typeof(ImageThumbnail), new PropertyMetadata(null));
 
         /// <summary>
+        /// Identifies the TextProperty dependency property
+        /// </summary>
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
+            "Text", typeof(string), typeof(ImageThumbnail), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Identifies the ProxyProperty dependency property
+        /// </summary>
+        public static readonly DependencyProperty ProxyProperty = DependencyProperty.Register(
+            "Proxy", typeof(IFileObject), typeof(ImageThumbnail), new PropertyMetadata(ProxyProperty_PropertyChanged));
+
+        /// <summary>
         /// Gets or sets the command to be execute
         /// when the user clicks the thumbnail image
         /// </summary>
@@ -104,7 +116,14 @@ namespace ActivFlex.Controls
             }
         }
 
-        #endregion
+        /// <summary>
+        /// Gets or sets the content of the text label.
+        /// </summary>
+        [Bindable(true)]
+        public string Text {
+            get => (string)this.GetValue(TextProperty);
+            set => this.SetValue(TextProperty, value);
+        }
 
         /// <summary>
         /// Gets or sets the represented object for this
@@ -112,7 +131,22 @@ namespace ActivFlex.Controls
         /// be empty and will be set by the constructor.
         /// The proxy will be passed as a command parameter.
         /// </summary>
-        public IFileObject Proxy { get; set; }
+        [Bindable(true)]
+        public IFileObject Proxy {
+            get => (IFileObject)this.GetValue(ProxyProperty);
+            set => this.SetValue(ProxyProperty, value);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Create a new control to display a simple thumbnail
+        /// image. The image itself will not be loaded.
+        /// </summary>
+        public ImageThumbnail()
+        {
+            InitializeComponent();
+        }
 
         /// <summary>
         /// Create a new control to display a simple thumbnail
@@ -128,7 +162,20 @@ namespace ActivFlex.Controls
             this.CanSelect = CanSelect;
             this.Proxy = proxy;
 
-            SetText(proxy != null ? proxy.Name : "");
+            Text = proxy != null ? proxy.Name : "";
+        }
+
+        private static void ProxyProperty_PropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            var vm = (ImageThumbnail)obj;
+            vm.Text = vm.Proxy.Name;
+
+            if (vm.Proxy is IMediaObject) {
+                var mediaObject = vm.Proxy as IMediaObject;
+
+                BitmapImage thumbnail = mediaObject.LoadThumbnail(512);
+                vm.SetThumbnail(thumbnail);
+            }
         }
 
         /// <summary>
@@ -150,19 +197,11 @@ namespace ActivFlex.Controls
             GetImageControl().Source = image;
         }
 
-        /// <summary>
-        /// Change the content of the text label.
-        /// </summary>
-        /// <param name="text">Text to display below the thumbnail</param>
-        public void SetText(string text)
-        {
-            this.nameDisplay.Content = text;
-        }
-
         #region Helper Functions
 
         private Image GetImageControl()
         {
+            btnThumbnail.ApplyTemplate();
             return (Image)btnThumbnail.Template.FindName("imgDisplay", btnThumbnail);
         }
 
