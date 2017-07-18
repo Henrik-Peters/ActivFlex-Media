@@ -6,16 +6,23 @@
              mc:Ignorable="d"
              x:Name="imgThumbnail"
              d:DesignHeight="300" d:DesignWidth="300"
+             MaxWidth="150" MaxHeight="150"
              Foreground="{StaticResource Thumbnail.Text.Color}">
 
     <Grid Style="{StaticResource TextThumbnailStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" MinHeight="30"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <Button x:Name="btnThumbnail" Grid.Row="0" Click="Thumbnail_Click" MouseDoubleClick="Thumbnail_DoubleClick"/>
-        <Rectangle x:Name="nameBackground" Grid.Row="1" Height="25" Width="{Binding Path=ActualWidth, ElementName=nameDisplay}" RadiusX="7" RadiusY="7"/>
-        <Label x:Name="nameDisplay" Content="{Binding Text, ElementName=imgThumbnail}" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
+        <Button x:Name="btnThumbnail" Grid.Row="1" Grid.Column="1" MaxWidth="{Binding Path=MaxWidth, ElementName=imgThumbnail}" MaxHeight="120" Click="Thumbnail_Click" MouseDoubleClick="Thumbnail_DoubleClick"/>
+        <Rectangle x:Name="nameBackground" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Height="25" Margin="0,3,0,0" Width="{Binding Path=ActualWidth, ElementName=nameDisplay}" VerticalAlignment="Top" RadiusX="7" RadiusY="7"/>
+        <Label x:Name="nameDisplay" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Content="{Binding Text, ElementName=imgThumbnail}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
     </Grid>
 </UserControl>

@@ -143,7 +143,7 @@
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type Media:MediaImage}">
-                        <Controls:ImageThumbnail Proxy="{Binding}" Margin="20" Width="150" Height="150" CanSelect="False"/>
+                        <Controls:ImageThumbnail Proxy="{Binding}" Margin="20" CanSelect="False"/>
                     </DataTemplate>
 
                 </ItemsControl.Resources>

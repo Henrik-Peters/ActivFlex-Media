@@ -48,8 +48,11 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">
-                            <Border Name="bd" BorderThickness="{StaticResource Thumbnail.Border.Thickness}" BorderBrush="{StaticResource Thumbnail.Border.Color}">
-                                <Image Name="imgDisplay" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                            <Border Name="bd"
+                                    BorderThickness="{StaticResource Thumbnail.Border.Thickness}"
+                                    BorderBrush="{StaticResource Thumbnail.Border.Color}">
+                                
+                                <Image Name="imgDisplay" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                             </Border>
 
                             <!-- Thumbnail trigger definitions -->
