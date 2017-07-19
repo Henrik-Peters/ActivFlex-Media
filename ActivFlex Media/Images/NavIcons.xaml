@@ -266,5 +266,44 @@
             </Path>
         </Canvas>
     </Viewbox>
+    <Viewbox x:Key="FolderIcon" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="256" Height="256">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources>
+                <LinearGradientBrush xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Key="linearGradient5654" MappingMode="Absolute" StartPoint="121,16" EndPoint="121,208">
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStopCollection>
+                            <GradientStop Color="#FF9E9E9E" Offset="0"/>
+                            <GradientStop Color="#FF7D7D7D" Offset="1"/>
+                        </GradientStopCollection>
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+                <LinearGradientBrush xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Key="linearGradient5665" MappingMode="Absolute" StartPoint="126,56" EndPoint="126,209">
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStopCollection>
+                            <GradientStop Color="#F0505050" Offset="0"/>
+                            <GradientStop Color="#B4646464" Offset="0.73186594"/>
+                            <GradientStop Color="#B4A0A0A0" Offset="0.89376438"/>
+                            <GradientStop Color="#B4646464" Offset="1"/>
+                        </GradientStopCollection>
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Canvas.Resources>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="{StaticResource linearGradient5654}" StrokeThickness="1.88976383" Stroke="#FF847D7D" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                    <Path.Data>
+                        <PathGeometry Figures="m 21.341757 20.883954 c 0.178305 -1.801813 1.57195 -3.747258 3.882624 -3.81445 l 48.132624 -0.0019 c 2.976175 0.305605 10.902098 10.443764 16.353147 15.665646 l 142.735628 0.0064 c 2.27937 0.07294 2.96072 1.011264 3.06376 3.41264 1.273 56.974292 -1.16761 114.28618 4.70138 170.84266 l -224.997197 0.007 C 22.311422 145.35713 20.622001 82.946762 21.341757 20.883954 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="{StaticResource linearGradient5665}" StrokeThickness="3.05162644" Stroke="#FF6E6E6E" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                    <Path.Data>
+                        <PathGeometry Figures="M 8.3893285 57.284538 H 247.44939 c 3.63072 0 6.69212 2.925566 6.55364 6.55364 l -5.21491 136.627832 c -0.13848 3.62807 -2.92292 6.55364 -6.55364 6.55364 H 13.692629 c -3.630716 0 -6.4128171 -2.92566 -6.5536395 -6.55364 L 1.8356886 63.838178 C 1.694866 60.210194 4.758612 57.284538 8.3893285 57.284538 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
 
 </ResourceDictionary>

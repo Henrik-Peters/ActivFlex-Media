@@ -14,6 +14,10 @@
     <SolidColorBrush x:Key="Thumbnail.Rectangle.Color" Color="Transparent"/>
     <SolidColorBrush x:Key="Thumbnail.Rectangle.Color.Hover" Color="#3682F4"/>
     <SolidColorBrush x:Key="Thumbnail.Rectangle.Color.Selected" Color="#3783F5"/>
+    <LinearGradientBrush x:Key="Thumbnail.Directory.Background" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#767575" Offset="0" />
+        <GradientStop Color="#393939" Offset="1.0" />
+    </LinearGradientBrush>
 
     <!-- Style definitions for the simple thumbnail button -->
     <Style x:Key="thumbnailButton" TargetType="{x:Type Button}">
@@ -38,7 +42,7 @@
         </Setter>
     </Style>
 
-    <!-- Style definitions for the named image thumbnail control -->
+    <!-- Style definitions for the named image thumbnail controls -->
     <Style x:Key="TextThumbnailStyle" TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="{StaticResource Thumbnail.Background.Color}"/>
         <Style.Resources>
@@ -113,4 +117,86 @@
         </Style.Resources>
     </Style>
 
+    <!-- Style definitions for directory thumbnail controls -->
+    <Style x:Key="DirectoryThumbnailStyle" TargetType="{x:Type Grid}">
+        <Setter Property="Background" Value="{StaticResource Thumbnail.Background.Color}"/>
+        <Style.Resources>
+
+            <!-- Style definitions for buttons -->
+            <Style TargetType="Button">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Name="bd"
+                                    Background="{StaticResource Thumbnail.Directory.Background}"
+                                    BorderThickness="{StaticResource Thumbnail.Border.Thickness}"
+                                    BorderBrush="{StaticResource Thumbnail.Border.Color}">
+
+                                <ContentPresenter Name="contentPresenter" 
+                                                  Content="{StaticResource FolderIcon}" 
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"
+                                                  Width="90" 
+                                                  Height="90"/>
+                            </Border>
+
+                            <!-- Thumbnail trigger definitions -->
+                            <!-- Change the order of the triggers to prevent hovering on a selected state -->
+                            <ControlTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsSelected, ElementName=dirThumbnail}" Value="True">
+                                    <Setter Property="BorderBrush" TargetName="bd" Value="{StaticResource Thumbnail.Border.Color.Selected}"/>
+                                </DataTrigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderBrush" TargetName="bd" Value="{StaticResource Thumbnail.Border.Color.Hover}"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="BorderBrush" TargetName="bd" Value="{StaticResource Thumbnail.Border.Color.Pressed}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Style definitions for the text background rectangle -->
+            <Style TargetType="Rectangle">
+                <Setter Property="Fill" Value="{StaticResource Thumbnail.Rectangle.Color}"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsSelected, ElementName=dirThumbnail}" Value="True">
+                        <Setter Property="Fill" Value="{StaticResource Thumbnail.Rectangle.Color.Selected}"/>
+                    </DataTrigger>
+
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding ElementName=btnThumbnail, Path=IsMouseOver}" Value="True"/>
+                            <Condition Binding="{Binding IsSelected, ElementName=dirThumbnail}" Value="False"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Fill" Value="{StaticResource Thumbnail.Rectangle.Color.Hover}"/>
+                    </MultiDataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <!-- Inherit the foreground property instead of the default override -->
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, 
+                                                              Path=(TextElement.Foreground)}"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsSelected, ElementName=dirThumbnail}" Value="True">
+                        <Setter Property="Foreground" Value="{StaticResource Thumbnail.Text.Color.Selected}"/>
+                    </DataTrigger>
+
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding ElementName=btnThumbnail, Path=IsMouseOver}" Value="True"/>
+                            <Condition Binding="{Binding IsSelected, ElementName=dirThumbnail}" Value="False"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Foreground" Value="{StaticResource Thumbnail.Text.Color.Hover}"/>
+                    </MultiDataTrigger>
+                </Style.Triggers>
+            </Style>
+
+        </Style.Resources>
+    </Style>
+    
 </ResourceDictionary>
