@@ -22,6 +22,10 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using WinInterop = System.Windows.Interop;
 using ActivFlex.ViewModels;
+using System.Windows.Media;
+using System.Windows.Controls;
+using System.Windows.Media.Animation;
+using System.Windows.Data;
 
 namespace ActivFlex
 {
@@ -115,6 +119,27 @@ namespace ActivFlex
                 } else {
                     vm.DecreaseZoom?.Execute(null);
                 }
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //The ItemPanelTemplate of MediaItemControl is loaded after the zoom is set.
+            //The EventTrigger of the scale animation will miss the first UpdateTarget-Event.
+            //This is fixed by firing the UpdateTarget-Event or changing the zoom again:
+            try {
+                Border border = VisualTreeHelper.GetChild(this.MediaItemControl, 0) as Border;
+                ItemsPresenter itemsPresenter = VisualTreeHelper.GetChild(border, 0) as ItemsPresenter;
+                WrapPanel wrapPanel = VisualTreeHelper.GetChild(itemsPresenter, 0) as WrapPanel;
+
+                DoubleAnimation animationX = wrapPanel.FindName("thumbScaleAnimationX") as DoubleAnimation;
+                DoubleAnimation animationY = wrapPanel.FindName("thumbScaleAnimationY") as DoubleAnimation;
+                
+                BindingOperations.GetBindingExpression(animationX, DoubleAnimation.ToProperty).UpdateTarget();
+                BindingOperations.GetBindingExpression(animationY, DoubleAnimation.ToProperty).UpdateTarget();
+            } catch {
+                vm.Zoom = 0.0;
+                vm.Zoom = 1.0;
             }
         }
 
