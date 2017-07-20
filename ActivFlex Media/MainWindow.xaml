@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         Title="ActivFlex Media" Height="835" Width="1640"
         WindowStyle="None" AllowsTransparency="True"
-        WindowStartupLocation="CenterScreen" FontSize="18" StateChanged="Window_StateChanged" Loaded="Window_Loaded">
+        WindowStartupLocation="CenterScreen" FontSize="18" StateChanged="Window_StateChanged" Loaded="Window_Loaded" PreviewKeyDown="Window_PreviewKeyDown">
 
     <!-- Converter instances and window specific styles -->
     <Window.Resources>

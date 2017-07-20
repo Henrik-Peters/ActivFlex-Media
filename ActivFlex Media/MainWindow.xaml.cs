@@ -122,6 +122,14 @@ namespace ActivFlex
             }
         }
 
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Subtract) {
+                vm.DecreaseZoom?.Execute(null);
+                e.Handled = true;
+            }
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //The ItemPanelTemplate of MediaItemControl is loaded after the zoom is set.
