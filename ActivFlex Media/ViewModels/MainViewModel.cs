@@ -28,6 +28,7 @@ namespace ActivFlex.ViewModels
     /// </summary>
     public class MainViewModel : ViewModel
     {
+        #region Properties
         private ObservableCollection<NavItem> _navItems;
         public ObservableCollection<NavItem> NavItems {
             get => _navItems;
@@ -46,6 +47,21 @@ namespace ActivFlex.ViewModels
             set => SetProperty(ref _fileSystemItems, value);
         }
 
+        private double _zoom;
+        public double Zoom {
+            get => _zoom;
+            set => SetProperty(ref _zoom, value);
+        }
+
+        private double _zoomDelta;
+        public double ZoomDelta {
+            get => _zoomDelta;
+            set => SetProperty(ref _zoomDelta, value);
+        }
+
+        #endregion
+        #region Commands
+
         /// <summary>
         /// Toggle the NavVisible property
         /// </summary>
@@ -56,6 +72,23 @@ namespace ActivFlex.ViewModels
         /// passed path. Requires a path as argument.
         /// </summary>
         public ICommand BrowseFileSystem { get; set; }
+
+        /// <summary>
+        /// Increase the zoom level by the zoom delta.
+        /// </summary>
+        public ICommand IncreaseZoom { get; set; }
+
+        /// <summary>
+        /// Decrease the zoom level by the zoom delta.
+        /// </summary>
+        public ICommand DecreaseZoom { get; set; }
+
+        /// <summary>
+        /// Reset the zoom level to neutral (1.0).
+        /// </summary>
+        public ICommand ResetZoom { get; set; }
+
+        #endregion
 
         /// <summary>
         /// Creates a new ViewModel for the MainArea
@@ -72,12 +105,20 @@ namespace ActivFlex.ViewModels
             this.NavItems[0].NavChildren = new ObservableCollection<NavItem>(
                                 FileSystemBrowser.GetLogicalDrives()
                                 .Select(drive => new LogicalDriveNavItem(drive)));
+
+            //Default Zoom
+            this.Zoom = 1.0;
+            this.ZoomDelta = 0.1;
             
             //Commands
             this.ToggleNavVisibility = new RelayCommand(() => NavVisible = !NavVisible);
             this.BrowseFileSystem = new RelayCommand<string>(path => {
                 FileSystemItems = new ObservableCollection<IFileObject>(FileSystemBrowser.Browse(path));
             });
+
+            this.ResetZoom = new RelayCommand(() => Zoom = 1.0);
+            this.IncreaseZoom = new RelayCommand(() => Zoom += ZoomDelta);
+            this.DecreaseZoom = new RelayCommand(() => Zoom -= ZoomDelta);
         }
     }
 }

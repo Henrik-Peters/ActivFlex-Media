@@ -107,6 +107,17 @@ namespace ActivFlex
             }
         }
 
+        private void MediaScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl)) {
+                if (e.Delta > 0) {
+                    vm.IncreaseZoom?.Execute(null);
+                } else {
+                    vm.DecreaseZoom?.Execute(null);
+                }
+            }
+        }
+
         #region WindowSizeLimits
 
         [DllImport("user32")]
