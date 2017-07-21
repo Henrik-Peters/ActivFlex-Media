@@ -1,0 +1,65 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Colors for the browse control buttons -->
+    <SolidColorBrush x:Key="BrowseButton.DefaultColor" Color="#E6E6E6"/>
+    <SolidColorBrush x:Key="BrowseButton.HoverColor" Color="#61B0E0"/>
+    <SolidColorBrush x:Key="BrowseButton.PressedColor" Color="#0061B4"/>
+
+    <!-- Back button icon definitions -->
+    <Viewbox x:Key="BackIcon" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources/>
+            <Canvas>
+                <Ellipse xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="5" Width="54" Canvas.Top="4.6" Height="54.8" StrokeThickness="3.78" Stroke="{StaticResource BrowseButton.DefaultColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="0" Canvas.Top="0" Width="64" Height="64" RadiusX="0" RadiusY="0" StrokeThickness="0" Stroke="{StaticResource BrowseButton.DefaultColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="21.923729" Canvas.Top="29.422874" Width="28.875261" Height="5.1542525" Fill="{StaticResource BrowseButton.DefaultColor}" StrokeThickness="0" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="5.29133844" Stroke="{StaticResource BrowseButton.DefaultColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="M 33.876024 44.599218 19.510696 32.291791 32.941283 19.312029" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+    <Viewbox x:Key="BackIconHover" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources/>
+            <Canvas>
+                <Ellipse xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="5" Width="54" Canvas.Top="4.6" Height="54.8" StrokeThickness="3.78" Stroke="{StaticResource BrowseButton.HoverColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="0" Canvas.Top="0" Width="64" Height="64" RadiusX="0" RadiusY="0" StrokeThickness="0" Stroke="{StaticResource BrowseButton.HoverColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="21.923729" Canvas.Top="29.422874" Width="28.875261" Height="5.1542525" Fill="{StaticResource BrowseButton.HoverColor}" StrokeThickness="0" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="5.29133844" Stroke="{StaticResource BrowseButton.HoverColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="M 33.876024 44.599218 19.510696 32.291791 32.941283 19.312029" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+    <Viewbox x:Key="BackIconPressed" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources/>
+            <Canvas>
+                <Ellipse xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="5" Width="54" Canvas.Top="4.6" Height="54.8" StrokeThickness="3.78" Stroke="{StaticResource BrowseButton.PressedColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="0" Canvas.Top="0" Width="64" Height="64" RadiusX="0" RadiusY="0" StrokeThickness="0" Stroke="{StaticResource BrowseButton.PressedColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="21.923729" Canvas.Top="29.422874" Width="28.875261" Height="5.1542525" Fill="{StaticResource BrowseButton.PressedColor}" StrokeThickness="0" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="5.29133844" Stroke="{StaticResource BrowseButton.PressedColor}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                    <Path.Data>
+                        <PathGeometry Figures="M 33.876024 44.599218 19.510696 32.291791 32.941283 19.312029" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+
+</ResourceDictionary>
