@@ -59,10 +59,26 @@ namespace ActivFlex.ViewModels
             set => SetProperty(ref _zoomDelta, value);
         }
 
+        private string _lastPath;
+        public string LastPath {
+            get => _lastPath;
+            set {
+                SetProperty(ref _lastPath, value);
+                NotifyPropertyChanged(nameof(BrowseBackAvailable));
+            }
+        }
+
         private string _path;
         public string Path {
             get => _path;
-            set => SetProperty(ref _path, value);
+            set {
+                LastPath = _path;
+                SetProperty(ref _path, value);
+            }
+        }
+        
+        public bool BrowseBackAvailable {
+            get => LastPath != null;
         }
 
         #endregion
@@ -78,6 +94,12 @@ namespace ActivFlex.ViewModels
         /// passed path. Requires a path as argument.
         /// </summary>
         public ICommand BrowseFileSystem { get; set; }
+
+        /// <summary>
+        /// Browse back to the last path. When the last
+        /// path is not available nothing will be executed.
+        /// </summary>
+        public ICommand BrowseUp { get; set; }
 
         /// <summary>
         /// Increase the zoom level by the zoom delta.
@@ -126,6 +148,12 @@ namespace ActivFlex.ViewModels
             this.ResetZoom = new RelayCommand(() => Zoom = 1.0);
             this.IncreaseZoom = new RelayCommand(() => Zoom += ZoomDelta);
             this.DecreaseZoom = new RelayCommand(() => Zoom -= ZoomDelta);
+
+            this.BrowseUp = new RelayCommand(() => {
+                if (BrowseBackAvailable) {
+                    BrowseFileSystem.Execute(LastPath);
+                }
+            });
         }
     }
 }

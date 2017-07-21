@@ -19,6 +19,7 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace ActivFlex.Controls
 {
@@ -30,7 +31,11 @@ namespace ActivFlex.Controls
         public IconButton()
         {
             InitializeComponent();
-            this.controlBtn.Click += (s, e) => Click?.Invoke(this, e);
+            this.controlBtn.Click += (s, e) => 
+            {
+                Click?.Invoke(this, e);
+                Command?.Execute(this);
+            };
         }
 
         /// <summary>
@@ -66,6 +71,12 @@ namespace ActivFlex.Controls
         public static readonly DependencyProperty ContentDisabledProperty = DependencyProperty.Register(
             "ContentDisabled", typeof(object), typeof(IconButton), new FrameworkPropertyMetadata(null));
 
+        /// <summary>
+        /// Identifies the CommandProperty dependency property
+        /// </summary>
+        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
+            "Command", typeof(ICommand), typeof(IconButton), new FrameworkPropertyMetadata(null));
+        
 
         /// <summary>
         /// Gets or sets the content to be displayed
@@ -103,7 +114,16 @@ namespace ActivFlex.Controls
             get => this.GetValue(ContentDisabledProperty);
             set => this.SetValue(ContentDisabledProperty, value);
         }
-        
+
+        /// <summary>
+        /// Gets or sets the command executed on a click
+        /// </summary>
+        [Bindable(true)]
+        public ICommand Command {
+            get => (ICommand)this.GetValue(CommandProperty);
+            set => this.SetValue(CommandProperty, value);
+        }
+
         private static void ContentDefaultPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             //Set the default values to the default content property

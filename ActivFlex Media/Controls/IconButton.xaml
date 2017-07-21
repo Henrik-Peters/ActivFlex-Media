@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             Focusable="False"
-             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+             x:Name="IconButtonControl"
+             Focusable="False">
     <Grid>
         <Button Name="controlBtn" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top">
             <Button.Style>
@@ -18,19 +18,19 @@
 
                                 <!-- Optional border display -->
                                 <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" SnapsToDevicePixels="true" Background="Transparent">
-                                    <ContentPresenter x:Name="contentPresenter" Content="{Binding ContentDefault}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    <ContentPresenter x:Name="contentPresenter" Content="{Binding ContentDefault, ElementName=IconButtonControl}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                 </Border>
 
                                 <!-- Set the content to the corresponding user control content properties -->
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Content" TargetName="contentPresenter" Value="{Binding ContentHover}"/>
+                                        <Setter Property="Content" TargetName="contentPresenter" Value="{Binding ContentHover, ElementName=IconButtonControl}"/>
                                     </Trigger>
                                     <Trigger Property="IsPressed" Value="True">
-                                        <Setter Property="Content" TargetName="contentPresenter" Value="{Binding ContentPressed}"/>
+                                        <Setter Property="Content" TargetName="contentPresenter" Value="{Binding ContentPressed, ElementName=IconButtonControl}"/>
                                     </Trigger>
                                     <Trigger Property="IsEnabled" Value="false">
-                                        <Setter Property="Content" TargetName="contentPresenter" Value="{Binding ContentDisabled}"/>
+                                        <Setter Property="Content" TargetName="contentPresenter" Value="{Binding ContentDisabled, ElementName=IconButtonControl}"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>

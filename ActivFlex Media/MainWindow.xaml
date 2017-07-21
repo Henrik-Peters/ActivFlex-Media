@@ -15,6 +15,7 @@
     <!-- Converter instances and window specific styles -->
     <Window.Resources>
         <Converters:NavItemIconConverter x:Key="NavIconConverter"/>
+        <Converters:BooleanVisibilityConverter x:Key="BoolVisibilityConverter"/>
         <KeyTime x:Key="NavTreeFadeTime">0:0:0.2</KeyTime>
     </Window.Resources>
 
@@ -143,6 +144,8 @@
             </Grid.ColumnDefinitions>
             
             <Controls:IconButton x:Name="BtnBack" Width="30" Grid.Column="0" Margin="10,5,0,0"
+                                 Command="{Binding BrowseUp}"
+                                 Visibility="{Binding BrowseBackAvailable, Converter={StaticResource BoolVisibilityConverter}}"
                                  ContentDefault="{StaticResource BackIcon}"
                                  ContentHover="{StaticResource BackIconHover}"
                                  ContentPressed="{StaticResource BackIconPressed}"/>

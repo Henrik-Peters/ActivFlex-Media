@@ -64,6 +64,7 @@
     <Compile Include="Controls\SimpleThumbnail.xaml.cs">
       <DependentUpon>SimpleThumbnail.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BooleanVisibilityConverter.cs" />
     <Compile Include="Converters\NavItemIconConverter.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\NavItemViewModel.cs" />
