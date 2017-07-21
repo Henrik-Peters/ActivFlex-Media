@@ -35,7 +35,8 @@ namespace ActivFlex.Media
         /// creation and display of a media image.
         /// </summary>
         public static readonly string[] ImageExtensions = new string[] {
-            "bmp", "jpg", "png" };
+            "bmp", "png", "gif", "jpg", "jpeg", "jpe", "jif", "jfif", "jfi",
+            "jp2", "j2k", "jpf", "jpx", "jpm", "dib", "tif", "tiff", "dds" };
 
         /// <summary>
         /// The current loading state of the image data.
