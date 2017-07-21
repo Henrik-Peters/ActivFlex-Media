@@ -188,11 +188,17 @@
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type FileSystem:DirectoryItem}">
-                        <Controls:DirectoryThumbnail Proxy="{Binding}" Margin="20" CanSelect="False"/>
+                        <Controls:DirectoryThumbnail Margin="20"
+                                                     CanSelect="False"
+                                                     Proxy="{Binding}"
+                                                     Click="{Binding DataContext.BrowseFileSystem,
+                                                             RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type Media:MediaImage}">
-                        <Controls:ImageThumbnail Proxy="{Binding}" Margin="20" CanSelect="False"/>
+                        <Controls:ImageThumbnail Margin="20"
+                                                 CanSelect="False"
+                                                 Proxy="{Binding}"/>
                     </DataTemplate>
 
                 </ItemsControl.Resources>

@@ -152,12 +152,12 @@ namespace ActivFlex.Controls
                 IsSelected = !IsSelected;
             }
 
-            Click?.Execute(null);
+            Click?.Execute(Proxy?.Path);
         }
 
         private void Thumbnail_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            DoubleClick?.Execute(null);
+            DoubleClick?.Execute(Proxy?.Path);
         }
     }
 }

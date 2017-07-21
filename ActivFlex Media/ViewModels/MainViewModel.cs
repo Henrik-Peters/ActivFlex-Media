@@ -59,6 +59,12 @@ namespace ActivFlex.ViewModels
             set => SetProperty(ref _zoomDelta, value);
         }
 
+        private string _path;
+        public string Path {
+            get => _path;
+            set => SetProperty(ref _path, value);
+        }
+
         #endregion
         #region Commands
 
@@ -113,6 +119,7 @@ namespace ActivFlex.ViewModels
             //Commands
             this.ToggleNavVisibility = new RelayCommand(() => NavVisible = !NavVisible);
             this.BrowseFileSystem = new RelayCommand<string>(path => {
+                this.Path = path;
                 FileSystemItems = new ObservableCollection<IFileObject>(FileSystemBrowser.Browse(path));
             });
 
