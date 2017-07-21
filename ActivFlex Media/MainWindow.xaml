@@ -9,7 +9,7 @@
         xmlns:Converters="clr-namespace:ActivFlex.Converters" x:Class="ActivFlex.MainWindow"
         mc:Ignorable="d"
         Title="ActivFlex Media" Height="835" Width="1640"
-        WindowStyle="None" AllowsTransparency="True"
+        WindowStyle="None" AllowsTransparency="True" Background="#494A52"
         WindowStartupLocation="CenterScreen" FontSize="18" StateChanged="Window_StateChanged" Loaded="Window_Loaded" PreviewKeyDown="Window_PreviewKeyDown">
 
     <!-- Converter instances and window specific styles -->
@@ -21,6 +21,7 @@
 
     <!-- Input command bindings -->
     <Window.InputBindings>
+        <KeyBinding Command="{Binding BrowseUp}" Key="Backspace"/>
         <KeyBinding Command="{Binding IncreaseZoom}" Key="Add"/>
         <KeyBinding Command="{Binding IncreaseZoom}" Key="Add" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding DecreaseZoom}" Key="Subtract"/>
@@ -42,7 +43,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="35" />
-            <RowDefinition Height="40" />
+            <RowDefinition Height="60" />
             <RowDefinition Height="*" />
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
@@ -88,8 +89,8 @@
                 <HierarchicalDataTemplate ItemsSource="{Binding NavChildren}">
 
                     <StackPanel Orientation="Horizontal">
-                        <ContentPresenter Height="20" Width="20" Content="{Binding Converter={StaticResource NavIconConverter}}"/>
-                        <TextBlock VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding DisplayName}"/>
+                        <ContentPresenter Height="30" Width="20" Content="{Binding Converter={StaticResource NavIconConverter}}"/>
+                        <TextBlock Text="{Binding DisplayName}" Foreground="#E6E6E6" VerticalAlignment="Center" Margin="5,0,0,0"/>
                     </StackPanel>
 
                 </HierarchicalDataTemplate>
@@ -138,12 +139,12 @@
         <!-- Media header presentation area -->
         <Grid Grid.Row="1" Grid.Column="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="45"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="400"/>
             </Grid.ColumnDefinitions>
-            
-            <Controls:IconButton x:Name="BtnBack" Width="30" Grid.Column="0" Margin="10,5,0,0"
+
+            <Controls:IconButton x:Name="BtnBack" Width="35" Height="35" Grid.Column="0" Margin="10,0,0,0" VerticalAlignment="Center"
                                  Command="{Binding BrowseUp}"
                                  Visibility="{Binding BrowseBackAvailable, Converter={StaticResource BoolVisibilityConverter}}"
                                  ContentDefault="{StaticResource BackIcon}"
@@ -153,9 +154,10 @@
             <Slider x:Name="ZoomSlider"
                     Width="200" 
                     Grid.Column="2"
-                    Margin="0,10,100,0"
+                    Margin="0,0,100,0"
                     Minimum="0.5"
                     Maximum="3.0"
+                    VerticalAlignment="Center"
                     HorizontalAlignment="Right"
                     IsSnapToTickEnabled="True"
                     Ticks="0.5, 0.6, 0.7, 0.8, 1.0, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.0"
@@ -204,7 +206,7 @@
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type FileSystem:DirectoryItem}">
-                        <Controls:DirectoryThumbnail Margin="20"
+                        <Controls:DirectoryThumbnail Margin="20,5,20,20"
                                                      CanSelect="False"
                                                      Proxy="{Binding}"
                                                      Click="{Binding DataContext.BrowseFileSystem,
@@ -212,7 +214,7 @@
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type Media:MediaImage}">
-                        <Controls:ImageThumbnail Margin="20"
+                        <Controls:ImageThumbnail Margin="20,5,20,20"
                                                  CanSelect="False"
                                                  Proxy="{Binding}"/>
                     </DataTemplate>
