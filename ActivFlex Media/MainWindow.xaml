@@ -75,7 +75,7 @@
         </Grid>
         
         <!-- Window border -->
-        <Border x:Name="outerBorder" Grid.RowSpan="3" Grid.ColumnSpan="3" 
+        <Border x:Name="outerBorder" Grid.RowSpan="4" Grid.ColumnSpan="3" 
                 BorderThickness="1"
                 BorderBrush="LightGray">
         </Border>
@@ -217,6 +217,8 @@
 
                     <DataTemplate DataType="{x:Type Media:MediaImage}">
                         <Controls:ImageThumbnail Margin="20,5,20,20"
+                                                 Width="150"
+                                                 Height="150"
                                                  CanSelect="False"
                                                  Proxy="{Binding}"/>
                     </DataTemplate>
