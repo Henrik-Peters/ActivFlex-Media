@@ -19,6 +19,7 @@ using System.Linq;
 using System.Windows.Input;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using static System.IO.Path;
 using ActivFlex.FileSystem;
 
 namespace ActivFlex.ViewModels
@@ -59,26 +60,24 @@ namespace ActivFlex.ViewModels
             set => SetProperty(ref _zoomDelta, value);
         }
 
-        private string _lastPath;
-        public string LastPath {
-            get => _lastPath;
-            set {
-                SetProperty(ref _lastPath, value);
-                NotifyPropertyChanged(nameof(BrowseBackAvailable));
-            }
-        }
-
         private string _path;
         public string Path {
             get => _path;
             set {
-                LastPath = _path;
                 SetProperty(ref _path, value);
+                NotifyPropertyChanged(nameof(PathAvailable));
+                NotifyPropertyChanged(nameof(BrowseUpAvailable));
             }
         }
-        
-        public bool BrowseBackAvailable {
-            get => LastPath != null;
+
+        public bool PathAvailable {
+            get => !string.IsNullOrEmpty(Path);
+        }
+
+        public bool BrowseUpAvailable {
+            get => string.IsNullOrEmpty(Path) 
+                ? false 
+                : !Path.EndsWith(DirectorySeparatorChar.ToString());
         }
 
         #endregion
@@ -150,10 +149,23 @@ namespace ActivFlex.ViewModels
             this.DecreaseZoom = new RelayCommand(() => Zoom -= ZoomDelta);
 
             this.BrowseUp = new RelayCommand(() => {
-                if (BrowseBackAvailable) {
-                    BrowseFileSystem.Execute(LastPath);
-                }
+                BrowseFileSystem.Execute(GetParentPath(Path));
             });
+        }
+
+        private string GetParentPath(string path)
+        {
+            string parentPath = path;
+            int lastSeperator = path.LastIndexOf(DirectorySeparatorChar);
+
+            if (lastSeperator != -1) {
+                parentPath = path.Substring(0, lastSeperator);
+
+                if (!parentPath.Contains(DirectorySeparatorChar))
+                    parentPath += DirectorySeparatorChar;
+            }
+
+            return parentPath;
         }
     }
 }

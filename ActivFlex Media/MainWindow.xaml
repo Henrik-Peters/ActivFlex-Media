@@ -146,7 +146,7 @@
 
             <Controls:IconButton x:Name="BtnBack" Width="35" Height="35" Grid.Column="0" Margin="10,0,0,0" VerticalAlignment="Center"
                                  Command="{Binding BrowseUp}"
-                                 Visibility="{Binding BrowseBackAvailable, Converter={StaticResource BoolVisibilityConverter}}"
+                                 Visibility="{Binding PathAvailable, Converter={StaticResource BoolVisibilityConverter}}"
                                  ContentDefault="{StaticResource BackIcon}"
                                  ContentHover="{StaticResource BackIconHover}"
                                  ContentPressed="{StaticResource BackIconPressed}"/>
