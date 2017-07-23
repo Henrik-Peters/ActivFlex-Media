@@ -141,7 +141,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="45"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="310"/>
             </Grid.ColumnDefinitions>
 
             <Controls:IconButton x:Name="BtnBack" Width="35" Height="35" Grid.Column="0" Margin="10,0,0,0" VerticalAlignment="Center"
@@ -150,6 +150,8 @@
                                  ContentDefault="{StaticResource BackIcon}"
                                  ContentHover="{StaticResource BackIconHover}"
                                  ContentPressed="{StaticResource BackIconPressed}"/>
+
+            <Controls:PathNavigator Grid.Column="1" Margin="5,0,0,0" Path="{Binding Path}" Command="{Binding BrowseFileSystem}"/>
             
             <Slider x:Name="ZoomSlider"
                     Width="200" 

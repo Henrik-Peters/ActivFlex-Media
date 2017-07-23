@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="Images/BrowseIcons.xaml"/>
                 <ResourceDictionary Source="Styles/Fonts.xaml"/>
                 <ResourceDictionary Source="Styles/Thumbnails.xaml"/>
+                <ResourceDictionary Source="Styles/BrowseNavigation.xaml"/>
                 <ResourceDictionary Source="Styles/TreeViewItem.xaml"/>
                 <ResourceDictionary Source="Styles/ToggleButtons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
