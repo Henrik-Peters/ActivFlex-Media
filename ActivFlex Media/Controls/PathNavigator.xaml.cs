@@ -22,6 +22,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
+using static System.IO.Path;
 
 namespace ActivFlex.Controls
 {
@@ -81,7 +82,7 @@ namespace ActivFlex.Controls
         {
             //Split the path into segments
             var control = (PathNavigator)d;
-            control.PathSegments = control.Path.Split('/');
+            control.PathSegments = control.Path.Split(DirectorySeparatorChar);
             control.PathStackPanel.Children.Clear();
 
             for (int i = 0; i < control.PathSegments.Length; i++) {
@@ -109,7 +110,13 @@ namespace ActivFlex.Controls
 
         private string GetPathElements(int amount)
         {
-            return String.Join("/", PathSegments.Take(amount));
+            String subPath = String.Join(DirectorySeparatorChar.ToString(), PathSegments.Take(amount));
+
+            if (amount == 1) {
+                subPath += DirectorySeparatorChar.ToString();
+            }
+
+            return subPath;
         }
     }
 }
