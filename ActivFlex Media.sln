@@ -5,10 +5,16 @@ VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivFlex Media", "ActivFlex Media\ActivFlex Media.csproj", "{4FA28709-82C2-4D24-87E4-8E6B27CFBF8E}"
 	ProjectSection(ProjectDependencies) = postProject
+		{D83F5F00-CC85-4401-A642-5BA5C2A746EC} = {D83F5F00-CC85-4401-A642-5BA5C2A746EC}
 		{4E64BB08-3850-40E4-BDF0-2D6A21E62537} = {4E64BB08-3850-40E4-BDF0-2D6A21E62537}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivFlex Core", "ActivFlex Core\ActivFlex Core.csproj", "{4E64BB08-3850-40E4-BDF0-2D6A21E62537}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivFlex Presenter", "ActivFlex Presenter\ActivFlex Presenter.csproj", "{D83F5F00-CC85-4401-A642-5BA5C2A746EC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4E64BB08-3850-40E4-BDF0-2D6A21E62537} = {4E64BB08-3850-40E4-BDF0-2D6A21E62537}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +30,10 @@ Global
 		{4E64BB08-3850-40E4-BDF0-2D6A21E62537}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E64BB08-3850-40E4-BDF0-2D6A21E62537}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E64BB08-3850-40E4-BDF0-2D6A21E62537}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D83F5F00-CC85-4401-A642-5BA5C2A746EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D83F5F00-CC85-4401-A642-5BA5C2A746EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D83F5F00-CC85-4401-A642-5BA5C2A746EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D83F5F00-CC85-4401-A642-5BA5C2A746EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
