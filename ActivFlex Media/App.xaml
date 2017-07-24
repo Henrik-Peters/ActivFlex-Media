@@ -5,6 +5,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Images/Logos.xaml"/>
                 <ResourceDictionary Source="Images/TitleBarIcons.xaml"/>
                 <ResourceDictionary Source="Images/NavIcons.xaml"/>
                 <ResourceDictionary Source="Images/BrowseIcons.xaml"/>
