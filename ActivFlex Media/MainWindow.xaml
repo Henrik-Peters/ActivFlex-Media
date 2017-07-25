@@ -77,12 +77,6 @@
             </StackPanel>
         </Grid>
         
-        <!-- Window border -->
-        <Border x:Name="outerBorder" Grid.RowSpan="4" Grid.ColumnSpan="3" 
-                BorderThickness="1"
-                BorderBrush="LightGray">
-        </Border>
-        
         <!-- Navigation area -->
         <TreeView x:Name="NavView" Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding NavItems}" Margin="10,10,0,0" Background="Transparent" 
                   Height="Auto" Width="240" HorizontalContentAlignment="Stretch" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
@@ -236,6 +230,12 @@
         <Presentation:ImagePresenter x:Name="MediaPresenter" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3"
                                      Visibility="{Binding ImagePresentActive, Converter={StaticResource BoolVisibilityConverter}}"
                                      Image="{Binding ImagePresentData}"/>
+
+        <!-- Window border -->
+        <Border x:Name="outerBorder" Grid.RowSpan="4" Grid.ColumnSpan="3" 
+                BorderThickness="1"
+                BorderBrush="#7C7C82">
+        </Border>
 
     </Grid>
 </Window>
