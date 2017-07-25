@@ -187,6 +187,10 @@
       <Project>{4e64bb08-3850-40e4-bdf0-2d6a21e62537}</Project>
       <Name>ActivFlex Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ActivFlex Presenter\ActivFlex Presenter.csproj">
+      <Project>{D83F5F00-CC85-4401-A642-5BA5C2A746EC}</Project>
+      <Name>ActivFlex Presenter</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\ActivFlexIcon.ico" />

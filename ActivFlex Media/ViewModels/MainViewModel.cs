@@ -16,16 +16,19 @@
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using static System.IO.Path;
 using ActivFlex.FileSystem;
+using ActivFlex.Media;
 
 namespace ActivFlex.ViewModels
 {
     /// <summary>
-    /// ViewModel implementation for the MainArea.
+    /// ViewModel implementation for MainWindow.
     /// </summary>
     public class MainViewModel : ViewModel
     {
@@ -80,6 +83,18 @@ namespace ActivFlex.ViewModels
                 : !Path.EndsWith(DirectorySeparatorChar.ToString());
         }
 
+        private bool _imagePresentActive;
+        public bool ImagePresentActive {
+            get => _imagePresentActive;
+            set => SetProperty(ref _imagePresentActive, value);
+        }
+
+        private ImageSource _imagePresentData;
+        public ImageSource ImagePresentData {
+            get => _imagePresentData;
+            set => SetProperty(ref _imagePresentData, value);
+        }
+
         #endregion
         #region Commands
 
@@ -115,6 +130,18 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public ICommand ResetZoom { get; set; }
 
+        /// <summary>
+        /// Start the presenting mode with the
+        /// media object passed as argument.
+        /// </summary>
+        public ICommand PresentImage { get; set; }
+
+        /// <summary>
+        /// Run an escape action. Depending on the
+        /// current mode an action will be chosen.
+        /// </summary>
+        public ICommand ExitMode { get; set; }
+
         #endregion
 
         /// <summary>
@@ -136,23 +163,69 @@ namespace ActivFlex.ViewModels
             //Default Zoom
             this.Zoom = 1.0;
             this.ZoomDelta = 0.1;
-            
+
+            //Presentation startup
+            this.ImagePresentActive = false;
+
             //Commands
             this.ToggleNavVisibility = new RelayCommand(() => NavVisible = !NavVisible);
             this.BrowseFileSystem = new RelayCommand<string>(path => {
                 this.Path = path;
                 FileSystemItems = new ObservableCollection<IFileObject>(FileSystemBrowser.Browse(path));
             });
-
+            
             this.ResetZoom = new RelayCommand(() => Zoom = 1.0);
             this.IncreaseZoom = new RelayCommand(() => Zoom += ZoomDelta);
             this.DecreaseZoom = new RelayCommand(() => Zoom -= ZoomDelta);
-
+            
             this.BrowseUp = new RelayCommand(() => {
                 BrowseFileSystem.Execute(GetParentPath(Path));
             });
+
+            this.ExitMode = new RelayCommand(ExitCurrentMode);
+            this.PresentImage = new RelayCommand<MediaImage>(PresentMediaImage);
         }
 
+        /// <summary>
+        /// Start the presentation mode for an image.
+        /// The image will be loaded when the image is 
+        /// still waiting for loading.
+        /// </summary>
+        /// <param name="mediaImage">Image data for the presenter</param>
+        private void PresentMediaImage(MediaImage mediaImage)
+        {
+            if (mediaImage.LoadState == ImageLoadState.Waiting) {
+                mediaImage.LoadImageSync();
+            }
+
+            if (mediaImage.LoadState == ImageLoadState.Successful) {
+                ImagePresentData = mediaImage.Image;
+                ImagePresentActive = true;
+            }
+        }
+
+        /// <summary>
+        /// Choose an exit action depending on the current
+        /// application mode. On the Top-Level this will
+        /// shutdown the complete application instance.
+        /// </summary>
+        private void ExitCurrentMode()
+        {
+            if (ImagePresentActive) {
+                ImagePresentActive = false;
+            } else {
+                Application.Current.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// Get the parent location of a path by using
+        /// string operations. When a root path is provided
+        /// the unchanged root path will be returned. Root
+        /// paths always end with the directory separator.
+        /// </summary>
+        /// <param name="path">Current path location</param>
+        /// <returns>The parent location of the path</returns>
         private string GetParentPath(string path)
         {
             string parentPath = path;
