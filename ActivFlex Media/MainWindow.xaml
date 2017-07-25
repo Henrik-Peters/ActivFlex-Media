@@ -229,7 +229,7 @@
         <!-- Image presentation control -->
         <Presentation:ImagePresenter x:Name="MediaPresenter" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3"
                                      Visibility="{Binding ImagePresentActive, Converter={StaticResource BoolVisibilityConverter}}"
-                                     Image="{Binding ImagePresentData}"/>
+                                     Image="{Binding ImagePresentData}" PreviewMouseDown="MediaPresenter_PreviewMouseDown"/>
 
         <!-- Window border -->
         <Border x:Name="outerBorder" Grid.RowSpan="4" Grid.ColumnSpan="3" 

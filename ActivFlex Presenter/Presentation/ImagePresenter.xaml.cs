@@ -74,6 +74,26 @@ namespace ActivFlex.Presentation
             tSkew.AngleY = 0;
         }
 
+        /// <summary>
+        /// Increase the current scale transform of 
+        /// the image by the zoomSpeed constant.
+        /// </summary>
+        public void IncreaseZoom()
+        {
+            tScale.ScaleX += zoomSpeed;
+            tScale.ScaleY += zoomSpeed;
+        }
+
+        /// <summary>
+        /// Decrease the current scale transform of 
+        /// the image by the zoomSpeed constant.
+        /// </summary>
+        public void DecreaseZoom()
+        {
+            tScale.ScaleX -= zoomSpeed;
+            tScale.ScaleY -= zoomSpeed;
+        }
+
         private static void Image_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var presenter = (ImagePresenter)d;
@@ -86,9 +106,11 @@ namespace ActivFlex.Presentation
 
         private void UserControl_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            double deltaZoom = e.Delta > 0 ? zoomSpeed : -zoomSpeed;
-            tScale.ScaleX += deltaZoom;
-            tScale.ScaleY += deltaZoom;
+            if (e.Delta > 0) {
+                IncreaseZoom();
+            } else {
+                DecreaseZoom();
+            }
         }
 
         private void ImgDisplay_SizeChanged(object sender, SizeChangedEventArgs e)

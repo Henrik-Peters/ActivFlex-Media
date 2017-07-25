@@ -122,11 +122,32 @@ namespace ActivFlex
             }
         }
 
+        private void MediaPresenter_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.MiddleButton == MouseButtonState.Pressed && vm.ImagePresentActive) {
+                MediaPresenter.ResetRenderTransform();
+                e.Handled = true;
+            }
+        }
+
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key) {
+                case Key.Add:
+                    if (vm.ImagePresentActive) {
+                        MediaPresenter.IncreaseZoom();
+                    } else {
+                        vm.IncreaseZoom?.Execute(null);
+                    }
+                    e.Handled = true;
+                    break;
+
                 case Key.Subtract:
-                    vm.DecreaseZoom?.Execute(null);
+                    if (vm.ImagePresentActive) {
+                        MediaPresenter.DecreaseZoom();
+                    } else {
+                        vm.DecreaseZoom?.Execute(null);
+                    }
                     e.Handled = true;
                     break;
 
