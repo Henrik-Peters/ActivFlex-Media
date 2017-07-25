@@ -124,9 +124,23 @@ namespace ActivFlex
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Subtract) {
-                vm.DecreaseZoom?.Execute(null);
-                e.Handled = true;
+            switch (e.Key) {
+                case Key.Subtract:
+                    vm.DecreaseZoom?.Execute(null);
+                    e.Handled = true;
+                    break;
+
+                case Key.Left:
+                    if (vm.ImagePresentActive) {
+                        vm.PreviousImage?.Execute(null);
+                    }
+                    break;
+
+                case Key.Right:
+                    if (vm.ImagePresentActive) {
+                        vm.NextImage?.Execute(null);
+                    }
+                    break;
             }
         }
 

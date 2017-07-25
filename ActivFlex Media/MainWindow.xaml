@@ -24,8 +24,6 @@
     <!-- Input command bindings -->
     <Window.InputBindings>
         <KeyBinding Command="{Binding ExitMode}" Key="Esc"/>
-        <KeyBinding Command="{Binding NextImage}" Key="Right"/>
-        <KeyBinding Command="{Binding PreviousImage}" Key="Left"/>
         <KeyBinding Command="{Binding BrowseUp}" Key="Backspace"/>
         <KeyBinding Command="{Binding IncreaseZoom}" Key="Add"/>
         <KeyBinding Command="{Binding IncreaseZoom}" Key="Add" Modifiers="Ctrl"/>

@@ -261,11 +261,19 @@ namespace ActivFlex.ViewModels
         /// image collection. Overflows will be handled.
         /// </summary>
         /// <param name="next">Use the next or previous image</param>
-        private void ChangeActiveImage(bool next)
+        /// <returns>True when another image could be used</returns>
+        private bool ChangeActiveImage(bool next)
         {
-            MediaImage nextImage;
+            MediaImage nextImage = null;
+            int loadingTries = 0;
+
+            if (!ImagePresentActive)
+                return false;
 
             do {
+                if (loadingTries++ > ActiveImages.Length)
+                    return false;
+
                 //Calculate the next index and handle overflows
                 if (next) imageIndex++;
                 else imageIndex--;
@@ -277,15 +285,19 @@ namespace ActivFlex.ViewModels
                     imageIndex = 0;
                 }
 
-                nextImage = ActiveImages[imageIndex];
+                if (imageIndex >= 0 && imageIndex < ActiveImages.Length) {
+                    nextImage = ActiveImages[imageIndex];
+                }
 
                 //Check if the image is still waiting for loading
-                if (nextImage.LoadState == ImageLoadState.Waiting) {
+                if (nextImage?.LoadState == ImageLoadState.Waiting) {
                     nextImage.LoadImageSync();
                 }
 
-            } while (!(nextImage.LoadState == ImageLoadState.Successful));
+            } while (!(nextImage?.LoadState == ImageLoadState.Successful));
+
             PresentMediaImage(nextImage);
+            return true;
         }
 
         /// <summary>
