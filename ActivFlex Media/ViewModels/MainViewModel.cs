@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -24,7 +25,6 @@ using System.Collections.ObjectModel;
 using static System.IO.Path;
 using ActivFlex.FileSystem;
 using ActivFlex.Media;
-using System;
 
 namespace ActivFlex.ViewModels
 {

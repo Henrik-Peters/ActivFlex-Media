@@ -32,7 +32,7 @@ namespace ActivFlex.Presentation
         private Point translateOrigin;
 
         //Zoom constants
-        private const double zoomSpeed = .2D;
+        private const double zoomSpeed = .15D;
 
         #region DependencyProperties
 
