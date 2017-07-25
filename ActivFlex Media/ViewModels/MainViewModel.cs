@@ -24,11 +24,12 @@ using System.Collections.ObjectModel;
 using static System.IO.Path;
 using ActivFlex.FileSystem;
 using ActivFlex.Media;
+using System;
 
 namespace ActivFlex.ViewModels
 {
     /// <summary>
-    /// ViewModel implementation for MainWindow.
+    /// ViewModel implementation for the main application.
     /// </summary>
     public class MainViewModel : ViewModel
     {
@@ -95,6 +96,14 @@ namespace ActivFlex.ViewModels
             set => SetProperty(ref _imagePresentData, value);
         }
 
+        private int imageIndex = 0;
+
+        private MediaImage[] _activeImages;
+        public MediaImage[] ActiveImages {
+            get => _activeImages;
+            set => SetProperty(ref _activeImages, value);
+        }
+
         #endregion
         #region Commands
 
@@ -137,10 +146,28 @@ namespace ActivFlex.ViewModels
         public ICommand PresentImage { get; set; }
 
         /// <summary>
+        /// Start the presenting mode with the
+        /// argument as first media image.
+        /// </summary>
+        public ICommand LaunchPresenter { get; set; }
+
+        /// <summary>
         /// Run an escape action. Depending on the
         /// current mode an action will be chosen.
         /// </summary>
         public ICommand ExitMode { get; set; }
+
+        /// <summary>
+        /// Switches to the next image of the media
+        /// collection when in presentation mode.
+        /// </summary>
+        public ICommand NextImage { get; set; }
+
+        /// <summary>
+        /// Switches to the previous image of the media
+        /// collection when in presentation mode.
+        /// </summary>
+        public ICommand PreviousImage { get; set; }
 
         #endregion
 
@@ -155,7 +182,7 @@ namespace ActivFlex.ViewModels
             this.NavItems = new ObservableCollection<NavItem>(
                 new List<NavItem>(new[] { new GroupNavItem("My Computer", "MyComputerIcon", true) })
             );
-
+            
             this.NavItems[0].NavChildren = new ObservableCollection<NavItem>(
                                 FileSystemBrowser.GetLogicalDrives()
                                 .Select(drive => new LogicalDriveNavItem(drive)));
@@ -165,6 +192,7 @@ namespace ActivFlex.ViewModels
             this.ZoomDelta = 0.1;
 
             //Presentation startup
+            this.ActiveImages = new MediaImage[0];
             this.ImagePresentActive = false;
 
             //Commands
@@ -183,7 +211,30 @@ namespace ActivFlex.ViewModels
             });
 
             this.ExitMode = new RelayCommand(ExitCurrentMode);
+            this.NextImage = new RelayCommand(() => ChangeActiveImage(true));
+            this.PreviousImage = new RelayCommand(() => ChangeActiveImage(false));
+            this.LaunchPresenter = new RelayCommand<MediaImage>(LaunchImagePresenter);
             this.PresentImage = new RelayCommand<MediaImage>(PresentMediaImage);
+        }
+
+        /// <summary>
+        /// Start the image presentation mode with an image
+        /// from the current FileSystemItems collection. 
+        /// All Images will be stored in the ActiveImage collection 
+        /// and the imageIndex will be set to the first image.
+        /// </summary>
+        /// <param name="mediaImage">Image to display first</param>
+        private void LaunchImagePresenter(MediaImage mediaImage)
+        {
+            PresentMediaImage(mediaImage);
+
+            //Store all images of the parent location in the active media collection
+            ActiveImages = FileSystemItems
+                .Where(item => item is MediaImage)
+                .Cast<MediaImage>()
+                .ToArray();
+
+            imageIndex = Array.IndexOf(ActiveImages, mediaImage);
         }
 
         /// <summary>
@@ -202,6 +253,39 @@ namespace ActivFlex.ViewModels
                 ImagePresentData = mediaImage.Image;
                 ImagePresentActive = true;
             }
+        }
+
+        /// <summary>
+        /// Change the active image to an image next to
+        /// the actual image. ActiveImages is used as the
+        /// image collection. Overflows will be handled.
+        /// </summary>
+        /// <param name="next">Use the next or previous image</param>
+        private void ChangeActiveImage(bool next)
+        {
+            MediaImage nextImage;
+
+            do {
+                //Calculate the next index and handle overflows
+                if (next) imageIndex++;
+                else imageIndex--;
+
+                if (imageIndex < 0) {
+                    imageIndex = ActiveImages.Length - 1;
+
+                } else if (imageIndex >= ActiveImages.Length) {
+                    imageIndex = 0;
+                }
+
+                nextImage = ActiveImages[imageIndex];
+
+                //Check if the image is still waiting for loading
+                if (nextImage.LoadState == ImageLoadState.Waiting) {
+                    nextImage.LoadImageSync();
+                }
+
+            } while (!(nextImage.LoadState == ImageLoadState.Successful));
+            PresentMediaImage(nextImage);
         }
 
         /// <summary>

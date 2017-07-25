@@ -24,6 +24,8 @@
     <!-- Input command bindings -->
     <Window.InputBindings>
         <KeyBinding Command="{Binding ExitMode}" Key="Esc"/>
+        <KeyBinding Command="{Binding NextImage}" Key="Right"/>
+        <KeyBinding Command="{Binding PreviousImage}" Key="Left"/>
         <KeyBinding Command="{Binding BrowseUp}" Key="Backspace"/>
         <KeyBinding Command="{Binding IncreaseZoom}" Key="Add"/>
         <KeyBinding Command="{Binding IncreaseZoom}" Key="Add" Modifiers="Ctrl"/>
@@ -218,7 +220,7 @@
                                                  Height="150"
                                                  CanSelect="False"
                                                  Proxy="{Binding}"
-                                                 Click="{Binding DataContext.PresentImage,
+                                                 Click="{Binding DataContext.LaunchPresenter,
                                                          RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                     </DataTemplate>
 
