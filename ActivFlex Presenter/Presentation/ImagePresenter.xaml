@@ -1,12 +1,23 @@
 ﻿<UserControl x:Class="ActivFlex.Presentation.ImagePresenter"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ActivFlex.Presentation"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
+             Background="Black"
+             d:DesignHeight="300" d:DesignWidth="300" MouseWheel="UserControl_MouseWheel">
+
+    <Grid x:Name="GridPresenter" ClipToBounds="True">
+        <Image x:Name="ImgDisplay" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SizeChanged="ImgDisplay_SizeChanged" 
+               MouseLeftButtonDown="ImgDisplay_MouseLeftButtonDown" MouseLeftButtonUp="ImgDisplay_MouseLeftButtonUp" MouseMove="ImgDisplay_MouseMove">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform x:Name="tScale" ScaleX="1.0" ScaleY="1.0"/>
+                    <TranslateTransform x:Name="tTranslate" X="0.0" Y="0.0"/>
+                    <RotateTransform x:Name="tRotate" Angle="0"/>
+                    <SkewTransform x:Name="tSkew" AngleX="0" AngleY="0"/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
     </Grid>
 </UserControl>
