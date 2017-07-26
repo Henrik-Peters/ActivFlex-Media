@@ -56,10 +56,10 @@ namespace ActivFlex
                 if (this.WindowState == WindowState.Maximized && Fullscreen)
                     Fullscreen = false;
 
+                this.ChangeFullscreenMode(Fullscreen);
                 this.WindowState = (this.WindowState == WindowState.Maximized
                                                         ? WindowState.Normal
                                                         : WindowState.Maximized);
-
             };
             btnClose.Click += (s, e) => this.Close();
 
@@ -68,12 +68,7 @@ namespace ActivFlex
             {
                 if (e.Key == Key.F11 || (e.SystemKey == Key.Enter && (Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)) {
                     Fullscreen = !Fullscreen;
-
-                    if (this.WindowState == WindowState.Maximized && Fullscreen)
-                        this.WindowState = WindowState.Normal;
-                    
-                    //toggle the window state
-                    this.WindowState = (Fullscreen ? WindowState.Maximized : WindowState.Normal);
+                    ChangeFullscreenMode(Fullscreen);
                 }
             };
 
@@ -82,6 +77,39 @@ namespace ActivFlex
             this.DataContext = vm;
             this.SourceInitialized += new EventHandler(Window_SourceInitialized);
             Window_StateChanged(this, null);
+            ChangeFullscreenMode(false);
+        }
+
+        /// <summary>
+        /// Change the current mode for the fullscreen window.
+        /// If enableFullscreen is true the window will enter
+        /// the fullscreen mode, for false the normal mode.
+        /// </summary>
+        /// <param name="enableFullscreen">True to switch to fullscreen</param>
+        public void ChangeFullscreenMode(bool enableFullscreen)
+        {
+            Fullscreen = enableFullscreen;
+
+            //Check for a maximized state
+            if (this.WindowState == WindowState.Maximized && Fullscreen)
+                this.WindowState = WindowState.Normal;
+
+            //toggle the window state
+            this.WindowState = (Fullscreen ? WindowState.Maximized : WindowState.Normal);
+
+            //Set the image presenter
+            if (enableFullscreen) {
+                Grid.SetRow(MediaPresenter, 0);
+                Grid.SetColumn(MediaPresenter, 0);
+                Grid.SetRowSpan(MediaPresenter, 4);
+                Grid.SetColumnSpan(MediaPresenter, 3);
+
+            } else {
+                Grid.SetRow(MediaPresenter, 1);
+                Grid.SetColumn(MediaPresenter, 0);
+                Grid.SetRowSpan(MediaPresenter, 2);
+                Grid.SetColumnSpan(MediaPresenter, 3);
+            }
         }
 
         private void Window_StateChanged(object sender, EventArgs e)
