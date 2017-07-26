@@ -207,7 +207,11 @@ namespace ActivFlex.ViewModels
             this.DecreaseZoom = new RelayCommand(() => Zoom -= ZoomDelta);
             
             this.BrowseUp = new RelayCommand(() => {
-                BrowseFileSystem.Execute(GetParentPath(Path));
+                if (ImagePresentActive) {
+                    this.ExitMode?.Execute(null);
+                } else {
+                    BrowseFileSystem.Execute(GetParentPath(Path));
+                }
             });
 
             this.ExitMode = new RelayCommand(ExitCurrentMode);
