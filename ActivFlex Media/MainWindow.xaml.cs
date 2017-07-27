@@ -55,13 +55,14 @@ namespace ActivFlex
             //titlebar button events
             btnMinimize.Click += (s, e) => this.WindowState = WindowState.Minimized;
             btnMaximize.Click += (s, e) => {
-                if (this.WindowState == WindowState.Maximized && Fullscreen)
-                    Fullscreen = false;
+                if (this.WindowState == WindowState.Maximized && Fullscreen) {
+                    ChangeFullscreenMode(false);
 
-                this.ChangeFullscreenMode(Fullscreen);
-                this.WindowState = (this.WindowState == WindowState.Maximized
+                } else {
+                    this.WindowState = (this.WindowState == WindowState.Maximized
                                                         ? WindowState.Normal
                                                         : WindowState.Maximized);
+                }
             };
             btnClose.Click += (s, e) => this.Close();
 
@@ -69,8 +70,7 @@ namespace ActivFlex
             this.PreviewKeyDown += (s, e) =>
             {
                 if (e.Key == Key.F11 || (e.SystemKey == Key.Enter && (Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)) {
-                    Fullscreen = !Fullscreen;
-                    ChangeFullscreenMode(Fullscreen);
+                    ChangeFullscreenMode(!Fullscreen);
                 }
             };
 
@@ -200,7 +200,10 @@ namespace ActivFlex
         {
             if (StartupOptions.HasOptions) {
                 if (StartupOptions.ImagePaths.Count > 0) {
+
+                    //Change to fullscreen for presentation
                     ChangeFullscreenMode(true);
+                    Window_StateChanged(this, null);
 
                     if (StartupOptions.ImagePaths.Count == 1) {
                         //Single image provided
