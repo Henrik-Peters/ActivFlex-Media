@@ -83,7 +83,13 @@ namespace ActivFlex.FileSystem
                 .ToList();
         }
 
-        private static string GetExtension(string Path)
+        /// <summary>
+        /// Get the extension of a path without the dot and
+        /// convert the extension into lower case format.
+        /// </summary>
+        /// <param name="Path">Path to find the extension</param>
+        /// <returns>Extension in lower case format</returns>
+        public static string GetExtension(string Path)
         {
             return System.IO.Path.GetExtension(Path)
                 .Replace(".", "")

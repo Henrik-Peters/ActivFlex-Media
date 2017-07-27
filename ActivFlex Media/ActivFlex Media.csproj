@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Configuration\Parameter.cs" />
     <Compile Include="Controls\DirectoryThumbnail.xaml.cs">
       <DependentUpon>DirectoryThumbnail.xaml</DependentUpon>
     </Compile>
