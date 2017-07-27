@@ -21,11 +21,14 @@ using System.Windows.Input;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using WinInterop = System.Windows.Interop;
-using ActivFlex.ViewModels;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
-using System.Windows.Data;
+using static ActivFlex.Configuration.Parameter;
+using static ActivFlex.FileSystem.FileSystemBrowser;
+using ActivFlex.ViewModels;
+using ActivFlex.Media;
 
 namespace ActivFlex
 {
@@ -51,8 +54,7 @@ namespace ActivFlex
 
             //titlebar button events
             btnMinimize.Click += (s, e) => this.WindowState = WindowState.Minimized;
-            btnMaximize.Click += (s, e) =>
-            {
+            btnMaximize.Click += (s, e) => {
                 if (this.WindowState == WindowState.Maximized && Fullscreen)
                     Fullscreen = false;
 
@@ -78,6 +80,7 @@ namespace ActivFlex
             this.SourceInitialized += new EventHandler(Window_SourceInitialized);
             Window_StateChanged(this, null);
             ChangeFullscreenMode(false);
+            HandleStartupArguments();
         }
 
         /// <summary>
@@ -190,6 +193,37 @@ namespace ActivFlex
                         vm.NextImage?.Execute(null);
                     }
                     break;
+            }
+        }
+
+        private void HandleStartupArguments()
+        {
+            if (StartupOptions.HasOptions) {
+                if (StartupOptions.ImagePaths.Count > 0) {
+                    ChangeFullscreenMode(true);
+
+                    if (StartupOptions.ImagePaths.Count == 1) {
+                        //Single image provided
+                        vm.PresentImage.Execute(new MediaImage(StartupOptions.ImagePaths[0]));
+                        
+                    } else {
+                        //Multiple images provided
+                        vm.ActiveImages = new MediaImage[StartupOptions.ImagePaths.Count];
+
+                        for (int i = 0; i < vm.ActiveImages.Length; i++) {
+                            vm.ActiveImages[i] = new MediaImage(StartupOptions.ImagePaths[i]);
+                        }
+
+                        vm.PresentImage.Execute(new MediaImage(StartupOptions.ImagePaths[0]));
+                    }
+
+                    //Browse to the directory of the first image
+                    vm.BrowseFileSystem.Execute(GetParentPath(StartupOptions.ImagePaths[0]));
+
+                } else if (StartupOptions.DirectoryPaths.Count == 1) {
+                    //Single directory and no images provided
+                    vm.BrowseFileSystem.Execute(StartupOptions.DirectoryPaths[0]);
+                }
             }
         }
 

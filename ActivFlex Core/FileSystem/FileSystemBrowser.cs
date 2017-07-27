@@ -18,6 +18,7 @@
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using static System.IO.Path;
 using ActivFlex.Media;
 
 namespace ActivFlex.FileSystem
@@ -81,6 +82,29 @@ namespace ActivFlex.FileSystem
             return list
                 .OrderBy(entry => entry.Name)
                 .ToList();
+        }
+
+        /// <summary>
+        /// Get the parent location of a path by using
+        /// string operations. When a root path is provided
+        /// the unchanged root path will be returned. Root
+        /// paths always end with the directory separator.
+        /// </summary>
+        /// <param name="path">Current path location</param>
+        /// <returns>The parent location of the path</returns>
+        public static string GetParentPath(string path)
+        {
+            string parentPath = path;
+            int lastSeperator = path.LastIndexOf(DirectorySeparatorChar);
+
+            if (lastSeperator != -1) {
+                parentPath = path.Substring(0, lastSeperator);
+
+                if (!parentPath.Contains(DirectorySeparatorChar))
+                    parentPath += DirectorySeparatorChar;
+            }
+
+            return parentPath;
         }
 
         /// <summary>

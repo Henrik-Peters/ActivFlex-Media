@@ -210,7 +210,7 @@ namespace ActivFlex.ViewModels
                 if (ImagePresentActive) {
                     this.ExitMode?.Execute(null);
                 } else {
-                    BrowseFileSystem.Execute(GetParentPath(Path));
+                    BrowseFileSystem.Execute(FileSystemBrowser.GetParentPath(Path));
                 }
             });
 
@@ -316,29 +316,6 @@ namespace ActivFlex.ViewModels
             } else {
                 Application.Current.Shutdown();
             }
-        }
-
-        /// <summary>
-        /// Get the parent location of a path by using
-        /// string operations. When a root path is provided
-        /// the unchanged root path will be returned. Root
-        /// paths always end with the directory separator.
-        /// </summary>
-        /// <param name="path">Current path location</param>
-        /// <returns>The parent location of the path</returns>
-        private string GetParentPath(string path)
-        {
-            string parentPath = path;
-            int lastSeperator = path.LastIndexOf(DirectorySeparatorChar);
-
-            if (lastSeperator != -1) {
-                parentPath = path.Substring(0, lastSeperator);
-
-                if (!parentPath.Contains(DirectorySeparatorChar))
-                    parentPath += DirectorySeparatorChar;
-            }
-
-            return parentPath;
         }
     }
 }

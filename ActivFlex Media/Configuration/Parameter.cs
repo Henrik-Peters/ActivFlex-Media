@@ -19,6 +19,7 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using static ActivFlex.FileSystem.FileSystemBrowser;
 using ActivFlex.Media;
 
@@ -38,7 +39,7 @@ namespace ActivFlex.Configuration
         {
             string[] args = Environment.GetCommandLineArgs();
 
-            List<string> directoryPaths = new List<string>();
+            List <string> directoryPaths = new List<string>();
             List<string> imagePaths = new List<string>();
 
             //Try to parse all command line arguments
@@ -70,12 +71,12 @@ namespace ActivFlex.Configuration
         /// <summary>
         /// Contains all arguments that are valid directory paths.
         /// </summary>
-        public IReadOnlyCollection<string> DirectoryPaths { get; set; }
+        public ReadOnlyCollection<string> DirectoryPaths { get; set; }
 
         /// <summary>
         /// Contains all arguments that are valid paths to media images.
         /// </summary>
-        public IReadOnlyCollection<string> ImagePaths { get; set; }
+        public ReadOnlyCollection<string> ImagePaths { get; set; }
 
         /// <summary>
         /// Get the number of all parsed arguments.
