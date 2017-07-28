@@ -16,6 +16,7 @@
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Diagnostics;
@@ -205,9 +206,17 @@ namespace ActivFlex
                     ChangeFullscreenMode(true);
                     Window_StateChanged(this, null);
 
+                    //Browse to the directory of the first image
+                    vm.BrowseFileSystem.Execute(GetParentPath(StartupOptions.ImagePaths[0]));
+
                     if (StartupOptions.ImagePaths.Count == 1) {
                         //Single image provided
-                        vm.PresentImage.Execute(new MediaImage(StartupOptions.ImagePaths[0]));
+                        MediaImage firstImage = vm.FileSystemItems
+                            .Where(item => item.Path == StartupOptions.ImagePaths[0])
+                            .Cast<MediaImage>()
+                            .First();
+
+                        vm.LaunchPresenter.Execute(firstImage);
                         
                     } else {
                         //Multiple images provided
@@ -219,9 +228,6 @@ namespace ActivFlex
 
                         vm.PresentImage.Execute(new MediaImage(StartupOptions.ImagePaths[0]));
                     }
-
-                    //Browse to the directory of the first image
-                    vm.BrowseFileSystem.Execute(GetParentPath(StartupOptions.ImagePaths[0]));
 
                 } else if (StartupOptions.DirectoryPaths.Count == 1) {
                     //Single directory and no images provided
