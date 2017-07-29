@@ -23,6 +23,7 @@ using System.Windows.Media;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using static System.IO.Path;
+using ActivFlex.Configuration;
 using ActivFlex.FileSystem;
 using ActivFlex.Media;
 
@@ -104,6 +105,12 @@ namespace ActivFlex.ViewModels
             set => SetProperty(ref _activeImages, value);
         }
 
+        private ConfigData _config;
+        public ConfigData Config {
+            get => _config;
+            set => SetProperty(ref _config, value);
+        }
+
         #endregion
         #region Commands
 
@@ -177,6 +184,11 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public MainViewModel()
         {
+            //Configuration
+            if (this.Config == null) {
+                this.Config = ConfigProvider.LoadConfig();
+            }
+
             //Navigation items
             this.NavVisible = true;
             this.NavItems = new ObservableCollection<NavItem>(
