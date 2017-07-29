@@ -305,7 +305,7 @@
             </Canvas>
         </Canvas>
     </Viewbox>
-    <Viewbox x:Key="MediaLibraryIcon" x:Shared="false"  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+    <Viewbox x:Key="PictureIcon" x:Shared="false"  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
         <Canvas Width="64" Height="64">
             <Canvas.RenderTransform>
                 <TranslateTransform X="0" Y="0"/>
@@ -328,6 +328,53 @@
                         </Path.Data>
                     </Path>
                     <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="1.8637754" Canvas.Top="8.0285492" Width="58.709949" Height="46.689304" RadiusX="3.412312" RadiusY="3.412312" StrokeThickness="2.09352636" Stroke="#FFF7F7F7" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                </Canvas>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+    <Viewbox x:Key="MediaLibraryIcon" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources>
+                <LinearGradientBrush xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Key="linearGradient5201" MappingMode="Absolute" StartPoint="3,39" EndPoint="38,4">
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStopCollection>
+                            <GradientStop Color="#FFAAAAAA" Offset="0"/>
+                            <GradientStop Color="#FFAAAAAA" Offset="0.49888086"/>
+                            <GradientStop Color="#FF939393" Offset="0.50539792"/>
+                            <GradientStop Color="#FF939393" Offset="1"/>
+                        </GradientStopCollection>
+                    </LinearGradientBrush.GradientStops>
+                    <LinearGradientBrush.Transform>
+                        <TranslateTransform X="-3.2035849" Y="-3.53125"/>
+                    </LinearGradientBrush.Transform>
+                </LinearGradientBrush>
+            </Canvas.Resources>
+            <Canvas Opacity="1">
+                <Canvas>
+                    <Canvas.RenderTransform>
+                        <MatrixTransform Matrix="1.0953872 0 0 1.0953872 0.67513237 -0.2902454"/>
+                    </Canvas.RenderTransform>
+                    <Ellipse xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="1.1" Canvas.Top="1.4" Width="54.4" Height="54.4" Fill="#FF646464" StrokeThickness="2.2470777" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="3.2339149" Canvas.Top="6.4221783" Width="50.125" Height="44.380596" Fill="#FF8E8E8E" StrokeThickness="2.51351452" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#FF161412" StrokeThickness="2.26771665" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                        <Path.Data>
+                            <PathGeometry Figures="m 2.296415 6.21875 v 44.8125 h 1.5585938 v -1.833984 c 0 -0.749632 0.6820367 -1.353516 1.53125 -1.353516 H 8.829618 c 0.849213 0 1.53125 0.603884 1.53125 1.353516 v 1.833984 h 36.556641 v -1.833984 c 0 -0.749632 0.682037 -1.353516 1.53125 -1.353516 h 3.443359 c 0.849213 0 1.53125 0.603884 1.53125 1.353516 v 1.833984 h 0.873047 V 6.21875 h -0.873047 v 2.066406 c 0 0.749632 -0.682037 1.353516 -1.53125 1.353516 h -3.443359 c -0.849213 0 -1.53125 -0.603884 -1.53125 -1.353516 V 6.21875 H 10.360868 v 2.066406 c 0 0.749632 -0.682037 1.353516 -1.53125 1.353516 H 5.3862588 c -0.8492139 0 -1.5312502 -0.603884 -1.53125 -1.353516 V 6.21875 Z m 3.3203125 5.892578 H 8.063993 c 0.7756 0 1.400391 0.624791 1.400391 1.400391 v 3.828125 c 0 0.7756 -0.624791 1.40039 -1.400391 1.40039 H 5.6167275 c -0.7756 0 -1.4003906 -0.62479 -1.4003906 -1.40039 v -3.828125 c 0 -0.7756 0.6247906 -1.400391 1.4003906 -1.400391 z m 42.9999995 0 h 2.449219 c 0.7756 0 1.400391 0.624791 1.400391 1.400391 v 3.828125 c 0 0.7756 -0.624791 1.40039 -1.400391 1.40039 h -2.449219 c -0.775598 0 -1.398437 -0.62479 -1.398437 -1.40039 v -3.828125 c 0 -0.7756 0.622839 -1.400391 1.398437 -1.400391 z M 5.6167275 20.701172 H 8.063993 c 0.7756 0 1.400391 0.624792 1.400391 1.40039 v 3.828126 c 0 0.775598 -0.624791 1.40039 -1.400391 1.40039 H 5.6167275 c -0.7756 0 -1.4003906 -0.624792 -1.4003906 -1.40039 v -3.828126 c 0 -0.775598 0.6247906 -1.40039 1.4003906 -1.40039 z m 42.9999995 0 h 2.449219 c 0.7756 0 1.400391 0.624792 1.400391 1.40039 v 3.828126 c 0 0.775598 -0.624791 1.40039 -1.400391 1.40039 h -2.449219 c -0.775598 0 -1.398437 -0.624792 -1.398437 -1.40039 v -3.828126 c 0 -0.775598 0.622839 -1.40039 1.398437 -1.40039 z M 5.6167275 29.507812 H 8.063993 c 0.7756 0 1.400391 0.624791 1.400391 1.400391 v 3.830078 c 0 0.7756 -0.624791 1.400391 -1.400391 1.400391 H 5.6167275 c -0.7756 0 -1.4003906 -0.624791 -1.4003906 -1.400391 v -3.830078 c 0 -0.7756 0.6247906 -1.400391 1.4003906 -1.400391 z m 42.9999995 0 h 2.449219 c 0.7756 0 1.400391 0.624791 1.400391 1.400391 v 3.830078 c 0 0.7756 -0.624791 1.400391 -1.400391 1.400391 h -2.449219 c -0.775598 0 -1.398437 -0.624791 -1.398437 -1.400391 v -3.830078 c 0 -0.7756 0.622839 -1.400391 1.398437 -1.400391 z M 5.6167275 38.615234 H 8.063993 c 0.7756 0 1.400391 0.624791 1.400391 1.400391 v 3.830078 c 0 0.7756 -0.624791 1.398438 -1.400391 1.398438 H 5.6167275 c -0.7756 0 -1.4003906 -0.622838 -1.4003906 -1.398438 v -3.830078 c 0 -0.7756 0.6247906 -1.400391 1.4003906 -1.400391 z m 42.9999995 0 h 2.449219 c 0.7756 0 1.400391 0.624791 1.400391 1.400391 v 3.830078 c 0 0.7756 -0.624791 1.398438 -1.400391 1.398438 h -2.449219 c -0.775598 0 -1.398437 -0.622838 -1.398437 -1.398438 v -3.830078 c 0 -0.7756 0.622839 -1.400391 1.398437 -1.400391 z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="11.127122" Canvas.Top="10.931293" Width="34.625389" Height="35.439514" Fill="{StaticResource linearGradient5201}" StrokeThickness="2.36681557" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#FFFAFAFA" StrokeThickness="2.21927023" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                        <Path.Data>
+                            <PathGeometry Figures="m 19.827665 17.5625 19.0625 10.9375 -19.0625 11 z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#FFDCDCDC" StrokeThickness="0" Stroke="#FF797979" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                        <Path.Data>
+                            <PathGeometry Figures="m 56.110441 22.088918 -21.256553 2.911351 -0.0045 21.321684 a 6.4314701 6.4314701 0 0 0 -4.272586 -1.634786 6.4314701 6.4314701 0 0 0 -6.432763 6.432762 6.4314701 6.4314701 0 0 0 6.432763 6.43059 6.4314701 6.4314701 0 0 0 6.430589 -6.43059 6.4314701 6.4314701 0 0 0 -0.0067 -0.197563 l -0.0045 -17.574487 16.840678 -2.227477 v 11.847311 a 6.4314701 6.4314701 0 0 0 -4.151008 -1.521892 6.4314701 6.4314701 0 0 0 -6.432762 6.430589 6.4314701 6.4314701 0 0 0 6.432762 6.432761 6.4314701 6.4314701 0 0 0 6.428419 -6.380657 h 0.0022 v -0.05209 z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
                 </Canvas>
             </Canvas>
         </Canvas>
