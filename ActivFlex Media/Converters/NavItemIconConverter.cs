@@ -43,7 +43,10 @@ namespace ActivFlex.Converters
             //Load the correct resource by the type of the nav item
             if (item.GetType() == typeof(GroupNavItem)) {
                 resourceIdentifier = ((GroupNavItem)item).IconResource;
-
+                
+            } else if (item.GetType() == typeof(DirectoryNavItem)) {
+                resourceIdentifier = ((DirectoryNavItem)item).IconResource;
+                
             } else if (item.GetType() == typeof(LogicalDriveNavItem)) {
 
                 //Use the drive type to load the resource

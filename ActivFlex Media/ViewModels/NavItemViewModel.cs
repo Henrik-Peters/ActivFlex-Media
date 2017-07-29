@@ -141,4 +141,54 @@ namespace ActivFlex.ViewModels
             this.DisplayName = driveItem.Path;
         }
     }
+
+    /// <summary>
+    /// ViewModel implementation for a directory related nav item.
+    /// </summary>
+    public class DirectoryNavItem : NavItem
+    {
+        private string _displayName;
+        private string _iconResource;
+        private string _path;
+
+        /// <summary>
+        /// Text that represents the item.
+        /// </summary>
+        public override string DisplayName {
+            get => _displayName;
+            set => SetProperty(ref _displayName, value);
+        }
+
+        /// <summary>
+        /// Resource key identifier to load the
+        /// icon from the resource dictionary.
+        /// </summary>
+        public string IconResource {
+            get => _iconResource;
+            set => SetProperty(ref _iconResource, value);
+        }
+
+        /// <summary>
+        /// Get the path of the represented directory.
+        /// </summary>
+        public string Path {
+            get => _path;
+            set => SetProperty(ref _path, value);
+        }
+
+        /// <summary>
+        /// Create a nav item to represent a directory.
+        /// This should be used to point to a directory
+        /// for file browsing (no tree children).
+        /// </summary>
+        /// <param name="displayName">Text to display in the item</param>
+        /// <param name="iconResource">Key of the resource for the icon</param>
+        /// <param name="path">Path to the directory</param>
+        public DirectoryNavItem(string displayName, string iconResource, string path) : base()
+        {
+            this.DisplayName = displayName;
+            this.IconResource = iconResource;
+            this.Path = path;
+        }
+    }
 }

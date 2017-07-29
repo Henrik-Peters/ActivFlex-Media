@@ -193,11 +193,17 @@ namespace ActivFlex.ViewModels
             this.NavVisible = true;
             this.NavItems = new ObservableCollection<NavItem>(
                 new List<NavItem>(new[] {
-                    new GroupNavItem("Media libraries", "MediaLibraryIcon", true),
+                    new GroupNavItem("Media libraries", "GeneralIcon", true),
                     new GroupNavItem("My Computer", "MyComputerIcon", true)
                 })
             );
-            
+
+            this.NavItems[0].NavChildren = new ObservableCollection<NavItem>(
+                new List<NavItem>(new[] {
+                    new DirectoryNavItem("Pictures", "MediaLibraryIcon", Environment.GetFolderPath(Environment.SpecialFolder.MyPictures))
+                })
+            );
+
             this.NavItems[1].NavChildren = new ObservableCollection<NavItem>(
                                 FileSystemBrowser.GetLogicalDrives()
                                 .Select(drive => new LogicalDriveNavItem(drive)));
