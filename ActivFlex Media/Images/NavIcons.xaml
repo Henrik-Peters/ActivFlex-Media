@@ -305,5 +305,32 @@
             </Canvas>
         </Canvas>
     </Viewbox>
+    <Viewbox x:Key="MediaLibraryIcon" x:Shared="false"  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources/>
+            <Canvas>
+                <Canvas>
+                    <Canvas.RenderTransform>
+                        <MatrixTransform Matrix="0.99273164 0 0 0.99273164 1.008159 0.85483035"/>
+                    </Canvas.RenderTransform>
+                    <Ellipse xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="37.8" Width="16.3" Canvas.Top="13.7" Height="15.7" Fill="#FFFAFAFA" StrokeThickness="3.48217034" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#FFF0F0F0" StrokeThickness="3.41081834" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                        <Path.Data>
+                            <PathGeometry Figures="M 23.991986 28.579619 44.186912 53.990755 H 4.7902541 Z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#FFF0F0F0" StrokeThickness="2.47603869" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                        <Path.Data>
+                            <PathGeometry Figures="M 42.195794 36.688077 57.54869 54.302721 H 27.59796 Z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="1.8637754" Canvas.Top="8.0285492" Width="58.709949" Height="46.689304" RadiusX="3.412312" RadiusY="3.412312" StrokeThickness="2.09352636" Stroke="#FFF7F7F7" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                </Canvas>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
 
 </ResourceDictionary>
