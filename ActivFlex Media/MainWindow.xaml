@@ -204,14 +204,26 @@
                         <!-- No display for normal files -->
                     </DataTemplate>
 
+                    <!-- Directory template -->
                     <DataTemplate DataType="{x:Type FileSystem:DirectoryItem}">
                         <Controls:DirectoryThumbnail Margin="20,5,20,20"
                                                      CanSelect="False"
                                                      Proxy="{Binding}"
                                                      Click="{Binding DataContext.BrowseFileSystem,
-                                                             RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                                                             RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                     Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+
+                            <Controls:DirectoryThumbnail.ContextMenu>
+                                <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                                    <MenuItem Header="Open" 
+                                              Command="{Binding BrowseFileSystem}"
+                                              CommandParameter="{Binding PlacementTarget.Proxy.Path, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                                </ContextMenu>
+                            </Controls:DirectoryThumbnail.ContextMenu>
+                        </Controls:DirectoryThumbnail>
                     </DataTemplate>
 
+                    <!-- MediaImage template -->
                     <DataTemplate DataType="{x:Type Media:MediaImage}">
                         <Controls:ImageThumbnail Margin="20,5,20,20"
                                                  Width="150"
@@ -219,7 +231,17 @@
                                                  CanSelect="False"
                                                  Proxy="{Binding}"
                                                  Click="{Binding DataContext.LaunchPresenter,
-                                                         RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                                                         RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                 Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+
+                            <Controls:ImageThumbnail.ContextMenu>
+                                <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                                    <MenuItem Header="Open" 
+                                              Command="{Binding LaunchPresenter}"
+                                              CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                                </ContextMenu>
+                            </Controls:ImageThumbnail.ContextMenu>
+                        </Controls:ImageThumbnail>
                     </DataTemplate>
 
                 </ItemsControl.Resources>
