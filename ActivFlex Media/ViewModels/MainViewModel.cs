@@ -193,7 +193,7 @@ namespace ActivFlex.ViewModels
             this.NavVisible = true;
             this.NavItems = new ObservableCollection<NavItem>(
                 new List<NavItem>(new[] {
-                    new GroupNavItem("Media libraries", "MediaLibraryIcon", true),
+                    new GroupNavItem("Media libraries", "MediaLibraryIcon", true, NavTag.MediaLibraryRoot),
                     new GroupNavItem("My Computer", "MyComputerIcon", true)
                 })
             );

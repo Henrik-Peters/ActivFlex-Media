@@ -22,12 +22,19 @@ using ActivFlex.FileSystem;
 namespace ActivFlex.ViewModels
 {
     /// <summary>
+    /// This state provides additional context
+    /// about the usage of navigation items.
+    /// </summary>
+    public enum NavTag { None, MediaLibraryRoot }
+
+    /// <summary>
     /// ViewModel implementation for items in the navigation area.
     /// </summary>
     public abstract class NavItem : ViewModel
     {
         private bool _isExpanded;
         private ObservableCollection<NavItem> _navChildren;
+        private NavTag _tag;
 
         /// <summary>
         /// Text that represents the item.
@@ -40,6 +47,20 @@ namespace ActivFlex.ViewModels
         public bool IsExpanded {
             get => _isExpanded;
             set => SetProperty(ref _isExpanded, value);
+        }
+
+        /// <summary>
+        /// Provides additional metainformation.
+        /// </summary>
+        public NavTag Tag {
+            get => _tag;
+            set {
+                if (_tag == value)
+                    return;
+
+                _tag = value;
+                NotifyPropertyChanged();
+            }
         }
 
         /// <summary>
@@ -63,6 +84,7 @@ namespace ActivFlex.ViewModels
             this._navChildren = new ObservableCollection<NavItem>();
             this.NavChildren = Children ?? _navChildren;
             this.IsExpanded = IsExpanded;
+            this.Tag = NavTag.None;
         }
     }
 
@@ -98,11 +120,13 @@ namespace ActivFlex.ViewModels
         /// <param name="DisplayName">Text to display for the group</param>
         /// <param name="IconResource">Key of the resource for the icon</param>
         /// <param name="IsExpanded">The startup expand state of the group</param>
-        public GroupNavItem(string DisplayName, string IconResource, bool IsExpanded = false) : base()
+        /// <param name="Tag">Used for additional meta information</param>
+        public GroupNavItem(string DisplayName, string IconResource, bool IsExpanded = false, NavTag Tag = NavTag.None) : base()
         {
             this.DisplayName = DisplayName;
             this.IconResource = IconResource;
             this.IsExpanded = IsExpanded;
+            this.Tag = Tag;
         }
     }
 
@@ -134,11 +158,13 @@ namespace ActivFlex.ViewModels
         /// This should be used as an entry point for the
         /// file browsing system (no tree children).
         /// </summary>
-        /// <param name="driveItem"></param>
-        public LogicalDriveNavItem(LogicalDriveItem driveItem) : base()
+        /// <param name="driveItem">The represented drive item</param>
+        /// <param name="Tag">Used for additional meta information</param>
+        public LogicalDriveNavItem(LogicalDriveItem driveItem, NavTag tag = NavTag.None) : base()
         {
             this._driveItem = driveItem;
             this.DisplayName = driveItem.Path;
+            this.Tag = tag;
         }
     }
 
@@ -184,11 +210,13 @@ namespace ActivFlex.ViewModels
         /// <param name="displayName">Text to display in the item</param>
         /// <param name="iconResource">Key of the resource for the icon</param>
         /// <param name="path">Path to the directory</param>
-        public DirectoryNavItem(string displayName, string iconResource, string path) : base()
+        /// <param name="tag">Used for additional meta information</param>
+        public DirectoryNavItem(string displayName, string iconResource, string path, NavTag tag = NavTag.None) : base()
         {
             this.DisplayName = displayName;
             this.IconResource = iconResource;
             this.Path = path;
+            this.Tag = tag;
         }
     }
 }
