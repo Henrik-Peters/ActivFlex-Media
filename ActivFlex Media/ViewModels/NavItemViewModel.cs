@@ -33,6 +33,7 @@ namespace ActivFlex.ViewModels
     public abstract class NavItem : ViewModel
     {
         private bool _isExpanded;
+        private string _localizeKey;
         private ObservableCollection<NavItem> _navChildren;
         private NavTag _tag;
 
@@ -40,6 +41,16 @@ namespace ActivFlex.ViewModels
         /// Text that represents the item.
         /// </summary>
         public abstract string DisplayName { get; set; }
+
+        /// <summary>
+        /// This key is used to translate the display name
+        /// when the translate manager has changed. It can
+        /// be empty when no localization should be done.
+        /// </summary>
+        public string LocalizeKey {
+            get => _localizeKey;
+            set => SetProperty(ref _localizeKey, value);
+        }
 
         /// <summary>
         /// Current expand state of the item.
@@ -118,12 +129,15 @@ namespace ActivFlex.ViewModels
         /// This should be used to represent a navigation category.
         /// </summary>
         /// <param name="DisplayName">Text to display for the group</param>
+        /// <param name="LocalizeKey">Key to use for translation when the language changes</param>
         /// <param name="IconResource">Key of the resource for the icon</param>
         /// <param name="IsExpanded">The startup expand state of the group</param>
         /// <param name="Tag">Used for additional meta information</param>
-        public GroupNavItem(string DisplayName, string IconResource, bool IsExpanded = false, NavTag Tag = NavTag.None) : base()
+        public GroupNavItem(string DisplayName, string LocalizeKey, string IconResource, 
+                            bool IsExpanded = false, NavTag Tag = NavTag.None) : base()
         {
             this.DisplayName = DisplayName;
+            this.LocalizeKey = LocalizeKey;
             this.IconResource = IconResource;
             this.IsExpanded = IsExpanded;
             this.Tag = Tag;
@@ -211,10 +225,12 @@ namespace ActivFlex.ViewModels
         /// <param name="iconResource">Key of the resource for the icon</param>
         /// <param name="path">Path to the directory</param>
         /// <param name="tag">Used for additional meta information</param>
-        public DirectoryNavItem(string displayName, string iconResource, string path, NavTag tag = NavTag.None) : base()
+        /// <param name="localizeKey">Key to use for translation when the language changes</param>
+        public DirectoryNavItem(string displayName, string iconResource, string path, NavTag tag = NavTag.None, string localizeKey = null) : base()
         {
             this.DisplayName = displayName;
             this.IconResource = iconResource;
+            this.LocalizeKey = localizeKey;
             this.Path = path;
             this.Tag = tag;
         }

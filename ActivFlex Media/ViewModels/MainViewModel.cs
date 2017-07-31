@@ -57,7 +57,10 @@ namespace ActivFlex.ViewModels
         private TranslateManager _translateManager;
         public TranslateManager Localize {
             get => _translateManager;
-            set => SetProperty(ref _translateManager, value);
+            set {
+                SetProperty(ref _translateManager, value);
+                UpdateNavLocalization(NavItems);
+            }
         }
 
         private double _zoom;
@@ -202,14 +205,15 @@ namespace ActivFlex.ViewModels
             this.NavVisible = true;
             this.NavItems = new ObservableCollection<NavItem>(
                 new List<NavItem>(new[] {
-                    new GroupNavItem(Localize["MediaLibraries"], "MediaLibraryIcon", true, NavTag.MediaLibraryRoot),
-                    new GroupNavItem(Localize["MyComputer"], "MyComputerIcon", true)
+                    new GroupNavItem(Localize["MediaLibraries"], "MediaLibraries", "MediaLibraryIcon", true, NavTag.MediaLibraryRoot),
+                    new GroupNavItem(Localize["MyComputer"], "MyComputer", "MyComputerIcon", true)
                 })
             );
 
             this.NavItems[0].NavChildren = new ObservableCollection<NavItem>(
                 new List<NavItem>(new[] {
-                    new DirectoryNavItem(Localize["Pictures"], "PictureIcon", Environment.GetFolderPath(Environment.SpecialFolder.MyPictures))
+                    new DirectoryNavItem(Localize["Pictures"], "PictureIcon", 
+                                         Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), NavTag.None, "Pictures")
                 })
             );
 
@@ -332,6 +336,30 @@ namespace ActivFlex.ViewModels
 
             PresentMediaImage(nextImage);
             return true;
+        }
+
+        /// <summary>
+        /// This function will update the language 
+        /// translations for the main navigation.
+        /// </summary>
+        /// <param name="Items">Navigation items to update</param>
+        private void UpdateNavLocalization(ICollection<NavItem> Items)
+        {
+            if (Items != null && Items.Any()) {
+                foreach (NavItem item in Items) {
+                    if (!String.IsNullOrEmpty(item.LocalizeKey)) {
+                        
+                        try {
+                            string translation = _translateManager[item.LocalizeKey];
+                            item.DisplayName = translation;
+                        } catch { }
+                    }
+
+                    if (item.NavChildren != null && item.NavChildren.Any()) {
+                        UpdateNavLocalization(item.NavChildren);
+                    }
+                }
+            }
         }
 
         /// <summary>
