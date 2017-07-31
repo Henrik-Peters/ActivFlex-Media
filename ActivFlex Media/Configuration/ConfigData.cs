@@ -18,6 +18,7 @@
 using System;
 using System.Reflection;
 using System.Xml.Serialization;
+using ActivFlex.Localization;
 
 namespace ActivFlex.Configuration
 {
@@ -36,7 +37,7 @@ namespace ActivFlex.Configuration
         /// Contains a configuration with default values.
         /// This instance should be used as a fallback.
         /// </summary>
-        public static readonly ConfigData DefaultConfig = new ConfigData(Environment.UserName);
+        public static readonly ConfigData DefaultConfig = new ConfigData(Environment.UserName, Language.English);
 
         /// <summary>
         /// The version of ActivFlex Media when this config
@@ -58,14 +59,21 @@ namespace ActivFlex.Configuration
         public string Username { get; set; }
 
         /// <summary>
+        /// Localization language to use for translations.
+        /// </summary>
+        public Language Language { get; set; }
+
+        /// <summary>
         /// Create a new dataset for a concrete configuration. 
         /// All properties should only be set with this constructor.
         /// </summary>
         /// <param name="Username">Name to be used when modifying media items</param>
-        public ConfigData(string Username)
+        /// <param name="Language">Localization language to use for translations</param>
+        public ConfigData(string Username, Language Language)
         {
             this.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.Username = Username;
+            this.Language = Language;
         }
     }
 }

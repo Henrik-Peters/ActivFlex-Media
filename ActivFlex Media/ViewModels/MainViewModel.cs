@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using static System.IO.Path;
 using ActivFlex.Configuration;
+using ActivFlex.Localization;
 using ActivFlex.FileSystem;
 using ActivFlex.Media;
 
@@ -51,6 +52,12 @@ namespace ActivFlex.ViewModels
         public ObservableCollection<IFileObject> FileSystemItems {
             get => _fileSystemItems;
             set => SetProperty(ref _fileSystemItems, value);
+        }
+
+        private TranslateManager _translateManager;
+        public TranslateManager Localize {
+            get => _translateManager;
+            set => SetProperty(ref _translateManager, value);
         }
 
         private double _zoom;
@@ -189,18 +196,20 @@ namespace ActivFlex.ViewModels
                 this.Config = ConfigProvider.LoadConfig();
             }
 
+            this.Localize = new TranslateManager(Config.Language);
+
             //Navigation items
             this.NavVisible = true;
             this.NavItems = new ObservableCollection<NavItem>(
                 new List<NavItem>(new[] {
-                    new GroupNavItem("Media libraries", "MediaLibraryIcon", true, NavTag.MediaLibraryRoot),
-                    new GroupNavItem("My Computer", "MyComputerIcon", true)
+                    new GroupNavItem(Localize["MediaLibraries"], "MediaLibraryIcon", true, NavTag.MediaLibraryRoot),
+                    new GroupNavItem(Localize["MyComputer"], "MyComputerIcon", true)
                 })
             );
 
             this.NavItems[0].NavChildren = new ObservableCollection<NavItem>(
                 new List<NavItem>(new[] {
-                    new DirectoryNavItem("Pictures", "PictureIcon", Environment.GetFolderPath(Environment.SpecialFolder.MyPictures))
+                    new DirectoryNavItem(Localize["Pictures"], "PictureIcon", Environment.GetFolderPath(Environment.SpecialFolder.MyPictures))
                 })
             );
 

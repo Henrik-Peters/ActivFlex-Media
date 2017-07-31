@@ -215,7 +215,7 @@
 
                             <Controls:DirectoryThumbnail.ContextMenu>
                                 <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-                                    <MenuItem Header="Open" 
+                                    <MenuItem Header="{Binding Localize[Open]}" 
                                               Command="{Binding BrowseFileSystem}"
                                               CommandParameter="{Binding PlacementTarget.Proxy.Path, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                                 </ContextMenu>
@@ -236,7 +236,7 @@
 
                             <Controls:ImageThumbnail.ContextMenu>
                                 <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-                                    <MenuItem Header="Open" 
+                                    <MenuItem Header="{Binding Localize[Open]}" 
                                               Command="{Binding LaunchPresenter}"
                                               CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                                 </ContextMenu>
