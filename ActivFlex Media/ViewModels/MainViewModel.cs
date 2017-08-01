@@ -196,6 +196,12 @@ namespace ActivFlex.ViewModels
         {
             //Configuration
             if (this.Config == null) {
+
+                //Create a default config when no config exists
+                if (!ConfigProvider.ConfigExists) {
+                    ConfigProvider.SaveConfig(ConfigData.DefaultConfig);
+                }
+
                 this.Config = ConfigProvider.LoadConfig();
             }
 
