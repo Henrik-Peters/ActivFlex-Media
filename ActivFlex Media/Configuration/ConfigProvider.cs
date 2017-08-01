@@ -23,12 +23,34 @@ namespace ActivFlex.Configuration
 {
     /// <summary>
     /// This class provides loading and saving functions
-    /// for the configuration data by using an XMLSerializer. 
+    /// for the configuration data by using an XMLSerializer.
     /// </summary>
     public static class ConfigProvider
     {
         private const string ApplicationFolderName = "ActivFlex Media";
         private const string ConfigFileName = "Configuration.xml";
+
+        /// <summary>
+        /// Get the path for the application data. This will
+        /// be the ActivFlex folder inside the users AppData.
+        /// </summary>
+        public static string AppDataPath {
+            get => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\" + ApplicationFolderName;
+        }
+
+        /// <summary>
+        /// Get the path of the configuration file.
+        /// </summary>
+        public static string ConfigPath {
+            get => AppDataPath + "\\" + ConfigFileName;
+        }
+
+        /// <summary>
+        /// Will be true when the config exists in the file system.
+        /// </summary>
+        public static bool ConfigExists {
+            get => File.Exists(ConfigPath);
+        }
 
         /// <summary>
         /// Load the configuration from the file system. The file will be 
@@ -39,20 +61,15 @@ namespace ActivFlex.Configuration
         public static ConfigData LoadConfig()
         {
             ConfigData config = ConfigData.DefaultConfig;
-            string roamingPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\" + ApplicationFolderName;
-            string configPath = roamingPath + "\\" + ConfigFileName;
 
-            if (!Directory.Exists(roamingPath) || !File.Exists(configPath)) {
-                //Config not existing - use default config
-                return config;
+            if (ConfigExists) {
+                try {
+                    using (var stream = new FileStream(ConfigPath, FileMode.Open)) {
+                        var XML = new XmlSerializer(typeof(ConfigData));
+                        config = (ConfigData)XML.Deserialize(stream);
+                    }
+                } catch { }
             }
-
-            try {
-                using (var stream = new FileStream(configPath, FileMode.Open)) {
-                    var XML = new XmlSerializer(typeof(ConfigData));
-                    config = (ConfigData)XML.Deserialize(stream);
-                }
-            } catch { }
 
             return config;
         }
@@ -66,15 +83,12 @@ namespace ActivFlex.Configuration
         /// <returns>True when the config was written to disk successfully</returns>
         public static bool SaveConfig(ConfigData config)
         {
-            string roamingPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/" + ApplicationFolderName;
-            string configPath = roamingPath + "\\" + ConfigFileName;
-
-            if (!Directory.Exists(roamingPath)) {
-                Directory.CreateDirectory(roamingPath);
+            if (!Directory.Exists(AppDataPath)) {
+                Directory.CreateDirectory(AppDataPath);
             }
 
             try {
-                using (var stream = new FileStream(configPath, FileMode.Create)) {
+                using (var stream = new FileStream(ConfigPath, FileMode.Create)) {
                     var XML = new XmlSerializer(typeof(ConfigData));
                     XML.Serialize(stream, config);
                 }
