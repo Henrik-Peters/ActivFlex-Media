@@ -40,36 +40,6 @@ namespace ActivFlex.Controls
             "Click", typeof(ICommand), typeof(ImageThumbnail), new PropertyMetadata(null));
 
         /// <summary>
-        /// Identifies the DoubleClickCommand dependency property
-        /// </summary>
-        public static readonly DependencyProperty DoubleClickCommandProperty = DependencyProperty.Register(
-            "DoubleClick", typeof(ICommand), typeof(ImageThumbnail), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Identifies the IsSelectedProperty dependency property
-        /// </summary>
-        public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register(
-            "IsSelected", typeof(bool), typeof(ImageThumbnail), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Identifies the CanSelect dependency property
-        /// </summary>
-        public static readonly DependencyProperty CanSelectProperty = DependencyProperty.Register(
-            "CanSelect", typeof(bool), typeof(ImageThumbnail), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Identifies the TextProperty dependency property
-        /// </summary>
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
-            "Text", typeof(string), typeof(ImageThumbnail), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Identifies the ProxyProperty dependency property
-        /// </summary>
-        public static readonly DependencyProperty ProxyProperty = DependencyProperty.Register(
-            "Proxy", typeof(IFileObject), typeof(ImageThumbnail), new PropertyMetadata(ProxyProperty_PropertyChanged));
-
-        /// <summary>
         /// Gets or sets the command to be execute
         /// when the user clicks the thumbnail image
         /// </summary>
@@ -78,6 +48,12 @@ namespace ActivFlex.Controls
             get => (ICommand)this.GetValue(ClickCommandProperty);
             set => this.SetValue(ClickCommandProperty, value);
         }
+        
+        /// <summary>
+        /// Identifies the DoubleClickCommand dependency property
+        /// </summary>
+        public static readonly DependencyProperty DoubleClickCommandProperty = DependencyProperty.Register(
+            "DoubleClick", typeof(ICommand), typeof(ImageThumbnail), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the command to be execute
@@ -88,6 +64,12 @@ namespace ActivFlex.Controls
             get => (ICommand)this.GetValue(DoubleClickCommandProperty);
             set => this.SetValue(DoubleClickCommandProperty, value);
         }
+        
+        /// <summary>
+        /// Identifies the IsSelectedProperty dependency property
+        /// </summary>
+        public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register(
+            "IsSelected", typeof(bool), typeof(ImageThumbnail), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the selected value of the control.
@@ -101,6 +83,12 @@ namespace ActivFlex.Controls
                     this.SetValue(IsSelectedProperty, value);
             }
         }
+
+        /// <summary>
+        /// Identifies the CanSelect dependency property
+        /// </summary>
+        public static readonly DependencyProperty CanSelectProperty = DependencyProperty.Register(
+            "CanSelect", typeof(bool), typeof(ImageThumbnail), new PropertyMetadata(null));
 
         /// <summary>
         /// Enables or disables the select ability. When set
@@ -117,6 +105,12 @@ namespace ActivFlex.Controls
         }
 
         /// <summary>
+        /// Identifies the TextProperty dependency property
+        /// </summary>
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
+            "Text", typeof(string), typeof(ImageThumbnail), new PropertyMetadata(null));
+        
+        /// <summary>
         /// Gets or sets the content of the text label.
         /// </summary>
         [Bindable(true)]
@@ -124,6 +118,12 @@ namespace ActivFlex.Controls
             get => (string)this.GetValue(TextProperty);
             set => this.SetValue(TextProperty, value);
         }
+
+        /// <summary>
+        /// Identifies the ProxyProperty dependency property
+        /// </summary>
+        public static readonly DependencyProperty ProxyProperty = DependencyProperty.Register(
+            "Proxy", typeof(IFileObject), typeof(ImageThumbnail), new PropertyMetadata(ProxyProperty_PropertyChanged));
 
         /// <summary>
         /// Gets or sets the represented object for this

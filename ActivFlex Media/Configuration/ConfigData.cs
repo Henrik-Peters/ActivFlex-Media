@@ -37,7 +37,12 @@ namespace ActivFlex.Configuration
         /// Contains a configuration with default values.
         /// This instance should be used as a fallback.
         /// </summary>
-        public static readonly ConfigData DefaultConfig = new ConfigData(Environment.UserName, Language.English);
+        public static readonly ConfigData DefaultConfig = new ConfigData(
+            Environment.UserName, 
+            Language.English, 
+            WindowStartupState.Default, 
+            WindowStartupState.Fullscreen
+        );
 
         /// <summary>
         /// The version of ActivFlex Media when this config
@@ -64,16 +69,32 @@ namespace ActivFlex.Configuration
         public Language Language { get; set; }
 
         /// <summary>
+        /// Options for the size and position of the window
+        /// on a startup without any media arguments.
+        /// </summary>
+        public WindowStartupState NormalStartup { get; set; }
+
+        /// <summary>
+        /// Options for the size and position of the window
+        /// on a startup with media arguments.
+        /// </summary>
+        public WindowStartupState PresenterStartup { get; set; }
+
+        /// <summary>
         /// Create a new dataset for a concrete configuration. 
         /// All properties should only be set with this constructor.
         /// </summary>
         /// <param name="Username">Name to be used when modifying media items</param>
         /// <param name="Language">Localization language to use for translations</param>
-        public ConfigData(string Username, Language Language)
+        /// <param name="NormalStartup">Window layout options for a startup</param>
+        /// <param name="PresenterStartup">Window layout options for a startup in presentation mode</param>
+        public ConfigData(string Username, Language Language, WindowStartupState NormalStartup, WindowStartupState PresenterStartup)
         {
             this.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.Username = Username;
             this.Language = Language;
+            this.NormalStartup = NormalStartup;
+            this.PresenterStartup = PresenterStartup;
         }
     }
 }
