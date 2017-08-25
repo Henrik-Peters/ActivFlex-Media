@@ -25,6 +25,7 @@ using System.Collections.ObjectModel;
 using static System.IO.Path;
 using ActivFlex.Configuration;
 using ActivFlex.Localization;
+using ActivFlex.Navigation;
 using ActivFlex.FileSystem;
 using ActivFlex.Media;
 

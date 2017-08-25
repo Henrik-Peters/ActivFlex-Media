@@ -20,7 +20,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Data;
 using System.Globalization;
-using ActivFlex.ViewModels;
+using ActivFlex.Navigation;
 
 namespace ActivFlex.Converters
 {

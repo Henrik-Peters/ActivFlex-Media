@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Converters="clr-namespace:ActivFlex.Converters"
-                    xmlns:ViewModels="clr-namespace:ActivFlex.ViewModels">
+                    xmlns:Navigation="clr-namespace:ActivFlex.Navigation">
 
     <!-- TreeViewItem border and TreeArrow color definitions -->
     <SolidColorBrush x:Key="TreeViewItem.Selected.Color" Color="#F2418CFF"/>
@@ -127,7 +127,7 @@
 
                     <!-- TreeViewItem triggers -->
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Tag}" Value="{x:Static ViewModels:NavTag.MediaLibraryRoot}">
+                        <DataTrigger Binding="{Binding Tag}" Value="{x:Static Navigation:NavTag.MediaLibraryRoot}">
                             <Setter TargetName="Bd" Property="ContextMenu" Value="{StaticResource NavMediaMenu}"/>
                         </DataTrigger>
                         

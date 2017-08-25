@@ -29,6 +29,7 @@ using System.Windows.Media.Animation;
 using static ActivFlex.Configuration.Parameter;
 using static ActivFlex.FileSystem.FileSystemBrowser;
 using ActivFlex.ViewModels;
+using ActivFlex.Navigation;
 using ActivFlex.Media;
 
 namespace ActivFlex

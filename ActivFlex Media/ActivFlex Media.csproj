@@ -77,8 +77,11 @@
     <Compile Include="Converters\NavItemIconConverter.cs" />
     <Compile Include="Localization\Language.cs" />
     <Compile Include="Localization\TranslateManager.cs" />
+    <Compile Include="Navigation\DirectoryNavItem.cs" />
+    <Compile Include="Navigation\GroupNavItem.cs" />
+    <Compile Include="Navigation\LogicalDriveNavItem.cs" />
+    <Compile Include="Navigation\NavItem.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\NavItemViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Page Include="Controls\DirectoryThumbnail.xaml">
