@@ -42,6 +42,7 @@ namespace ActivFlex.Configuration
             Language.English, 
             WindowStartupState.Default, 
             WindowStartupState.Fullscreen,
+            WindowRestoreState.Default,
             1640, 835, 200, 100
         );
 
@@ -82,6 +83,11 @@ namespace ActivFlex.Configuration
         public WindowStartupState PresenterStartup { get; set; }
 
         /// <summary>
+        /// The state of the window for restoring the layout.
+        /// </summary>
+        public WindowRestoreState RestoreState { get; set; }
+
+        /// <summary>
         /// Width of the window used for restoring the window size.
         /// </summary>
         public double RestoreWidth { get; set; }
@@ -114,13 +120,14 @@ namespace ActivFlex.Configuration
         /// <param name="RestoreLeft">Left position of the window used for restoring</param>
         /// <param name="RestoreTop">Top position of the window used for restoring</param>
         public ConfigData(string Username, Language Language, WindowStartupState NormalStartup, WindowStartupState PresenterStartup, 
-                          double RestoreWidth, double RestoreHeight, double RestoreLeft, double RestoreTop)
+                          WindowRestoreState RestoreState, double RestoreWidth, double RestoreHeight, double RestoreLeft, double RestoreTop)
         {
             this.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.Username = Username;
             this.Language = Language;
             this.NormalStartup = NormalStartup;
             this.PresenterStartup = PresenterStartup;
+            this.RestoreState = RestoreState;
             this.RestoreWidth = RestoreWidth;
             this.RestoreHeight = RestoreHeight;
             this.RestoreLeft = RestoreLeft;

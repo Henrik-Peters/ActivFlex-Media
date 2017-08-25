@@ -256,6 +256,7 @@ namespace ActivFlex
                 case WindowStartupState.RestoreSizeCentered:
                     this.Width = vm.Config.RestoreWidth;
                     this.Height = vm.Config.RestoreHeight;
+                    this.RestoreWindowState();
                     break;
 
                 case WindowStartupState.RestoreAll:
@@ -264,10 +265,24 @@ namespace ActivFlex
                     this.Height = vm.Config.RestoreHeight;
                     this.Left = vm.Config.RestoreLeft;
                     this.Top = vm.Config.RestoreTop;
+                    this.RestoreWindowState();
                     break;
             }
 
             Window_StateChanged(this, null);
+        }
+
+        private void RestoreWindowState()
+        {
+            switch (vm.Config.RestoreState) {
+                case WindowRestoreState.Fullscreen:
+                    ChangeFullscreenMode(true);
+                    break;
+
+                case WindowRestoreState.Maximised:
+                    this.WindowState = WindowState.Maximized;
+                    break;
+            }
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -277,7 +292,17 @@ namespace ActivFlex
                 vm.Config.PresenterStartup == WindowStartupState.RestoreAll || vm.Config.PresenterStartup == WindowStartupState.RestoreSizeCentered) {
 
                 ConfigData config = vm.Config;
-                ConfigProvider.SaveConfig(new ConfigData(config.Username, config.Language, config.NormalStartup, config.PresenterStartup, 
+                WindowRestoreState restoreState = WindowRestoreState.Default;
+
+                if (this.WindowState == WindowState.Maximized) {
+                    restoreState = WindowRestoreState.Maximised;
+                }
+
+                if (Fullscreen) {
+                    restoreState = WindowRestoreState.Fullscreen;
+                }
+
+                ConfigProvider.SaveConfig(new ConfigData(config.Username, config.Language, config.NormalStartup, config.PresenterStartup, restoreState,
                                                          this.Width, this.Height, this.Left, this.Top));
             }
         }

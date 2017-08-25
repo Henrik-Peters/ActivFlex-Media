@@ -18,6 +18,16 @@
 namespace ActivFlex.Configuration
 {
     /// <summary>
+    /// Possible window states in restore mode.
+    /// </summary>
+    public enum WindowRestoreState
+    {
+        Default,
+        Maximised,
+        Fullscreen
+    }
+
+    /// <summary>
     /// Possible options for the window layout
     /// when the application will be started.
     /// </summary>
