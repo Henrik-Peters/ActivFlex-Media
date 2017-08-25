@@ -20,6 +20,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Diagnostics;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using WinInterop = System.Windows.Interop;
 using System.Windows.Data;
@@ -28,6 +29,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using static ActivFlex.Configuration.Parameter;
 using static ActivFlex.FileSystem.FileSystemBrowser;
+using ActivFlex.Configuration;
 using ActivFlex.ViewModels;
 using ActivFlex.Navigation;
 using ActivFlex.Media;
@@ -83,6 +85,7 @@ namespace ActivFlex
             Window_StateChanged(this, null);
             ChangeFullscreenMode(false);
             HandleStartupArguments();
+            HandleStartupLayout();
         }
 
         /// <summary>
@@ -207,10 +210,6 @@ namespace ActivFlex
             if (StartupOptions.HasOptions) {
                 if (StartupOptions.ImagePaths.Count > 0) {
 
-                    //Change to fullscreen for presentation
-                    ChangeFullscreenMode(true);
-                    Window_StateChanged(this, null);
-
                     //Browse to the directory of the first image
                     vm.BrowseFileSystem.Execute(GetParentPath(StartupOptions.ImagePaths[0]));
 
@@ -238,6 +237,48 @@ namespace ActivFlex
                     //Single directory and no images provided
                     vm.BrowseFileSystem.Execute(StartupOptions.DirectoryPaths[0]);
                 }
+            }
+        }
+
+        private void HandleStartupLayout()
+        {
+            var startupOptions = vm.ImagePresentActive ? vm.Config.PresenterStartup : vm.Config.NormalStartup;
+
+            switch (startupOptions) {
+                case WindowStartupState.Fullscreen:
+                    ChangeFullscreenMode(true);
+                    break;
+
+                case WindowStartupState.Maximised:
+                    this.WindowState = WindowState.Maximized;
+                    break;
+
+                case WindowStartupState.RestoreSizeCentered:
+                    this.Width = vm.Config.RestoreWidth;
+                    this.Height = vm.Config.RestoreHeight;
+                    break;
+
+                case WindowStartupState.RestoreAll:
+                    this.WindowStartupLocation = WindowStartupLocation.Manual;
+                    this.Width = vm.Config.RestoreWidth;
+                    this.Height = vm.Config.RestoreHeight;
+                    this.Left = vm.Config.RestoreLeft;
+                    this.Top = vm.Config.RestoreTop;
+                    break;
+            }
+
+            Window_StateChanged(this, null);
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            //Save the current window layout when restoring is active
+            if (vm.Config.NormalStartup == WindowStartupState.RestoreAll || vm.Config.NormalStartup == WindowStartupState.RestoreSizeCentered ||
+                vm.Config.PresenterStartup == WindowStartupState.RestoreAll || vm.Config.PresenterStartup == WindowStartupState.RestoreSizeCentered) {
+
+                ConfigData config = vm.Config;
+                ConfigProvider.SaveConfig(new ConfigData(config.Username, config.Language, config.NormalStartup, config.PresenterStartup, 
+                                                         this.Width, this.Height, this.Left, this.Top));
             }
         }
 

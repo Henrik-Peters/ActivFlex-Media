@@ -41,7 +41,8 @@ namespace ActivFlex.Configuration
             Environment.UserName, 
             Language.English, 
             WindowStartupState.Default, 
-            WindowStartupState.Fullscreen
+            WindowStartupState.Fullscreen,
+            1640, 835, 200, 100
         );
 
         /// <summary>
@@ -81,6 +82,26 @@ namespace ActivFlex.Configuration
         public WindowStartupState PresenterStartup { get; set; }
 
         /// <summary>
+        /// Width of the window used for restoring the window size.
+        /// </summary>
+        public double RestoreWidth { get; set; }
+
+        /// <summary>
+        /// Height of the window used for restoring the window size.
+        /// </summary>
+        public double RestoreHeight { get; set; }
+
+        /// <summary>
+        /// Left position of the window used for restoring.
+        /// </summary>
+        public double RestoreLeft { get; set; }
+
+        /// <summary>
+        /// Top position of the window used for restoring.
+        /// </summary>
+        public double RestoreTop { get; set; }
+
+        /// <summary>
         /// Create a new dataset for a concrete configuration. 
         /// All properties should only be set with this constructor.
         /// </summary>
@@ -88,13 +109,22 @@ namespace ActivFlex.Configuration
         /// <param name="Language">Localization language to use for translations</param>
         /// <param name="NormalStartup">Window layout options for a startup</param>
         /// <param name="PresenterStartup">Window layout options for a startup in presentation mode</param>
-        public ConfigData(string Username, Language Language, WindowStartupState NormalStartup, WindowStartupState PresenterStartup)
+        /// <param name="RestoreWidth">Width of the window used for restoring</param>
+        /// <param name="RestoreHeight">Height of the window used for restoring</param>
+        /// <param name="RestoreLeft">Left position of the window used for restoring</param>
+        /// <param name="RestoreTop">Top position of the window used for restoring</param>
+        public ConfigData(string Username, Language Language, WindowStartupState NormalStartup, WindowStartupState PresenterStartup, 
+                          double RestoreWidth, double RestoreHeight, double RestoreLeft, double RestoreTop)
         {
             this.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.Username = Username;
             this.Language = Language;
             this.NormalStartup = NormalStartup;
             this.PresenterStartup = PresenterStartup;
+            this.RestoreWidth = RestoreWidth;
+            this.RestoreHeight = RestoreHeight;
+            this.RestoreLeft = RestoreLeft;
+            this.RestoreTop = RestoreTop;
         }
     }
 }
