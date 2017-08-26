@@ -31,26 +31,6 @@ most of the WPF markup files (window descriptions, resource dictionaries).
 All logic that is related to presenting media items (like displaying images,
 playing music) should be placed in this module.
 
-
-## Changelog / Version info
-
-For every release you will find a brief description here, describing what has changed or has been added
-to the project. This should be a shorter and more readable summary than the actual commit history. Some 
-changes may be left out here if they are not necessarily important to the whole project (like small bug fixes).
-
-### ActivFlex Media - Version 0.1
-
-* Images will be presented when passed as startup arguments
-* Size and position of images can be changed in presentation mode
-* Images can be displayed and exchanged in presentation mode
-* Navigation control for the browsing path added
-* The thumbnail size can be changed with a zoom control
-* Images have thumbnails that keep their aspect ratio
-* Browsing in the file system is now possible
-* The main navigation contains all logical drives from the filesystem
-* GUI allows switching between normal and fullscreen mode
-* Custom window layout design and resize logic
-
 ## Miscellaneous
 
 At the moments all icons and controls are vector-based. This can be very useful in the future to create
