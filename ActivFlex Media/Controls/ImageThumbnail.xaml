@@ -22,7 +22,7 @@
         </Grid.ColumnDefinitions>
 
         <Button x:Name="btnThumbnail" Grid.Row="1" Grid.Column="1" MaxWidth="{Binding Path=MaxWidth, ElementName=imgThumbnail}" MaxHeight="120" Click="Thumbnail_Click" MouseDoubleClick="Thumbnail_DoubleClick"/>
-        <Rectangle x:Name="nameBackground" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Height="20" Margin="0,3,0,0" Width="{Binding Path=ActualWidth, ElementName=nameDisplay}" VerticalAlignment="Top" RadiusX="7" RadiusY="7"/>
-        <Label x:Name="nameDisplay" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Content="{Binding Text, ElementName=imgThumbnail}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="12" FontWeight="Bold"/>
+        <Rectangle x:Name="nameBackground" Style="{StaticResource RectThumbnailImageStyle}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Height="20" Margin="0,3,0,0" Width="{Binding Path=ActualWidth, ElementName=nameDisplay}" VerticalAlignment="Top" RadiusX="7" RadiusY="7"/>
+        <Label x:Name="nameDisplay" Style="{StaticResource LabelThumbnailImageStyle}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Content="{Binding Text, ElementName=imgThumbnail}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="12" FontWeight="Bold"/>
     </Grid>
 </UserControl>
