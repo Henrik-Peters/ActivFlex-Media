@@ -288,6 +288,8 @@ namespace ActivFlex
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            vm.loadThumbsInterrupt = true;
+
             //Save the current window layout when restoring is active
             if (vm.Config.NormalStartup == WindowStartupState.RestoreAll || vm.Config.NormalStartup == WindowStartupState.RestoreSizeCentered ||
                 vm.Config.PresenterStartup == WindowStartupState.RestoreAll || vm.Config.PresenterStartup == WindowStartupState.RestoreSizeCentered) {

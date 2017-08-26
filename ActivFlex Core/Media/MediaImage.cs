@@ -82,20 +82,24 @@ namespace ActivFlex.Media
         {
             if (File.Exists(Path)) {
                 try {
-                    this.Thumbnail = new BitmapImage();
-                    this.Thumbnail.BeginInit();
-                    this.Thumbnail.UriSource = new Uri(@Path);
-                    this.Thumbnail.DecodePixelWidth = DecodePixelWidth;
-                    this.Thumbnail.CacheOption = BitmapCacheOption.OnLoad;
-                    this.Thumbnail.EndInit();
+                    BitmapImage thumbnail = new BitmapImage();
+                    thumbnail.BeginInit();
+                    thumbnail.UriSource = new Uri(@Path);
+                    thumbnail.DecodePixelWidth = DecodePixelWidth;
+                    thumbnail.CacheOption = BitmapCacheOption.OnLoad;
+                    thumbnail.EndInit();
+
+                    if (thumbnail.CanFreeze) {
+                        thumbnail.Freeze();
+                        this.Thumbnail = thumbnail;
+                    }
 
                 } catch {
-                    this.Thumbnail = null;
                     this.LoadState = ImageLoadState.Error;
                 }
             }
 
-            return this.Thumbnail;
+            return Thumbnail;
         }
 
         /// <summary>

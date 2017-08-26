@@ -16,11 +16,15 @@
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
 using System;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Collections.ObjectModel;
 using static System.IO.Path;
 using ActivFlex.Configuration;
@@ -36,6 +40,21 @@ namespace ActivFlex.ViewModels
     /// </summary>
     public class MainViewModel : ViewModel
     {
+        /// <summary>
+        /// This thread will load the thumbnails from the loading queue.
+        /// </summary>
+        Thread thumbnailThread;
+
+        /// <summary>
+        /// Enqueue thumbnails to set them up for loading.
+        /// </summary>
+        Queue<IThumbnailViewModel> loadingQueue = new Queue<IThumbnailViewModel>();
+
+        /// <summary>
+        /// Interrupt flag to stop the thumbnail loading thread.
+        /// </summary>
+        public volatile bool loadThumbsInterrupt = true;
+
         #region Properties
         private ObservableCollection<NavItem> _navItems;
         public ObservableCollection<NavItem> NavItems {
@@ -52,7 +71,14 @@ namespace ActivFlex.ViewModels
         private ObservableCollection<IThumbnailViewModel> _fileSystemItems;
         public ObservableCollection<IThumbnailViewModel> FileSystemItems {
             get => _fileSystemItems;
-            set => SetProperty(ref _fileSystemItems, value);
+            set {
+                if (_fileSystemItems != value) {
+                    _fileSystemItems = value;
+                    _fileSystemItems.CollectionChanged += FileSystemItems_CollectionChanged;
+                    FileSystemItems_CollectionChanged(this, null);
+                    NotifyPropertyChanged();
+                }
+            }
         }
 
         private TranslateManager _translateManager;
@@ -236,6 +262,9 @@ namespace ActivFlex.ViewModels
             this.ActiveImages = new MediaImage[0];
             this.ImagePresentActive = false;
 
+            //Threads
+            this.thumbnailThread = new Thread(LoadThumbnails);
+
             //Commands
             this.ToggleNavVisibility = new RelayCommand(() => NavVisible = !NavVisible);
             this.BrowseFileSystem = new RelayCommand<string>(BrowseToPath);
@@ -259,6 +288,42 @@ namespace ActivFlex.ViewModels
         }
 
         /// <summary>
+        /// Update the thumbnail loading queue when
+        /// the FileSystemItems collection changed.
+        /// </summary>
+        private void FileSystemItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            loadThumbsInterrupt = true;
+            if (thumbnailThread.IsAlive)
+                thumbnailThread.Join();
+
+            loadingQueue.Clear();
+            
+            foreach (var item in FileSystemItems.Where(item => item is ImageItemViewModel)) {
+                loadingQueue.Enqueue(item);
+            }
+
+            thumbnailThread = new Thread(LoadThumbnails);
+            loadThumbsInterrupt = false;
+            thumbnailThread.Start();
+        }
+
+        /// <summary>
+        /// This method will be executed by the thumbnail loading thread.
+        /// The loaded thumbnails will be stored in the related view models.
+        /// </summary>
+        private void LoadThumbnails()
+        {
+            while (!loadThumbsInterrupt && loadingQueue.Any()) {
+                IThumbnailViewModel viewModelItem = loadingQueue.Dequeue();
+
+                if (viewModelItem is ImageItemViewModel item) {
+                    item.LoadThumbnail(512);
+                }
+            }
+        }
+
+        /// <summary>
         /// Run the FileSystemBrowser for the provided path.
         /// This will also create the related view model
         /// implementation for the object and store them 
@@ -276,9 +341,7 @@ namespace ActivFlex.ViewModels
                         return new DirectoryItemViewModel(directoryItem);
                     }
 
-                    var mediaItem = item as MediaImage;
-                    mediaItem.LoadThumbnail(512);
-                    return new ImageItemViewModel(mediaItem);
+                    return new ImageItemViewModel((MediaImage)item);
                 })
             );
         }
