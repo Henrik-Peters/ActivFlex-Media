@@ -230,6 +230,8 @@
                                                  Height="150"
                                                  CanSelect="False"
                                                  Proxy="{Binding}"
+                                                 Text="{Binding Name}"
+                                                 DefaultContent="{StaticResource PictureIcon}"
                                                  Click="{Binding DataContext.LaunchPresenter,
                                                          RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                                                  Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">

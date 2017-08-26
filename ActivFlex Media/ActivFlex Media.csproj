@@ -75,6 +75,7 @@
       <DependentUpon>SimpleThumbnail.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BooleanVisibilityConverter.cs" />
+    <Compile Include="Converters\IsNullConverter.cs" />
     <Compile Include="Converters\NavItemIconConverter.cs" />
     <Compile Include="Localization\Language.cs" />
     <Compile Include="Localization\TranslateManager.cs" />

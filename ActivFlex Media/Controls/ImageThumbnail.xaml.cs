@@ -128,13 +128,42 @@ namespace ActivFlex.Controls
         /// <summary>
         /// Gets or sets the represented object for this
         /// thumbnail control. The proxy object should never
-        /// be empty and will be set by the constructor.
-        /// The proxy will be passed as a command parameter.
+        /// be empty. The proxy will be used in the commands.
         /// </summary>
         [Bindable(true)]
         public IFileObject Proxy {
             get => (IFileObject)this.GetValue(ProxyProperty);
             set => this.SetValue(ProxyProperty, value);
+        }
+
+        /// <summary>
+        /// Identifies the DefaultContent dependency property
+        /// </summary>
+        public static readonly DependencyProperty DefaultContentProperty = DependencyProperty.Register(
+            "DefaultContent", typeof(object), typeof(ImageThumbnail), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the content resource to be displayed
+        /// when no image is set (default content of the control).
+        /// </summary>
+        public object DefaultContent {
+            get => this.GetValue(DefaultContentProperty);
+            set => this.SetValue(DefaultContentProperty, value);
+        }
+
+        /// <summary>
+        /// Identifies the ImageProperty dependency property
+        /// </summary>
+        public static readonly DependencyProperty ImageProperty = DependencyProperty.Register(
+            "Image", typeof(BitmapSource), typeof(ImageThumbnail), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the image to the displayed as thumbnail.
+        /// The default content will be hidden after setting an image.
+        /// </summary>
+        public BitmapSource Image {
+            get => (BitmapSource)this.GetValue(ImageProperty);
+            set => this.SetValue(ImageProperty, value);
         }
 
         #endregion
@@ -167,15 +196,8 @@ namespace ActivFlex.Controls
 
         private static void ProxyProperty_PropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            var vm = (ImageThumbnail)obj;
-            vm.Text = vm.Proxy.Name;
-
-            if (vm.Proxy is IMediaObject) {
-                var mediaObject = vm.Proxy as IMediaObject;
-
-                BitmapImage thumbnail = mediaObject.LoadThumbnail(512);
-                vm.SetThumbnail(thumbnail);
-            }
+            var control = (ImageThumbnail)obj;
+            control.Text = control.Proxy.Name;
         }
 
         /// <summary>
@@ -194,7 +216,7 @@ namespace ActivFlex.Controls
         /// <param name="image">Data of the thumbnail image</param>
         public void SetThumbnail(BitmapSource image)
         {
-            GetImageControl().Source = image;
+            this.Image = image;
         }
 
         #region Helper Functions

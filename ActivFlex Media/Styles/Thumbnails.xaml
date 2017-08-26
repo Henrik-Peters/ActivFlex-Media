@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Converts="clr-namespace:ActivFlex.Converters">
+    
     <!-- Style resources for thumbnail displaying -->
     <SolidColorBrush x:Key="Thumbnail.Background.Color" Color="Transparent"/>
     <SolidColorBrush x:Key="Thumbnail.Border.Color" Color="Black"/>
@@ -18,6 +19,9 @@
         <GradientStop Color="#767575" Offset="0" />
         <GradientStop Color="#393939" Offset="1.0" />
     </LinearGradientBrush>
+
+    <!-- Converter instances -->
+    <Converts:IsNullConverter x:Key="IsNullConverter"/>
 
     <!-- Style definitions for the simple thumbnail button -->
     <Style x:Key="thumbnailButton" TargetType="{x:Type Button}">
@@ -53,15 +57,31 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <Border Name="bd"
+                                    Background="{StaticResource Thumbnail.Directory.Background}"
                                     BorderThickness="{StaticResource Thumbnail.Border.Thickness}"
                                     BorderBrush="{StaticResource Thumbnail.Border.Color}">
-                                
-                                <Image Name="imgDisplay" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+
+                                <Grid>
+                                    <ContentPresenter Name="defaultContent" Content="{Binding DefaultContent, ElementName=imgThumbnail}"
+                                                      VerticalAlignment="Center" HorizontalAlignment="Center" Width="90" Height="90"
+                                                      Margin="30,15,30,15"/>
+
+                                    <Image Name="imgDisplay" OpacityMask="White" Source="{Binding Image, ElementName=imgThumbnail}" 
+                                           Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                                </Grid>
                             </Border>
 
                             <!-- Thumbnail trigger definitions -->
                             <!-- Change the order of the triggers to prevent hovering on a selected state -->
                             <ControlTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Image, ElementName=imgThumbnail, Converter={StaticResource IsNullConverter}}" Value="False">
+                                    <Setter Property="Background" TargetName="bd" Value="{x:Null}"/>
+                                    <Setter Property="Visibility" TargetName="defaultContent" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Image, ElementName=imgThumbnail, Converter={StaticResource IsNullConverter}}" Value="True">
+                                    <Setter Property="Background" TargetName="bd" Value="{StaticResource Thumbnail.Directory.Background}"/>
+                                    <Setter Property="Visibility" TargetName="defaultContent" Value="Visible"/>
+                                </DataTrigger>
                                 <DataTrigger Binding="{Binding IsSelected, ElementName=imgThumbnail}" Value="True">
                                     <Setter Property="BorderBrush" TargetName="bd" Value="{StaticResource Thumbnail.Border.Color.Selected}"/>
                                 </DataTrigger>
