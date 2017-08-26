@@ -318,7 +318,7 @@ namespace ActivFlex.ViewModels
                 IThumbnailViewModel viewModelItem = loadingQueue.Dequeue();
 
                 if (viewModelItem is ImageItemViewModel item) {
-                    item.LoadThumbnail(512);
+                    item.LoadThumbnail(Config.ThumbnailDecodeSize);
                 }
             }
         }

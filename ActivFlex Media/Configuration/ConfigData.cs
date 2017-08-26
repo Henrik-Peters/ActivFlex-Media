@@ -43,7 +43,8 @@ namespace ActivFlex.Configuration
             WindowStartupState.Default, 
             WindowStartupState.Fullscreen,
             WindowRestoreState.Default,
-            1640, 835, 200, 100
+            1640, 835, 200, 100,
+            512
         );
 
         /// <summary>
@@ -108,6 +109,11 @@ namespace ActivFlex.Configuration
         public double RestoreTop { get; set; }
 
         /// <summary>
+        /// The DecodePixelWidth for thumbnail images.
+        /// </summary>
+        public int ThumbnailDecodeSize { get; set; }
+
+        /// <summary>
         /// Create a new dataset for a concrete configuration. 
         /// All properties should only be set with this constructor.
         /// </summary>
@@ -119,8 +125,10 @@ namespace ActivFlex.Configuration
         /// <param name="RestoreHeight">Height of the window used for restoring</param>
         /// <param name="RestoreLeft">Left position of the window used for restoring</param>
         /// <param name="RestoreTop">Top position of the window used for restoring</param>
+        /// <param name="ThumbnailDecodeSize">The width size to use for thumbnail images</param>
         public ConfigData(string Username, Language Language, WindowStartupState NormalStartup, WindowStartupState PresenterStartup, 
-                          WindowRestoreState RestoreState, double RestoreWidth, double RestoreHeight, double RestoreLeft, double RestoreTop)
+                          WindowRestoreState RestoreState, double RestoreWidth, double RestoreHeight, double RestoreLeft, double RestoreTop,
+                          int ThumbnailDecodeSize)
         {
             this.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.Username = Username;
@@ -132,6 +140,7 @@ namespace ActivFlex.Configuration
             this.RestoreHeight = RestoreHeight;
             this.RestoreLeft = RestoreLeft;
             this.RestoreTop = RestoreTop;
+            this.ThumbnailDecodeSize = ThumbnailDecodeSize;
         }
     }
 }

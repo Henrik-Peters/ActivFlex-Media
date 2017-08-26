@@ -306,7 +306,7 @@ namespace ActivFlex
                 }
 
                 ConfigProvider.SaveConfig(new ConfigData(config.Username, config.Language, config.NormalStartup, config.PresenterStartup, restoreState,
-                                                         this.Width, this.Height, this.Left, this.Top));
+                                                         this.Width, this.Height, this.Left, this.Top, config.ThumbnailDecodeSize));
             }
         }
 
