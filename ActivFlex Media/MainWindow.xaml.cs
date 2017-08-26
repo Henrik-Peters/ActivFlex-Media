@@ -216,6 +216,7 @@ namespace ActivFlex
                     if (StartupOptions.ImagePaths.Count == 1) {
                         //Single image provided
                         MediaImage firstImage = vm.FileSystemItems
+                            .Select(item => item.Proxy)
                             .Where(item => item.Path == StartupOptions.ImagePaths[0])
                             .Cast<MediaImage>()
                             .First();

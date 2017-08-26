@@ -49,8 +49,8 @@ namespace ActivFlex.ViewModels
             set => SetProperty(ref _navVisible, value);
         }
 
-        private ObservableCollection<IFileObject> _fileSystemItems;
-        public ObservableCollection<IFileObject> FileSystemItems {
+        private ObservableCollection<IThumbnailViewModel> _fileSystemItems;
+        public ObservableCollection<IThumbnailViewModel> FileSystemItems {
             get => _fileSystemItems;
             set => SetProperty(ref _fileSystemItems, value);
         }
@@ -238,11 +238,7 @@ namespace ActivFlex.ViewModels
 
             //Commands
             this.ToggleNavVisibility = new RelayCommand(() => NavVisible = !NavVisible);
-            this.BrowseFileSystem = new RelayCommand<string>(path => {
-                this.Path = path;
-                FileSystemItems = new ObservableCollection<IFileObject>(FileSystemBrowser.Browse(path));
-            });
-            
+            this.BrowseFileSystem = new RelayCommand<string>(BrowseToPath);
             this.ResetZoom = new RelayCommand(() => Zoom = 1.0);
             this.IncreaseZoom = new RelayCommand(() => Zoom += ZoomDelta);
             this.DecreaseZoom = new RelayCommand(() => Zoom -= ZoomDelta);
@@ -263,6 +259,31 @@ namespace ActivFlex.ViewModels
         }
 
         /// <summary>
+        /// Run the FileSystemBrowser for the provided path.
+        /// This will also create the related view model
+        /// implementation for the object and store them 
+        /// in the FileSystemItems collection.
+        /// </summary>
+        /// <param name="path">Filesystem path for the browser</param>
+        private void BrowseToPath(string path)
+        {
+            this.Path = path;
+            FileSystemItems = new ObservableCollection<IThumbnailViewModel>(FileSystemBrowser.Browse(path)
+                .Where(item => item is DirectoryItem || item is MediaImage)
+                .Select<IFileObject, IThumbnailViewModel>(item => {
+
+                    if (item is DirectoryItem directoryItem) {
+                        return new DirectoryItemViewModel(directoryItem);
+                    }
+
+                    var mediaItem = item as MediaImage;
+                    mediaItem.LoadThumbnail(512);
+                    return new ImageItemViewModel(mediaItem);
+                })
+            );
+        }
+
+        /// <summary>
         /// Start the image presentation mode with an image
         /// from the current FileSystemItems collection. 
         /// All Images will be stored in the ActiveImage collection 
@@ -275,6 +296,7 @@ namespace ActivFlex.ViewModels
 
             //Store all images of the parent location in the active media collection
             ActiveImages = FileSystemItems
+                .Select(item => item.Proxy)
                 .Where(item => item is MediaImage)
                 .Cast<MediaImage>()
                 .ToArray();
@@ -291,7 +313,7 @@ namespace ActivFlex.ViewModels
         private void PresentMediaImage(MediaImage mediaImage)
         {
             if (mediaImage.LoadState == ImageLoadState.Waiting) {
-                mediaImage.LoadImageSync();
+                mediaImage.LoadImage();
             }
 
             if (mediaImage.LoadState == ImageLoadState.Successful) {
@@ -336,7 +358,7 @@ namespace ActivFlex.ViewModels
 
                 //Check if the image is still waiting for loading
                 if (nextImage?.LoadState == ImageLoadState.Waiting) {
-                    nextImage.LoadImageSync();
+                    nextImage.LoadImage();
                 }
 
             } while (!(nextImage?.LoadState == ImageLoadState.Successful));

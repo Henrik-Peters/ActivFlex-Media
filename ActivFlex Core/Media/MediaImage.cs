@@ -17,8 +17,6 @@
 #endregion
 using System;
 using System.IO;
-using System.Threading.Tasks;
-using System.Windows.Threading;
 using System.Windows.Media.Imaging;
 
 namespace ActivFlex.Media
@@ -105,7 +103,7 @@ namespace ActivFlex.Media
         /// the current thread until the image is loaded
         /// sucessfully or loading has failed.
         /// </summary>
-        public void LoadImageSync()
+        public void LoadImage()
         {
             if (!File.Exists(Path)) {
                 this.LoadState = ImageLoadState.InvalidPath;
@@ -127,29 +125,6 @@ namespace ActivFlex.Media
                     this.LoadState = ImageLoadState.Error;
                 }
             }
-        }
-
-        /// <summary>
-        /// Load the image data. The loading process will
-        /// not block the current thread. To check the loading
-        /// process use <see cref="LoadState"/>. The Image will
-        /// freeze after loading to allow access from other threads.
-        /// </summary>
-        /// <param name="dispatcher">Dispatcher of the Thread to execute onSuccessfulLoad</param>
-        /// <param name="onSuccessfulLoad">Action to perform when loading has completed</param>
-        public void LoadImageAsync(Dispatcher dispatcher, Action<BitmapImage> onSuccessfulLoad)
-        {
-            Task.Factory.StartNew(() => {
-                LoadImageSync();
-
-                if (Image.CanFreeze && this.LoadState == ImageLoadState.Successful) {
-                    Image.Freeze();
-                    dispatcher.BeginInvoke(onSuccessfulLoad, Image);
-
-                } else {
-                    this.LoadState = ImageLoadState.Error;
-                }
-            });
         }
     }
 }

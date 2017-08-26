@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:ActivFlex.Controls"
         xmlns:Converters="clr-namespace:ActivFlex.Converters"
-        xmlns:Media="clr-namespace:ActivFlex.Media;assembly=ActivFlex-Core"
-        xmlns:FileSystem="clr-namespace:ActivFlex.FileSystem;assembly=ActivFlex-Core"
+        xmlns:ViewModels="clr-namespace:ActivFlex.ViewModels"
         xmlns:Presentation="clr-namespace:ActivFlex.Presentation;assembly=ActivFlex-Presenter"
         mc:Ignorable="d"
         Title="ActivFlex Media" Height="835" Width="1640"
@@ -199,16 +198,12 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.Resources>
-
-                    <DataTemplate DataType="{x:Type FileSystem:FileItem}">
-                        <!-- No display for normal files -->
-                    </DataTemplate>
-
+                    
                     <!-- Directory template -->
-                    <DataTemplate DataType="{x:Type FileSystem:DirectoryItem}">
+                    <DataTemplate DataType="{x:Type ViewModels:DirectoryItemViewModel}">
                         <Controls:DirectoryThumbnail Margin="20,5,20,20"
                                                      CanSelect="False"
-                                                     Proxy="{Binding}"
+                                                     Proxy="{Binding Proxy}"
                                                      Click="{Binding DataContext.BrowseFileSystem,
                                                              RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                                                      Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
@@ -224,13 +219,14 @@
                     </DataTemplate>
 
                     <!-- MediaImage template -->
-                    <DataTemplate DataType="{x:Type Media:MediaImage}">
+                    <DataTemplate DataType="{x:Type ViewModels:ImageItemViewModel}">
                         <Controls:ImageThumbnail Margin="20,5,20,20"
                                                  Width="150"
                                                  Height="150"
                                                  CanSelect="False"
-                                                 Proxy="{Binding}"
+                                                 Proxy="{Binding Proxy}"
                                                  Text="{Binding Name}"
+                                                 Image="{Binding ThumbImage}"
                                                  DefaultContent="{StaticResource PictureIcon}"
                                                  Click="{Binding DataContext.LaunchPresenter,
                                                          RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"

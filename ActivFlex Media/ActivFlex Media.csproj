@@ -83,6 +83,9 @@
     <Compile Include="Navigation\GroupNavItem.cs" />
     <Compile Include="Navigation\LogicalDriveNavItem.cs" />
     <Compile Include="Navigation\NavItem.cs" />
+    <Compile Include="ViewModels\DirectoryItemViewModel.cs" />
+    <Compile Include="ViewModels\ImageItemViewModel.cs" />
+    <Compile Include="ViewModels\IThumbnailViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
