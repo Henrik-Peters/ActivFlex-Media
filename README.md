@@ -3,7 +3,7 @@
 ActivFlex can be used for various media functionalities like managing, displaying or grouping media items.
 At the moment this is an early version and just provides some basic features like image browsing.
 
-**Versionstatus Development: 0.1**
+**Latest released version: 0.2**
 
 ## Prerequisites / Tools
 
@@ -30,6 +30,16 @@ most of the WPF markup files (window descriptions, resource dictionaries).
 #### ActivFlex Presenter
 All logic that is related to presenting media items (like displaying images,
 playing music) should be placed in this module.
+
+## Configuration
+
+The application will use a folder called "ActivFlex Media" located in the users AppData roaming directory.
+Only this folder contains configuration data and the application should not use other locations or methods
+like the registry or some kind of hidden files.
+
+The ConfigData-Class will be serialized into a XML-File and provide the configuration data storage. This file
+may be changed as long the GUI does not provide the functionality to change the configuration or misses some
+records of the configuration. When the configuration file is lost a default configuration will be used instead.
 
 ## Miscellaneous
 
