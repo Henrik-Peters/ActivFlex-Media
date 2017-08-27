@@ -112,20 +112,23 @@ namespace ActivFlex.Media
             if (!File.Exists(Path)) {
                 this.LoadState = ImageLoadState.InvalidPath;
             } else {
-
                 try {
                     this.LoadState = ImageLoadState.Loading;
 
-                    this.Image = new BitmapImage();
-                    this.Image.BeginInit();
-                    this.Image.UriSource = new Uri(@Path);
-                    this.Image.CacheOption = BitmapCacheOption.OnLoad;
-                    this.Image.EndInit();
-                    
+                    BitmapImage image = new BitmapImage();
+                    image.BeginInit();
+                    image.UriSource = new Uri(@Path);
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.EndInit();
+
                     this.LoadState = ImageLoadState.Successful;
 
+                    if (image.CanFreeze) {
+                        image.Freeze();
+                        this.Image = image;
+                    }
+
                 } catch {
-                    this.Image = null;
                     this.LoadState = ImageLoadState.Error;
                 }
             }
