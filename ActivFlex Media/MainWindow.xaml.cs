@@ -289,6 +289,7 @@ namespace ActivFlex
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             vm.loadThumbsInterrupt = true;
+            vm.preloadInterrupt = true;
 
             //Save the current window layout when restoring is active
             if (vm.Config.NormalStartup == WindowStartupState.RestoreAll || vm.Config.NormalStartup == WindowStartupState.RestoreSizeCentered ||
@@ -306,7 +307,7 @@ namespace ActivFlex
                 }
 
                 ConfigProvider.SaveConfig(new ConfigData(config.Username, config.Language, config.NormalStartup, config.PresenterStartup, restoreState,
-                                                         this.Width, this.Height, this.Left, this.Top, config.ThumbnailDecodeSize));
+                                                         this.Width, this.Height, this.Left, this.Top, config.ThumbnailDecodeSize, config.PreloadPresenterImages));
             }
         }
 

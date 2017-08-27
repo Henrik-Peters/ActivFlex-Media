@@ -16,13 +16,11 @@
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Collections.ObjectModel;
@@ -54,6 +52,21 @@ namespace ActivFlex.ViewModels
         /// Interrupt flag to stop the thumbnail loading thread.
         /// </summary>
         public volatile bool loadThumbsInterrupt = true;
+
+        /// <summary>
+        /// Thread for preloading images to the left side of the active image.
+        /// </summary>
+        Thread leftPreloadThread;
+
+        /// <summary>
+        /// Thread for preloading images to the right side of the active image.
+        /// </summary>
+        Thread rightPreloadThread;
+
+        /// <summary>
+        /// Interrupt flag to stop the image preloading threads.
+        /// </summary>
+        public volatile bool preloadInterrupt = true;
 
         #region Properties
         private ObservableCollection<NavItem> _navItems;
@@ -125,7 +138,28 @@ namespace ActivFlex.ViewModels
         private bool _imagePresentActive;
         public bool ImagePresentActive {
             get => _imagePresentActive;
-            set => SetProperty(ref _imagePresentActive, value);
+            set {
+                if (_imagePresentActive != value) {
+                    _imagePresentActive = value;
+                    NotifyPropertyChanged();
+
+                    //Image preloading
+                    if (Config.PreloadPresenterImages) {
+                        if (value) {
+                            preloadInterrupt = false;
+
+                            leftPreloadThread = new Thread(() => PreloadActiveImages(imageIndex, false));
+                            rightPreloadThread = new Thread(() => PreloadActiveImages(imageIndex, true));
+
+                            leftPreloadThread.Start();
+                            rightPreloadThread.Start();
+
+                        } else {
+                            preloadInterrupt = true;
+                        }
+                    }
+                }
+            }
         }
 
         private ImageSource _imagePresentData;
@@ -285,6 +319,37 @@ namespace ActivFlex.ViewModels
             this.PreviousImage = new RelayCommand(() => ChangeActiveImage(false));
             this.LaunchPresenter = new RelayCommand<MediaImage>(LaunchImagePresenter);
             this.PresentImage = new RelayCommand<MediaImage>(PresentMediaImage);
+        }
+
+        /// <summary>
+        /// Preload the images of the ActiveImages array in
+        /// a specific direction based on the startIndex.
+        /// </summary>
+        /// <param name="startIndex">Index of the image to start from</param>
+        /// <param name="incrementIndex">True for loading images to the right side</param>
+        private void PreloadActiveImages(int startIndex, bool incrementIndex)
+        {
+            if (incrementIndex) {
+                for (int i = startIndex; !preloadInterrupt && i < ActiveImages.Length; i++) {
+                    LoadImage(i);
+                }
+            } else {
+                for (int i = startIndex; !preloadInterrupt && i > 0; i--) {
+                    LoadImage(i);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Try to load an image with a specific 
+        /// index in the ActiveImages collection.
+        /// </summary>
+        /// <param name="index">Index of the image</param>
+        private void LoadImage(int index)
+        {
+            if (ActiveImages[index].LoadState == ImageLoadState.Waiting) {
+                ActiveImages[index].LoadImage();
+            }
         }
 
         /// <summary>
