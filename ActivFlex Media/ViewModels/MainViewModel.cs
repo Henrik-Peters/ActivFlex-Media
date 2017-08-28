@@ -71,12 +71,12 @@ namespace ActivFlex.ViewModels
         /// <summary>
         /// Used for synchronization with the left preload thread.
         /// </summary>
-        private static readonly object preloadLeftSync = new object();
+        private readonly object preloadLeftSync = new object();
 
         /// <summary>
         /// Used for synchronization with the right preload thread.
         /// </summary>
-        private static readonly object preloadRightSync = new object();
+        private readonly object preloadRightSync = new object();
 
         /// <summary>
         /// The number of images that will be preloaded to 
@@ -445,10 +445,18 @@ namespace ActivFlex.ViewModels
 
         /// <summary>
         /// This method will be executed by the left preload thread.
+        /// Images out of the loading range will be disposed.
         /// </summary>
         private void PreloadLeftImages()
         {
             while (!preloadInterrupt) {
+                //Dispose images out of the loading range
+                foreach (MediaImage image in RightImages().Take(2 * preloadRange - preloadInitDistance).Skip(preloadRange)) {
+                    if (image.LoadState == ImageLoadState.Successful) {
+                        image.DisposeImage();
+                    }
+                }
+
                 //Preload images to the left side
                 foreach (MediaImage image in LeftImages().Take(preloadRange)) {
                     if (preloadInterrupt) break;
@@ -468,10 +476,18 @@ namespace ActivFlex.ViewModels
 
         /// <summary>
         /// This method will be executed by the right preload thread.
+        /// Images out of the loading range will be disposed.
         /// </summary>
         private void PreloadRightImages()
         {
             while (!preloadInterrupt) {
+                //Dispose images out of the loading range
+                foreach (MediaImage image in LeftImages().Take(2 * preloadRange - preloadInitDistance).Skip(preloadRange)) {
+                    if (image.LoadState == ImageLoadState.Successful) {
+                        image.DisposeImage();
+                    }
+                }
+
                 //Preload images to the right side
                 foreach (MediaImage image in RightImages().Take(preloadRange)) {
                     if (preloadInterrupt) break;

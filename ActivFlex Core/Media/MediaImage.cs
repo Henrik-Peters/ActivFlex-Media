@@ -133,5 +133,21 @@ namespace ActivFlex.Media
                 }
             }
         }
+
+        /// <summary>
+        /// Try to set the image data to null. This will
+        /// also reset the loading state to waiting.
+        /// </summary>
+        /// <returns>True when image data were removed</returns>
+        public bool DisposeImage()
+        {
+            if (this.Image != null) {
+                this.Image = null;
+                this.LoadState = ImageLoadState.Waiting;
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 }
