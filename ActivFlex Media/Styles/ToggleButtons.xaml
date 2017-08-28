@@ -2,6 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
+    <!-- Style resources for the media bar toggle button -->
+    <SolidColorBrush x:Key="MediaBarButton.Default.Color" Color="#D2D2D9"/>
+    <SolidColorBrush x:Key="MediaBarButton.Hover.Color" Color="#61B0E0"/>
+    <SolidColorBrush x:Key="MediaBarButton.Pressed.Color" Color="#1276FF"/>
+
     <!-- Style resources for the nav tree toggle button -->
     <sys:Double x:Key="ToggleNavButton.Circle.Radius">3</sys:Double>
     <sys:Double x:Key="ToggleNavButton.Border.Thickness">0.2</sys:Double>
@@ -9,7 +14,7 @@
     <SolidColorBrush x:Key="ToggleNavButton.Border.Color" Color="#C5C8D0"/>
     <SolidColorBrush x:Key="ToggleNavButton.Hover.Color" Color="#6EC8FF"/>
     <SolidColorBrush x:Key="ToggleNavButton.Pressed.Color" Color="#0064FF"/>
-
+    
     <!-- Style definitions for the nav tree toggle button -->
     <Style x:Key="toggleNavButton" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -61,6 +66,43 @@
                             <Setter Property="Fill" TargetName="CircleTop" Value="{StaticResource ToggleNavButton.Pressed.Color}"/>
                             <Setter Property="Fill" TargetName="CircleCenter" Value="{StaticResource ToggleNavButton.Pressed.Color}"/>
                             <Setter Property="Fill" TargetName="CircleBot" Value="{StaticResource ToggleNavButton.Pressed.Color}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Style definitions for the media bar toggle button -->
+    <Style x:Key="ToggleMediaBarStyle" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Path Name="ButtonPath" StrokeThickness="1" Data="M 3 3 L 10 17 17 3 z"
+                          Stroke="{StaticResource MediaBarButton.Default.Color}"
+                          Fill="{StaticResource MediaBarButton.Default.Color}"/>
+                    
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding MediaBarVisible}" Value="False">
+                            <Setter Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="180"/>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <Trigger Property="IsDefaulted" Value="true">
+                            <Setter Property="Fill" TargetName="ButtonPath" Value="{StaticResource MediaBarButton.Default.Color}"/>
+                            <Setter Property="Stroke" TargetName="ButtonPath" Value="{StaticResource MediaBarButton.Default.Color}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Fill" TargetName="ButtonPath" Value="{StaticResource MediaBarButton.Hover.Color}"/>
+                            <Setter Property="Stroke" TargetName="ButtonPath" Value="{StaticResource MediaBarButton.Hover.Color}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Fill" TargetName="ButtonPath" Value="{StaticResource MediaBarButton.Pressed.Color}"/>
+                            <Setter Property="Stroke" TargetName="ButtonPath" Value="{StaticResource MediaBarButton.Pressed.Color}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
