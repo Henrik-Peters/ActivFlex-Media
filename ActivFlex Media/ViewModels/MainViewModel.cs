@@ -68,6 +68,66 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public volatile bool preloadInterrupt = true;
 
+        /// <summary>
+        /// Used for synchronization with the left preload thread.
+        /// </summary>
+        private static readonly object preloadLeftSync = new object();
+
+        /// <summary>
+        /// Used for synchronization with the right preload thread.
+        /// </summary>
+        private static readonly object preloadRightSync = new object();
+
+        /// <summary>
+        /// The number of images that will be preloaded to 
+        /// the left and right side of the active image.
+        /// </summary>
+        private const int preloadRange = 10;
+
+        /// <summary>
+        /// When an unloaded image is closer than this value
+        /// to the active image a new preload will start.
+        /// </summary>
+        private const int preloadInitDistance = 2;
+
+        /// <summary>
+        /// Variable for the image index property.
+        /// </summary>
+        private volatile int imageIndex = 0;
+
+        /// <summary>
+        /// Index of the currently presented image.
+        /// </summary>
+        private int ImageIndex {
+            get => imageIndex;
+            set {
+                imageIndex = value;
+
+                //Check if the image preloading must be started
+                if (Config.PreloadPresenterImages) {
+                    foreach (MediaImage image in RightImages().Take(preloadInitDistance + 1)) {
+                        if (image.LoadState == ImageLoadState.Waiting) {
+
+                            lock (preloadRightSync) {
+                                Monitor.Pulse(preloadRightSync);
+                            }
+                            break;
+                        }
+                    }
+
+                    foreach (MediaImage image in LeftImages().Take(preloadInitDistance + 1)) {
+                        if (image.LoadState == ImageLoadState.Waiting) {
+                            
+                            lock (preloadLeftSync) {
+                                Monitor.Pulse(preloadLeftSync);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         #region Properties
         private ObservableCollection<NavItem> _navItems;
         public ObservableCollection<NavItem> NavItems {
@@ -146,13 +206,52 @@ namespace ActivFlex.ViewModels
             get => _imagePresentData;
             set => SetProperty(ref _imagePresentData, value);
         }
-
-        private int imageIndex = 0;
-
+        
         private MediaImage[] _activeImages;
         public MediaImage[] ActiveImages {
             get => _activeImages;
-            set => SetProperty(ref _activeImages, value);
+            set {
+                StopPreloadingThreads();
+                SetProperty(ref _activeImages, value);
+            }
+        }
+
+        /// <summary>
+        /// Iterate over all images to the left side of the active image.
+        /// When an overflow happens the iteration will continue at the end
+        /// of the array. The iteration will start on the first image to the left
+        /// side of the active image (exclusive) and end after the active image.
+        /// </summary>
+        /// <returns>Current image of the iteration</returns>
+        IEnumerable<MediaImage> LeftImages()
+        {
+            int index = ImageIndex;
+            while (index != ImageIndex + 1) {
+                index--;
+                if (index < 0)
+                    index = _activeImages.Length - 1;
+
+                yield return _activeImages[index];
+            }
+        }
+
+        /// <summary>
+        /// Iterate over all images to the right side of the active image.
+        /// When an overflow happens the iteration will continue at the beginning
+        /// of the array. The iteration will start on the first image to the right
+        /// side of the active image (exclusive) and end before the active image.
+        /// </summary>
+        /// <returns>Current image of the iteration</returns>
+        IEnumerable<MediaImage> RightImages()
+        {
+            int index = ImageIndex;
+            while (index != ImageIndex - 1) {
+                index++;
+                if (index >= _activeImages.Length)
+                    index = 0;
+
+                yield return _activeImages[index];
+            }
         }
 
         private ConfigData _config;
@@ -304,13 +403,15 @@ namespace ActivFlex.ViewModels
         /// Start the image preloading threads. Make sure the
         /// correct image index is set before starting a preload.
         /// </summary>
-        private void StartImagePreloading()
+        private void StartPreloadingThreads()
         {
+            StopPreloadingThreads();
+
             if (Config.PreloadPresenterImages) {
                 preloadInterrupt = false;
 
-                leftPreloadThread = new Thread(() => PreloadActiveImages(imageIndex - 1, false));
-                rightPreloadThread = new Thread(() => PreloadActiveImages(imageIndex + 1, true));
+                leftPreloadThread = new Thread(PreloadLeftImages);
+                rightPreloadThread = new Thread(PreloadRightImages);
 
                 leftPreloadThread.Start();
                 rightPreloadThread.Start();
@@ -318,40 +419,73 @@ namespace ActivFlex.ViewModels
         }
 
         /// <summary>
-        /// Preload the images of the ActiveImages array in
-        /// a specific direction based on the startIndex.
-        /// This method will be executed by a preload thread.
+        /// Interrupt the preloading threads and block the current
+        /// thread until both threads have stopped their execution.
         /// </summary>
-        /// <param name="startIndex">Index of the image to start from</param>
-        /// <param name="incrementIndex">True for loading images to the right side</param>
-        private void PreloadActiveImages(int startIndex, bool incrementIndex)
+        public void StopPreloadingThreads()
         {
-            if (incrementIndex) {
-                Console.WriteLine("[" + Thread.CurrentThread.ManagedThreadId + "]: started right");
-                for (int i = startIndex; !preloadInterrupt && i < ActiveImages.Length; i++) {
-                    Console.WriteLine("Right loading index: " + i.ToString());
-                    LoadImage(i);
+            if (leftPreloadThread != null && rightPreloadThread != null) {
+                if (leftPreloadThread.IsAlive || rightPreloadThread.IsAlive) {
+
+                    preloadInterrupt = true;
+                    leftPreloadThread.Interrupt();
+                    rightPreloadThread.Interrupt();
+
+                    try {
+                        if (leftPreloadThread.IsAlive)
+                            leftPreloadThread.Join();
+
+                        if (rightPreloadThread.IsAlive)
+                            rightPreloadThread.Join();
+
+                    } catch { }
                 }
-                Console.WriteLine("[" + Thread.CurrentThread.ManagedThreadId + "]: shutdown right");
-            } else {
-                Console.WriteLine("[" + Thread.CurrentThread.ManagedThreadId + "]: started left");
-                for (int i = startIndex; !preloadInterrupt && i >= 0; i--) {
-                    Console.WriteLine("Left loading index: " + i.ToString());
-                    LoadImage(i);
-                }
-                Console.WriteLine("[" + Thread.CurrentThread.ManagedThreadId + "]: shutdown left");
             }
         }
 
         /// <summary>
-        /// Try to load an image with a specific 
-        /// index in the ActiveImages collection.
+        /// This method will be executed by the left preload thread.
         /// </summary>
-        /// <param name="index">Index of the image</param>
-        private void LoadImage(int index)
+        private void PreloadLeftImages()
         {
-            if (ActiveImages[index].LoadState == ImageLoadState.Waiting) {
-                ActiveImages[index].LoadImage();
+            while (!preloadInterrupt) {
+                //Preload images to the left side
+                foreach (MediaImage image in LeftImages().Take(preloadRange)) {
+                    if (preloadInterrupt) break;
+                    if (image.LoadState == ImageLoadState.Waiting) {
+                        image.LoadImage();
+                    }
+                }
+
+                //Wait for a new preload request or an interrupt
+                lock (preloadLeftSync) {
+                    try {
+                        Monitor.Wait(preloadLeftSync);
+                    } catch (ThreadInterruptedException) { }
+                }
+            }
+        }
+
+        /// <summary>
+        /// This method will be executed by the right preload thread.
+        /// </summary>
+        private void PreloadRightImages()
+        {
+            while (!preloadInterrupt) {
+                //Preload images to the right side
+                foreach (MediaImage image in RightImages().Take(preloadRange)) {
+                    if (preloadInterrupt) break;
+                    if (image.LoadState == ImageLoadState.Waiting) {
+                        image.LoadImage();
+                    }
+                }
+
+                //Wait for a new preload request or an interrupt
+                lock (preloadRightSync) {
+                    try {
+                        Monitor.Wait(preloadRightSync);
+                    } catch (ThreadInterruptedException) { }
+                }
             }
         }
 
@@ -432,11 +566,8 @@ namespace ActivFlex.ViewModels
                 .Cast<MediaImage>()
                 .ToArray();
 
-            imageIndex = Array.IndexOf(ActiveImages, mediaImage);
-
-            if (Config.PreloadPresenterImages) {
-                StartImagePreloading();
-            }
+            ImageIndex = Array.IndexOf(ActiveImages, mediaImage);
+            StartPreloadingThreads();
         }
 
         /// <summary>
@@ -477,18 +608,18 @@ namespace ActivFlex.ViewModels
                     return false;
 
                 //Calculate the next index and handle overflows
-                if (next) imageIndex++;
-                else imageIndex--;
+                if (next) ImageIndex++;
+                else ImageIndex--;
 
-                if (imageIndex < 0) {
-                    imageIndex = ActiveImages.Length - 1;
+                if (ImageIndex < 0) {
+                    ImageIndex = ActiveImages.Length - 1;
 
-                } else if (imageIndex >= ActiveImages.Length) {
-                    imageIndex = 0;
+                } else if (ImageIndex >= ActiveImages.Length) {
+                    ImageIndex = 0;
                 }
 
-                if (imageIndex >= 0 && imageIndex < ActiveImages.Length) {
-                    nextImage = ActiveImages[imageIndex];
+                if (ImageIndex >= 0 && ImageIndex < ActiveImages.Length) {
+                    nextImage = ActiveImages[ImageIndex];
                 }
 
                 //Check if the image is still waiting for loading
