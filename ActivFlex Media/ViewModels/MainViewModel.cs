@@ -91,6 +91,18 @@ namespace ActivFlex.ViewModels
         private const int preloadInitDistance = 2;
 
         /// <summary>
+        /// The maximum number of in memory loaded 
+        /// images when no preloading takes place.
+        /// </summary>
+        private const int maxInPlaceLoadedImages = 10;
+
+        /// <summary>
+        /// This queue holds images that can be disposed
+        /// when no preloading takes place.
+        /// </summary>
+        Queue<MediaImage> inPlaceDisposeQueue = new Queue<MediaImage>();
+
+        /// <summary>
         /// Variable for the image index property.
         /// </summary>
         private volatile int imageIndex = 0;
@@ -565,6 +577,24 @@ namespace ActivFlex.ViewModels
         }
 
         /// <summary>
+        /// Enqueue a media image for disposing when no preload is active.
+        /// When the queue will be too long images from the queue will be disposed.
+        /// </summary>
+        /// <param name="image">Image to enqueue for later disposing</param>
+        private void EnqueueInPlaceDispose(MediaImage image)
+        {
+            if (!Config.PreloadPresenterImages && image.LoadState == ImageLoadState.Successful) {
+
+                if (inPlaceDisposeQueue.Count > maxInPlaceLoadedImages) {
+                    MediaImage disposeImage = inPlaceDisposeQueue.Dequeue();
+                    disposeImage.DisposeImage();
+                }
+
+                inPlaceDisposeQueue.Enqueue(image);
+            }
+        }
+
+        /// <summary>
         /// Start the image presentation mode with an image
         /// from the current FileSystemItems collection. 
         /// All Images will be stored in the ActiveImage collection 
@@ -596,6 +626,11 @@ namespace ActivFlex.ViewModels
         {
             if (mediaImage.LoadState == ImageLoadState.Waiting) {
                 mediaImage.LoadImage();
+
+                //Dispose images for in-place-loading
+                if (!Config.PreloadPresenterImages) {
+                    EnqueueInPlaceDispose(mediaImage);
+                }
             }
 
             if (mediaImage.LoadState == ImageLoadState.Successful) {
@@ -641,6 +676,11 @@ namespace ActivFlex.ViewModels
                 //Check if the image is still waiting for loading
                 if (nextImage?.LoadState == ImageLoadState.Waiting) {
                     nextImage.LoadImage();
+
+                    //Dispose images for in-place-loading
+                    if (!Config.PreloadPresenterImages) {
+                        EnqueueInPlaceDispose(nextImage);
+                    }
                 }
 
             } while (!(nextImage?.LoadState == ImageLoadState.Successful));
