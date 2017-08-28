@@ -153,6 +153,12 @@ namespace ActivFlex.ViewModels
             set => SetProperty(ref _navVisible, value);
         }
 
+        private bool _mediaBarVisible;
+        public bool MediaBarVisible {
+            get => _mediaBarVisible;
+            set => SetProperty(ref _mediaBarVisible, value);
+        }
+
         private ObservableCollection<IThumbnailViewModel> _fileSystemItems;
         public ObservableCollection<IThumbnailViewModel> FileSystemItems {
             get => _fileSystemItems;
@@ -281,6 +287,11 @@ namespace ActivFlex.ViewModels
         public ICommand ToggleNavVisibility { get; set; }
 
         /// <summary>
+        /// Toggle the MediaBarVisible property
+        /// </summary>
+        public ICommand ToggleMediaBarVisibility { get; set; }
+
+        /// <summary>
         /// Run the file system browser with the
         /// passed path. Requires a path as argument.
         /// </summary>
@@ -360,6 +371,7 @@ namespace ActivFlex.ViewModels
 
             //Navigation items
             this.NavVisible = true;
+            this.MediaBarVisible = true;
             this.NavItems = new ObservableCollection<NavItem>(
                 new List<NavItem>(new[] {
                     new GroupNavItem(Localize["MediaLibraries"], "MediaLibraries", "MediaLibraryIcon", true, NavTag.MediaLibraryRoot),
@@ -391,6 +403,7 @@ namespace ActivFlex.ViewModels
 
             //Commands
             this.ToggleNavVisibility = new RelayCommand(() => NavVisible = !NavVisible);
+            this.ToggleMediaBarVisibility = new RelayCommand(() => MediaBarVisible = !MediaBarVisible);
             this.BrowseFileSystem = new RelayCommand<string>(BrowseToPath);
             this.ResetZoom = new RelayCommand(() => Zoom = 1.0);
             this.IncreaseZoom = new RelayCommand(() => Zoom += ZoomDelta);
