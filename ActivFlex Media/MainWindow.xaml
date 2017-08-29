@@ -57,8 +57,11 @@
             <StackPanel Height="35" WindowChrome.IsHitTestVisibleInChrome="True" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
                 <Label x:Name="lblTitleHeader" Content="ActivFlex Media" Style="{StaticResource Orkney}" FontSize="22" HorizontalAlignment="Left" Margin="5,2,0,0" VerticalAlignment="Top" FontWeight="Bold">
                     <Label.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="{Binding Localize[ShowInfo]}" Command="{Binding ShowInfo}" FontSize="18" FontFamily="Segoue UI" FontWeight="Normal"/>
+                        <ContextMenu FontSize="18" FontFamily="Segoue UI" FontWeight="Normal">
+                            <MenuItem x:Name="ShowInfoMenuItem" Header="{Binding Localize[ShowInfo]}" Command="{Binding ShowInfo}"/>
+                            <MenuItem x:Name="ToggleFullscreenMenuItem" Header="{Binding Localize[ToggleFullscreen]}" Click="ToggleFullscreenMenuItem_Click"/>
+                            <Separator/>
+                            <MenuItem x:Name="ExitMenuItem" Header="{Binding Localize[Exit]}" Command="{Binding ExitMode}"/>
                         </ContextMenu>
                     </Label.ContextMenu>
                 </Label>

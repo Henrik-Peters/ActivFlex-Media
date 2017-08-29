@@ -170,6 +170,11 @@ namespace ActivFlex
             }
         }
 
+        private void ToggleFullscreenMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeFullscreenMode(!Fullscreen);
+        }
+
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key) {
