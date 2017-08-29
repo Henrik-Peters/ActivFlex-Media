@@ -55,7 +55,13 @@
         <Grid Grid.ColumnSpan="3" VerticalAlignment="Top" Background="DarkGray">
             <!-- Left StackPanel: IsHitTestVisibleInChrome will prevent dragging on a click -->
             <StackPanel Height="35" WindowChrome.IsHitTestVisibleInChrome="True" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
-                <Label x:Name="lblTitleHeader" Content="ActivFlex Media" Style="{StaticResource Orkney}" FontSize="22" HorizontalAlignment="Left" Margin="5,2,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                <Label x:Name="lblTitleHeader" Content="ActivFlex Media" Style="{StaticResource Orkney}" FontSize="22" HorizontalAlignment="Left" Margin="5,2,0,0" VerticalAlignment="Top" FontWeight="Bold">
+                    <Label.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="{Binding Localize[ShowInfo]}" Command="{Binding ShowInfo}" FontSize="18" FontFamily="Segoue UI" FontWeight="Normal"/>
+                        </ContextMenu>
+                    </Label.ContextMenu>
+                </Label>
             </StackPanel>
 
             <!-- Right StackPanel: IsHitTestVisibleInChrome will prevent dragging on a click -->

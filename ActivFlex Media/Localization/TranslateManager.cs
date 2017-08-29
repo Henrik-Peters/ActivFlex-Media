@@ -38,7 +38,8 @@ namespace ActivFlex.Localization
             ["NewLibrary"] = new List<string> { "New library", "Neue Biblothek" },
             ["MediaLibraries"] = new List<string> { "Media libraries", "Biblotheken" },
             ["MyComputer"] = new List<string> { "My Computer", "Mein Computer" },
-            ["Pictures"] = new List<string> { "Pictures", "Bilder" }
+            ["Pictures"] = new List<string> { "Pictures", "Bilder" },
+            ["ShowInfo"] = new List<string> { "Show info", "Info anzeigen" }
         };
 
         /// <summary>
