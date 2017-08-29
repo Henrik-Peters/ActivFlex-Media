@@ -166,7 +166,11 @@
             <!-- Media control area toggle button -->
             <Button x:Name="MediaBarToggle" Command="{Binding ToggleMediaBarVisibility}" Style="{StaticResource ToggleMediaBarStyle}"
                     Grid.Column="2" Height="20" Width="20" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,60,0"/>
-            
+
+            <!-- Info launch button -->
+            <Button x:Name="ShowInfoButton" Command="{Binding ShowInfo}" Style="{StaticResource ShowInfoButtonStyle}"
+                    Grid.Column="2" Height="22" Width="22" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,22,0"/>
+
         </Grid>
 
         <!-- Media presentation area -->

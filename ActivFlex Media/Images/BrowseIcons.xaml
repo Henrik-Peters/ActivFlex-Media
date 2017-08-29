@@ -4,7 +4,7 @@
     <!-- Colors for the browse control buttons -->
     <SolidColorBrush x:Key="BrowseButton.DefaultColor" Color="#E6E6E6"/>
     <SolidColorBrush x:Key="BrowseButton.HoverColor" Color="#61B0E0"/>
-    <SolidColorBrush x:Key="BrowseButton.PressedColor" Color="#0061B4"/>
+    <SolidColorBrush x:Key="BrowseButton.PressedColor" Color="#1172C5"/>
 
     <!-- Back button icon definitions -->
     <Viewbox x:Key="BackIcon" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">

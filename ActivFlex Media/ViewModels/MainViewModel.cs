@@ -348,6 +348,11 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public ICommand PreviousImage { get; set; }
 
+        /// <summary>
+        /// Show the application info window dialog.
+        /// </summary>
+        public ICommand ShowInfo { get; set; }
+
         #endregion
 
         /// <summary>

@@ -5,7 +5,12 @@
     <!-- Style resources for the media bar toggle button -->
     <SolidColorBrush x:Key="MediaBarButton.Default.Color" Color="#D2D2D9"/>
     <SolidColorBrush x:Key="MediaBarButton.Hover.Color" Color="#61B0E0"/>
-    <SolidColorBrush x:Key="MediaBarButton.Pressed.Color" Color="#1276FF"/>
+    <SolidColorBrush x:Key="MediaBarButton.Pressed.Color" Color="#1172C5"/>
+
+    <!-- Style resources for the show info button -->
+    <SolidColorBrush x:Key="ShowInfo.Default.Color" Color="#E6E6E6"/>
+    <SolidColorBrush x:Key="ShowInfo.Hover.Color" Color="#61B0E0"/>
+    <SolidColorBrush x:Key="ShowInfo.Pressed.Color" Color="#1172C5"/>
 
     <!-- Style resources for the nav tree toggle button -->
     <sys:Double x:Key="ToggleNavButton.Circle.Radius">3</sys:Double>
@@ -103,6 +108,39 @@
                         <Trigger Property="IsPressed" Value="true">
                             <Setter Property="Fill" TargetName="ButtonPath" Value="{StaticResource MediaBarButton.Pressed.Color}"/>
                             <Setter Property="Stroke" TargetName="ButtonPath" Value="{StaticResource MediaBarButton.Pressed.Color}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Style definitions for the show info button -->
+    <Style x:Key="ShowInfoButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" Width="22" Height="22" BorderBrush="{StaticResource ShowInfo.Default.Color}" BorderThickness="2" CornerRadius="12" Background="Transparent">
+                        <ContentPresenter x:Name="contentPresenter" Content="?" TextBlock.Foreground="{StaticResource ShowInfo.Default.Color}" TextBlock.FontSize="15" TextBlock.FontWeight="Bold" Margin="0,-1.7,0,0" Focusable="False" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource ShowInfo.Default.Color}"/>
+                            <Setter Property="TextBlock.Foreground" TargetName="contentPresenter" Value="{StaticResource ShowInfo.Default.Color}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource ShowInfo.Hover.Color}"/>
+                            <Setter Property="TextBlock.Foreground" TargetName="contentPresenter" Value="{StaticResource ShowInfo.Hover.Color}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource ShowInfo.Pressed.Color}"/>
+                            <Setter Property="TextBlock.Foreground" TargetName="contentPresenter" Value="{StaticResource ShowInfo.Pressed.Color}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="BorderBrush" TargetName="border" Value="Gray"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="Gray"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
