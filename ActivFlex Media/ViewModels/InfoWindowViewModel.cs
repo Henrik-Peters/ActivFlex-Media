@@ -31,7 +31,7 @@ namespace ActivFlex.ViewModels
         public ICommand Close { get; set; }
 
         /// <summary>
-        /// Create a new view model instance for 
+        /// Create a new view model instance for
         /// the application info window view.
         /// </summary>
         public InfoWindowViewModel()

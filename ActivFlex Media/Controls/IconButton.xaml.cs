@@ -34,7 +34,7 @@ namespace ActivFlex.Controls
             this.controlBtn.Click += (s, e) => 
             {
                 Click?.Invoke(this, e);
-                Command?.Execute(this);
+                Command?.Execute(CommandParameter);
             };
         }
 
@@ -44,7 +44,6 @@ namespace ActivFlex.Controls
         [Browsable(true)]
         public event EventHandler Click;
         
-
         #region DependencyProperties
 
         /// <summary>
@@ -52,31 +51,6 @@ namespace ActivFlex.Controls
         /// </summary>
         public static readonly DependencyProperty ContentDefaultProperty = DependencyProperty.Register(
             "ContentDefault", typeof(object), typeof(IconButton), new FrameworkPropertyMetadata(ContentDefaultPropertyChanged));
-
-        /// <summary>
-        /// Identifies the ContentHover dependency property
-        /// </summary>
-        public static readonly DependencyProperty ContentHoverProperty = DependencyProperty.Register(
-            "ContentHover", typeof(object), typeof(IconButton), new FrameworkPropertyMetadata(ContentHoverPropertyChanged));
-
-        /// <summary>
-        /// Identifies the ContentPressed dependency property
-        /// </summary>
-        public static readonly DependencyProperty ContentPressedProperty = DependencyProperty.Register(
-            "ContentPressed", typeof(object), typeof(IconButton), new FrameworkPropertyMetadata(null));
-
-        /// <summary>
-        /// Identifies the ContentDisabled dependency property
-        /// </summary>
-        public static readonly DependencyProperty ContentDisabledProperty = DependencyProperty.Register(
-            "ContentDisabled", typeof(object), typeof(IconButton), new FrameworkPropertyMetadata(null));
-
-        /// <summary>
-        /// Identifies the CommandProperty dependency property
-        /// </summary>
-        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
-            "Command", typeof(ICommand), typeof(IconButton), new FrameworkPropertyMetadata(null));
-        
 
         /// <summary>
         /// Gets or sets the content to be displayed
@@ -89,13 +63,25 @@ namespace ActivFlex.Controls
         }
 
         /// <summary>
+        /// Identifies the ContentHover dependency property
+        /// </summary>
+        public static readonly DependencyProperty ContentHoverProperty = DependencyProperty.Register(
+            "ContentHover", typeof(object), typeof(IconButton), new FrameworkPropertyMetadata(ContentHoverPropertyChanged));
+
+        /// <summary>
         /// Gets or sets the hover state content
         /// </summary>
         [Bindable(true)]
         public object ContentHover {
             get => this.GetValue(ContentHoverProperty);
             set => this.SetValue(ContentHoverProperty, value);
-        }   
+        }
+
+        /// <summary>
+        /// Identifies the ContentPressed dependency property
+        /// </summary>
+        public static readonly DependencyProperty ContentPressedProperty = DependencyProperty.Register(
+            "ContentPressed", typeof(object), typeof(IconButton), new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the pressed state content
@@ -107,6 +93,12 @@ namespace ActivFlex.Controls
         }
 
         /// <summary>
+        /// Identifies the ContentDisabled dependency property
+        /// </summary>
+        public static readonly DependencyProperty ContentDisabledProperty = DependencyProperty.Register(
+            "ContentDisabled", typeof(object), typeof(IconButton), new FrameworkPropertyMetadata(null));
+
+        /// <summary>
         /// Gets or sets the disabled state content
         /// </summary>
         [Bindable(true)]
@@ -116,12 +108,33 @@ namespace ActivFlex.Controls
         }
 
         /// <summary>
+        /// Identifies the Command dependency property
+        /// </summary>
+        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
+            "Command", typeof(ICommand), typeof(IconButton), new FrameworkPropertyMetadata(null));
+
+        /// <summary>
         /// Gets or sets the command executed on a click
         /// </summary>
         [Bindable(true)]
         public ICommand Command {
             get => (ICommand)this.GetValue(CommandProperty);
             set => this.SetValue(CommandProperty, value);
+        }
+
+        /// <summary>
+        /// Identifies the CommandParameter dependency property
+        /// </summary>
+        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register(
+            "CommandParameter", typeof(object), typeof(IconButton), new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the parameter for the command execution.
+        /// </summary>
+        [Bindable(true)]
+        public object CommandParameter {
+            get => this.GetValue(CommandParameterProperty);
+            set => this.SetValue(CommandParameterProperty, value);
         }
 
         private static void ContentDefaultPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
