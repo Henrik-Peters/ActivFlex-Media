@@ -1,0 +1,45 @@
+﻿<Window x:Class="ActivFlex.Views.InfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:ActivFlex.Controls"
+        xmlns:ViewModels="clr-namespace:ActivFlex.ViewModels"
+        x:Name="Info"
+        mc:Ignorable="d"
+        Title="ActivFlex Media - Info" Height="360" Width="1000" FontSize="18"
+        WindowStyle="None" AllowsTransparency="True" Background="#42434B" WindowStartupLocation="CenterScreen">
+
+    <WindowChrome.WindowChrome>
+        <!-- Height for the drag area of window title bar -->
+        <WindowChrome CaptionHeight="35"/>
+    </WindowChrome.WindowChrome>
+
+    <Window.DataContext>
+        <ViewModels:InfoWindowViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+
+        <!-- Titlebar grid area -->
+        <Grid Grid.ColumnSpan="3" VerticalAlignment="Top" Background="DarkGray">
+            <StackPanel Height="35" WindowChrome.IsHitTestVisibleInChrome="True" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
+                <Label Content="ActivFlex Media - Info" Style="{StaticResource Orkney}" FontSize="22" HorizontalAlignment="Left" Margin="5,2,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+            </StackPanel>
+
+            <StackPanel Height="35" WindowChrome.IsHitTestVisibleInChrome="True" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+                <Controls:IconButton Width="30" Command="{Binding Close}"
+                             ContentDefault="{StaticResource CloseIcon}"
+                             ContentHover="{StaticResource CloseIconHover}"
+                             ContentPressed="{StaticResource CloseIconPressed}"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Window border -->
+        <Border x:Name="outerBorder" Grid.RowSpan="4" Grid.ColumnSpan="3"
+                BorderThickness="1"
+                BorderBrush="#7C7C82">
+        </Border>
+
+    </Grid>
+</Window>

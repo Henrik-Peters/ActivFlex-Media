@@ -29,6 +29,7 @@ using ActivFlex.Configuration;
 using ActivFlex.Localization;
 using ActivFlex.Navigation;
 using ActivFlex.FileSystem;
+using ActivFlex.Views;
 using ActivFlex.Media;
 
 namespace ActivFlex.ViewModels
@@ -410,6 +411,7 @@ namespace ActivFlex.ViewModels
             this.ToggleNavVisibility = new RelayCommand(() => NavVisible = !NavVisible);
             this.ToggleMediaBarVisibility = new RelayCommand(() => MediaBarVisible = !MediaBarVisible);
             this.BrowseFileSystem = new RelayCommand<string>(BrowseToPath);
+            this.ShowInfo = new RelayCommand(() => new InfoWindow().ShowDialog());
             this.ResetZoom = new RelayCommand(() => Zoom = 1.0);
             this.IncreaseZoom = new RelayCommand(() => Zoom += ZoomDelta);
             this.DecreaseZoom = new RelayCommand(() => Zoom -= ZoomDelta);
