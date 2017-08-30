@@ -17,6 +17,9 @@
 #endregion
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Documents;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace ActivFlex.ViewModels
 {
@@ -26,9 +29,23 @@ namespace ActivFlex.ViewModels
     public class InfoWindowViewModel : ViewModel
     {
         /// <summary>
+        /// Get the current assembly version info.
+        /// </summary>
+        public string Version {
+            get => "Version " +
+                Assembly.GetExecutingAssembly().GetName().Version.Major.ToString() + "." +
+                Assembly.GetExecutingAssembly().GetName().Version.Minor.ToString();
+        }
+
+        /// <summary>
         /// Close the passed window instance.
         /// </summary>
         public ICommand Close { get; set; }
+
+        /// <summary>
+        /// Open the uri from the passed hyperlink.
+        /// </summary>
+        public ICommand OpenHyperlink { get; set; }
 
         /// <summary>
         /// Create a new view model instance for
@@ -37,6 +54,7 @@ namespace ActivFlex.ViewModels
         public InfoWindowViewModel()
         {
             this.Close = new RelayCommand<Window>(CloseWindow);
+            this.OpenHyperlink = new RelayCommand<Hyperlink>(link => Process.Start(link.NavigateUri.ToString()));
         }
 
         private void CloseWindow(Window window)

@@ -7,7 +7,7 @@
         xmlns:ViewModels="clr-namespace:ActivFlex.ViewModels"
         x:Name="Info"
         mc:Ignorable="d"
-        Title="ActivFlex Media - Info" Height="360" Width="1000" FontSize="18"
+        Title="ActivFlex Media - Info" Height="500" Width="1000" FontSize="18"
         WindowStyle="None" AllowsTransparency="True" Background="#42434B" WindowStartupLocation="CenterScreen">
 
     <WindowChrome.WindowChrome>
@@ -19,10 +19,27 @@
         <ViewModels:InfoWindowViewModel/>
     </Window.DataContext>
 
+    <!-- Input key bindings -->
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding Close}" 
+                    CommandParameter="{Binding ElementName=Info}" 
+                    Key="Esc"/>
+    </Window.InputBindings>
+
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
 
         <!-- Titlebar grid area -->
-        <Grid Grid.ColumnSpan="3" VerticalAlignment="Top" Background="DarkGray">
+        <Grid Grid.ColumnSpan="2" VerticalAlignment="Top" Background="DarkGray">
             <StackPanel Height="35" WindowChrome.IsHitTestVisibleInChrome="True" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
                 <Label Content="ActivFlex Media - Info" Style="{StaticResource Orkney}" FontSize="22" HorizontalAlignment="Left" Margin="5,2,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
             </StackPanel>
@@ -35,11 +52,47 @@
             </StackPanel>
         </Grid>
 
+        <!-- Header info area -->
+        <ContentPresenter Content="{StaticResource ActivFlexIcon}" Grid.Row="1" Grid.Column="0" Margin="10"/>
+        <Label Content="ActivFlex Media" Style="{StaticResource Jellee-Roman}" Grid.Row="1" Grid.Column="2" FontSize="40" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding Version}" Grid.Row="1" Grid.Column="2" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,50,0,0"/>
+        <TextBlock Grid.Row="1" Grid.Column="2" FontSize="23" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,105,0,0" FontWeight="Bold">
+            <Hyperlink NavigateUri="https://github.com/Henrik-Peters/ActivFlex-Media" Command="{Binding OpenHyperlink}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+                https://github.com/Henrik-Peters/ActivFlex-Media
+            </Hyperlink>
+        </TextBlock>
+
+        <!-- Info box area -->
+        <FlowDocumentScrollViewer Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,10,20,0">
+            <FlowDocument Background="DarkGray" FontFamily="Segoue UI" FontSize="18">
+                <Paragraph LineHeight="1" FontSize="24" FontWeight="Bold">Summary</Paragraph>
+                <Paragraph LineHeight="10">
+                    <Run Text="ActivFlex can be used for various media functionalities like managing, displaying or grouping media items. At the moment this is an early version and just provides some basic features like image browsing."/>
+                </Paragraph>
+                <Paragraph LineHeight="1" FontSize="24" FontWeight="Bold">License</Paragraph>
+                <Paragraph LineHeight="10">
+                    <Run Text="The of license ActivFlex Media is the GNU GENERAL PUBLIC LICENSE Version 3"/>
+                </Paragraph>
+                <Paragraph LineHeight="1" FontSize="24" FontWeight="Bold">Fonts</Paragraph>
+                <Paragraph LineHeight="10">
+                    <Run Text="The application is using the following third-party fonts:"/>
+                </Paragraph>
+                <Paragraph LineHeight="1">
+                    <Run Text="Orkney - https://fontlibrary.org/de/font/orkney"/>
+                </Paragraph>
+                <Paragraph LineHeight="1">
+                    <Run Text="Jellee Roman - https://fontlibrary.org/de/font/jellee-typeface"/>
+                </Paragraph>
+            </FlowDocument>
+        </FlowDocumentScrollViewer>
+
+        <!-- Close button -->
+        <Button Content="OK" Grid.Row="3" Grid.Column="2" Command="{Binding Close}" CommandParameter="{Binding ElementName=Info}" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,30,0"/>
+
         <!-- Window border -->
         <Border x:Name="outerBorder" Grid.RowSpan="4" Grid.ColumnSpan="3"
                 BorderThickness="1"
                 BorderBrush="#7C7C82">
         </Border>
-
     </Grid>
 </Window>
