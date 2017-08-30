@@ -57,7 +57,7 @@
         <Label Content="ActivFlex Media" Style="{StaticResource Jellee-Roman}" Grid.Row="1" Grid.Column="2" FontSize="40" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding Version}" Grid.Row="1" Grid.Column="2" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,50,0,0"/>
         <TextBlock Grid.Row="1" Grid.Column="2" FontSize="23" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,105,0,0" FontWeight="Bold">
-            <Hyperlink NavigateUri="https://github.com/Henrik-Peters/ActivFlex-Media" Command="{Binding OpenHyperlink}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+            <Hyperlink NavigateUri="https://github.com/Henrik-Peters/ActivFlex-Media" Style="{StaticResource BlueHyperlinkStyle}" Command="{Binding OpenHyperlink}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
                 https://github.com/Henrik-Peters/ActivFlex-Media
             </Hyperlink>
         </TextBlock>
