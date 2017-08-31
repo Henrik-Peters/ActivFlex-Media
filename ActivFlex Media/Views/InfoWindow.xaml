@@ -87,7 +87,7 @@
         </FlowDocumentScrollViewer>
 
         <!-- Close button -->
-        <Button Content="OK" Grid.Row="3" Grid.Column="2" Command="{Binding Close}" CommandParameter="{Binding ElementName=Info}" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,30,0"/>
+        <Button Content="OK" Grid.Row="3" Grid.Column="2" Command="{Binding Close}" CommandParameter="{Binding ElementName=Info}" Style="{StaticResource LightGreyOrangeButton}" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,30,0"/>
 
         <!-- Window border -->
         <Border x:Name="outerBorder" Grid.RowSpan="4" Grid.ColumnSpan="3"

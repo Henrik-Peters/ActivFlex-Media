@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="Images/TitleBarIcons.xaml"/>
                 <ResourceDictionary Source="Images/NavIcons.xaml"/>
                 <ResourceDictionary Source="Images/BrowseIcons.xaml"/>
+                <ResourceDictionary Source="Styles/Buttons.xaml"/>
                 <ResourceDictionary Source="Styles/Fonts.xaml"/>
                 <ResourceDictionary Source="Styles/Thumbnails.xaml"/>
                 <ResourceDictionary Source="Styles/ContextMenus.xaml"/>
