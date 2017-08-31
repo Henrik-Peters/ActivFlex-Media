@@ -40,7 +40,7 @@
 
         <!-- Titlebar grid area -->
         <Grid Grid.ColumnSpan="2" VerticalAlignment="Top" Background="DarkGray">
-            <StackPanel Height="35" WindowChrome.IsHitTestVisibleInChrome="True" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
+            <StackPanel Height="35" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
                 <Label Content="ActivFlex Media - Info" Style="{StaticResource Orkney}" FontSize="22" HorizontalAlignment="Left" Margin="5,2,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
             </StackPanel>
 
