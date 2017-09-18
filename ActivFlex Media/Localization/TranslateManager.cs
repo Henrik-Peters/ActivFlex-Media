@@ -41,7 +41,8 @@ namespace ActivFlex.Localization
             ["Pictures"] = new List<string> { "Pictures", "Bilder" },
             ["ShowInfo"] = new List<string> { "Show info", "Info anzeigen" },
             ["ToggleFullscreen"] = new List<string> { "Toggle fullscreen", "Vollbildmodus wechseln" },
-            ["Exit"] = new List<string> { "Exit", "Beenden" }
+            ["Exit"] = new List<string> { "Exit", "Beenden" },
+            ["Play"] = new List<string> { "Play", "Wiedergabe" }
         };
 
         /// <summary>

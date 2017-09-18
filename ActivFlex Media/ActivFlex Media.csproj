@@ -91,6 +91,7 @@
     <Compile Include="ViewModels\InfoWindowViewModel.cs" />
     <Compile Include="ViewModels\IThumbnailViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\MusicItemViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\InfoWindow.xaml.cs">

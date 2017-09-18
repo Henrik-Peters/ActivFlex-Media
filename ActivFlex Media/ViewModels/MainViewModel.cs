@@ -332,6 +332,12 @@ namespace ActivFlex.ViewModels
         public ICommand LaunchPresenter { get; set; }
 
         /// <summary>
+        /// Start the playback mode with the
+        /// argument as the music item to play.
+        /// </summary>
+        public ICommand LaunchMusicPlayback { get; set; }
+
+        /// <summary>
         /// Run an escape action. Depending on the
         /// current mode an action will be chosen.
         /// </summary>
@@ -429,6 +435,7 @@ namespace ActivFlex.ViewModels
             this.PreviousImage = new RelayCommand(() => ChangeActiveImage(false));
             this.LaunchPresenter = new RelayCommand<MediaImage>(LaunchImagePresenter);
             this.PresentImage = new RelayCommand<MediaImage>(PresentMediaImage);
+            this.LaunchMusicPlayback = new RelayCommand<MediaMusic>(music => System.Diagnostics.Process.Start(music.Path));
         }
 
         /// <summary>
@@ -584,14 +591,18 @@ namespace ActivFlex.ViewModels
         {
             this.Path = path;
             FileSystemItems = new ObservableCollection<IThumbnailViewModel>(FileSystemBrowser.Browse(path)
-                .Where(item => item is DirectoryItem || item is MediaImage)
+                .Where(item => item is DirectoryItem || item is MediaImage || item is MediaMusic)
                 .Select<IFileObject, IThumbnailViewModel>(item => {
 
-                    if (item is DirectoryItem directoryItem) {
-                        return new DirectoryItemViewModel(directoryItem);
+                    if (item is MediaImage imageItem) {
+                        return new ImageItemViewModel(imageItem);
                     }
 
-                    return new ImageItemViewModel((MediaImage)item);
+                    if (item is MediaMusic musicItem) {
+                        return new MusicItemViewModel(musicItem);
+                    }
+
+                    return new DirectoryItemViewModel((DirectoryItem)item);
                 })
             );
         }
