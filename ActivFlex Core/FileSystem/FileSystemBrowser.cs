@@ -70,7 +70,13 @@ namespace ActivFlex.FileSystem
                     .ToList());
 
                 list.AddRange(files
+                    .Where(file => MediaMusic.MusicExtensions.Contains(GetExtension(file)))
+                    .Select(file => new MediaMusic(file))
+                    .ToList());
+
+                list.AddRange(files
                     .Where(file => !MediaImage.ImageExtensions.Contains(GetExtension(file)))
+                    .Where(file => !MediaMusic.MusicExtensions.Contains(GetExtension(file)))
                     .Select(file => new FileItem(file))
                     .ToList());
 

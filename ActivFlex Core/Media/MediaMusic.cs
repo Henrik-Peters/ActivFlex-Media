@@ -27,6 +27,13 @@ namespace ActivFlex.Media
     public class MediaMusic : MediaObject
     {
         /// <summary>
+        /// All file extensions that are valid for the
+        /// creation and playback of music items.
+        /// </summary>
+        public static readonly string[] MusicExtensions = new string[] {
+            "mp3", "wav", "wma", "aac", "m4a" };
+
+        /// <summary>
         /// Create a new music item only by the filesystem path.
         /// The file name will be used to generate the name.
         /// </summary>
