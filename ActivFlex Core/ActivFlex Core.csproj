@@ -51,6 +51,7 @@
     <Compile Include="Media\ImageLoadState.cs" />
     <Compile Include="Media\IMediaObject.cs" />
     <Compile Include="Media\MediaImage.cs" />
+    <Compile Include="Media\MediaMusic.cs" />
     <Compile Include="Media\MediaObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
