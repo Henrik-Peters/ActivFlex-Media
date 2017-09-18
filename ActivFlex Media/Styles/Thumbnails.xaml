@@ -16,10 +16,13 @@
     <SolidColorBrush x:Key="Thumbnail.Rectangle.Color.Hover" Color="#3682F4"/>
     <SolidColorBrush x:Key="Thumbnail.Rectangle.Color.Selected" Color="#3783F5"/>
     <LinearGradientBrush x:Key="Thumbnail.Directory.Background" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#767575" Offset="0" />
+        <GradientStop Color="#767575" Offset="0"/>
         <GradientStop Color="#393939" Offset="1.0" />
     </LinearGradientBrush>
-
+    <SolidColorBrush x:Key="Thumbnail.Music.InnerColor" Color="#FF0000"/>
+    <SolidColorBrush x:Key="Thumbnail.Music.OuterColor" Color="#B4B4B4"/>
+    <SolidColorBrush x:Key="Thumbnail.Music.ExtensionColor" Color="Black"/>
+    
     <!-- Converter instances -->
     <Converts:IsNullConverter x:Key="IsNullConverter"/>
 
@@ -212,6 +215,103 @@
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding ElementName=btnThumbnail, Path=IsMouseOver}" Value="True"/>
                     <Condition Binding="{Binding IsSelected, ElementName=dirThumbnail}" Value="False"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Foreground" Value="{StaticResource Thumbnail.Text.Color.Hover}"/>
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    
+    <!-- Style definitions for music thumbnail controls -->
+    <Style x:Key="MusicThumbnailStyle" TargetType="{x:Type Grid}">
+        <Setter Property="Background" Value="{StaticResource Thumbnail.Background.Color}"/>
+        <Style.Resources>
+
+            <!-- Style definitions for buttons -->
+            <Style TargetType="Button">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Name="bd"
+                                    Background="{StaticResource Thumbnail.Directory.Background}"
+                                    BorderThickness="{StaticResource Thumbnail.Border.Thickness}"
+                                    BorderBrush="{StaticResource Thumbnail.Border.Color}">
+
+                                <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+                                    <Canvas Width="64" Height="64">
+                                        <Canvas Opacity="1">
+                                            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="{StaticResource Thumbnail.Music.OuterColor}" StrokeThickness="2.42919493" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                                                <Path.Data>
+                                                    <PathGeometry Figures="m 48.235376 6.2148056 -22.617188 3.009766 -0.002 17.7753914 a 7.6455922 7.6455922 0 0 0 -2.210937 -0.330078 7.6455922 7.6455922 0 0 0 -7.646485 7.646484 7.6455922 7.6455922 0 0 0 7.646485 7.644531 7.6455922 7.6455922 0 0 0 7.640624 -7.578125 h 0.002 v -0.02539 a 7.6455922 7.6455922 0 0 0 0.002 -0.04102 7.6455922 7.6455922 0 0 0 -0.002 -0.06055 l -0.002 -14.46875 11.892579 -1.474609 v 5.8125 a 7.6455922 7.6455922 0 0 0 -2.341797 -0.371094 7.6455922 7.6455922 0 0 0 -7.646485 7.644531 7.6455922 7.6455922 0 0 0 7.646485 7.646485 7.6455922 7.6455922 0 0 0 7.642578 -7.59961 h 0.002 v -0.04687 z" FillRule="NonZero"/>
+                                                </Path.Data>
+                                            </Path>
+                                            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="{StaticResource Thumbnail.Music.InnerColor}" StrokeThickness="1.83833957" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                                                <Path.Data>
+                                                    <PathGeometry Figures="m 46.375965 8.1991806 -19.123047 2.6191414 -0.0039 19.181641 a 5.7859478 5.7859478 0 0 0 -3.84375 -1.470704 5.7859478 5.7859478 0 0 0 -5.78711 5.78711 5.7859478 5.7859478 0 0 0 5.78711 5.785156 5.7859478 5.7859478 0 0 0 5.785156 -5.785156 5.7859478 5.7859478 0 0 0 -0.0059 -0.177734 l -0.0039 -15.810547 15.150391 -2.003907 v 10.658204 a 5.7859478 5.7859478 0 0 0 -3.734375 -1.369141 5.7859478 5.7859478 0 0 0 -5.78711 5.785156 5.7859478 5.7859478 0 0 0 5.78711 5.787109 5.7859478 5.7859478 0 0 0 5.783203 -5.740234 h 0.002 v -0.04687 z" FillRule="NonZero"/>
+                                                </Path.Data>
+                                            </Path>
+                                            <TextBlock xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" FontWeight="Bold" FontFamily="Calibri" FontSize="16" FontStyle="normal" Foreground="{StaticResource Thumbnail.Music.ExtensionColor}" Canvas.Left="17.184" Canvas.Top="42.101">
+                                                <Span>
+                                                    <Run Text="{Binding Path=Extension, ElementName=musicThumbnail}"/>
+                                                </Span>
+                                            </TextBlock>
+                                        </Canvas>
+                                    </Canvas>
+                                </Viewbox>
+                            </Border>
+
+                            <!-- Thumbnail trigger definitions -->
+                            <!-- Change the order of the triggers to prevent hovering on a selected state -->
+                            <ControlTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsSelected, ElementName=musicThumbnail}" Value="True">
+                                    <Setter Property="BorderBrush" TargetName="bd" Value="{StaticResource Thumbnail.Border.Color.Selected}"/>
+                                </DataTrigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderBrush" TargetName="bd" Value="{StaticResource Thumbnail.Border.Color.Hover}"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="BorderBrush" TargetName="bd" Value="{StaticResource Thumbnail.Border.Color.Pressed}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <!-- Style definitions for the text background rectangle -->
+    <Style x:Key="RectThumbnailMusicStyle" TargetType="Rectangle">
+        <Setter Property="Fill" Value="{StaticResource Thumbnail.Rectangle.Color}"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsSelected, ElementName=musicThumbnail}" Value="True">
+                <Setter Property="Fill" Value="{StaticResource Thumbnail.Rectangle.Color.Selected}"/>
+            </DataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=btnThumbnail, Path=IsMouseOver}" Value="True"/>
+                    <Condition Binding="{Binding IsSelected, ElementName=musicThumbnail}" Value="False"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Fill" Value="{StaticResource Thumbnail.Rectangle.Color.Hover}"/>
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Inherit the foreground property instead of the default override -->
+    <Style x:Key="LabelThumbnailMusicStyle" TargetType="Label">
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, 
+                                                              Path=(TextElement.Foreground)}"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsSelected, ElementName=musicThumbnail}" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource Thumbnail.Text.Color.Selected}"/>
+            </DataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=btnThumbnail, Path=IsMouseOver}" Value="True"/>
+                    <Condition Binding="{Binding IsSelected, ElementName=musicThumbnail}" Value="False"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Foreground" Value="{StaticResource Thumbnail.Text.Color.Hover}"/>
             </MultiDataTrigger>

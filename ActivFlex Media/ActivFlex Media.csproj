@@ -68,6 +68,9 @@
       <DependentUpon>ImageThumbnail.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\IThumbnail.cs" />
+    <Compile Include="Controls\MusicThumbnail.xaml.cs">
+      <DependentUpon>MusicThumbnail.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PathNavigator.xaml.cs">
       <DependentUpon>PathNavigator.xaml</DependentUpon>
     </Compile>
@@ -102,6 +105,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ImageThumbnail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MusicThumbnail.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="ActivFlex.Controls.MusicThumbnail"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             x:Name="musicThumbnail"
+             mc:Ignorable="d"
+             Focusable="False"
+             Width="150" Height="150"
+             d:DesignHeight="150" d:DesignWidth="150"
+             Foreground="{StaticResource Thumbnail.Text.Color}">
+
+    <Grid Style="{StaticResource MusicThumbnailStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" MinHeight="30"/>
+        </Grid.RowDefinitions>
+
+        <Button x:Name="btnThumbnail" Grid.Row="0" MaxWidth="{Binding Path=Width, ElementName=musicThumbnail}" Height="120" Click="Thumbnail_Click" MouseDoubleClick="Thumbnail_DoubleClick"/>
+        <Rectangle x:Name="nameBackground" Style="{StaticResource RectThumbnailMusicStyle}" Grid.Row="1" Height="20" Margin="0,3,0,0" Width="{Binding Path=ActualWidth, ElementName=nameDisplay}" VerticalAlignment="Top" RadiusX="7" RadiusY="7"/>
+        <Label x:Name="nameDisplay" Style="{StaticResource LabelThumbnailMusicStyle}" Grid.Row="1" Content="{Binding Text, ElementName=musicThumbnail}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="12" FontWeight="Bold"/>
+    </Grid>
+</UserControl>
