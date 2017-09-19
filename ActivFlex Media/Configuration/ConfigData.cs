@@ -45,7 +45,8 @@ namespace ActivFlex.Configuration
             WindowRestoreState.Default,
             1640, 835, 200, 100,
             512,
-            true
+            true,
+            LaunchBehavior.Self
         );
 
         /// <summary>
@@ -121,6 +122,11 @@ namespace ActivFlex.Configuration
         public bool PreloadPresenterImages { get; set; }
 
         /// <summary>
+        /// Default launch option for music items.
+        /// </summary>
+        public LaunchBehavior MusicLaunchBehavior { get; set; }
+
+        /// <summary>
         /// Create a new dataset for a concrete configuration. 
         /// All properties should only be set with this constructor.
         /// </summary>
@@ -136,7 +142,7 @@ namespace ActivFlex.Configuration
         /// <param name="PreloadPresenterImages">Enable or disable preloading of images in the presentation mode</param>
         public ConfigData(string Username, Language Language, WindowStartupState NormalStartup, WindowStartupState PresenterStartup, 
                           WindowRestoreState RestoreState, double RestoreWidth, double RestoreHeight, double RestoreLeft, double RestoreTop,
-                          int ThumbnailDecodeSize, bool PreloadPresenterImages)
+                          int ThumbnailDecodeSize, bool PreloadPresenterImages, LaunchBehavior MusicLaunchBehavior)
         {
             this.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.Username = Username;
@@ -150,6 +156,7 @@ namespace ActivFlex.Configuration
             this.RestoreTop = RestoreTop;
             this.ThumbnailDecodeSize = ThumbnailDecodeSize;
             this.PreloadPresenterImages = PreloadPresenterImages;
+            this.MusicLaunchBehavior = MusicLaunchBehavior;
         }
     }
 }
