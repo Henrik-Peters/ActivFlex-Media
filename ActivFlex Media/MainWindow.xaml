@@ -270,7 +270,7 @@
                                                  Proxy="{Binding Proxy}"
                                                  Text="{Binding Name}"
                                                  Extension="{Binding Extension}"
-                                                 Click="{Binding DataContext.LaunchMusicPlayback,
+                                                 Click="{Binding DataContext.DefaultMusicLaunch,
                                                          RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                                                  Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
 
@@ -278,6 +278,10 @@
                                 <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
                                     <MenuItem Header="{Binding Localize[Play]}" 
                                               Command="{Binding LaunchMusicPlayback}"
+                                              CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+
+                                    <MenuItem Header="{Binding Localize[PlayProcess]}" 
+                                              Command="{Binding LaunchMusicProgramm}"
                                               CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                                 </ContextMenu>
                             </Controls:MusicThumbnail.ContextMenu>

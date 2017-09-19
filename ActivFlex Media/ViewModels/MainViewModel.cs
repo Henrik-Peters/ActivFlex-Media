@@ -31,6 +31,7 @@ using ActivFlex.Navigation;
 using ActivFlex.FileSystem;
 using ActivFlex.Views;
 using ActivFlex.Media;
+using System.Diagnostics;
 
 namespace ActivFlex.ViewModels
 {
@@ -332,10 +333,22 @@ namespace ActivFlex.ViewModels
         public ICommand LaunchPresenter { get; set; }
 
         /// <summary>
+        /// Start the default music item launch
+        /// method specificed by the config.
+        /// </summary>
+        public ICommand DefaultMusicLaunch { get; set; }
+
+        /// <summary>
         /// Start the playback mode with the
         /// argument as the music item to play.
         /// </summary>
         public ICommand LaunchMusicPlayback { get; set; }
+
+        /// <summary>
+        /// Start the default media player for
+        /// the passed argument as music item.
+        /// </summary>
+        public ICommand LaunchMusicProgramm { get; set; }
 
         /// <summary>
         /// Run an escape action. Depending on the
@@ -435,7 +448,15 @@ namespace ActivFlex.ViewModels
             this.PreviousImage = new RelayCommand(() => ChangeActiveImage(false));
             this.LaunchPresenter = new RelayCommand<MediaImage>(LaunchImagePresenter);
             this.PresentImage = new RelayCommand<MediaImage>(PresentMediaImage);
-            this.LaunchMusicPlayback = new RelayCommand<MediaMusic>(music => System.Diagnostics.Process.Start(music.Path));
+            this.LaunchMusicPlayback = new RelayCommand<MediaMusic>(music => Process.Start(music.Path));
+            this.LaunchMusicProgramm = new RelayCommand<MediaMusic>(music => Process.Start(music.Path));
+            this.DefaultMusicLaunch = new RelayCommand<MediaMusic>(music => {
+                if (Config.MusicLaunchBehavior == LaunchBehavior.Self) {
+                    this.LaunchMusicPlayback.Execute(music);
+                } else {
+                    this.LaunchMusicProgramm.Execute(music);
+                }
+            });
         }
 
         /// <summary>
