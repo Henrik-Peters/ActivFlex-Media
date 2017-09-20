@@ -19,6 +19,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Controls.Primitives;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
@@ -52,6 +53,11 @@ namespace ActivFlex
         /// </summary>
         private bool Fullscreen { get; set; }
 
+        /// <summary>
+        /// Left repeat button of the media playback slider
+        /// </summary>
+        private RepeatButton TimeSliderActiveButton;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -77,6 +83,11 @@ namespace ActivFlex
                     ChangeFullscreenMode(!Fullscreen);
                 }
             };
+
+            //time slider
+            TimeSlider.ApplyTemplate();
+            TimeSliderActiveButton = TimeSlider.Template.FindName("LeftRepeatButton", TimeSlider) as RepeatButton;
+            TimeSlider_ValueChanged(this, null);
 
             //other window properties
             this.vm = new MainViewModel();
@@ -173,6 +184,16 @@ namespace ActivFlex
         private void ToggleFullscreenMenuItem_Click(object sender, RoutedEventArgs e)
         {
             ChangeFullscreenMode(!Fullscreen);
+        }
+
+        private void TimeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (TimeSlider.Value.Equals(0)) {
+                TimeSliderActiveButton.Visibility = Visibility.Hidden;
+
+            } else if (TimeSliderActiveButton.Visibility == Visibility.Hidden) {
+                TimeSliderActiveButton.Visibility = Visibility.Visible;
+            }
         }
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
