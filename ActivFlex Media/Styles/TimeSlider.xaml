@@ -1,0 +1,107 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:Double x:Key="TimeSlider.Height">3</sys:Double>
+    <SolidColorBrush x:Key="TimeSlider.Default.Color" Color="#E7EAEA"/>
+    <SolidColorBrush x:Key="TimeSlider.Default.Border.Color" Color="#D6D6D6"/>
+    <SolidColorBrush x:Key="TimeSlider.Value.Color" Color="#008AFF"/>
+    <SolidColorBrush x:Key="TimeSlider.Value.Border.Color" Color="Gray"/>
+    <SolidColorBrush x:Key="TimeSlider.Thumb.Border.Color" Color="Gray"/>
+    <SolidColorBrush x:Key="TimeSlider.Thumb.Border.HoverColor" Color="#008AFF"/>
+    <SolidColorBrush x:Key="TimeSlider.Thumb.Hover.Color" Color="#79BCE2"/>
+    <LinearGradientBrush x:Key="TimeSlider.Thumb.Default.Color" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#F7F7F7"/>
+        <GradientStop Offset="1" Color="#BCBCBC"/>
+    </LinearGradientBrush>
+
+    <!-- Time slider thumb selector style -->
+    <ControlTemplate x:Key="TimeSliderThumbStyle" TargetType="{x:Type Thumb}">
+        <Ellipse Name="Ellipse" Fill="{StaticResource TimeSlider.Thumb.Default.Color}" Stroke="{StaticResource TimeSlider.Thumb.Border.Color}" StrokeThickness="1"/>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Ellipse" Property="Fill" Value="#EEEEEE"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!-- Time slider area left to the thumb selector -->
+    <Style x:Key="ActiveValueTimeSliderStyle" TargetType="{x:Type RepeatButton}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border Height="{StaticResource TimeSlider.Height}" BorderThickness="0" CornerRadius="2" BorderBrush="{StaticResource TimeSlider.Value.Border.Color}" Background="{StaticResource TimeSlider.Value.Color}" Margin="0,0,-12,0" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Time slider area right to the thumb selector -->
+    <Style x:Key="InactiveValueTimeSliderStyle" TargetType="{x:Type RepeatButton}">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Rectangle Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Media control timer slider style -->
+    <Style x:Key="TimeSliderStyle" TargetType="{x:Type Slider}">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Slider}">
+                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Border x:Name="TrackBackground" CornerRadius="2" Height="{StaticResource TimeSlider.Height}" BorderBrush="{StaticResource TimeSlider.Default.Border.Color}" BorderThickness="0" Background="{StaticResource TimeSlider.Default.Color}" Margin="5,0" Grid.Row="1" VerticalAlignment="center">
+                                <Canvas Margin="-6,-1">
+                                    <Rectangle x:Name="PART_SelectionRange" Fill="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Height="4.0" Visibility="Hidden"/>
+                                </Canvas>
+                            </Border>
+                            <Track x:Name="PART_Track" Grid.Row="1">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource ActiveValueTimeSliderStyle}"/>
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource InactiveValueTimeSliderStyle}"/>
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb x:Name="Thumb" Focusable="False" Width="13" Height="13" OverridesDefaultStyle="True" Template="{StaticResource TimeSliderThumbStyle}" VerticalAlignment="Center"/>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="Thumb" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="Visibility" TargetName="Thumb" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsSelectionRangeEnabled" Value="True">
+                            <Setter Property="Visibility" TargetName="PART_SelectionRange" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -295,7 +295,7 @@
         <!-- Media control area -->
         <Grid x:Name="MediaControlBar" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Height="60">
             <Grid.RowDefinitions>
-                <RowDefinition Height="15"/>
+                <RowDefinition Height="13"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -304,7 +304,8 @@
                 <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
 
-            <Rectangle Grid.Row="0" Grid.ColumnSpan="3" Fill="Transparent"/>
+            <!-- Timeline -->
+            <Slider Name="TimeSlider" Grid.Column="0" Grid.ColumnSpan="3" Minimum="0" Maximum="100" IsMoveToPointEnabled="True" Style="{StaticResource TimeSliderStyle}"/>
 
             <!-- Media control bar stack -->
             <StackPanel x:Name="MediaBarStack" Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,4">
