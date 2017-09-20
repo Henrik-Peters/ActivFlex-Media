@@ -373,6 +373,35 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public ICommand ShowInfo { get; set; }
 
+        /// <summary>
+        /// Play/Pause the current media playback control.
+        /// When the passed argument is true play mode will
+        /// be executed, pause when the argument is false.
+        /// </summary>
+        public ICommand PlayPause { get; set; }
+
+        /// <summary>
+        /// Stop the current media playback control.
+        /// </summary>
+        public ICommand Stop { get; set; }
+
+        /// <summary>
+        /// Next track of the media playback control.
+        /// </summary>
+        public ICommand Next { get; set; }
+
+        /// <summary>
+        /// Previous track of the media playback control.
+        /// </summary>
+        public ICommand Previous { get; set; }
+
+        /// <summary>
+        /// Mute/Unmute the current media playback control.
+        /// When the passed argument is true the sound will
+        /// be muted and unmuted when the argument is false.
+        /// </summary>
+        public ICommand Mute { get; set; }
+
         #endregion
 
         /// <summary>
@@ -457,6 +486,13 @@ namespace ActivFlex.ViewModels
                     this.LaunchMusicProgramm.Execute(music);
                 }
             });
+
+            //Media playback commands
+            this.PlayPause = new RelayCommand<bool>(play => { });
+            this.Mute = new RelayCommand<bool>(mute => { });
+            this.Stop = new RelayCommand(() => { });
+            this.Next = new RelayCommand(() => { });
+            this.Previous = new RelayCommand(() => { });
         }
 
         /// <summary>

@@ -294,6 +294,29 @@
 
         <!-- Media control area -->
         <Grid x:Name="MediaControlBar" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Height="60">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Media control bar stack -->
+            <StackPanel x:Name="MediaBarStack" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                <Button x:Name="StopBtn" Width="32" Height="32" Command="{Binding Stop}"/>
+                <Button x:Name="PreviousBtn" Width="32" Margin="17,0,0,0" Command="{Binding Previous}">
+                    <Button.LayoutTransform>
+                        <RotateTransform Angle="180"/>
+                    </Button.LayoutTransform>
+                </Button>
+                <ToggleButton x:Name="PlayPauseBtn" Width="100" Margin="12,0,12,0"
+                              Command="{Binding PlayPause}"
+                              CommandParameter="{Binding IsChecked,RelativeSource={RelativeSource Self}}"/>
+
+                <Button x:Name="NextBtn" Width="32" Margin="0,0,12,0" Command="{Binding Next}"/>
+                <ToggleButton x:Name="MuteBtn" Width="32" Height="32" 
+                              Command="{Binding Mute}" 
+                              CommandParameter="{Binding IsChecked,RelativeSource={RelativeSource Self}}"/>
+            </StackPanel>
 
             <!-- Media control visibility toggle animation -->
             <Grid.Style>
