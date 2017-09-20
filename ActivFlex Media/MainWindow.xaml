@@ -294,26 +294,34 @@
 
         <!-- Media control area -->
         <Grid x:Name="MediaControlBar" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Height="60">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
-            
+
+            <Rectangle Grid.Row="0" Grid.ColumnSpan="3" Fill="Transparent"/>
+
             <!-- Media control bar stack -->
-            <StackPanel x:Name="MediaBarStack" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                <Button x:Name="StopBtn" Width="32" Height="32" Command="{Binding Stop}"/>
-                <Button x:Name="PreviousBtn" Width="32" Margin="17,0,0,0" Command="{Binding Previous}">
+            <StackPanel x:Name="MediaBarStack" Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,4">
+                <Button x:Name="StopBtn" Style="{StaticResource StopStyle}" Width="25" Command="{Binding Stop}"/>
+                <Button x:Name="PreviousBtn" Width="25" Margin="17,0,0,0" Style="{StaticResource NextStyle}" Command="{Binding Previous}">
                     <Button.LayoutTransform>
                         <RotateTransform Angle="180"/>
                     </Button.LayoutTransform>
                 </Button>
-                <ToggleButton x:Name="PlayPauseBtn" Width="100" Margin="12,0,12,0"
+                <ToggleButton x:Name="PlayPauseBtn" Margin="12,0,12,0"
+                              Style="{StaticResource PlayPauseStyle}"
                               Command="{Binding PlayPause}"
                               CommandParameter="{Binding IsChecked,RelativeSource={RelativeSource Self}}"/>
 
-                <Button x:Name="NextBtn" Width="32" Margin="0,0,12,0" Command="{Binding Next}"/>
-                <ToggleButton x:Name="MuteBtn" Width="32" Height="32" 
+                <Button x:Name="NextBtn" Width="25" Margin="0,0,17,0" Style="{StaticResource NextStyle}" Command="{Binding Next}"/>
+                <ToggleButton x:Name="MuteBtn" Width="25"
+                              Style="{StaticResource MuteStyle}"
                               Command="{Binding Mute}" 
                               CommandParameter="{Binding IsChecked,RelativeSource={RelativeSource Self}}"/>
             </StackPanel>

@@ -17,6 +17,7 @@
                 <ResourceDictionary Source="Styles/BrowseNavigation.xaml"/>
                 <ResourceDictionary Source="Styles/TreeViewItem.xaml"/>
                 <ResourceDictionary Source="Styles/ToggleButtons.xaml"/>
+                <ResourceDictionary Source="Styles/MediaControlBar.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
