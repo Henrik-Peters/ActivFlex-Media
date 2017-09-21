@@ -46,7 +46,8 @@ namespace ActivFlex.Configuration
             1640, 835, 200, 100,
             512,
             true,
-            LaunchBehavior.Self
+            LaunchBehavior.Self,
+            0.5
         );
 
         /// <summary>
@@ -127,6 +128,11 @@ namespace ActivFlex.Configuration
         public LaunchBehavior MusicLaunchBehavior { get; set; }
 
         /// <summary>
+        /// The last volume of the media playback.
+        /// </summary>
+        public double Volume { get; set; }
+
+        /// <summary>
         /// Create a new dataset for a concrete configuration. 
         /// All properties should only be set with this constructor.
         /// </summary>
@@ -139,10 +145,12 @@ namespace ActivFlex.Configuration
         /// <param name="RestoreLeft">Left position of the window used for restoring</param>
         /// <param name="RestoreTop">Top position of the window used for restoring</param>
         /// <param name="ThumbnailDecodeSize">The width size to use for thumbnail images</param>
-        /// <param name="PreloadPresenterImages">Enable or disable preloading of images in the presentation mode</param>
+        /// <param name="PreloadPresenterImages">Default launch option for music items</param>
+        /// <param name="MusicLaunchBehavior">Enable or disable preloading of images in the presentation mode</param>
+        /// <param name="Volume">The last volume of the media playback</param>
         public ConfigData(string Username, Language Language, WindowStartupState NormalStartup, WindowStartupState PresenterStartup, 
                           WindowRestoreState RestoreState, double RestoreWidth, double RestoreHeight, double RestoreLeft, double RestoreTop,
-                          int ThumbnailDecodeSize, bool PreloadPresenterImages, LaunchBehavior MusicLaunchBehavior)
+                          int ThumbnailDecodeSize, bool PreloadPresenterImages, LaunchBehavior MusicLaunchBehavior, double Volume)
         {
             this.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.Username = Username;
@@ -157,6 +165,7 @@ namespace ActivFlex.Configuration
             this.ThumbnailDecodeSize = ThumbnailDecodeSize;
             this.PreloadPresenterImages = PreloadPresenterImages;
             this.MusicLaunchBehavior = MusicLaunchBehavior;
+            this.Volume = Volume;
         }
     }
 }

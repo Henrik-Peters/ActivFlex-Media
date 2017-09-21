@@ -92,6 +92,7 @@ namespace ActivFlex
             //other window properties
             this.vm = new MainViewModel();
             this.DataContext = vm;
+            this.MediaPlayer.Volume = vm.Config.Volume;
             this.SourceInitialized += new EventHandler(Window_SourceInitialized);
             Window_StateChanged(this, null);
             ChangeFullscreenMode(false);
@@ -327,9 +328,10 @@ namespace ActivFlex
             vm.loadThumbsInterrupt = true;
             vm.StopPreloadingThreads();
 
-            //Save the current window layout when restoring is active
+            //Save the current window layout when restoring is active or volume has changed
             if (vm.Config.NormalStartup == WindowStartupState.RestoreAll || vm.Config.NormalStartup == WindowStartupState.RestoreSizeCentered ||
-                vm.Config.PresenterStartup == WindowStartupState.RestoreAll || vm.Config.PresenterStartup == WindowStartupState.RestoreSizeCentered) {
+                vm.Config.PresenterStartup == WindowStartupState.RestoreAll || vm.Config.PresenterStartup == WindowStartupState.RestoreSizeCentered ||
+                !vm.Config.Volume.Equals(VolumeSlider.Value)) {
 
                 ConfigData config = vm.Config;
                 WindowRestoreState restoreState = WindowRestoreState.Default;
@@ -343,7 +345,8 @@ namespace ActivFlex
                 }
 
                 ConfigProvider.SaveConfig(new ConfigData(config.Username, config.Language, config.NormalStartup, config.PresenterStartup, restoreState,
-                                                         this.Width, this.Height, this.Left, this.Top, config.ThumbnailDecodeSize, config.PreloadPresenterImages, config.MusicLaunchBehavior));
+                                                         this.Width, this.Height, this.Left, this.Top, config.ThumbnailDecodeSize, config.PreloadPresenterImages, 
+                                                         config.MusicLaunchBehavior, VolumeSlider.Value));
             }
         }
 
