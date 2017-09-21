@@ -301,7 +301,13 @@ namespace ActivFlex.ViewModels
         private double _currentPlaybackTime;
         public double CurrentPlaybackTime {
             get => _currentPlaybackTime;
-            set => SetProperty(ref _currentPlaybackTime, value);
+            set {
+                if (!TimelineDragActive) {
+                    mediaPlayer.Position = TimeSpan.FromMilliseconds(value);
+                }
+
+                SetProperty(ref _currentPlaybackTime, value);
+            }
         }
 
         private double _maxPlaybackTime;
@@ -567,9 +573,10 @@ namespace ActivFlex.ViewModels
                 mediaTimer.Stop();
                 mediaPlayer.Stop();
 
-                CurrentPlaybackTime = 0;
+                _currentPlaybackTime = 0;
                 _playmode = false;
                 NotifyPropertyChanged(nameof(PlayMode));
+                NotifyPropertyChanged(nameof(CurrentPlaybackTime));
 
             } else if (ImagePresentActive) {
                 ImagePresentActive = false;
@@ -584,7 +591,8 @@ namespace ActivFlex.ViewModels
         private void MediaTimerUpdate(object sender, EventArgs e)
         {
             if (!TimelineDragActive) {
-                CurrentPlaybackTime = mediaPlayer.Position.TotalMilliseconds;
+                _currentPlaybackTime = mediaPlayer.Position.TotalMilliseconds;
+                NotifyPropertyChanged(nameof(CurrentPlaybackTime));
             }
         }
 

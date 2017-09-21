@@ -305,8 +305,8 @@
             </Grid.ColumnDefinitions>
 
             <!-- Timeline -->
-            <Slider Name="TimeSlider" Grid.Column="0" Grid.ColumnSpan="3" Minimum="0" Maximum="{Binding MaxPlaybackTime}" Value="{Binding CurrentPlaybackTime}" 
-                    IsMoveToPointEnabled="True" Style="{StaticResource TimeSliderStyle}" ValueChanged="TimeSlider_ValueChanged" PreviewMouseLeftButtonDown="TimeSlider_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="TimeSlider_PreviewMouseLeftButtonUp"/>
+            <Slider Name="TimeSlider" Grid.Column="0" Grid.ColumnSpan="3" Minimum="0" Maximum="{Binding MaxPlaybackTime}" Value="{Binding CurrentPlaybackTime, Mode=TwoWay}" 
+                    IsMoveToPointEnabled="True" Style="{StaticResource TimeSliderStyle}" ValueChanged="TimeSlider_ValueChanged" PreviewMouseLeftButtonDown="TimeSlider_PreviewMouseLeftButtonDown" Thumb.DragCompleted="TimeSlider_DragCompleted"/>
 
             <!-- Media control bar stack -->
             <StackPanel x:Name="MediaBarStack" Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,4">

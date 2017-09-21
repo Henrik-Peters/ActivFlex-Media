@@ -212,7 +212,7 @@ namespace ActivFlex
             vm.TimelineDragActive = true;
         }
 
-        private void TimeSlider_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void TimeSlider_DragCompleted(object sender, DragCompletedEventArgs e)
         {
             MediaPlayer.Position = TimeSpan.FromMilliseconds(TimeSlider.Value);
             vm.TimelineDragActive = false;
