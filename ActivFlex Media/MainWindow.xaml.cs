@@ -207,6 +207,18 @@ namespace ActivFlex
             }
         }
 
+        private void MediaPlayer_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            if (MediaPlayer.NaturalDuration.HasTimeSpan) {
+                vm.MaxPlaybackTime = MediaPlayer.NaturalDuration.TimeSpan.TotalMilliseconds;
+            }
+        }
+
+        private void MediaPlayer_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            vm.Stop.Execute(null);
+        }
+
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key) {

@@ -23,6 +23,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Collections.ObjectModel;
@@ -115,6 +116,16 @@ namespace ActivFlex.ViewModels
         /// The media playback control of the ui.
         /// </summary>
         private MediaElement mediaPlayer;
+
+        /// <summary>
+        /// Timer for updating the data of the media playback.
+        /// </summary>
+        private DispatcherTimer mediaTimer;
+
+        /// <summary>
+        /// Time in milliseconds of the media data update timer.
+        /// </summary>
+        private const int mediaTimerUpdateInterval = 100;
 
         /// <summary>
         /// Index of the currently presented image.
@@ -287,16 +298,30 @@ namespace ActivFlex.ViewModels
             set => SetProperty(ref _config, value);
         }
 
+        private double _currentPlaybackTime;
+        public double CurrentPlaybackTime {
+            get => _currentPlaybackTime;
+            set => SetProperty(ref _currentPlaybackTime, value);
+        }
+
+        private double _maxPlaybackTime;
+        public double MaxPlaybackTime {
+            get => _maxPlaybackTime;
+            set => SetProperty(ref _maxPlaybackTime, value);
+        }
+
         private bool _playmode = false;
         public bool PlayMode {
             get => _playmode;
             set {
                 if (mediaPlayer.HasAudio || mediaPlayer.HasVideo) {
                     if (value) {
+                        mediaTimer.Start();
                         mediaPlayer.Play();
                         SetProperty(ref _playmode, value);
 
                     } else if (mediaPlayer.CanPause) {
+                        mediaTimer.Stop();
                         mediaPlayer.Pause();
                         SetProperty(ref _playmode, value);
                     }
@@ -433,6 +458,10 @@ namespace ActivFlex.ViewModels
             }
 
             this.mediaPlayer = mediaPlayer;
+            this.mediaTimer = new DispatcherTimer {
+                Interval = TimeSpan.FromMilliseconds(mediaTimerUpdateInterval)
+            };
+            this.mediaTimer.Tick += new EventHandler(MediaTimerUpdate);
             this.Localize = new TranslateManager(Config.Language);
 
             //Navigation items
@@ -515,6 +544,7 @@ namespace ActivFlex.ViewModels
             if (File.Exists(music.Path)) {
                 Stop.Execute(null);
                 mediaPlayer.Source = new Uri(music.Path);
+                mediaTimer.Start();
                 mediaPlayer.Play();
 
                 _playmode = true;
@@ -528,8 +558,10 @@ namespace ActivFlex.ViewModels
         private void StopCurrentPlayback()
         {
             if (PlayMode) {
+                mediaTimer.Stop();
                 mediaPlayer.Stop();
 
+                CurrentPlaybackTime = 0;
                 _playmode = false;
                 NotifyPropertyChanged(nameof(PlayMode));
 
@@ -537,6 +569,15 @@ namespace ActivFlex.ViewModels
                 ImagePresentActive = false;
                 preloadInterrupt = true;
             }
+        }
+
+        /// <summary>
+        /// Triggered every time when the media data
+        /// of the current playback should be updated.
+        /// </summary>
+        private void MediaTimerUpdate(object sender, EventArgs e)
+        {
+            CurrentPlaybackTime = mediaPlayer.Position.TotalMilliseconds;
         }
 
         /// <summary>
