@@ -310,6 +310,12 @@ namespace ActivFlex.ViewModels
             set => SetProperty(ref _maxPlaybackTime, value);
         }
 
+        private bool _timelineDragActive = false;
+        public bool TimelineDragActive {
+            get => _timelineDragActive;
+            set => SetProperty(ref _timelineDragActive, value);
+        }
+
         private bool _playmode = false;
         public bool PlayMode {
             get => _playmode;
@@ -577,7 +583,9 @@ namespace ActivFlex.ViewModels
         /// </summary>
         private void MediaTimerUpdate(object sender, EventArgs e)
         {
-            CurrentPlaybackTime = mediaPlayer.Position.TotalMilliseconds;
+            if (!TimelineDragActive) {
+                CurrentPlaybackTime = mediaPlayer.Position.TotalMilliseconds;
+            }
         }
 
         /// <summary>

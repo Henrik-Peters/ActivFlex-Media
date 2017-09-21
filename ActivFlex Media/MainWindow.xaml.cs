@@ -207,6 +207,17 @@ namespace ActivFlex
             }
         }
 
+        private void TimeSlider_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            vm.TimelineDragActive = true;
+        }
+
+        private void TimeSlider_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            MediaPlayer.Position = TimeSpan.FromMilliseconds(TimeSlider.Value);
+            vm.TimelineDragActive = false;
+        }
+
         private void MediaPlayer_MediaOpened(object sender, RoutedEventArgs e)
         {
             if (MediaPlayer.NaturalDuration.HasTimeSpan) {
