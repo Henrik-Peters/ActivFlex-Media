@@ -90,7 +90,7 @@ namespace ActivFlex
             TimeSlider_ValueChanged(this, null);
 
             //other window properties
-            this.vm = new MainViewModel();
+            this.vm = new MainViewModel(MediaPlayer);
             this.DataContext = vm;
             this.MediaPlayer.Volume = vm.Config.Volume;
             this.SourceInitialized += new EventHandler(Window_SourceInitialized);

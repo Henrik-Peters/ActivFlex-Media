@@ -315,11 +315,7 @@
                         <RotateTransform Angle="180"/>
                     </Button.LayoutTransform>
                 </Button>
-                <ToggleButton x:Name="PlayPauseBtn" Margin="12,0,12,0"
-                              Style="{StaticResource PlayPauseStyle}"
-                              Command="{Binding PlayPause}"
-                              CommandParameter="{Binding IsChecked,RelativeSource={RelativeSource Self}}"/>
-
+                <ToggleButton x:Name="PlayPauseBtn" Margin="12,0,12,0" Style="{StaticResource PlayPauseStyle}" IsChecked="{Binding PlayMode}"/>
                 <Button x:Name="NextBtn" Width="25" Margin="0,0,17,0" Style="{StaticResource NextStyle}" Command="{Binding Next}"/>
                 <ToggleButton x:Name="MuteBtn" Width="25" Margin="0,0,20,0"
                               Style="{StaticResource MuteStyle}"

@@ -16,11 +16,13 @@
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Collections.ObjectModel;
@@ -108,6 +110,11 @@ namespace ActivFlex.ViewModels
         /// Variable for the image index property.
         /// </summary>
         private volatile int imageIndex = 0;
+
+        /// <summary>
+        /// The media playback control of the ui.
+        /// </summary>
+        private MediaElement mediaPlayer;
 
         /// <summary>
         /// Index of the currently presented image.
@@ -280,6 +287,23 @@ namespace ActivFlex.ViewModels
             set => SetProperty(ref _config, value);
         }
 
+        private bool _playmode = false;
+        public bool PlayMode {
+            get => _playmode;
+            set {
+                if (mediaPlayer.HasAudio || mediaPlayer.HasVideo) {
+                    if (value) {
+                        mediaPlayer.Play();
+                        SetProperty(ref _playmode, value);
+
+                    } else if (mediaPlayer.CanPause) {
+                        mediaPlayer.Pause();
+                        SetProperty(ref _playmode, value);
+                    }
+                }
+            }
+        }
+
         #endregion
         #region Commands
 
@@ -374,13 +398,6 @@ namespace ActivFlex.ViewModels
         public ICommand ShowInfo { get; set; }
 
         /// <summary>
-        /// Play/Pause the current media playback control.
-        /// When the passed argument is true play mode will
-        /// be executed, pause when the argument is false.
-        /// </summary>
-        public ICommand PlayPause { get; set; }
-
-        /// <summary>
         /// Stop the current media playback control.
         /// </summary>
         public ICommand Stop { get; set; }
@@ -408,7 +425,8 @@ namespace ActivFlex.ViewModels
         /// Creates a new ViewModel for the MainArea
         /// and instantiate all fields and commands.
         /// </summary>
-        public MainViewModel()
+        /// <param name="mediaPlayer">Instance of the media playback control</param>
+        public MainViewModel(MediaElement mediaPlayer)
         {
             //Configuration
             if (this.Config == null) {
@@ -421,6 +439,7 @@ namespace ActivFlex.ViewModels
                 this.Config = ConfigProvider.LoadConfig();
             }
 
+            this.mediaPlayer = mediaPlayer;
             this.Localize = new TranslateManager(Config.Language);
 
             //Navigation items
@@ -477,7 +496,7 @@ namespace ActivFlex.ViewModels
             this.PreviousImage = new RelayCommand(() => ChangeActiveImage(false));
             this.LaunchPresenter = new RelayCommand<MediaImage>(LaunchImagePresenter);
             this.PresentImage = new RelayCommand<MediaImage>(PresentMediaImage);
-            this.LaunchMusicPlayback = new RelayCommand<MediaMusic>(music => Process.Start(music.Path));
+            this.LaunchMusicPlayback = new RelayCommand<MediaMusic>(StartMusicPlayback);
             this.LaunchMusicProgramm = new RelayCommand<MediaMusic>(music => Process.Start(music.Path));
             this.DefaultMusicLaunch = new RelayCommand<MediaMusic>(music => {
                 if (Config.MusicLaunchBehavior == LaunchBehavior.Self) {
@@ -488,11 +507,38 @@ namespace ActivFlex.ViewModels
             });
 
             //Media playback commands
-            this.PlayPause = new RelayCommand<bool>(play => { });
             this.Mute = new RelayCommand<bool>(mute => { });
-            this.Stop = new RelayCommand(() => { });
+            this.Stop = new RelayCommand(StopCurrentPlayback);
             this.Next = new RelayCommand(() => { });
             this.Previous = new RelayCommand(() => { });
+        }
+
+        /// <summary>
+        /// Launch the media playback for the passed music
+        /// item. Running playbacks will be stopped.
+        /// </summary>
+        /// <param name="music">Music item to play</param>
+        private void StartMusicPlayback(MediaMusic music)
+        {
+            if (File.Exists(music.Path)) {
+                Stop.Execute(null);
+                mediaPlayer.Source = new Uri(music.Path);
+                mediaPlayer.Play();
+
+                _playmode = true;
+                NotifyPropertyChanged(nameof(PlayMode));
+            }
+        }
+
+        /// <summary>
+        /// Stop the current media playback.
+        /// </summary>
+        private void StopCurrentPlayback()
+        {
+            mediaPlayer.Stop();
+
+            _playmode = false;
+            NotifyPropertyChanged(nameof(PlayMode));
         }
 
         /// <summary>
