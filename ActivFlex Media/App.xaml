@@ -19,6 +19,7 @@
                 <ResourceDictionary Source="Styles/ToggleButtons.xaml"/>
                 <ResourceDictionary Source="Styles/MediaControlBar.xaml"/>
                 <ResourceDictionary Source="Styles/TimeSlider.xaml"/>
+                <ResourceDictionary Source="Styles/VolumeSlider.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

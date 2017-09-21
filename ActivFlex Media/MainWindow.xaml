@@ -309,7 +309,7 @@
 
             <!-- Media control bar stack -->
             <StackPanel x:Name="MediaBarStack" Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,4">
-                <Button x:Name="StopBtn" Style="{StaticResource StopStyle}" Width="25" Command="{Binding Stop}"/>
+                <Button x:Name="StopBtn" Style="{StaticResource StopStyle}" Width="25" Command="{Binding Stop}" Margin="20,0,0,0"/>
                 <Button x:Name="PreviousBtn" Width="25" Margin="17,0,0,0" Style="{StaticResource NextStyle}" Command="{Binding Previous}">
                     <Button.LayoutTransform>
                         <RotateTransform Angle="180"/>
@@ -321,12 +321,13 @@
                               CommandParameter="{Binding IsChecked,RelativeSource={RelativeSource Self}}"/>
 
                 <Button x:Name="NextBtn" Width="25" Margin="0,0,17,0" Style="{StaticResource NextStyle}" Command="{Binding Next}"/>
-                <ToggleButton x:Name="MuteBtn" Width="25" Margin="0,0,12,0"
+                <ToggleButton x:Name="MuteBtn" Width="25" Margin="0,0,20,0"
                               Style="{StaticResource MuteStyle}"
                               Command="{Binding Mute}" 
                               CommandParameter="{Binding IsChecked,RelativeSource={RelativeSource Self}}"/>
 
-                <Slider x:Name="VolumeSlider" Margin="0,0,-120,0" Minimum="0.0" Maximum="1.0" Width="120" Height="20" 
+                <Slider x:Name="VolumeSlider" Margin="0,6,-130,0" Minimum="0.0" Maximum="1.0" Width="130" Height="20"
+                        Style="{StaticResource VolumeSliderStyle}" TickFrequency="0.25" IsSnapToTickEnabled="False" TickPlacement="BottomRight"
                         IsMoveToPointEnabled="True" Value="{Binding Path=Volume, ElementName=MediaPlayer, Mode=TwoWay}"/>
             </StackPanel>
 
