@@ -501,8 +501,8 @@ namespace ActivFlex.ViewModels
 
             //Media playback commands
             this.Stop = new RelayCommand(StopCurrentPlayback);
-            this.Next = new RelayCommand(() => { });
-            this.Previous = new RelayCommand(() => { });
+            this.Next = new RelayCommand(() => ChangeActiveImage(true));
+            this.Previous = new RelayCommand(() => ChangeActiveImage(false));
         }
 
         /// <summary>
@@ -527,10 +527,16 @@ namespace ActivFlex.ViewModels
         /// </summary>
         private void StopCurrentPlayback()
         {
-            mediaPlayer.Stop();
+            if (PlayMode) {
+                mediaPlayer.Stop();
 
-            _playmode = false;
-            NotifyPropertyChanged(nameof(PlayMode));
+                _playmode = false;
+                NotifyPropertyChanged(nameof(PlayMode));
+
+            } else if (ImagePresentActive) {
+                ImagePresentActive = false;
+                preloadInterrupt = true;
+            }
         }
 
         /// <summary>
