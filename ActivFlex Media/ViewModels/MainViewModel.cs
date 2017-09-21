@@ -412,13 +412,6 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public ICommand Previous { get; set; }
 
-        /// <summary>
-        /// Mute/Unmute the current media playback control.
-        /// When the passed argument is true the sound will
-        /// be muted and unmuted when the argument is false.
-        /// </summary>
-        public ICommand Mute { get; set; }
-
         #endregion
 
         /// <summary>
@@ -507,7 +500,6 @@ namespace ActivFlex.ViewModels
             });
 
             //Media playback commands
-            this.Mute = new RelayCommand<bool>(mute => { });
             this.Stop = new RelayCommand(StopCurrentPlayback);
             this.Next = new RelayCommand(() => { });
             this.Previous = new RelayCommand(() => { });

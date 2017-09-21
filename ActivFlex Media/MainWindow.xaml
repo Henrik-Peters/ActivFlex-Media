@@ -319,8 +319,7 @@
                 <Button x:Name="NextBtn" Width="25" Margin="0,0,17,0" Style="{StaticResource NextStyle}" Command="{Binding Next}"/>
                 <ToggleButton x:Name="MuteBtn" Width="25" Margin="0,0,20,0"
                               Style="{StaticResource MuteStyle}"
-                              Command="{Binding Mute}" 
-                              CommandParameter="{Binding IsChecked,RelativeSource={RelativeSource Self}}"/>
+                              IsChecked="{Binding IsMuted, ElementName=MediaPlayer, Mode=TwoWay}"/>
 
                 <Slider x:Name="VolumeSlider" Margin="0,6,-130,0" Minimum="0.0" Maximum="1.0" Width="130" Height="20"
                         Style="{StaticResource VolumeSliderStyle}" TickFrequency="0.25" IsSnapToTickEnabled="False" TickPlacement="BottomRight"
