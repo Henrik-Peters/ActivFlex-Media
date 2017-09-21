@@ -557,7 +557,7 @@ namespace ActivFlex.ViewModels
         /// </summary>
         private void StopCurrentPlayback()
         {
-            if (PlayMode) {
+            if (CurrentPlaybackTime > 0) {
                 mediaTimer.Stop();
                 mediaPlayer.Stop();
 
