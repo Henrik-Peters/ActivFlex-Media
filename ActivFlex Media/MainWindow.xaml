@@ -321,10 +321,13 @@
                               CommandParameter="{Binding IsChecked,RelativeSource={RelativeSource Self}}"/>
 
                 <Button x:Name="NextBtn" Width="25" Margin="0,0,17,0" Style="{StaticResource NextStyle}" Command="{Binding Next}"/>
-                <ToggleButton x:Name="MuteBtn" Width="25"
+                <ToggleButton x:Name="MuteBtn" Width="25" Margin="0,0,12,0"
                               Style="{StaticResource MuteStyle}"
                               Command="{Binding Mute}" 
                               CommandParameter="{Binding IsChecked,RelativeSource={RelativeSource Self}}"/>
+
+                <Slider x:Name="VolumeSlider" Margin="0,0,-120,0" Minimum="0.0" Maximum="1.0" Width="120" Height="20" 
+                        IsMoveToPointEnabled="True" Value="{Binding Path=Volume, ElementName=MediaPlayer, Mode=TwoWay}"/>
             </StackPanel>
 
             <!-- Media control visibility toggle animation -->
