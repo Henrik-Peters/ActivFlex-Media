@@ -123,11 +123,21 @@ namespace ActivFlex
                 Grid.SetRowSpan(MediaPresenter, 4);
                 Grid.SetColumnSpan(MediaPresenter, 3);
 
+                Grid.SetRow(MediaPlayer, 0);
+                Grid.SetColumn(MediaPlayer, 0);
+                Grid.SetRowSpan(MediaPlayer, 4);
+                Grid.SetColumnSpan(MediaPlayer, 3);
+
             } else {
                 Grid.SetRow(MediaPresenter, 1);
                 Grid.SetColumn(MediaPresenter, 0);
                 Grid.SetRowSpan(MediaPresenter, 2);
                 Grid.SetColumnSpan(MediaPresenter, 3);
+
+                Grid.SetRow(MediaPlayer, 1);
+                Grid.SetColumn(MediaPlayer, 0);
+                Grid.SetRowSpan(MediaPlayer, 2);
+                Grid.SetColumnSpan(MediaPlayer, 3);
             }
         }
 
