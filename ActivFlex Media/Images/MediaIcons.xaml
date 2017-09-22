@@ -1,0 +1,33 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Colors for the media icons -->
+    <SolidColorBrush x:Key="MusicIcon.InnerColor" Color="#ADAEB5"/>
+    <SolidColorBrush x:Key="MusicIcon.OuterColor" Color="#26272F"/>
+
+    <!-- Music media icon -->
+    <Viewbox x:Key="MusicMediaIcon" x:Shared="False" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Border BorderBrush="Gray" BorderThickness="2">
+            <Canvas Width="64" Height="64">
+                <Canvas>
+                    <Canvas>
+                        <Canvas.RenderTransform>
+                            <TranslateTransform X="3.4064864" Y="4.0285825"/>
+                        </Canvas.RenderTransform>
+                        <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="OuterNote" Fill="{StaticResource MusicIcon.OuterColor}" StrokeThickness="3.72061419" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                            <Path.Data>
+                                <PathGeometry Figures="m 51.460003 1.5966229 -34.64104 4.6098309 -0.0031 27.2252222 A 11.710175 11.710175 0 0 0 13.429571 32.926121 11.710175 11.710175 0 0 0 1.7180283 44.637662 11.710175 11.710175 0 0 0 13.429571 56.346212 11.710175 11.710175 0 0 0 25.13213 44.739371 h 0.0031 v -0.03889 a 11.710175 11.710175 0 0 0 0.0031 -0.06283 11.710175 11.710175 0 0 0 -0.0031 -0.09274 l -0.0031 -22.16069 18.214966 -2.258547 V 29.02824 A 11.710175 11.710175 0 0 0 39.760353 28.459869 11.710175 11.710175 0 0 0 28.048802 40.168419 11.710175 11.710175 0 0 0 39.760353 51.879961 11.710175 11.710175 0 0 0 51.465899 40.240214 h 0.0031 v -0.07179 z" FillRule="NonZero"/>
+                            </Path.Data>
+                        </Path>
+                        <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="InnerNote" Fill="{StaticResource MusicIcon.InnerColor}" StrokeThickness="2.81564569" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                            <Path.Data>
+                                <PathGeometry Figures="m 48.612131 4.63594 -29.289329 4.0115402 -0.0061 29.3790688 a 8.8618986 8.8618986 0 0 0 -5.887176 -2.252566 8.8618986 8.8618986 0 0 0 -8.8636786 8.863679 8.8618986 8.8618986 0 0 0 8.8636786 8.860686 8.8618986 8.8618986 0 0 0 8.860687 -8.860686 8.8618986 8.8618986 0 0 0 -0.0092 -0.272222 l -0.0061 -24.215819 23.204706 -3.069233 v 16.324365 a 8.8618986 8.8618986 0 0 0 -5.719652 -2.09701 8.8618986 8.8618986 0 0 0 -8.863679 8.860686 8.8618986 8.8618986 0 0 0 8.863679 8.863678 8.8618986 8.8618986 0 0 0 8.85769 -8.791883 h 0.0031 v -0.07179 z" FillRule="NonZero"/>
+                            </Path.Data>
+                        </Path>
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+        </Border>
+    </Viewbox>
+
+</ResourceDictionary>
