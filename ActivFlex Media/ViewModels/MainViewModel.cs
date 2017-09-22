@@ -617,6 +617,7 @@ namespace ActivFlex.ViewModels
 
                 _currentPlaybackTime = 0;
                 _playmode = false;
+                currentTimeLabel.Content = "00:00";
                 NotifyPropertyChanged(nameof(PlayMode));
                 NotifyPropertyChanged(nameof(CurrentPlaybackTime));
 
