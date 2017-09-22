@@ -16,6 +16,7 @@
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
 using System;
+using System.Windows;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -65,7 +66,6 @@ namespace ActivFlex.ViewModels
         /// Perform a setter operation and notify the
         /// PropertyChanged event when the value has changed.
         /// </summary>
-        /// <typeparam name="T">The type of the property (class)</typeparam>
         /// <param name="field">Reference of the field to store the new value</param>
         /// <param name="value">The new value to store</param>
         /// <param name="propertyName">Leave empty to use the callers name</param>
@@ -82,11 +82,26 @@ namespace ActivFlex.ViewModels
         /// Perform a setter operation and notify the
         /// PropertyChanged event when the value has changed.
         /// </summary>
-        /// <typeparam name="T">The type of the property (class)</typeparam>
         /// <param name="field">Reference of the field to store the new value</param>
         /// <param name="value">The new value to store</param>
         /// <param name="propertyName">Leave empty to use the callers name</param>
         protected void SetProperty(ref double field, double value, [CallerMemberName] String propertyName = "")
+        {
+            if (field == value)
+                return;
+
+            field = value;
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// Perform a setter operation and notify the
+        /// PropertyChanged event when the value has changed.
+        /// </summary>
+        /// <param name="field">Reference of the field to store the new value</param>
+        /// <param name="value">The new value to store</param>
+        /// <param name="propertyName">Leave empty to use the callers name</param>
+        protected void SetProperty(ref Visibility field, Visibility value, [CallerMemberName] String propertyName = "")
         {
             if (field == value)
                 return;

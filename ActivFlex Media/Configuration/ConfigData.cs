@@ -47,7 +47,8 @@ namespace ActivFlex.Configuration
             512,
             true,
             LaunchBehavior.Self,
-            0.5
+            0.5,
+            true
         );
 
         /// <summary>
@@ -133,6 +134,11 @@ namespace ActivFlex.Configuration
         public double Volume { get; set; }
 
         /// <summary>
+        /// Display or hide the media playback time side labels.
+        /// </summary>
+        public bool ShowTimelineSideLabels { get; set; }
+
+        /// <summary>
         /// Create a new dataset for a concrete configuration. 
         /// All properties should only be set with this constructor.
         /// </summary>
@@ -148,9 +154,11 @@ namespace ActivFlex.Configuration
         /// <param name="PreloadPresenterImages">Default launch option for music items</param>
         /// <param name="MusicLaunchBehavior">Enable or disable preloading of images in the presentation mode</param>
         /// <param name="Volume">The last volume of the media playback</param>
+        /// <param name="ShowTimelineSideLabels">Display or hide the media playback time side labels</param>
         public ConfigData(string Username, Language Language, WindowStartupState NormalStartup, WindowStartupState PresenterStartup, 
                           WindowRestoreState RestoreState, double RestoreWidth, double RestoreHeight, double RestoreLeft, double RestoreTop,
-                          int ThumbnailDecodeSize, bool PreloadPresenterImages, LaunchBehavior MusicLaunchBehavior, double Volume)
+                          int ThumbnailDecodeSize, bool PreloadPresenterImages, LaunchBehavior MusicLaunchBehavior, double Volume,
+                          bool ShowTimelineSideLabels)
         {
             this.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.Username = Username;
@@ -166,6 +174,7 @@ namespace ActivFlex.Configuration
             this.PreloadPresenterImages = PreloadPresenterImages;
             this.MusicLaunchBehavior = MusicLaunchBehavior;
             this.Volume = Volume;
+            this.ShowTimelineSideLabels = ShowTimelineSideLabels;
         }
     }
 }

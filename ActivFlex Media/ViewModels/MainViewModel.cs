@@ -342,6 +342,12 @@ namespace ActivFlex.ViewModels
             set => SetProperty(ref _timelineDragActive, value);
         }
 
+        private Visibility _ShowTimelineSideLabels = Visibility.Collapsed;
+        public Visibility ShowTimelineSideLabels {
+            get => _ShowTimelineSideLabels;
+            set => SetProperty(ref _ShowTimelineSideLabels, value);
+        }
+
         private bool _playmode = false;
         public bool PlayMode {
             get => _playmode;
@@ -351,6 +357,12 @@ namespace ActivFlex.ViewModels
                         mediaTimer.Start();
                         mediaPlayer.Play();
                         SetProperty(ref _playmode, value);
+
+                        if (Config.ShowTimelineSideLabels) {
+                            ShowTimelineSideLabels = Visibility.Visible;
+                        } else {
+                            ShowTimelineSideLabels = Visibility.Collapsed;
+                        }
 
                     } else if (mediaPlayer.CanPause) {
                         mediaTimer.Stop();
@@ -582,6 +594,12 @@ namespace ActivFlex.ViewModels
                 mediaPlayer.Source = new Uri(music.Path);
                 mediaTimer.Start();
                 mediaPlayer.Play();
+
+                if (Config.ShowTimelineSideLabels) {
+                    ShowTimelineSideLabels = Visibility.Visible;
+                } else {
+                    ShowTimelineSideLabels = Visibility.Collapsed;
+                }
 
                 _playmode = true;
                 NotifyPropertyChanged(nameof(PlayMode));
