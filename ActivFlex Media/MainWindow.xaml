@@ -314,18 +314,16 @@
             <!-- Maximum time label -->
             <Label x:Name="MaxTimeLbl" Content="--:--" Foreground="White" Visibility="{Binding ShowTimelineSideLabels}" Grid.Column="2" Grid.RowSpan="2" FontSize="16" FontWeight="Bold" Margin="0,-10,0,0"/>
 
-            
-            <ContentPresenter Content="{StaticResource MusicMediaIcon}" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="43" Margin="5,-4,0,0"/>
-            <Grid x:Name="MediaInfoGrid" Background="Transparent" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="54,0,0,0">
+            <!-- Media playback info area -->
+            <ContentPresenter x:Name="MediaInfoIcon" Content="{StaticResource MusicMediaIcon}" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="43" Margin="5,-4,0,0"/>
+            <Grid x:Name="MediaInfoGrid" Background="Transparent" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="55,0,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="22"/>
-                    <RowDefinition Height="22"/>
+                    <RowDefinition Height="45"/>
                 </Grid.RowDefinitions>
-                <Label x:Name="MediaInfoTopLabel" Content="" Grid.Row="0" FontSize="15" Padding="0" FontWeight="Bold"/>
-                <Label x:Name="MediaInfoBottomLabel" Content="" Grid.Row="1" FontSize="15" Padding="0" FontWeight="Bold"/>
+                <TextBlock x:Name="MediaInfoName" Text="{Binding MediaInfoName}" FontSize="15" Width="195" Height="40" TextWrapping="Wrap" Margin="0,0,0,0" Foreground="#EBEBEB" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2"/>
             </Grid>
 
             <!-- Media control bar stack -->

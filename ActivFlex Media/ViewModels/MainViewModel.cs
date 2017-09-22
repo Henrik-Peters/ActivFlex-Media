@@ -144,6 +144,11 @@ namespace ActivFlex.ViewModels
         private TimeSpanStringConverter timeSpanStringConverter = new TimeSpanStringConverter();
 
         /// <summary>
+        /// The info icon in the media playback area.
+        /// </summary>
+        private ContentPresenter mediaInfoIcon;
+
+        /// <summary>
         /// Index of the currently presented image.
         /// </summary>
         private int ImageIndex {
@@ -348,6 +353,12 @@ namespace ActivFlex.ViewModels
             set => SetProperty(ref _ShowTimelineSideLabels, value);
         }
 
+        private string _mediaInfoName = String.Empty;
+        public string MediaInfoName {
+            get => _mediaInfoName;
+            set => SetProperty(ref _mediaInfoName, value);
+        }
+
         private bool _playmode = false;
         public bool PlayMode {
             get => _playmode;
@@ -490,7 +501,8 @@ namespace ActivFlex.ViewModels
         /// <param name="mediaPlayer">Instance of the media playback control</param>
         /// <param name="currentTimeLabel">Reference to the label for displaying the current playback time</param>
         /// <param name="maxTimeLabel">Reference to the label for displaying the maximum playback time</param>
-        public MainViewModel(MediaElement mediaPlayer, Label currentTimeLabel, Label maxTimeLabel)
+        /// <param name="mediaInfoIcon">The info icon in the media playback areae</param>
+        public MainViewModel(MediaElement mediaPlayer, Label currentTimeLabel, Label maxTimeLabel, ContentPresenter mediaInfoIcon)
         {
             //Configuration
             if (this.Config == null) {
@@ -506,6 +518,8 @@ namespace ActivFlex.ViewModels
             this.mediaPlayer = mediaPlayer;
             this.currentTimeLabel = currentTimeLabel;
             this.maxTimeLabel = maxTimeLabel;
+            this.mediaInfoIcon = mediaInfoIcon;
+            this.mediaInfoIcon.Visibility = Visibility.Hidden;
             this.mediaTimer = new DispatcherTimer(DispatcherPriority.Send) {
                 Interval = TimeSpan.FromMilliseconds(mediaTimerUpdateInterval)
             };
@@ -591,6 +605,8 @@ namespace ActivFlex.ViewModels
         {
             if (File.Exists(music.Path)) {
                 Stop.Execute(null);
+                MediaInfoName = music.Name;
+                this.mediaInfoIcon.Visibility = Visibility.Visible;
                 mediaPlayer.Source = new Uri(music.Path);
                 mediaTimer.Start();
                 mediaPlayer.Play();
