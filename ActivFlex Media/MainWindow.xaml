@@ -17,7 +17,6 @@
     <Window.Resources>
         <Converters:NavItemIconConverter x:Key="NavIconConverter"/>
         <Converters:BooleanVisibilityConverter x:Key="BoolVisibilityConverter"/>
-        <Converters:MillisecondsStringConverter x:Key="MillisecondsStringConverter"/>
         <KeyTime x:Key="NavTreeFadeTime">0:0:0.2</KeyTime>
         <KeyTime x:Key="MediaBarFadeTime">0:0:0.2</KeyTime>
     </Window.Resources>
@@ -306,14 +305,14 @@
             </Grid.ColumnDefinitions>
 
             <!-- Current time label -->
-            <Label x:Name="CurrentTimeLbl" Content="{Binding CurrentPlaybackTime, Converter={StaticResource MillisecondsStringConverter}}" Foreground="White" Grid.Column="0" Grid.RowSpan="2" FontSize="16" FontWeight="Bold" Margin="0,-10,0,0"/>
+            <Label x:Name="CurrentTimeLbl" Content="--:--" Foreground="White" Grid.Column="0" Grid.RowSpan="2" FontSize="16" FontWeight="Bold" Margin="0,-10,0,0"/>
 
             <!-- Timeline -->
             <Slider Name="TimeSlider" Grid.Column="1" Grid.ColumnSpan="1" Minimum="0" Maximum="{Binding MaxPlaybackTime}" Value="{Binding CurrentPlaybackTime, Mode=TwoWay}" 
                     IsMoveToPointEnabled="True" Style="{StaticResource TimeSliderStyle}" ValueChanged="TimeSlider_ValueChanged" PreviewMouseLeftButtonDown="TimeSlider_PreviewMouseLeftButtonDown" Thumb.DragCompleted="TimeSlider_DragCompleted"/>
 
             <!-- Maximum time label -->
-            <Label x:Name="MaxTimeLbl" Content="{Binding MaxPlaybackTime, Converter={StaticResource MillisecondsStringConverter}}" Foreground="White" Grid.Column="2" Grid.RowSpan="2" FontSize="16" FontWeight="Bold" Margin="0,-10,0,0"/>
+            <Label x:Name="MaxTimeLbl" Content="--:--" Foreground="White" Grid.Column="2" Grid.RowSpan="2" FontSize="16" FontWeight="Bold" Margin="0,-10,0,0"/>
             
             <!-- Media control bar stack -->
             <StackPanel x:Name="MediaBarStack" Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,4">

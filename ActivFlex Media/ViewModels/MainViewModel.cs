@@ -29,6 +29,7 @@ using System.Collections.Specialized;
 using System.Collections.ObjectModel;
 using static System.IO.Path;
 using ActivFlex.Configuration;
+using ActivFlex.Converters;
 using ActivFlex.Localization;
 using ActivFlex.Navigation;
 using ActivFlex.FileSystem;
@@ -125,7 +126,22 @@ namespace ActivFlex.ViewModels
         /// <summary>
         /// Time in milliseconds of the media data update timer.
         /// </summary>
-        private const int mediaTimerUpdateInterval = 100;
+        private const int mediaTimerUpdateInterval = 200;
+
+        /// <summary>
+        /// Reference to the label for displaying the current playback time.
+        /// </summary>
+        private Label currentTimeLabel;
+
+        /// <summary>
+        /// Reference to the label for displaying the maximum playback time.
+        /// </summary>
+        private Label maxTimeLabel;
+
+        /// <summary>
+        /// Converter for the media playback times.
+        /// </summary>
+        private TimeSpanStringConverter timeSpanStringConverter = new TimeSpanStringConverter();
 
         /// <summary>
         /// Index of the currently presented image.
@@ -313,7 +329,11 @@ namespace ActivFlex.ViewModels
         private double _maxPlaybackTime;
         public double MaxPlaybackTime {
             get => _maxPlaybackTime;
-            set => SetProperty(ref _maxPlaybackTime, value);
+            set {
+                maxTimeLabel.Content = timeSpanStringConverter.Convert(
+                    mediaPlayer.NaturalDuration.TimeSpan, typeof(string), null, null);
+                SetProperty(ref _maxPlaybackTime, value);
+            }
         }
 
         private bool _timelineDragActive = false;
@@ -456,7 +476,9 @@ namespace ActivFlex.ViewModels
         /// and instantiate all fields and commands.
         /// </summary>
         /// <param name="mediaPlayer">Instance of the media playback control</param>
-        public MainViewModel(MediaElement mediaPlayer)
+        /// <param name="currentTimeLabel">Reference to the label for displaying the current playback time</param>
+        /// <param name="maxTimeLabel">Reference to the label for displaying the maximum playback time</param>
+        public MainViewModel(MediaElement mediaPlayer, Label currentTimeLabel, Label maxTimeLabel)
         {
             //Configuration
             if (this.Config == null) {
@@ -470,7 +492,9 @@ namespace ActivFlex.ViewModels
             }
 
             this.mediaPlayer = mediaPlayer;
-            this.mediaTimer = new DispatcherTimer {
+            this.currentTimeLabel = currentTimeLabel;
+            this.maxTimeLabel = maxTimeLabel;
+            this.mediaTimer = new DispatcherTimer(DispatcherPriority.Send) {
                 Interval = TimeSpan.FromMilliseconds(mediaTimerUpdateInterval)
             };
             this.mediaTimer.Tick += new EventHandler(MediaTimerUpdate);
@@ -594,6 +618,8 @@ namespace ActivFlex.ViewModels
                 _currentPlaybackTime = mediaPlayer.Position.TotalMilliseconds;
                 NotifyPropertyChanged(nameof(CurrentPlaybackTime));
             }
+
+            currentTimeLabel.Content = timeSpanStringConverter.Convert(mediaPlayer.Position, typeof(string), null, null);
         }
 
         /// <summary>

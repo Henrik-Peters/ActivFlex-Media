@@ -22,18 +22,16 @@ using System.Windows.Data;
 namespace ActivFlex.Converters
 {
     /// <summary>
-    /// Converts a timespan represented in milliseconds
-    /// to a readable string format. Hours and days will
-    /// only be displayed when they are not then zero.
+    /// Converts a timespan represented to a readable 
+    /// string format. Hours and days will only be 
+    /// displayed when they are not then zero.
     /// </summary>
-    [ValueConversion(typeof(double), typeof(string))]
-    public class MillisecondsStringConverter : IValueConverter
+    [ValueConversion(typeof(TimeSpan), typeof(string))]
+    public class TimeSpanStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is double milliseconds) {
-                TimeSpan timeSpan = TimeSpan.FromMilliseconds(milliseconds);
-
+            if (value is TimeSpan timeSpan) {
                 if (timeSpan.Days > 0) {
                     return timeSpan.ToString(@"dd\:hh\:mm\:ss");
                 }
@@ -50,8 +48,8 @@ namespace ActivFlex.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is string && TimeSpan.TryParse((string)value, out TimeSpan span)) {
-                return span.TotalMilliseconds;
+            if (value is string && TimeSpan.TryParse((string)value, out TimeSpan timeSpan)) {
+                return timeSpan;
             } else {
                 return null;
             }
