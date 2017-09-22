@@ -350,7 +350,14 @@ namespace ActivFlex.ViewModels
         private Visibility _ShowTimelineSideLabels = Visibility.Collapsed;
         public Visibility ShowTimelineSideLabels {
             get => _ShowTimelineSideLabels;
-            set => SetProperty(ref _ShowTimelineSideLabels, value);
+            set {
+                if (value == Visibility.Visible) {
+                    mediaInfoIcon.Width = 40;
+                    mediaInfoIcon.Margin = new Thickness(5, 0, 0, 0);
+                }
+
+                SetProperty(ref _ShowTimelineSideLabels, value);
+            }
         }
 
         private string _mediaInfoName = String.Empty;
