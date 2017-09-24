@@ -268,8 +268,12 @@ namespace ActivFlex
         private void HandleStartupArguments()
         {
             if (StartupOptions.HasOptions) {
-                if (StartupOptions.ImagePaths.Count > 0) {
+                if (StartupOptions.MusicPaths.Count > 0) {
+                    //Play the first music item
+                    vm.LaunchMusicPlayback.Execute(new MediaMusic(StartupOptions.MusicPaths[0]));
+                }
 
+                if (StartupOptions.ImagePaths.Count > 0) {
                     //Browse to the directory of the first image
                     vm.BrowseFileSystem.Execute(GetParentPath(StartupOptions.ImagePaths[0]));
 

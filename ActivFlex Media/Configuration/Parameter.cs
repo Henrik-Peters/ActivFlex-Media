@@ -41,6 +41,7 @@ namespace ActivFlex.Configuration
 
             List <string> directoryPaths = new List<string>();
             List<string> imagePaths = new List<string>();
+            List<string> musicPaths = new List<string>();
 
             //Try to parse all command line arguments
             for (int i = 1; i < args.Length; i++) {
@@ -51,12 +52,16 @@ namespace ActivFlex.Configuration
 
                 } else if (File.Exists(path) && MediaImage.ImageExtensions.Contains(GetExtension(path))) {
                     imagePaths.Add(path);
+
+                } else if (File.Exists(path) && MediaMusic.MusicExtensions.Contains(GetExtension(path))) {
+                    musicPaths.Add(path);
                 }
             }
 
             //Create read-only collections from the lists
             this.ImagePaths = Array.AsReadOnly(imagePaths.ToArray());
             this.DirectoryPaths = Array.AsReadOnly(directoryPaths.ToArray());
+            this.MusicPaths = Array.AsReadOnly(musicPaths.ToArray());
         }
 
         /// <summary>
@@ -79,14 +84,19 @@ namespace ActivFlex.Configuration
         public ReadOnlyCollection<string> ImagePaths { get; set; }
 
         /// <summary>
+        /// Contains all arguments that are valid paths to music items.
+        /// </summary>
+        public ReadOnlyCollection<string> MusicPaths { get; set; }
+
+        /// <summary>
         /// Get the number of all parsed arguments.
         /// </summary>
         public int OptionsAmount {
-            get => DirectoryPaths.Count + ImagePaths.Count;
+            get => DirectoryPaths.Count + ImagePaths.Count + MusicPaths.Count;
         }
 
         /// <summary>
-        /// Will be true when at least one argument is 
+        /// Will be true when at least one argument is
         /// valid and some parsed data will be available.
         /// </summary>
         public bool HasOptions {
