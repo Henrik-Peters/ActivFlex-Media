@@ -247,7 +247,7 @@
                                                  Text="{Binding Name}"
                                                  Image="{Binding ThumbImage}"
                                                  DefaultContent="{StaticResource PictureIcon}"
-                                                 Click="{Binding DataContext.LaunchPresenter,
+                                                 Click="{Binding DataContext.DefaultImageLaunch,
                                                          RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                                                  Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
 
@@ -255,6 +255,10 @@
                                 <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
                                     <MenuItem Header="{Binding Localize[Open]}" 
                                               Command="{Binding LaunchPresenter}"
+                                              CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+
+                                    <MenuItem Header="{Binding Localize[OpenProcess]}" 
+                                              Command="{Binding LaunchDefault}"
                                               CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                                 </ContextMenu>
                             </Controls:ImageThumbnail.ContextMenu>
@@ -281,7 +285,7 @@
                                               CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
 
                                     <MenuItem Header="{Binding Localize[PlayProcess]}" 
-                                              Command="{Binding LaunchMusicProgramm}"
+                                              Command="{Binding LaunchDefault}"
                                               CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                                 </ContextMenu>
                             </Controls:MusicThumbnail.ContextMenu>

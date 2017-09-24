@@ -43,7 +43,8 @@ namespace ActivFlex.Localization
             ["ToggleFullscreen"] = new List<string> { "Toggle fullscreen", "Vollbildmodus wechseln" },
             ["Exit"] = new List<string> { "Exit", "Beenden" },
             ["Play"] = new List<string> { "Play", "Wiedergabe" },
-            ["PlayProcess"] = new List<string> { "Play (default player)", "Wiedergabe (Standardprogramm)" }
+            ["PlayProcess"] = new List<string> { "Play (default player)", "Wiedergabe (Standardprogramm)" },
+            ["OpenProcess"] = new List<string> { "Open (default program)", "Öffnen (Standardprogramm)" }
         };
 
         /// <summary>

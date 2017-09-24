@@ -444,6 +444,12 @@ namespace ActivFlex.ViewModels
         public ICommand LaunchPresenter { get; set; }
 
         /// <summary>
+        /// Start the default image item launch
+        /// method specificed by the config.
+        /// </summary>
+        public ICommand DefaultImageLaunch { get; set; }
+
+        /// <summary>
         /// Start the default music item launch
         /// method specificed by the config.
         /// </summary>
@@ -456,10 +462,10 @@ namespace ActivFlex.ViewModels
         public ICommand LaunchMusicPlayback { get; set; }
 
         /// <summary>
-        /// Start the default media player for
+        /// Start the default process player for
         /// the passed argument as music item.
         /// </summary>
-        public ICommand LaunchMusicProgramm { get; set; }
+        public ICommand LaunchDefault { get; set; }
 
         /// <summary>
         /// Run an escape action. Depending on the
@@ -588,12 +594,19 @@ namespace ActivFlex.ViewModels
             this.LaunchPresenter = new RelayCommand<MediaImage>(LaunchImagePresenter);
             this.PresentImage = new RelayCommand<MediaImage>(PresentMediaImage);
             this.LaunchMusicPlayback = new RelayCommand<MediaMusic>(StartMusicPlayback);
-            this.LaunchMusicProgramm = new RelayCommand<MediaMusic>(music => Process.Start(music.Path));
+            this.LaunchDefault = new RelayCommand<IFileObject>(media => Process.Start(media.Path));
+            this.DefaultImageLaunch = new RelayCommand<MediaImage>(image => {
+                if (Config.ImageLaunchBehavior == LaunchBehavior.Self) {
+                    this.LaunchPresenter.Execute(image);
+                } else {
+                    this.LaunchDefault.Execute(image);
+                }
+            });
             this.DefaultMusicLaunch = new RelayCommand<MediaMusic>(music => {
                 if (Config.MusicLaunchBehavior == LaunchBehavior.Self) {
                     this.LaunchMusicPlayback.Execute(music);
                 } else {
-                    this.LaunchMusicProgramm.Execute(music);
+                    this.LaunchDefault.Execute(music);
                 }
             });
 
