@@ -39,6 +39,7 @@ namespace ActivFlex.Localization
             ["MediaLibraries"] = new List<string> { "Media libraries", "Biblotheken" },
             ["MyComputer"] = new List<string> { "My Computer", "Mein Computer" },
             ["Pictures"] = new List<string> { "Pictures", "Bilder" },
+            ["Music"] = new List<string> { "Music", "Musik" },
             ["ShowInfo"] = new List<string> { "Show info", "Info anzeigen" },
             ["ToggleFullscreen"] = new List<string> { "Toggle fullscreen", "Vollbildmodus wechseln" },
             ["Exit"] = new List<string> { "Exit", "Beenden" },

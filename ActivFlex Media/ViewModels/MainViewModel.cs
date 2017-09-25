@@ -552,7 +552,10 @@ namespace ActivFlex.ViewModels
             this.NavItems[0].NavChildren = new ObservableCollection<NavItem>(
                 new List<NavItem>(new[] {
                     new DirectoryNavItem(Localize["Pictures"], "PictureIcon", 
-                                         Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), NavTag.None, "Pictures")
+                                         Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), NavTag.None, "Pictures"),
+
+                    new DirectoryNavItem(Localize["Music"], "MusicIcon",
+                                         Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), NavTag.None, "Music")
                 })
             );
 
