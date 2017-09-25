@@ -524,19 +524,19 @@ namespace ActivFlex
                 case WM_HOTKEY:
                     switch (wParam.ToInt32()) {
                         case 0:
-                            Console.WriteLine("Next");
+                            vm.Next.Execute(null);
                             handled = true;
                             break;
                         case 1:
-                            Console.WriteLine("Prev");
+                            vm.Previous.Execute(null);
                             handled = true;
                             break;
                         case 2:
-                            Console.WriteLine("Stop");
+                            vm.Stop.Execute(null);
                             handled = true;
                             break;
                         case 3:
-                            Console.WriteLine("Play/Pause");
+                            vm.PlayMode = !vm.PlayMode;
                             handled = true;
                             break;
                     }
