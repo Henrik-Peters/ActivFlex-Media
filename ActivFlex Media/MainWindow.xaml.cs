@@ -398,6 +398,62 @@ namespace ActivFlex
             }
         }
 
+        #region GlobalHotkeys
+
+        [DllImport("user32.dll")]
+        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+
+        [DllImport("user32.dll")]
+        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+        private WinInterop.HwndSource _source;
+        const int WM_HOTKEY = 0x0312;
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _source.RemoveHook(WindowProc);
+            _source = null;
+            UnregisterHotKeys();
+            base.OnClosed(e);
+        }
+
+        private void RegisterHotKeys()
+        {
+            var helper = new WinInterop.WindowInteropHelper(this);
+            const uint VK_MEDIA_NEXT_TRACK = 0xB0;
+            const uint VK_MEDIA_PREV_TRACK = 0xB1;
+            const uint VK_MEDIA_STOP = 0xB2;
+            const uint VK_MEDIA_PLAY_PAUSE = 0xB3;
+
+            if (!RegisterHotKey(helper.Handle, 0, 0x0000, VK_MEDIA_NEXT_TRACK)) {
+                Debug.WriteLine("RegisterHotKey failed: VK_MEDIA_NEXT_TRACK");
+            }
+
+            if (!RegisterHotKey(helper.Handle, 1, 0x0000, VK_MEDIA_PREV_TRACK)) {
+                Debug.WriteLine("RegisterHotKey failed: VK_MEDIA_PREV_TRACK");
+            }
+
+            if (!RegisterHotKey(helper.Handle, 2, 0x0000, VK_MEDIA_STOP)) {
+                Debug.WriteLine("RegisterHotKey failed: VK_MEDIA_STOP");
+            }
+
+            if (!RegisterHotKey(helper.Handle, 3, 0x0000, VK_MEDIA_PLAY_PAUSE)) {
+                Debug.WriteLine("RegisterHotKey failed: VK_MEDIA_PLAY_PAUSE");
+            }
+        }
+
+        private void UnregisterHotKeys()
+        {
+            var helper = new WinInterop.WindowInteropHelper(this);
+
+            for (int i = 0; i < 4; i++) {
+                if (UnregisterHotKey(helper.Handle, i)) {
+                    Debug.WriteLine("UnregisterHotKey failed: " + i.ToString());
+                }
+            }
+        }
+
+        #endregion
         #region WindowSizeLimits
 
         [DllImport("user32")]
@@ -434,10 +490,10 @@ namespace ActivFlex
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         public class MONITORINFO
-        {         
+        {
             public int cbSize = Marshal.SizeOf(typeof(MONITORINFO));        
-            public RECT rcMonitor = new RECT();      
-            public RECT rcWork = new RECT();       
+            public RECT rcMonitor = new RECT();
+            public RECT rcWork = new RECT();
             public int dwFlags = 0;
         }
 
@@ -448,6 +504,11 @@ namespace ActivFlex
 
             //Add an event handler to the window handle. Forward all events to the WindowProc function
             WinInterop.HwndSource.FromHwnd(handle).AddHook(new WinInterop.HwndSourceHook(WindowProc));
+
+            //Global hotkey register
+            var helper = new WinInterop.WindowInteropHelper(this);
+            _source = WinInterop.HwndSource.FromHwnd(helper.Handle);
+            RegisterHotKeys();
         }
         
         private System.IntPtr WindowProc(System.IntPtr hwnd, int msg, System.IntPtr wParam, System.IntPtr lParam, ref bool handled)
@@ -457,6 +518,28 @@ namespace ActivFlex
                 case 0x0024:
                     WmGetMinMaxInfo(hwnd, lParam);
                     handled = true;
+                    break;
+
+                //Global registered hotkey pressed
+                case WM_HOTKEY:
+                    switch (wParam.ToInt32()) {
+                        case 0:
+                            Console.WriteLine("Next");
+                            handled = true;
+                            break;
+                        case 1:
+                            Console.WriteLine("Prev");
+                            handled = true;
+                            break;
+                        case 2:
+                            Console.WriteLine("Stop");
+                            handled = true;
+                            break;
+                        case 3:
+                            Console.WriteLine("Play/Pause");
+                            handled = true;
+                            break;
+                    }
                     break;
             }
 
