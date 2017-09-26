@@ -376,6 +376,12 @@ namespace ActivFlex.ViewModels
             }
         }
 
+        private Visibility _ShowVideoPlayback = Visibility.Hidden;
+        public Visibility ShowVideoPlayback {
+            get => _ShowVideoPlayback;
+            set => SetProperty(ref _ShowVideoPlayback, value);
+        }
+
         private string _mediaInfoName = String.Empty;
         public string MediaInfoName {
             get => _mediaInfoName;
@@ -692,6 +698,7 @@ namespace ActivFlex.ViewModels
                 Stop.Execute(null);
                 MediaInfoName = "";
                 this.mediaInfoIcon.Visibility = Visibility.Hidden;
+                this.ShowVideoPlayback = Visibility.Visible;
 
                 mediaPlayer.Source = new Uri(video.Path);
                 mediaTimer.Start();
@@ -714,6 +721,7 @@ namespace ActivFlex.ViewModels
         private void StopCurrentPlayback()
         {
             if (CurrentPlaybackTime > 0) {
+                this.ShowVideoPlayback = Visibility.Hidden;
                 mediaTimer.Stop();
                 mediaPlayer.Stop();
 
@@ -1117,9 +1125,13 @@ namespace ActivFlex.ViewModels
         /// </summary>
         private void ExitCurrentMode()
         {
-            if (ImagePresentActive) {
+            if (ShowVideoPlayback == Visibility.Visible) {
+                Stop.Execute(null);
+
+            } else if (ImagePresentActive) {
                 ImagePresentActive = false;
                 preloadInterrupt = true;
+
             } else {
                 Application.Current.Shutdown();
             }

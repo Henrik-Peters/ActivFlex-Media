@@ -406,9 +406,11 @@
             </Grid.Style>
         </Grid>
 
-        <!-- Media playback control -->
-        <MediaElement x:Name="MediaPlayer" LoadedBehavior="Manual" UnloadedBehavior="Manual" Grid.Row="1" Grid.Column="1"
-                      MediaOpened="MediaPlayer_MediaOpened" MediaEnded="MediaPlayer_MediaEnded"/>
+        <!-- Media playback area -->
+        <Border x:Name="MediaBorder" Background="Black" Visibility="{Binding ShowVideoPlayback}" Grid.Row="1" Grid.Column="1">
+            <MediaElement x:Name="MediaPlayer" LoadedBehavior="Manual" UnloadedBehavior="Manual" MediaOpened="MediaPlayer_MediaOpened" MediaEnded="MediaPlayer_MediaEnded"/>
+        </Border>
+        
 
         <!-- Image presentation control -->
         <Presentation:ImagePresenter x:Name="MediaPresenter" Grid.Row="1" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="1"
