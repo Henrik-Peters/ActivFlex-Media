@@ -19,9 +19,11 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Collections.Generic;
@@ -35,7 +37,6 @@ using ActivFlex.Navigation;
 using ActivFlex.FileSystem;
 using ActivFlex.Views;
 using ActivFlex.Media;
-using System.Diagnostics;
 
 namespace ActivFlex.ViewModels
 {
@@ -147,6 +148,21 @@ namespace ActivFlex.ViewModels
         /// The info icon in the media playback area.
         /// </summary>
         private ContentPresenter mediaInfoIcon;
+
+        /// <summary>
+        /// The media player to generate the thumbnail image.
+        /// </summary>
+        MediaPlayer thumbnailPlayer;
+
+        /// <summary>
+        /// The time of the video for the thumbnail shot.
+        /// </summary>
+        private static readonly TimeSpan DefaultThumbnailTime = TimeSpan.FromSeconds(0.1);
+
+        /// <summary>
+        /// This queue holds video items for thumbnail loading.
+        /// </summary>
+        Queue<VideoItemViewModel> vidLoadQueue;
 
         /// <summary>
         /// Index of the currently presented image.
@@ -805,11 +821,7 @@ namespace ActivFlex.ViewModels
             thumbnailThread = new Thread(LoadThumbnails);
             loadThumbsInterrupt = false;
             thumbnailThread.Start();
-
-            foreach (var item in FileSystemItems.Where(item => item is VideoItemViewModel)) {
-                VideoItemViewModel mediaItem = item as VideoItemViewModel;
-                mediaItem.LoadThumbnail(Config.ThumbnailDecodeSize);
-            }
+            LoadVideoThumbnails();
         }
 
         /// <summary>
@@ -824,6 +836,62 @@ namespace ActivFlex.ViewModels
                 if (viewModelItem is ImageItemViewModel item) {
                     item.LoadThumbnail(Config.ThumbnailDecodeSize);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Load the video thumbnails which are not loaded yet (lazily).
+        /// A new video loading queue will be created by this function.
+        /// </summary>
+        private void LoadVideoThumbnails()
+        {
+            vidLoadQueue = new Queue<VideoItemViewModel>(
+                FileSystemItems
+                .Where(item => item is VideoItemViewModel)
+                .Cast<VideoItemViewModel>()
+                .Where(videoItem => videoItem.ThumbImage == null)
+            );
+
+            if (vidLoadQueue.Any()) {
+                LoadNextVideoThumbnail();
+            }
+        }
+
+        /// <summary>
+        /// Load the next thumbnail from the video loading queue and 
+        /// store it in the related view model. This function will 
+        /// call itself recursively until the loading queue is empty.
+        /// </summary>
+        private void LoadNextVideoThumbnail()
+        {
+            if (vidLoadQueue.Any()) {
+                VideoItemViewModel videoItem = vidLoadQueue.Dequeue();
+                thumbnailPlayer = new MediaPlayer { Volume = 0, ScrubbingEnabled = true };
+
+                //Because the media opening process is done asynchronously by another thread, the loading 
+                //queue has to be emptied recursively to only use one media instance at once for saving memory
+                thumbnailPlayer.MediaOpened += (sender, e) => {
+
+                    //Keep the aspect ratio of the video in the thumbnail
+                    double aspectRatio = thumbnailPlayer.NaturalVideoWidth / (double)thumbnailPlayer.NaturalVideoHeight;
+                    int DecodePixelHeight = (int)(Config.ThumbnailDecodeSize / aspectRatio);
+
+                    RenderTargetBitmap renderTarget = new RenderTargetBitmap(Config.ThumbnailDecodeSize, DecodePixelHeight, 96, 96, PixelFormats.Pbgra32);
+                    DrawingVisual drawingVisual = new DrawingVisual();
+                    using (DrawingContext drawContext = drawingVisual.RenderOpen()) {
+                        drawContext.DrawVideo(thumbnailPlayer, new Rect(0, 0, Config.ThumbnailDecodeSize, DecodePixelHeight));
+                    }
+
+                    renderTarget.Render(drawingVisual);
+                    thumbnailPlayer.Close();
+
+                    //no image freezing necessary; assignment is on the UI-thread
+                    videoItem.ThumbImage = renderTarget;
+                    LoadNextVideoThumbnail();
+                };
+                thumbnailPlayer.Open(new Uri(videoItem.Path));
+                thumbnailPlayer.Pause();
+                thumbnailPlayer.Position = DefaultThumbnailTime;
             }
         }
 

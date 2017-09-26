@@ -15,9 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
-using System;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ActivFlex.FileSystem;
 using ActivFlex.Media;
@@ -72,53 +69,10 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public BitmapSource ThumbImage {
             get => _proxy.Thumbnail;
-            set => _proxy.Thumbnail = value;
-        }
-
-        /// <summary>
-        /// The time of the video for the thumbnail shot.
-        /// </summary>
-        private static readonly TimeSpan DefaultThumbnailTime = TimeSpan.FromSeconds(0.1);
-
-        /// <summary>
-        /// The media player to generate the thumbnail image.
-        /// </summary>
-        MediaPlayer player;
-
-        /// <summary>
-        /// Load the thumbnail of the represented video.
-        /// This operation will block the current thread.
-        /// The loaded thumbnail will be stored in ThumbImage.
-        /// </summary>
-        /// <param name="DecodePixelWidth"></param>
-        public void LoadThumbnail(int DecodePixelWidth)
-        {
-            player = new MediaPlayer { Volume = 0, ScrubbingEnabled = true };
-            player.Open(new Uri(_proxy.Path));
-            player.Pause();
-            player.Position = DefaultThumbnailTime;
-            player.MediaOpened += (sender, e) => {
-
-                //Keep the aspectRatio of the video in the thumbnail
-                double aspectRatio = player.NaturalVideoWidth / (double)player.NaturalVideoHeight;
-                int DecodePixelHeight = (int)(DecodePixelWidth / aspectRatio);
-
-                RenderTargetBitmap renderTarget = new RenderTargetBitmap(DecodePixelWidth, DecodePixelHeight, 96, 96, PixelFormats.Pbgra32);
-                DrawingVisual drawingVisual = new DrawingVisual();
-                using (DrawingContext drawContext = drawingVisual.RenderOpen()) {
-                    drawContext.DrawVideo(player, new Rect(0, 0, DecodePixelWidth, DecodePixelHeight));
-                }
-                renderTarget.Render(drawingVisual);
-                player.Close();
-                player = null;
-
-                if (renderTarget.CanFreeze) {
-                    renderTarget.Freeze();
-                }
-
-                this.ThumbImage = renderTarget;
+            set {
+                _proxy.Thumbnail = value;
                 NotifyPropertyChanged(nameof(ThumbImage));
-            };
+            }
         }
 
         /// <summary>
