@@ -48,6 +48,7 @@ namespace ActivFlex.Configuration
             true,
             LaunchBehavior.Self,
             LaunchBehavior.Self,
+            LaunchBehavior.Self,
             0.5,
             true
         );
@@ -135,6 +136,11 @@ namespace ActivFlex.Configuration
         public LaunchBehavior MusicLaunchBehavior { get; set; }
 
         /// <summary>
+        /// Default launch option for video items.
+        /// </summary>
+        public LaunchBehavior VideoLaunchBehavior { get; set; }
+
+        /// <summary>
         /// The last volume of the media playback.
         /// </summary>
         public double Volume { get; set; }
@@ -160,12 +166,13 @@ namespace ActivFlex.Configuration
         /// <param name="PreloadPresenterImages">Enable or disable preloading of images in the presentation mode</param>
         /// <param name="ImageLaunchBehavior">Default launch option for image items</param>
         /// <param name="MusicLaunchBehavior">Default launch option for music items</param>
+        /// <param name="VideoLaunchBehavior">Default launch option for video items</param>
         /// <param name="Volume">The last volume of the media playback</param>
         /// <param name="ShowTimelineSideLabels">Display or hide the media playback time side labels</param>
         public ConfigData(string Username, Language Language, WindowStartupState NormalStartup, WindowStartupState PresenterStartup, 
                           WindowRestoreState RestoreState, double RestoreWidth, double RestoreHeight, double RestoreLeft, double RestoreTop,
-                          int ThumbnailDecodeSize, bool PreloadPresenterImages, LaunchBehavior ImageLaunchBehavior, LaunchBehavior MusicLaunchBehavior, 
-                          double Volume, bool ShowTimelineSideLabels)
+                          int ThumbnailDecodeSize, bool PreloadPresenterImages, LaunchBehavior ImageLaunchBehavior, LaunchBehavior MusicLaunchBehavior,
+                          LaunchBehavior VideoLaunchBehavior, double Volume, bool ShowTimelineSideLabels)
         {
             this.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.Username = Username;
@@ -181,6 +188,7 @@ namespace ActivFlex.Configuration
             this.PreloadPresenterImages = PreloadPresenterImages;
             this.ImageLaunchBehavior = ImageLaunchBehavior;
             this.MusicLaunchBehavior = MusicLaunchBehavior;
+            this.VideoLaunchBehavior = VideoLaunchBehavior;
             this.Volume = Volume;
             this.ShowTimelineSideLabels = ShowTimelineSideLabels;
         }

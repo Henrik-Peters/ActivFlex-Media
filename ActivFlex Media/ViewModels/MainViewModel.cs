@@ -484,6 +484,18 @@ namespace ActivFlex.ViewModels
         public ICommand LaunchDefault { get; set; }
 
         /// <summary>
+        /// Start the default video item launch
+        /// method specificed by the config.
+        /// </summary>
+        public ICommand DefaultVideoLaunch { get; set; }
+
+        /// <summary>
+        /// Start the playback mode with the
+        /// argument as the video item to play.
+        /// </summary>
+        public ICommand LaunchVideoPlayback { get; set; }
+
+        /// <summary>
         /// Run an escape action. Depending on the
         /// current mode an action will be chosen.
         /// </summary>
@@ -613,6 +625,7 @@ namespace ActivFlex.ViewModels
             this.LaunchPresenter = new RelayCommand<MediaImage>(LaunchImagePresenter);
             this.PresentImage = new RelayCommand<MediaImage>(PresentMediaImage);
             this.LaunchMusicPlayback = new RelayCommand<MediaMusic>(StartMusicPlayback);
+            this.LaunchVideoPlayback = new RelayCommand<MediaVideo>(StartVideoPlayback);
             this.LaunchDefault = new RelayCommand<IFileObject>(media => Process.Start(media.Path));
             this.DefaultImageLaunch = new RelayCommand<MediaImage>(image => {
                 if (Config.ImageLaunchBehavior == LaunchBehavior.Self) {
@@ -626,6 +639,13 @@ namespace ActivFlex.ViewModels
                     this.LaunchMusicPlayback.Execute(music);
                 } else {
                     this.LaunchDefault.Execute(music);
+                }
+            });
+            this.DefaultVideoLaunch = new RelayCommand<MediaVideo>(video => {
+                if (Config.VideoLaunchBehavior == LaunchBehavior.Self) {
+                    this.LaunchVideoPlayback.Execute(video);
+                } else {
+                    this.LaunchDefault.Execute(video);
                 }
             });
 
@@ -647,6 +667,33 @@ namespace ActivFlex.ViewModels
                 MediaInfoName = music.Name;
                 this.mediaInfoIcon.Visibility = Visibility.Visible;
                 mediaPlayer.Source = new Uri(music.Path);
+                mediaTimer.Start();
+                mediaPlayer.Play();
+
+                if (Config.ShowTimelineSideLabels) {
+                    ShowTimelineSideLabels = Visibility.Visible;
+                } else {
+                    ShowTimelineSideLabels = Visibility.Collapsed;
+                }
+
+                _playmode = true;
+                NotifyPropertyChanged(nameof(PlayMode));
+            }
+        }
+
+        /// <summary>
+        /// Launch the media playback for the passed video
+        /// item. Running playbacks will be stopped.
+        /// </summary>
+        /// <param name="video">Video item to play</param>
+        private void StartVideoPlayback(MediaVideo video)
+        {
+            if (File.Exists(video.Path)) {
+                Stop.Execute(null);
+                MediaInfoName = "";
+                this.mediaInfoIcon.Visibility = Visibility.Hidden;
+
+                mediaPlayer.Source = new Uri(video.Path);
                 mediaTimer.Start();
                 mediaPlayer.Play();
 
