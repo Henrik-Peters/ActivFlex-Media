@@ -805,6 +805,11 @@ namespace ActivFlex.ViewModels
             thumbnailThread = new Thread(LoadThumbnails);
             loadThumbsInterrupt = false;
             thumbnailThread.Start();
+
+            foreach (var item in FileSystemItems.Where(item => item is VideoItemViewModel)) {
+                VideoItemViewModel mediaItem = item as VideoItemViewModel;
+                mediaItem.LoadThumbnail(Config.ThumbnailDecodeSize);
+            }
         }
 
         /// <summary>

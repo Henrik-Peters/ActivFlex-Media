@@ -37,7 +37,7 @@ namespace ActivFlex.Media
         /// <summary>
         /// The thumbnail data of the video.
         /// </summary>
-        public BitmapImage Thumbnail { get; private set; }
+        public BitmapSource Thumbnail { get; set; }
 
         /// <summary>
         /// Create a new video only by the filesystem path.
