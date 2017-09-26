@@ -292,6 +292,30 @@
                         </Controls:MusicThumbnail>
                     </DataTemplate>
 
+                    <!-- MediaVideo template -->
+                    <DataTemplate DataType="{x:Type ViewModels:VideoItemViewModel}">
+                        <Controls:ImageThumbnail Margin="20,5,20,20"
+                                                 Width="150"
+                                                 Height="150"
+                                                 CanSelect="False"
+                                                 Proxy="{Binding Proxy}"
+                                                 Text="{Binding Name}"
+                                                 Image="{Binding ThumbImage}"
+                                                 DefaultContent="{x:Null}"
+                                                 Click="{Binding DataContext.LaunchDefault,
+                                                         RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                 Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+
+                            <Controls:ImageThumbnail.ContextMenu>
+                                <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                                    <MenuItem Header="{Binding Localize[OpenProcess]}" 
+                                              Command="{Binding LaunchDefault}"
+                                              CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                                </ContextMenu>
+                            </Controls:ImageThumbnail.ContextMenu>
+                        </Controls:ImageThumbnail>
+                    </DataTemplate>
+
                 </ItemsControl.Resources>
             </ItemsControl>
         </ScrollViewer>

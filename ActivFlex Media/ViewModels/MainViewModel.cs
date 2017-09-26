@@ -833,7 +833,7 @@ namespace ActivFlex.ViewModels
         {
             this.Path = path;
             FileSystemItems = new ObservableCollection<IThumbnailViewModel>(FileSystemBrowser.Browse(path)
-                .Where(item => item is DirectoryItem || item is MediaImage || item is MediaMusic)
+                .Where(item => item is DirectoryItem || item is MediaImage || item is MediaMusic || item is MediaVideo)
                 .Select<IFileObject, IThumbnailViewModel>(item => {
 
                     if (item is MediaImage imageItem) {
@@ -842,6 +842,10 @@ namespace ActivFlex.ViewModels
 
                     if (item is MediaMusic musicItem) {
                         return new MusicItemViewModel(musicItem);
+                    }
+
+                    if (item is MediaVideo videoItem) {
+                        return new VideoItemViewModel(videoItem);
                     }
 
                     return new DirectoryItemViewModel((DirectoryItem)item);
