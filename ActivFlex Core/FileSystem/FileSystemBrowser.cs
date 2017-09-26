@@ -75,8 +75,14 @@ namespace ActivFlex.FileSystem
                     .ToList());
 
                 list.AddRange(files
+                    .Where(file => MediaVideo.VideoExtensions.Contains(GetExtension(file)))
+                    .Select(file => new MediaVideo(file))
+                    .ToList());
+
+                list.AddRange(files
                     .Where(file => !MediaImage.ImageExtensions.Contains(GetExtension(file)))
                     .Where(file => !MediaMusic.MusicExtensions.Contains(GetExtension(file)))
+                    .Where(file => !MediaVideo.VideoExtensions.Contains(GetExtension(file)))
                     .Select(file => new FileItem(file))
                     .ToList());
 

@@ -53,6 +53,7 @@
     <Compile Include="Media\MediaImage.cs" />
     <Compile Include="Media\MediaMusic.cs" />
     <Compile Include="Media\MediaObject.cs" />
+    <Compile Include="Media\MediaVideo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
