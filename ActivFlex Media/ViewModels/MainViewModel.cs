@@ -397,11 +397,15 @@ namespace ActivFlex.ViewModels
                         mediaTimer.Start();
                         mediaPlayer.Play();
                         SetProperty(ref _playmode, value);
-
+                        
                         if (Config.ShowTimelineSideLabels) {
                             ShowTimelineSideLabels = Visibility.Visible;
                         } else {
                             ShowTimelineSideLabels = Visibility.Collapsed;
+                        }
+
+                        if (mediaPlayer.HasVideo) {
+                            this.ShowVideoPlayback = Visibility.Visible;
                         }
 
                     } else if (mediaPlayer.CanPause) {
