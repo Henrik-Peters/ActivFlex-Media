@@ -280,6 +280,18 @@ namespace ActivFlex
             }
         }
 
+        private void MediaPresenter_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ChangeFullscreenMode(!Fullscreen);
+            e.Handled = true;
+        }
+
+        private void MediaBorder_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ChangeFullscreenMode(!Fullscreen);
+            e.Handled = true;
+        }
+
         private void HandleStartupArguments()
         {
             if (StartupOptions.HasOptions) {

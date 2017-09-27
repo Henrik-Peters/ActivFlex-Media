@@ -931,7 +931,7 @@ namespace ActivFlex.ViewModels
                 VideoItemViewModel videoItem = vidLoadQueue.Dequeue();
                 thumbnailPlayer = new MediaPlayer { Volume = 0, ScrubbingEnabled = true };
 
-                //Because the media opening process is done asynchronously by another thread, the loading 
+                //Because the media opening process is done asynchronously by another thread, the loading
                 //queue has to be emptied recursively to only use one media instance at once for saving memory
                 thumbnailPlayer.MediaOpened += (sender, e) => {
                     if (thumbnailPlayer.NaturalVideoWidth != 0 && thumbnailPlayer.NaturalVideoHeight != 0) {

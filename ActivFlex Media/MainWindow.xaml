@@ -409,15 +409,19 @@
         </Grid>
 
         <!-- Media playback area -->
-        <Border x:Name="MediaBorder" Background="Black" Visibility="{Binding ShowVideoPlayback}" Grid.Row="1" Grid.Column="1">
-            <MediaElement x:Name="MediaPlayer" LoadedBehavior="Manual" UnloadedBehavior="Manual" MediaOpened="MediaPlayer_MediaOpened" MediaEnded="MediaPlayer_MediaEnded"/>
-        </Border>
+        <ContentControl x:Name="MediaBorder" Visibility="{Binding ShowVideoPlayback}" Grid.Row="1" Grid.Column="1" PreviewMouseDoubleClick="MediaBorder_PreviewMouseDoubleClick">
+            <Border Background="Black">
+                <MediaElement x:Name="MediaPlayer" LoadedBehavior="Manual" UnloadedBehavior="Manual" MediaOpened="MediaPlayer_MediaOpened" MediaEnded="MediaPlayer_MediaEnded"/>
+            </Border>
+        </ContentControl>
+        
         
 
         <!-- Image presentation control -->
         <Presentation:ImagePresenter x:Name="MediaPresenter" Grid.Row="1" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="1"
                                      Visibility="{Binding ImagePresentActive, Converter={StaticResource BoolVisibilityConverter}}"
-                                     Image="{Binding ImagePresentData}" PreviewMouseDown="MediaPresenter_PreviewMouseDown"/>
+                                     Image="{Binding ImagePresentData}" PreviewMouseDown="MediaPresenter_PreviewMouseDown"
+                                     PreviewMouseDoubleClick="MediaPresenter_PreviewMouseDoubleClick"/>
 
         <!-- Window border -->
         <Border x:Name="outerBorder" Grid.RowSpan="4" Grid.ColumnSpan="3" 
