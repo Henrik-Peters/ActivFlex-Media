@@ -934,24 +934,26 @@ namespace ActivFlex.ViewModels
                 //Because the media opening process is done asynchronously by another thread, the loading 
                 //queue has to be emptied recursively to only use one media instance at once for saving memory
                 thumbnailPlayer.MediaOpened += (sender, e) => {
+                    if (thumbnailPlayer.NaturalVideoWidth != 0 && thumbnailPlayer.NaturalVideoHeight != 0) {
 
-                    //Keep the aspect ratio of the video in the thumbnail
-                    double aspectRatio = thumbnailPlayer.NaturalVideoWidth / (double)thumbnailPlayer.NaturalVideoHeight;
-                    int DecodePixelHeight = (int)(Config.ThumbnailDecodeSize / aspectRatio);
+                        //Keep the aspect ratio of the video in the thumbnail
+                        double aspectRatio = thumbnailPlayer.NaturalVideoWidth / (double)thumbnailPlayer.NaturalVideoHeight;
+                        int DecodePixelHeight = (int)(Config.ThumbnailDecodeSize / aspectRatio);
 
-                    RenderTargetBitmap renderTarget = new RenderTargetBitmap(Config.ThumbnailDecodeSize, DecodePixelHeight, 96, 96, PixelFormats.Pbgra32);
-                    DrawingVisual drawingVisual = new DrawingVisual();
-                    using (DrawingContext drawContext = drawingVisual.RenderOpen()) {
-                        drawContext.DrawVideo(thumbnailPlayer, new Rect(0, 0, Config.ThumbnailDecodeSize, DecodePixelHeight));
+                        RenderTargetBitmap renderTarget = new RenderTargetBitmap(Config.ThumbnailDecodeSize, DecodePixelHeight, 96, 96, PixelFormats.Pbgra32);
+                        DrawingVisual drawingVisual = new DrawingVisual();
+                        using (DrawingContext drawContext = drawingVisual.RenderOpen()) {
+                            drawContext.DrawVideo(thumbnailPlayer, new Rect(0, 0, Config.ThumbnailDecodeSize, DecodePixelHeight));
+                        }
+
+                        renderTarget.Render(drawingVisual);
+                        thumbnailPlayer.Close();
+
+                        //no image freezing necessary; assignment is on the UI-thread
+                        videoItem.ThumbImage = renderTarget;
+                        videoItem.IndicatorVisibility = Visibility.Visible;
+                        LoadNextVideoThumbnail();
                     }
-
-                    renderTarget.Render(drawingVisual);
-                    thumbnailPlayer.Close();
-
-                    //no image freezing necessary; assignment is on the UI-thread
-                    videoItem.ThumbImage = renderTarget;
-                    videoItem.IndicatorVisibility = Visibility.Visible;
-                    LoadNextVideoThumbnail();
                 };
                 thumbnailPlayer.Open(new Uri(videoItem.Path));
                 thumbnailPlayer.Pause();
