@@ -273,7 +273,12 @@ namespace ActivFlex
                     vm.LaunchMusicPlayback.Execute(new MediaMusic(StartupOptions.MusicPaths[0]));
                 }
 
-                if (StartupOptions.ImagePaths.Count > 0) {
+                if (StartupOptions.VideoPaths.Count > 0 && StartupOptions.MusicPaths.Count == 0) {
+                    //Play the first video item
+                    vm.LaunchVideoPlayback.Execute(new MediaVideo(StartupOptions.VideoPaths[0]));
+                }
+
+                if (StartupOptions.ImagePaths.Count > 0 && StartupOptions.VideoPaths.Count == 0) {
                     //Browse to the directory of the first image
                     vm.BrowseFileSystem.Execute(GetParentPath(StartupOptions.ImagePaths[0]));
 

@@ -42,6 +42,7 @@ namespace ActivFlex.Configuration
             List <string> directoryPaths = new List<string>();
             List<string> imagePaths = new List<string>();
             List<string> musicPaths = new List<string>();
+            List<string> videoPaths = new List<string>();
 
             //Try to parse all command line arguments
             for (int i = 1; i < args.Length; i++) {
@@ -55,13 +56,17 @@ namespace ActivFlex.Configuration
 
                 } else if (File.Exists(path) && MediaMusic.MusicExtensions.Contains(GetExtension(path))) {
                     musicPaths.Add(path);
+
+                } else if (File.Exists(path) && MediaVideo.VideoExtensions.Contains(GetExtension(path))) {
+                    videoPaths.Add(path);
                 }
             }
 
             //Create read-only collections from the lists
-            this.ImagePaths = Array.AsReadOnly(imagePaths.ToArray());
             this.DirectoryPaths = Array.AsReadOnly(directoryPaths.ToArray());
+            this.ImagePaths = Array.AsReadOnly(imagePaths.ToArray());
             this.MusicPaths = Array.AsReadOnly(musicPaths.ToArray());
+            this.VideoPaths = Array.AsReadOnly(videoPaths.ToArray());
         }
 
         /// <summary>
@@ -89,10 +94,15 @@ namespace ActivFlex.Configuration
         public ReadOnlyCollection<string> MusicPaths { get; set; }
 
         /// <summary>
+        /// Contains all arguments that are valid paths to video items.
+        /// </summary>
+        public ReadOnlyCollection<string> VideoPaths { get; set; }
+
+        /// <summary>
         /// Get the number of all parsed arguments.
         /// </summary>
         public int OptionsAmount {
-            get => DirectoryPaths.Count + ImagePaths.Count + MusicPaths.Count;
+            get => DirectoryPaths.Count + ImagePaths.Count + MusicPaths.Count + VideoPaths.Count;
         }
 
         /// <summary>
