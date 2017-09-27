@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
+using System.Windows;
 using System.Windows.Media.Imaging;
 using ActivFlex.FileSystem;
 using ActivFlex.Media;
@@ -73,6 +74,12 @@ namespace ActivFlex.ViewModels
                 _proxy.Thumbnail = value;
                 NotifyPropertyChanged(nameof(ThumbImage));
             }
+        }
+
+        private Visibility _indicatorVisibility = Visibility.Collapsed;
+        public Visibility IndicatorVisibility {
+            get => _indicatorVisibility;
+            set => SetProperty(ref _indicatorVisibility, value);
         }
 
         /// <summary>

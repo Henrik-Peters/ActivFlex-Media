@@ -946,6 +946,7 @@ namespace ActivFlex.ViewModels
 
                     //no image freezing necessary; assignment is on the UI-thread
                     videoItem.ThumbImage = renderTarget;
+                    videoItem.IndicatorVisibility = Visibility.Visible;
                     LoadNextVideoThumbnail();
                 };
                 thumbnailPlayer.Open(new Uri(videoItem.Path));

@@ -71,6 +71,18 @@
 
                                     <Image Name="imgDisplay" OpacityMask="White" Source="{Binding Image, ElementName=imgThumbnail}" 
                                            Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+
+                                    <Viewbox Visibility="{Binding VideoIndicator, ElementName=imgThumbnail}" Width="12" Height="12" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,5,5">
+                                        <Canvas Width="64" Height="64">
+                                            <Canvas>
+                                                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#FFFAFAFA" StrokeThickness="6.5018754" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                                                    <Path.Data>
+                                                        <PathGeometry Figures="M 3.8822294 0.37962757 60.742955 31.852938 3.8822294 63.506096 Z" FillRule="NonZero"/>
+                                                    </Path.Data>
+                                                </Path>
+                                            </Canvas>
+                                        </Canvas>
+                                    </Viewbox>
                                 </Grid>
                             </Border>
 

@@ -152,6 +152,20 @@ namespace ActivFlex.Controls
         }
 
         /// <summary>
+        /// Identifies the VideoIndicatorProperty dependency property
+        /// </summary>
+        public static readonly DependencyProperty VideoIndicatorProperty = DependencyProperty.Register(
+            "VideoIndicator", typeof(Visibility), typeof(ImageThumbnail), new PropertyMetadata(Visibility.Collapsed));
+
+        /// <summary>
+        /// Gets or sets the visibility of the video indicator.
+        /// </summary>
+        public Visibility VideoIndicator {
+            get => (Visibility)this.GetValue(VideoIndicatorProperty);
+            set => this.SetValue(VideoIndicatorProperty, value);
+        }
+
+        /// <summary>
         /// Identifies the ImageProperty dependency property
         /// </summary>
         public static readonly DependencyProperty ImageProperty = DependencyProperty.Register(
