@@ -302,7 +302,7 @@
                                                  Proxy="{Binding Proxy}"
                                                  Text="{Binding Name}"
                                                  Image="{Binding ThumbImage}"
-                                                 DefaultContent="{x:Null}"
+                                                 DefaultContent="{StaticResource VideoIcon}"
                                                  Click="{Binding DataContext.DefaultVideoLaunch,
                                                          RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                                                  Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
