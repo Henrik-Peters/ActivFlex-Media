@@ -636,7 +636,11 @@ namespace ActivFlex.ViewModels
             this.PresentImage = new RelayCommand<MediaImage>(PresentMediaImage);
             this.LaunchMusicPlayback = new RelayCommand<MediaMusic>(StartMusicPlayback);
             this.LaunchVideoPlayback = new RelayCommand<MediaVideo>(StartVideoPlayback);
-            this.LaunchDefault = new RelayCommand<IFileObject>(media => Process.Start(media.Path));
+            this.LaunchDefault = new RelayCommand<IFileObject>(media => {
+                if (File.Exists(media.Path)) {
+                    Process.Start(media.Path);
+                }
+            });
             this.DefaultImageLaunch = new RelayCommand<MediaImage>(image => {
                 if (Config.ImageLaunchBehavior == LaunchBehavior.Self) {
                     this.LaunchPresenter.Execute(image);
