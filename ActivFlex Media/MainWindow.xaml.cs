@@ -262,6 +262,21 @@ namespace ActivFlex
                         vm.NextImage?.Execute(null);
                     }
                     break;
+
+                case Key.Space:
+                    vm.PlayMode = !vm.PlayMode;
+                    e.Handled = true;
+                    break;
+
+                case Key.S:
+                    vm.Stop.Execute(null);
+                    e.Handled = true;
+                    break;
+
+                case Key.M:
+                    MediaPlayer.IsMuted = !MediaPlayer.IsMuted;
+                    e.Handled = true;
+                    break;
             }
         }
 
