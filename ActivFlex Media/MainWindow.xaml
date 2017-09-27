@@ -165,6 +165,7 @@
                     Margin="0,0,100,0"
                     Minimum="0.5"
                     Maximum="3.0"
+                    Focusable="False"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Right"
                     IsSnapToTickEnabled="True"
@@ -184,7 +185,7 @@
 
         <!-- Media presentation area -->
         <ScrollViewer x:Name="MediaScrollViewer" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="3" PreviewMouseWheel="MediaScrollViewer_PreviewMouseWheel">
-            <ItemsControl x:Name="MediaItemControl" ItemsSource="{Binding FileSystemItems}">
+            <ItemsControl x:Name="MediaItemControl" ItemsSource="{Binding FileSystemItems}" Focusable="False">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         
