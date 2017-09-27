@@ -593,7 +593,10 @@ namespace ActivFlex.ViewModels
                                          Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), NavTag.None, "Pictures"),
 
                     new DirectoryNavItem(Localize["Music"], "MusicIcon",
-                                         Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), NavTag.None, "Music")
+                                         Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), NavTag.None, "Music"),
+
+                    new DirectoryNavItem(Localize["Videos"], "VideoIcon",
+                                         Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), NavTag.None, "Videos")
                 })
             );
 

@@ -1,9 +1,9 @@
 # ActivFlex Media
 
 ActivFlex can be used for various media functionalities like managing, displaying or grouping media items.
-At the moment this is an early version and just provides some basic features like image browsing.
+At the moment this is an early version and just provides some basic features like media browsing and playing.
 
-**Latest released version: 0.2**
+**Latest released version: 0.3**
 
 ## Prerequisites / Tools
 
