@@ -543,6 +543,11 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public ICommand Previous { get; set; }
 
+        /// <summary>
+        /// Show the config window to create a new media library.
+        /// </summary>
+        public ICommand CreateMediaLibrary { get; set; }
+
         #endregion
 
         /// <summary>
@@ -619,6 +624,7 @@ namespace ActivFlex.ViewModels
             this.ToggleNavVisibility = new RelayCommand(() => NavVisible = !NavVisible);
             this.ToggleMediaBarVisibility = new RelayCommand(() => MediaBarVisible = !MediaBarVisible);
             this.BrowseFileSystem = new RelayCommand<string>(BrowseToPath);
+            this.CreateMediaLibrary = new RelayCommand(CreateLibrary);
             this.ShowInfo = new RelayCommand(() => new InfoWindow().ShowDialog());
             this.ResetZoom = new RelayCommand(() => Zoom = 1.0);
             this.IncreaseZoom = new RelayCommand(() => Zoom += ZoomDelta);
@@ -993,6 +999,15 @@ namespace ActivFlex.ViewModels
                     return new DirectoryItemViewModel((DirectoryItem)item);
                 })
             );
+        }
+
+        /// <summary>
+        /// Show the dialog for creating a new media library.
+        /// </summary>
+        private void CreateLibrary()
+        {
+            LibraryWindow libWindow = new LibraryWindow();
+            libWindow.ShowDialog();
         }
 
         /// <summary>

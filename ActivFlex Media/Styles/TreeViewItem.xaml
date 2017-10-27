@@ -67,7 +67,7 @@
             
             <!-- Context menu for the media library root - should be linked the main data context via the tag -->
             <ContextMenu x:Key="NavMediaMenu" DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-                <MenuItem Header="{Binding Localize[NewLibrary]}"/>
+                <MenuItem Header="{Binding Localize[NewLibrary]}" Command="{Binding CreateMediaLibrary}"/>
             </ContextMenu>
         </Style.Resources>
 
