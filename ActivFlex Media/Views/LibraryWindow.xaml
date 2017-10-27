@@ -4,10 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:ActivFlex.Controls"
-        xmlns:ViewModels="clr-namespace:ActivFlex.ViewModels"
         x:Name="LibraryConfig"
         mc:Ignorable="d"
-        Title="ActivFlex Media" Height="300" Width="800" FontSize="18"
+        Title="{Binding Localize[LibraryWindowTitle]}" Height="300" Width="800" FontSize="18"
         WindowStyle="None" AllowsTransparency="True" Background="#42434B" WindowStartupLocation="CenterScreen">
 
     <WindowChrome.WindowChrome>
@@ -15,14 +14,10 @@
         <WindowChrome CaptionHeight="35"/>
     </WindowChrome.WindowChrome>
 
-    <Window.DataContext>
-        <ViewModels:LibraryWindowViewModel/>
-    </Window.DataContext>
-
     <!-- Input key bindings -->
     <Window.InputBindings>
         <KeyBinding Command="{Binding Close}" 
-                    CommandParameter="{Binding ElementName=Info}" 
+                    CommandParameter="{Binding ElementName=LibraryConfig}" 
                     Key="Esc"/>
     </Window.InputBindings>
 
@@ -31,16 +26,21 @@
         <!-- Titlebar grid area -->
         <Grid Grid.ColumnSpan="2" VerticalAlignment="Top" Background="DarkGray">
             <StackPanel Height="35" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
-                <Label Content="ActivFlex Media" Style="{StaticResource Orkney}" FontSize="22" HorizontalAlignment="Left" Margin="5,2,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                <Label Content="{Binding Localize[LibraryWindowTitle]}" Style="{StaticResource Orkney}" FontSize="22" Height="37" HorizontalAlignment="Left" Margin="5,2,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
             </StackPanel>
 
             <StackPanel Height="35" WindowChrome.IsHitTestVisibleInChrome="True" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
-                <Controls:IconButton Width="30" Command="{Binding Close}" CommandParameter="{Binding ElementName=Info}"
+                <Controls:IconButton Width="30" Command="{Binding Close}" CommandParameter="{Binding ElementName=LibraryConfig}"
                              ContentDefault="{StaticResource CloseIcon}"
                              ContentHover="{StaticResource CloseIconHover}"
                              ContentPressed="{StaticResource CloseIconPressed}"/>
             </StackPanel>
         </Grid>
 
+        <!-- Window border -->
+        <Border x:Name="outerBorder" Grid.RowSpan="4" Grid.ColumnSpan="3"
+                BorderThickness="1"
+                BorderBrush="#7C7C82">
+        </Border>
     </Grid>
 </Window>

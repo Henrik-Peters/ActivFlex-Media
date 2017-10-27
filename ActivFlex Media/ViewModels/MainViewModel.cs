@@ -1006,7 +1006,7 @@ namespace ActivFlex.ViewModels
         /// </summary>
         private void CreateLibrary()
         {
-            LibraryWindow libWindow = new LibraryWindow();
+            LibraryWindow libWindow = new LibraryWindow(Localize);
             libWindow.ShowDialog();
         }
 

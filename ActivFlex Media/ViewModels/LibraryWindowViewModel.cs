@@ -17,6 +17,7 @@
 #endregion
 using System.Windows;
 using System.Windows.Input;
+using ActivFlex.Localization;
 
 namespace ActivFlex.ViewModels
 {
@@ -26,6 +27,15 @@ namespace ActivFlex.ViewModels
     public class LibraryWindowViewModel : ViewModel
     {
         /// <summary>
+        /// Reference to the localization manager.
+        /// </summary>
+        private TranslateManager _translateManager;
+        public TranslateManager Localize {
+            get => _translateManager;
+            set => SetProperty(ref _translateManager, value);
+        }
+
+        /// <summary>
         /// Close the passed window instance.
         /// </summary>
         public ICommand Close { get; set; }
@@ -34,8 +44,10 @@ namespace ActivFlex.ViewModels
         /// Create a new view model instance for
         /// the library config window view.
         /// </summary>
-        public LibraryWindowViewModel()
+        /// <param name="localizeManager">Reference to the current localization</param>
+        public LibraryWindowViewModel(TranslateManager localizeManager)
         {
+            this.Localize = localizeManager;
             this.Close = new RelayCommand<Window>(CloseWindow);
         }
 
