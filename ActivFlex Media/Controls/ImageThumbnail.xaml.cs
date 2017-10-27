@@ -29,7 +29,7 @@ namespace ActivFlex.Controls
     /// <summary>
     /// Viewlogic for ImageThumbnail.xaml
     /// </summary>
-    public partial class ImageThumbnail : UserControl, IThumbnail
+    public partial class ImageThumbnail : UserControl
     {
         #region DependencyProperties
 

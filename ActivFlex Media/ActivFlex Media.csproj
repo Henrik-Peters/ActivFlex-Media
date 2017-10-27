@@ -68,7 +68,6 @@
     <Compile Include="Controls\ImageThumbnail.xaml.cs">
       <DependentUpon>ImageThumbnail.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\IThumbnail.cs" />
     <Compile Include="Controls\MusicThumbnail.xaml.cs">
       <DependentUpon>MusicThumbnail.xaml</DependentUpon>
     </Compile>
