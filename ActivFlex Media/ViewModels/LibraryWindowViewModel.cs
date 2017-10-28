@@ -17,6 +17,7 @@
 #endregion
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using ActivFlex.Localization;
 
 namespace ActivFlex.ViewModels
@@ -36,9 +37,60 @@ namespace ActivFlex.ViewModels
         }
 
         /// <summary>
+        /// Name of the represented media library.
+        /// </summary>
+        private string _libraryName;
+        public string LibraryName {
+            get => _libraryName;
+            set => SetProperty(ref _libraryName, value);
+        }
+
+        /// <summary>
+        /// Background color of the library name box.
+        /// </summary>
+        private Brush _libraryNameBrush = Brushes.White;
+        public Brush LibraryNameBrush {
+            get => _libraryNameBrush;
+            set => SetProperty(ref _libraryNameBrush, value);
+        }
+
+        /// <summary>
+        /// Owner of the represented media library.
+        /// </summary>
+        private string _ownerName;
+        public string OwnerName {
+            get => _ownerName;
+            set => SetProperty(ref _ownerName, value);
+        }
+
+        /// <summary>
+        /// Background color of the owner name box.
+        /// </summary>
+        private Brush _ownerNameBrush = Brushes.White;
+        public Brush OwnerNameBrush {
+            get => _ownerNameBrush;
+            set => SetProperty(ref _ownerNameBrush, value);
+        }
+
+        /// <summary>
+        /// True when the form has valid data 
+        /// and the apply button was pressed.
+        /// </summary>
+        private bool _applySuccess = false;
+        public bool ApplySuccess {
+            get => _applySuccess;
+            set => SetProperty(ref _applySuccess, value);
+        }
+
+        /// <summary>
         /// Close the passed window instance.
         /// </summary>
         public ICommand Close { get; set; }
+
+        /// <summary>
+        /// Apply the current changes from the window.
+        /// </summary>
+        public ICommand Apply { get; set; }
 
         /// <summary>
         /// Create a new view model instance for
@@ -48,7 +100,28 @@ namespace ActivFlex.ViewModels
         public LibraryWindowViewModel(TranslateManager localizeManager)
         {
             this.Localize = localizeManager;
+            this.Apply = new RelayCommand<Window>(ApplyChanges);
             this.Close = new RelayCommand<Window>(CloseWindow);
+        }
+
+        private void ApplyChanges(Window window)
+        {
+            bool dataValid = true;
+
+            if (string.IsNullOrEmpty(LibraryName)) {
+                LibraryNameBrush = Brushes.DarkRed;
+                dataValid = false;
+            }
+
+            if (string.IsNullOrEmpty(OwnerName)) {
+                OwnerNameBrush = Brushes.DarkRed;
+                dataValid = false;
+            }
+
+            if (dataValid) {
+                ApplySuccess = true;
+                CloseWindow(window);
+            }
         }
 
         private void CloseWindow(Window window)

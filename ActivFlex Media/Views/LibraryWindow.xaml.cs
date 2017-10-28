@@ -16,6 +16,8 @@
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Controls;
 using ActivFlex.ViewModels;
 using ActivFlex.Localization;
 
@@ -27,13 +29,29 @@ namespace ActivFlex.Views
     public partial class LibraryWindow : Window
     {
         /// <summary>
+        /// View model instance for this window.
+        /// </summary>
+        LibraryWindowViewModel vm;
+
+        /// <summary>
         /// Create a new library config window instance.
         /// </summary>
         /// <param name="localizeManager">Reference to the current localization</param>
         public LibraryWindow(TranslateManager localizeManager)
         {
             InitializeComponent();
-            this.DataContext = new LibraryWindowViewModel(localizeManager);
+            this.vm = new LibraryWindowViewModel(localizeManager);
+            this.DataContext = vm;
+        }
+
+        private void LibraryNameBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            vm.LibraryNameBrush = Brushes.White;
+        }
+
+        private void LibraryOwnerBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            vm.OwnerNameBrush = Brushes.White;
         }
     }
 }

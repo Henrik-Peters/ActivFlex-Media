@@ -1008,7 +1008,14 @@ namespace ActivFlex.ViewModels
         {
             LibraryWindow libWindow = new LibraryWindow(Localize);
             libWindow.ApplyBtn.Content = Localize["Create"];
+
+            var libraryContext = libWindow.DataContext as LibraryWindowViewModel;
+            libraryContext.OwnerName = Config.Username;
             libWindow.ShowDialog();
+
+            if (libraryContext.ApplySuccess) {
+                //Create the new media library
+            }
         }
 
         /// <summary>

@@ -54,14 +54,14 @@
             </Grid.RowDefinitions>
 
             <Label Content="{Binding Localize[Name:]}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold"/>
-            <TextBox x:Name="LibraryNameBox" Grid.Row="0" Grid.Column="1" Margin="7,5,0,0" HorizontalAlignment="Left" FontSize="20" Width="420" Height="30" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+            <TextBox x:Name="LibraryNameBox" Text="{Binding LibraryName, Mode=TwoWay}" Background="{Binding LibraryNameBrush}" TextChanged="LibraryNameBox_TextChanged" Grid.Row="0" Grid.Column="1" Margin="7,5,0,0" HorizontalAlignment="Left" FontSize="20" Width="420" Height="30" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
             <Label Content="{Binding Localize[Owner:]}" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" FontSize="20"/>
-            <TextBox x:Name="LibraryOwnerBox" Grid.Row="1" Grid.Column="1" Margin="7,5,0,0" HorizontalAlignment="Left" FontSize="20" Width="420" Height="30" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+            <TextBox x:Name="LibraryOwnerBox" Text="{Binding OwnerName, Mode=TwoWay}" Background="{Binding OwnerNameBrush}" TextChanged="LibraryOwnerBox_TextChanged" Grid.Row="1" Grid.Column="1" Margin="7,5,0,0" HorizontalAlignment="Left" FontSize="20" Width="420" Height="30" TextWrapping="Wrap" VerticalAlignment="Top"/>
         </Grid>
         
         <!-- Apply button -->
-        <Button x:Name="ApplyBtn" Content="{Binding Localize[Apply]}" Grid.Row="3" Command="{Binding Close}" CommandParameter="{Binding ElementName=LibraryConfig}" Style="{StaticResource LightGreyOrangeButton}" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,150,0"/>
+        <Button x:Name="ApplyBtn" Content="{Binding Localize[Apply]}" Grid.Row="3" Command="{Binding Apply}" CommandParameter="{Binding ElementName=LibraryConfig}" Style="{StaticResource LightGreyOrangeButton}" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,150,0"/>
 
         <!-- Cancel button -->
         <Button Content="{Binding Localize[Cancel]}" Grid.Row="3" Command="{Binding Close}" CommandParameter="{Binding ElementName=LibraryConfig}" Style="{StaticResource LightGreyOrangeButton}" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,15,0"/>
