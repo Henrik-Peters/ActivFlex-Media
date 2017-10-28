@@ -35,6 +35,7 @@ using ActivFlex.Converters;
 using ActivFlex.Localization;
 using ActivFlex.Navigation;
 using ActivFlex.FileSystem;
+using ActivFlex.Storage;
 using ActivFlex.Views;
 using ActivFlex.Media;
 
@@ -163,6 +164,11 @@ namespace ActivFlex.ViewModels
         /// This queue holds video items for thumbnail loading.
         /// </summary>
         Queue<VideoItemViewModel> vidLoadQueue;
+
+        /// <summary>
+        /// The storage provider for the persistent data storage.
+        /// </summary>
+        public IStorageProvider storageEngine;
 
         /// <summary>
         /// Index of the currently presented image.
@@ -581,6 +587,7 @@ namespace ActivFlex.ViewModels
             };
             this.mediaTimer.Tick += new EventHandler(MediaTimerUpdate);
             this.Localize = new TranslateManager(Config.Language);
+            this.storageEngine = new SQLiteProvider();
 
             //Navigation items
             this.NavVisible = true;

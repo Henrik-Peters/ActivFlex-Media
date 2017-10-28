@@ -386,6 +386,7 @@ namespace ActivFlex
         {
             vm.loadThumbsInterrupt = true;
             vm.StopPreloadingThreads();
+            vm.storageEngine?.Dispose();
 
             //Save the current window layout when restoring is active or volume has changed
             if (vm.Config.NormalStartup == WindowStartupState.RestoreAll || vm.Config.NormalStartup == WindowStartupState.RestoreSizeCentered ||
