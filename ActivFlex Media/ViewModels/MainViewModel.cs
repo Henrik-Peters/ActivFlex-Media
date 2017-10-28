@@ -1007,6 +1007,7 @@ namespace ActivFlex.ViewModels
         private void CreateLibrary()
         {
             LibraryWindow libWindow = new LibraryWindow(Localize);
+            libWindow.ApplyBtn.Content = Localize["Create"];
             libWindow.ShowDialog();
         }
 
