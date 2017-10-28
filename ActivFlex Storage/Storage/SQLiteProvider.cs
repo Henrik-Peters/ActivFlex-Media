@@ -17,6 +17,7 @@
 #endregion
 using System;
 using System.IO;
+using System.Diagnostics;
 using System.Data.SQLite;
 
 namespace ActivFlex.Storage
@@ -59,6 +60,7 @@ namespace ActivFlex.Storage
             //Make sure the environment for the database file is available
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\" + ApplicationFolderName;
             string dbPath = appDataPath + "\\" + DatabaseFileName;
+            bool schemaInit = false;
 
             if (!Directory.Exists(appDataPath)) {
                 Directory.CreateDirectory(appDataPath);
@@ -66,6 +68,7 @@ namespace ActivFlex.Storage
 
             if (!File.Exists(dbPath)) {
                 SQLiteConnection.CreateFile(dbPath);
+                schemaInit = true;
             }
 
             //Open the connection to the database
@@ -74,6 +77,40 @@ namespace ActivFlex.Storage
 
             //Setting PRAGMAs via the connection string is sometimes not possible
             new SQLiteCommand(@"PRAGMA foreign_keys = ON;", connection).ExecuteNonQuery();
+
+            if (schemaInit) InitSchema();
+        }
+
+        private void InitSchema()
+        {
+            Debug.WriteLine("Initializing database schema");
+
+            var sqlContainers = @"CREATE TABLE Containers (
+                CID INTEGER PRIMARY KEY,
+                name VARCHAR(80),
+                parent INT,
+                FOREIGN KEY (parent) REFERENCES Containers(CID)
+                ON UPDATE CASCADE
+                ON DELETE CASCADE
+            )";
+
+            var sqlLibraries = @"CREATE TABLE Libraries (
+                LID INTEGER PRIMARY KEY,
+                name VARCHAR(80),
+                owner VARCHAR(80),
+                rootContainer INT,
+                FOREIGN KEY (rootContainer) REFERENCES Containers(CID)
+                ON UPDATE CASCADE
+                ON DELETE CASCADE
+            )";
+
+            SQLiteCommand cmd = new SQLiteCommand(sqlContainers, connection);
+            int queryCode = cmd.ExecuteNonQuery();
+            Debug.WriteLine("CREATE TABLE Containers: " + queryCode.ToString());
+
+            cmd = new SQLiteCommand(sqlLibraries, connection);
+            queryCode = cmd.ExecuteNonQuery();
+            Debug.WriteLine("CREATE TABLE Libraries: " + queryCode.ToString());
         }
 
         public void Dispose()
