@@ -10,7 +10,7 @@ At the moment this is an early version and just provides some basic features lik
 The following things were used to create, compile or support the development of ActivFlex.
 
 * Windows OS
-* .NET Framework 4.5.2
+* .NET Framework 4.6.1
 * Visual Studio 2017
 * Blend for Visual Studio 2017
 * Inkscape (Icon-Graphics)
@@ -26,6 +26,11 @@ be treated as "plugins" to the core functions in this module.
 This project is responsible for the graphical user interface (GUI) of the
 application. This project should contain all icons, styles, view models and
 most of the WPF markup files (window descriptions, resource dictionaries).
+
+#### ActivFlex Storage
+Contains the data storage engine logic of ActivFlex. All operations for persistent
+media data storage should be defined in this module. In the normal case, this 
+should just be database operations.
 
 #### ActivFlex Presenter
 All logic that is related to presenting media items (like displaying images,
