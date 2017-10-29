@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
+using ActivFlex.Libraries;
+
 namespace ActivFlex.Storage
 {
     /// <summary>
@@ -34,5 +36,15 @@ namespace ActivFlex.Storage
         /// shutdown of the application or the storage engine.
         /// </summary>
         void Dispose();
+
+        /// <summary>
+        /// Create a new media library in the database. This will also
+        /// create the root container for the library. The new library 
+        /// will have the same ID as in the database.
+        /// </summary>
+        /// <param name="name">Display name of the library</param>
+        /// <param name="owner">Owner just represented just by a name</param>
+        /// <returns></returns>
+        MediaLibrary CreateMediaLibrary(string name, string owner);
     }
 }

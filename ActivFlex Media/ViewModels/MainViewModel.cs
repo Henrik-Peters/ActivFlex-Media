@@ -35,6 +35,7 @@ using ActivFlex.Converters;
 using ActivFlex.Localization;
 using ActivFlex.Navigation;
 using ActivFlex.FileSystem;
+using ActivFlex.Libraries;
 using ActivFlex.Storage;
 using ActivFlex.Views;
 using ActivFlex.Media;
@@ -1022,6 +1023,10 @@ namespace ActivFlex.ViewModels
 
             if (libraryContext.ApplySuccess) {
                 //Create the new media library
+                var name = libraryContext.LibraryName;
+                var owner = libraryContext.OwnerName;
+
+                storageEngine.CreateMediaLibrary(name, owner);
             }
         }
 

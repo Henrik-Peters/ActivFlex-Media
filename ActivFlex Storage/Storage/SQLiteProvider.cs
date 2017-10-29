@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Diagnostics;
 using System.Data.SQLite;
+using ActivFlex.Libraries;
 
 namespace ActivFlex.Storage
 {
@@ -111,6 +112,35 @@ namespace ActivFlex.Storage
             cmd = new SQLiteCommand(sqlLibraries, connection);
             queryCode = cmd.ExecuteNonQuery();
             Debug.WriteLine("CREATE TABLE Libraries: " + queryCode.ToString());
+        }
+
+        public MediaLibrary CreateMediaLibrary(string name, string owner)
+        {
+            var sqlContainer = @"INSERT INTO Containers(name)
+                                 VALUES('Root-Container');";
+
+            new SQLiteCommand(sqlContainer, connection).ExecuteNonQuery();
+
+            //Get the ID of the new container
+            var sqlContainerID = @"SELECT CID FROM Containers ORDER BY CID DESC LIMIT 1;";
+            int rootContainerID = Convert.ToInt32(new SQLiteCommand(sqlContainerID, connection).ExecuteScalar());
+
+            //Create the new library and link to the root container
+            var sqlLibrary = @"INSERT INTO Libraries(name, owner, rootContainer)
+                               VALUES(@Name, @Owner, @RootContainer);";
+            
+            var command = new SQLiteCommand(sqlLibrary, connection);
+            command.Parameters.AddWithValue("Name", name);
+            command.Parameters.AddWithValue("Owner", owner);
+            command.Parameters.AddWithValue("RootContainer", rootContainerID);
+            command.ExecuteNonQuery();
+            
+            //Get the ID of the library
+            var sqlLibraryID = @"SELECT LID FROM Libraries ORDER BY LID DESC LIMIT 1;";
+            int LibraryID = Convert.ToInt32(new SQLiteCommand(sqlLibraryID, connection).ExecuteScalar());
+
+            MediaContainer rootContainer = new MediaContainer(rootContainerID, "Root-Container");
+            return new MediaLibrary(LibraryID, name, owner, rootContainer);
         }
 
         public void Dispose()
