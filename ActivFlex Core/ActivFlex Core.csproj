@@ -49,6 +49,8 @@
     <Compile Include="FileSystem\FileSystemItem.cs" />
     <Compile Include="FileSystem\IFileObject.cs" />
     <Compile Include="FileSystem\LogicalDriveItem.cs" />
+    <Compile Include="Libraries\MediaContainer.cs" />
+    <Compile Include="Libraries\MediaLibrary.cs" />
     <Compile Include="Media\ImageLoadState.cs" />
     <Compile Include="Media\IMediaObject.cs" />
     <Compile Include="Media\MediaImage.cs" />
