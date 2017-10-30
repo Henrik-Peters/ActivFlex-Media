@@ -6,8 +6,8 @@
         xmlns:Controls="clr-namespace:ActivFlex.Controls"
         x:Name="LibraryConfig"
         mc:Ignorable="d"
-        Title="{Binding Localize[LibraryWindowTitle]}" Height="180" Width="540" FontSize="18"
-        WindowStyle="None" AllowsTransparency="True" Background="#42434B" WindowStartupLocation="CenterScreen">
+        Title="{Binding Localize[LibraryWindowTitle]}" Height="180" Width="540" FontSize="18" ResizeMode="NoResize"
+        WindowStyle="None" AllowsTransparency="True" Background="#42434B" WindowStartupLocation="CenterScreen" KeyDown="LibraryConfig_KeyDown">
 
     <WindowChrome.WindowChrome>
         <!-- Height for the drag area of window title bar -->

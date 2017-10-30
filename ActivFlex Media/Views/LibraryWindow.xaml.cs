@@ -16,6 +16,7 @@
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
 using ActivFlex.ViewModels;
@@ -42,6 +43,15 @@ namespace ActivFlex.Views
             InitializeComponent();
             this.vm = new LibraryWindowViewModel(localizeManager);
             this.DataContext = vm;
+        }
+
+        private void LibraryConfig_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return) {
+                vm.LibraryName = LibraryNameBox.Text;
+                vm.OwnerName = LibraryOwnerBox.Text;
+                vm.Apply.Execute(this);
+            }
         }
 
         private void LibraryNameBox_TextChanged(object sender, TextChangedEventArgs e)
