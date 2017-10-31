@@ -52,6 +52,7 @@ namespace ActivFlex.Navigation
         {
             this._mediaLibrary = mediaLibrary;
             this.DisplayName = mediaLibrary.Name;
+            this.Tag = NavTag.MediaLibrary;
         }
 
         /// <summary>
@@ -64,6 +65,7 @@ namespace ActivFlex.Navigation
         {
             this._mediaLibrary = mediaLibrary;
             this.DisplayName = name;
+            this.Tag = NavTag.MediaLibrary;
         }
     }
 }

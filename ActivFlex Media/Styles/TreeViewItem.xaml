@@ -69,6 +69,18 @@
             <ContextMenu x:Key="NavMediaMenu" DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
                 <MenuItem Header="{Binding Localize[NewLibrary]}" Command="{Binding CreateMediaLibrary}"/>
             </ContextMenu>
+            
+            <!-- Context menu for the media library items -->
+            <ContextMenu x:Key="NavMediaLibraryMenu" DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                <MenuItem Header="{Binding Localize[Open]}" Command="{Binding OpenMediaLibrary}"
+                          CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                <Separator/>
+                <MenuItem Header="{Binding Localize[Configure]}" Command="{Binding ConfigureMediaLibrary}"
+                          CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                
+                <MenuItem Header="{Binding Localize[Delete]}" Command="{Binding DeleteMediaLibrary}"
+                          CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+            </ContextMenu>
         </Style.Resources>
 
         <!-- Focusable should be false on expandable items to prevent their selection -->
@@ -130,7 +142,9 @@
                         <DataTrigger Binding="{Binding Tag}" Value="{x:Static Navigation:NavTag.MediaLibraryRoot}">
                             <Setter TargetName="Bd" Property="ContextMenu" Value="{StaticResource NavMediaMenu}"/>
                         </DataTrigger>
-                        
+                        <DataTrigger Binding="{Binding Tag}" Value="{x:Static Navigation:NavTag.MediaLibrary}">
+                            <Setter TargetName="Bd" Property="ContextMenu" Value="{StaticResource NavMediaLibraryMenu}"/>
+                        </DataTrigger>
                         <Trigger Property="IsExpanded" Value="false">
                             <Setter Property="Visibility" TargetName="ItemsHost" Value="Collapsed"/>
                         </Trigger>

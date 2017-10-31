@@ -24,7 +24,7 @@ namespace ActivFlex.Navigation
     /// This state provides additional context
     /// about the usage of navigation items.
     /// </summary>
-    public enum NavTag { None, MediaLibraryRoot }
+    public enum NavTag { None, MediaLibraryRoot, MediaLibrary }
 
     /// <summary>
     /// ViewModel implementation for items in the navigation area.

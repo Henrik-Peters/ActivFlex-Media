@@ -555,6 +555,21 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public ICommand CreateMediaLibrary { get; set; }
 
+        /// <summary>
+        /// Display the passed media library with the item browser.
+        /// </summary>
+        public ICommand OpenMediaLibrary { get; set; }
+
+        /// <summary>
+        /// Show the settings dialog to change the passed media library.
+        /// </summary>
+        public ICommand ConfigureMediaLibrary { get; set; }
+
+        /// <summary>
+        /// Show the delete dialog for the passed media library.
+        /// </summary>
+        public ICommand DeleteMediaLibrary { get; set; }
+
         #endregion
 
         /// <summary>
@@ -637,6 +652,9 @@ namespace ActivFlex.ViewModels
             this.ExitMode = new RelayCommand(ExitCurrentMode);
             this.NextImage = new RelayCommand(() => ChangeActiveImage(true));
             this.PreviousImage = new RelayCommand(() => ChangeActiveImage(false));
+            this.OpenMediaLibrary = new RelayCommand<MediaLibrary>(BrowseMediaLibrary);
+            this.ConfigureMediaLibrary = new RelayCommand<MediaLibrary>(ShowMediaLibraryConfig);
+            this.DeleteMediaLibrary = new RelayCommand<MediaLibrary>(RemoveMediaLibrary);
             this.LaunchPresenter = new RelayCommand<MediaImage>(LaunchImagePresenter);
             this.PresentImage = new RelayCommand<MediaImage>(PresentMediaImage);
             this.LaunchMusicPlayback = new RelayCommand<MediaMusic>(StartMusicPlayback);
@@ -693,6 +711,35 @@ namespace ActivFlex.ViewModels
                 new DirectoryNavItem(Localize["Videos"], "VideoIcon",
                                          Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), NavTag.None, "Videos")
             };
+        }
+
+        /// <summary>
+        /// Launch the media library item browser. The browser
+        /// will use the root media container of the library.
+        /// </summary>
+        /// <param name="library">Library to display</param>
+        private void BrowseMediaLibrary(MediaLibrary library)
+        {
+            Debug.WriteLine("Browse: " + library.Name);
+        }
+
+        /// <summary>
+        /// Show the configuration window for the passed library.
+        /// Changes will be forwarded to the storage engine.
+        /// </summary>
+        /// <param name="library">Library to configure</param>
+        private void ShowMediaLibraryConfig(MediaLibrary library)
+        {
+            Debug.WriteLine("Config: " + library.Name);
+        }
+
+        /// <summary>
+        /// Show the delete dialog window for the passed library.
+        /// </summary>
+        /// <param name="library">Library to delete</param>
+        private void RemoveMediaLibrary(MediaLibrary library)
+        {
+            Debug.WriteLine("Remove: " + library.Name);
         }
 
         /// <summary>

@@ -50,9 +50,12 @@ namespace ActivFlex.Localization
             ["LibraryWindowTitle"] = new List<string> { "ActivFlex Media - Library configuration", "ActivFlex Media - Bibliotheksoptionen" },
             ["Cancel"] = new List<string> { "Cancel", "Abbrechen" },
             ["Apply"] = new List<string> { "Apply", "Übernehmen" },
+            ["Delete"] = new List<string> { "Delete", "Löschen" },
+            ["Rename"] = new List<string> { "Rename", "Umbenennen" },
             ["Create"] = new List<string> { "Create", "Erstellen" },
             ["Name:"] = new List<string> { "Name:", "Name:" },
-            ["Owner:"] = new List<string> { "Owner:", "Besitzer:" }
+            ["Owner:"] = new List<string> { "Owner:", "Besitzer:" },
+            ["Configure"] = new List<string> { "Configure", "Konfigurieren" }
         };
 
         /// <summary>

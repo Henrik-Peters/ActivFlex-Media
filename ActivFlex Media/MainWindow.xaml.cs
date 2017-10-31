@@ -163,13 +163,14 @@ namespace ActivFlex
         {
             var item = NavView.SelectedItem;
 
-            if (item is LogicalDriveNavItem) {
-                var driveItem = item as LogicalDriveNavItem;
+            if (item is LogicalDriveNavItem driveItem) {
                 vm.BrowseFileSystem.Execute(driveItem.DisplayName);
 
-            } else if (item is DirectoryNavItem) {
-                var directoryItem = item as DirectoryNavItem;
+            } else if (item is DirectoryNavItem directoryItem) {
                 vm.BrowseFileSystem.Execute(directoryItem.Path);
+
+            } else if (item is LibraryNavItem libraryNavItem) {
+                vm.OpenMediaLibrary.Execute(libraryNavItem.MediaLibrary);
             }
         }
 
