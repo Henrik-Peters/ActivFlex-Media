@@ -86,6 +86,7 @@
     <Compile Include="Localization\TranslateManager.cs" />
     <Compile Include="Navigation\DirectoryNavItem.cs" />
     <Compile Include="Navigation\GroupNavItem.cs" />
+    <Compile Include="Navigation\LibraryNavItem.cs" />
     <Compile Include="Navigation\LogicalDriveNavItem.cs" />
     <Compile Include="Navigation\NavItem.cs" />
     <Compile Include="ViewModels\DirectoryItemViewModel.cs" />

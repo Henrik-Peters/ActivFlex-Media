@@ -600,20 +600,20 @@ namespace ActivFlex.ViewModels
                 })
             );
 
-            List<MediaLibrary> libraries = storageEngine.ReadMediaLibraries();
-
+            //Load the media libraries
             this.NavItems[0].NavChildren = new ObservableCollection<NavItem>(
-                new List<NavItem>(new[] {
-                    new DirectoryNavItem(Localize["Pictures"], "PictureIcon", 
+                storageEngine.ReadMediaLibraries()
+                .Select(library => new LibraryNavItem(library))
+            ) {
+                new DirectoryNavItem(Localize["Pictures"], "PictureIcon",
                                          Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), NavTag.None, "Pictures"),
 
-                    new DirectoryNavItem(Localize["Music"], "MusicIcon",
+                new DirectoryNavItem(Localize["Music"], "MusicIcon",
                                          Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), NavTag.None, "Music"),
 
-                    new DirectoryNavItem(Localize["Videos"], "VideoIcon",
+                new DirectoryNavItem(Localize["Videos"], "VideoIcon",
                                          Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), NavTag.None, "Videos")
-                })
-            );
+            };
 
             this.NavItems[1].NavChildren = new ObservableCollection<NavItem>(
                                 FileSystemBrowser.GetLogicalDrives()
