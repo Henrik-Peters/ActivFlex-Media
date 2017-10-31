@@ -416,5 +416,27 @@
             </Canvas>
         </Canvas>
     </Viewbox>
+    <Viewbox x:Key="MediaLibraryNavIcon" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#FFB4B4B4" StrokeThickness="3.98422861" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                    <Path.Data>
+                        <PathGeometry Figures="M 20.5625 2.90625 L 20.5625 61.746094 L 55.849609 61.746094 C 57.179209 61.746094 58.25 60.675303 58.25 59.345703 L 58.25 5.3066406 C 58.25 3.9770406 57.179209 2.90625 55.849609 2.90625 L 20.5625 2.90625 z " FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#FF8C8C8C" StrokeThickness="3.98422861" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                    <Path.Data>
+                        <PathGeometry Figures="M 11.5625 2.90625 C 10.2329 2.90625 9.1621094 3.9770406 9.1621094 5.3066406 L 9.1621094 59.345703 C 9.1621094 60.675303 10.2329 61.746094 11.5625 61.746094 L 20.802734 61.746094 L 20.802734 2.90625 L 11.5625 2.90625 z " FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Ellipse xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="22" Canvas.Top="14.4" Width="34.8" Height="34.8" Fill="#FF646464" StrokeThickness="1.43498254" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#FFFAFAFA" StrokeThickness="2.49170208" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                    <Path.Data>
+                        <PathGeometry Figures="M 30.37183 19.982368 52.795132 31.703517 30.37183 43.491644 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
 
 </ResourceDictionary>

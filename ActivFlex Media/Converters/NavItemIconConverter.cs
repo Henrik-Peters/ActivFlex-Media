@@ -47,6 +47,9 @@ namespace ActivFlex.Converters
             } else if (item.GetType() == typeof(DirectoryNavItem)) {
                 resourceIdentifier = ((DirectoryNavItem)item).IconResource;
                 
+            } else if (item.GetType() == typeof(LibraryNavItem)) {
+                resourceIdentifier = "MediaLibraryNavIcon";
+
             } else if (item.GetType() == typeof(LogicalDriveNavItem)) {
 
                 //Use the drive type to load the resource
