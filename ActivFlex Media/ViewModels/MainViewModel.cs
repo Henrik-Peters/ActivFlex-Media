@@ -600,6 +600,8 @@ namespace ActivFlex.ViewModels
                 })
             );
 
+            List<MediaLibrary> libraries = storageEngine.ReadMediaLibraries();
+
             this.NavItems[0].NavChildren = new ObservableCollection<NavItem>(
                 new List<NavItem>(new[] {
                     new DirectoryNavItem(Localize["Pictures"], "PictureIcon", 

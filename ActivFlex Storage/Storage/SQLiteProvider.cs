@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Diagnostics;
+using System.Collections.Generic;
 using System.Data.SQLite;
 using ActivFlex.Libraries;
 
@@ -141,6 +142,35 @@ namespace ActivFlex.Storage
 
             MediaContainer rootContainer = new MediaContainer(rootContainerID, "Root-Container");
             return new MediaLibrary(LibraryID, name, owner, rootContainer);
+        }
+
+        public List<MediaLibrary> ReadMediaLibraries()
+        {
+            var sql = @"SELECT l.LID, c.CID, l.name AS 'LibName', l.owner, c.name AS 'ContainerName'
+                        FROM Libraries l
+                        INNER JOIN Containers c ON l.rootContainer = c.CID;";
+
+            List<MediaLibrary> libraries = new List<MediaLibrary>();
+
+            //Create the list from the query
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection)) {
+                using (SQLiteDataReader reader = cmd.ExecuteReader()) {
+
+                    while (reader.Read()) {
+                        int LID = Convert.ToInt32(reader["LID"]);
+                        string libName = reader["LibName"] as string;
+                        string owner = reader["owner"] as string;
+
+                        int CID = Convert.ToInt32(reader["CID"]);
+                        string containerName = reader["ContainerName"] as string;
+
+                        MediaContainer rootContainer = new MediaContainer(CID, containerName);
+                        libraries.Add(new MediaLibrary(LID, libName, owner, rootContainer));
+                    }
+                }
+            }
+
+            return libraries;
         }
 
         public void Dispose()

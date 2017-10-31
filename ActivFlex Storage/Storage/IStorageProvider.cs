@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
+using System.Collections.Generic;
 using ActivFlex.Libraries;
 
 namespace ActivFlex.Storage
@@ -46,5 +47,12 @@ namespace ActivFlex.Storage
         /// <param name="owner">Owner just represented just by a name</param>
         /// <returns></returns>
         MediaLibrary CreateMediaLibrary(string name, string owner);
+
+        /// <summary>
+        /// Get all media libraries from the data storage. This will create 
+        /// new library instances and also resolve all media containers.
+        /// </summary>
+        /// <returns>List with all stored media libraries</returns>
+        List<MediaLibrary> ReadMediaLibraries();
     }
 }
