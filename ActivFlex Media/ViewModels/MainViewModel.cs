@@ -599,22 +599,8 @@ namespace ActivFlex.ViewModels
                     new GroupNavItem(Localize["MyComputer"], "MyComputer", "MyComputerIcon", true)
                 })
             );
-
-            //Load the media libraries
-            this.NavItems[0].NavChildren = new ObservableCollection<NavItem>(
-                storageEngine.ReadMediaLibraries()
-                .Select(library => new LibraryNavItem(library))
-            ) {
-                new DirectoryNavItem(Localize["Pictures"], "PictureIcon",
-                                         Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), NavTag.None, "Pictures"),
-
-                new DirectoryNavItem(Localize["Music"], "MusicIcon",
-                                         Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), NavTag.None, "Music"),
-
-                new DirectoryNavItem(Localize["Videos"], "VideoIcon",
-                                         Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), NavTag.None, "Videos")
-            };
-
+            
+            LoadMediaLibraries();
             this.NavItems[1].NavChildren = new ObservableCollection<NavItem>(
                                 FileSystemBrowser.GetLogicalDrives()
                                 .Select(drive => new LogicalDriveNavItem(drive)));
@@ -686,6 +672,27 @@ namespace ActivFlex.ViewModels
             this.Stop = new RelayCommand(StopCurrentPlayback);
             this.Next = new RelayCommand(() => ChangeActiveImage(true));
             this.Previous = new RelayCommand(() => ChangeActiveImage(false));
+        }
+
+        /// <summary>
+        /// Load the media libraries from the storage provider 
+        /// and convert them to navigation view models.
+        /// </summary>
+        private void LoadMediaLibraries()
+        {
+            this.NavItems[0].NavChildren = new ObservableCollection<NavItem>(
+                storageEngine.ReadMediaLibraries()
+                .Select(library => new LibraryNavItem(library))
+            ) {
+                new DirectoryNavItem(Localize["Pictures"], "PictureIcon",
+                                         Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), NavTag.None, "Pictures"),
+
+                new DirectoryNavItem(Localize["Music"], "MusicIcon",
+                                         Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), NavTag.None, "Music"),
+
+                new DirectoryNavItem(Localize["Videos"], "VideoIcon",
+                                         Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), NavTag.None, "Videos")
+            };
         }
 
         /// <summary>
@@ -1029,6 +1036,7 @@ namespace ActivFlex.ViewModels
                 var owner = libraryContext.OwnerName;
 
                 storageEngine.CreateMediaLibrary(name, owner);
+                LoadMediaLibraries();
             }
         }
 
