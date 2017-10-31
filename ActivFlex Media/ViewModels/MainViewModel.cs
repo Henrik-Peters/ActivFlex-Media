@@ -152,6 +152,11 @@ namespace ActivFlex.ViewModels
         private ContentPresenter mediaInfoIcon;
 
         /// <summary>
+        /// The navigation area tree view control.
+        /// </summary>
+        private TreeView navView;
+
+        /// <summary>
         /// The media player to generate the thumbnail image.
         /// </summary>
         MediaPlayer thumbnailPlayer;
@@ -556,6 +561,11 @@ namespace ActivFlex.ViewModels
         public ICommand CreateMediaLibrary { get; set; }
 
         /// <summary>
+        /// Select the passed media library in the navigation view.
+        /// </summary>
+        public ICommand SelectNavigationLibrary { get; set; }
+        
+        /// <summary>
         /// Display the passed media library with the item browser.
         /// </summary>
         public ICommand OpenMediaLibrary { get; set; }
@@ -577,10 +587,11 @@ namespace ActivFlex.ViewModels
         /// and instantiate all fields and commands.
         /// </summary>
         /// <param name="mediaPlayer">Instance of the media playback control</param>
+        /// <param name="navView">Instance of the navigation tree view control</param>
         /// <param name="currentTimeLabel">Reference to the label for displaying the current playback time</param>
         /// <param name="maxTimeLabel">Reference to the label for displaying the maximum playback time</param>
         /// <param name="mediaInfoIcon">The info icon in the media playback areae</param>
-        public MainViewModel(MediaElement mediaPlayer, Label currentTimeLabel, Label maxTimeLabel, ContentPresenter mediaInfoIcon)
+        public MainViewModel(MediaElement mediaPlayer, TreeView navView, Label currentTimeLabel, Label maxTimeLabel, ContentPresenter mediaInfoIcon)
         {
             //Configuration
             if (this.Config == null) {
@@ -593,6 +604,7 @@ namespace ActivFlex.ViewModels
                 this.Config = ConfigProvider.LoadConfig();
             }
 
+            this.navView = navView;
             this.mediaPlayer = mediaPlayer;
             this.currentTimeLabel = currentTimeLabel;
             this.maxTimeLabel = maxTimeLabel;
@@ -653,6 +665,7 @@ namespace ActivFlex.ViewModels
             this.NextImage = new RelayCommand(() => ChangeActiveImage(true));
             this.PreviousImage = new RelayCommand(() => ChangeActiveImage(false));
             this.OpenMediaLibrary = new RelayCommand<MediaLibrary>(BrowseMediaLibrary);
+            this.SelectNavigationLibrary = new RelayCommand<MediaLibrary>(SelectMediaLibrary);
             this.ConfigureMediaLibrary = new RelayCommand<MediaLibrary>(ShowMediaLibraryConfig);
             this.DeleteMediaLibrary = new RelayCommand<MediaLibrary>(RemoveMediaLibrary);
             this.LaunchPresenter = new RelayCommand<MediaImage>(LaunchImagePresenter);
@@ -711,6 +724,29 @@ namespace ActivFlex.ViewModels
                 new DirectoryNavItem(Localize["Videos"], "VideoIcon",
                                          Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), NavTag.None, "Videos")
             };
+        }
+
+        /// <summary>
+        /// Select the passed media library in the
+        /// navigation tree view and open the library.
+        /// </summary>
+        /// <param name="library">Library to select</param>
+        private void SelectMediaLibrary(MediaLibrary library)
+        {
+            TreeViewItem libraryRootItem = navView.ItemContainerGenerator.ContainerFromIndex(0) as TreeViewItem;
+
+            //Find the view model of the library
+            LibraryNavItem libraryNavItem =
+                libraryRootItem.Items
+                .Cast<object>()
+                .Where(item => item is LibraryNavItem)
+                .Cast<LibraryNavItem>()
+                .First(navItem => navItem.MediaLibrary.LibraryID == library.LibraryID);
+
+            //Get the tree view navigation item for selection
+            int navIndex = libraryRootItem.Items.IndexOf(libraryNavItem);
+            TreeViewItem targetItem = libraryRootItem.ItemContainerGenerator.ContainerFromIndex(navIndex) as TreeViewItem;
+            targetItem.IsSelected = true;
         }
 
         /// <summary>
