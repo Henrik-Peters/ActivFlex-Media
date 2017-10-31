@@ -173,6 +173,19 @@ namespace ActivFlex.Storage
             return libraries;
         }
 
+        public void UpdateMediaLibrary(int libraryID, string name, string owner)
+        {
+            var sql = @"UPDATE Libraries 
+                        SET name=@Name, owner=@OWNER 
+                        WHERE LID=@LibraryID";
+
+            var command = new SQLiteCommand(sql, connection);
+            command.Parameters.AddWithValue("LibraryID", libraryID);
+            command.Parameters.AddWithValue("Name", name);
+            command.Parameters.AddWithValue("Owner", owner);
+            command.ExecuteNonQuery();
+        }
+
         public void Dispose()
         {
             if (connection != null) {

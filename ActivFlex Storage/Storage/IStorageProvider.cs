@@ -54,5 +54,14 @@ namespace ActivFlex.Storage
         /// </summary>
         /// <returns>List with all stored media libraries</returns>
         List<MediaLibrary> ReadMediaLibraries();
+
+        /// <summary>
+        /// Update an existing media library with new data. The LID can
+        /// not be changed, it will be used to identify to the library.
+        /// </summary>
+        /// <param name="libraryID">Unique identifier of the library</param>
+        /// <param name="name">New name of the library</param>
+        /// <param name="owner">New owner of the library</param>
+        void UpdateMediaLibrary(int libraryID, string name, string owner);
     }
 }

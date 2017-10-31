@@ -766,7 +766,20 @@ namespace ActivFlex.ViewModels
         /// <param name="library">Library to configure</param>
         private void ShowMediaLibraryConfig(MediaLibrary library)
         {
-            Debug.WriteLine("Config: " + library.Name);
+            LibraryWindow confWindow = new LibraryWindow(Localize);
+            var libraryContext = confWindow.DataContext as LibraryWindowViewModel;
+            libraryContext.LibraryName = library.Name;
+            libraryContext.OwnerName = library.Owner;
+            confWindow.ShowDialog();
+
+            if (libraryContext.ApplySuccess) {
+                //Update the media library data
+                var name = libraryContext.LibraryName;
+                var owner = libraryContext.OwnerName;
+
+                storageEngine.UpdateMediaLibrary(library.LibraryID, name, owner);
+                LoadMediaLibraries();
+            }
         }
 
         /// <summary>
