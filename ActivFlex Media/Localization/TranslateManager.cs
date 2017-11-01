@@ -55,7 +55,10 @@ namespace ActivFlex.Localization
             ["Create"] = new List<string> { "Create", "Erstellen" },
             ["Name:"] = new List<string> { "Name:", "Name:" },
             ["Owner:"] = new List<string> { "Owner:", "Besitzer:" },
-            ["Configure"] = new List<string> { "Configure", "Konfigurieren" }
+            ["Configure"] = new List<string> { "Configure", "Konfigurieren" },
+            ["DeleteDialogTitle"] = new List<string> { "Confirm deletion", "Löschvorgang bestätigen" },
+            ["Yes"] = new List<string> { "Yes", "Ja" },
+            ["No"] = new List<string> { "No", "Nein" }
         };
 
         /// <summary>

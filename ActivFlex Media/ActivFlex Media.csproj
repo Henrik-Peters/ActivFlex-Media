@@ -89,6 +89,7 @@
     <Compile Include="Navigation\LibraryNavItem.cs" />
     <Compile Include="Navigation\LogicalDriveNavItem.cs" />
     <Compile Include="Navigation\NavItem.cs" />
+    <Compile Include="ViewModels\DeleteDialogViewModel.cs" />
     <Compile Include="ViewModels\DirectoryItemViewModel.cs" />
     <Compile Include="ViewModels\ImageItemViewModel.cs" />
     <Compile Include="ViewModels\InfoWindowViewModel.cs" />
@@ -99,6 +100,9 @@
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\VideoItemViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
+    <Compile Include="Views\DeleteDialog.xaml.cs">
+      <DependentUpon>DeleteDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\InfoWindow.xaml.cs">
       <DependentUpon>InfoWindow.xaml</DependentUpon>
     </Compile>
@@ -208,6 +212,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\VolumeSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeleteDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

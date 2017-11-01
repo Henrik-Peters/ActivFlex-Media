@@ -788,7 +788,13 @@ namespace ActivFlex.ViewModels
         /// <param name="library">Library to delete</param>
         private void RemoveMediaLibrary(MediaLibrary library)
         {
-            Debug.WriteLine("Remove: " + library.Name);
+            DeleteDialog deleteDialog = new DeleteDialog(Localize);
+            var deleteContext = deleteDialog.DataContext as DeleteDialogViewModel;
+            deleteDialog.ShowDialog();
+
+            if (deleteContext.DeleteConfirm) {
+                //Delete the media library
+            }
         }
 
         /// <summary>
