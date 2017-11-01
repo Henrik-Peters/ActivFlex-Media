@@ -6,7 +6,7 @@
         xmlns:Controls="clr-namespace:ActivFlex.Controls"
         x:Name="DeleteDialogWindow"
         mc:Ignorable="d"
-        Title="{Binding Localize[DeleteDialogTitle]}" Height="160" Width="540" FontSize="18" ResizeMode="NoResize"
+        Title="{Binding Localize[DeleteDialogTitle]}" FontSize="18" ResizeMode="NoResize" SizeToContent="WidthAndHeight"
         WindowStyle="None" AllowsTransparency="True" Background="#42434B" WindowStartupLocation="CenterScreen" KeyDown="DeleteDialogWindow_KeyDown">
 
     <WindowChrome.WindowChrome>
@@ -22,14 +22,17 @@
     </Window.InputBindings>
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="70"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
         <!-- Titlebar grid area -->
-        <Grid Grid.ColumnSpan="2" VerticalAlignment="Top" Background="DarkGray">
+        <Grid Grid.ColumnSpan="1" VerticalAlignment="Top" Background="DarkGray">
             <StackPanel Height="35" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
                 <Label Content="{Binding Localize[DeleteDialogTitle]}" Style="{StaticResource Orkney}" FontSize="22" Height="37" HorizontalAlignment="Left" Margin="5,2,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
             </StackPanel>
@@ -42,11 +45,11 @@
             </StackPanel>
         </Grid>
 
-        <Border Grid.Row="1" Margin="10,2.5,0,0" Width="50" Height="50" BorderBrush="#E6E6E6" HorizontalAlignment="Left" BorderThickness="3" CornerRadius="25" Background="Transparent">
+        <Border Grid.Row="1" Margin="10,10,0,0" Width="50" Height="50" BorderBrush="#E6E6E6" HorizontalAlignment="Left" BorderThickness="3" CornerRadius="25" Background="Transparent">
             <ContentPresenter x:Name="contentPresenter" Content="?" TextBlock.Foreground="#E6E6E6" TextBlock.FontSize="37" TextBlock.FontWeight="Bold" Margin="0,-2.7,0,0" Focusable="False" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
 
-        <TextBlock HorizontalAlignment="Left" Margin="70,24.8,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="20">
+        <TextBlock HorizontalAlignment="Left" Margin="70,24.8,10,0" Grid.Row="1" VerticalAlignment="Top" FontSize="20">
             <Run Text="{Binding Localize[DeleteFirst], Mode=OneWay}"/>
             <Run FontWeight="Bold" Text="{Binding DeleteName, Mode=OneWay}"/>
             <Run Text="{Binding Localize[DeleteSecound], Mode=OneWay}"/>
@@ -59,7 +62,7 @@
         <Button Content="{Binding Localize[No]}" Grid.Row="3" Command="{Binding Close}" CommandParameter="{Binding ElementName=DeleteDialogWindow}" Style="{StaticResource LightGreyOrangeButton}" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,15,0"/>
 
         <!-- Window border -->
-        <Border x:Name="outerBorder" Grid.RowSpan="4" Grid.ColumnSpan="3"
+        <Border x:Name="outerBorder" Grid.RowSpan="4" Grid.ColumnSpan="1"
                 BorderThickness="1"
                 BorderBrush="#7C7C82">
         </Border>
