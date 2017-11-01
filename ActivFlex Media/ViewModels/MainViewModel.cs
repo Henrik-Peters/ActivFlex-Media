@@ -795,6 +795,8 @@ namespace ActivFlex.ViewModels
 
             if (deleteContext.DeleteConfirm) {
                 //Delete the media library
+                storageEngine.DeleteMediaLibrary(library.LibraryID);
+                LoadMediaLibraries();
             }
         }
 

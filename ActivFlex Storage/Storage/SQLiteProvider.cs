@@ -178,11 +178,39 @@ namespace ActivFlex.Storage
             var sql = @"UPDATE Libraries 
                         SET name=@Name, owner=@OWNER 
                         WHERE LID=@LibraryID";
-
+            
             var command = new SQLiteCommand(sql, connection);
             command.Parameters.AddWithValue("LibraryID", libraryID);
             command.Parameters.AddWithValue("Name", name);
             command.Parameters.AddWithValue("Owner", owner);
+            command.ExecuteNonQuery();
+        }
+
+        public void DeleteMediaLibrary(int libraryID)
+        {
+            //Get the root container ID
+            var sql = @"SELECT rootContainer
+                        FROM Libraries
+                        WHERE LID=@LibraryID;";
+
+            var command = new SQLiteCommand(sql, connection);
+            command.Parameters.AddWithValue("LibraryID", libraryID);
+            int rootContainerID = Convert.ToInt32(command.ExecuteScalar());
+            
+            //Delete the library
+            sql = @"DELETE FROM Libraries
+                    WHERE LID=@LibraryID";
+
+            command = new SQLiteCommand(sql, connection);
+            command.Parameters.AddWithValue("LibraryID", libraryID);
+            command.ExecuteNonQuery();
+            
+            //Delete the container
+            sql = @"DELETE FROM Containers
+                    WHERE CID=@ContainerID";
+
+            command = new SQLiteCommand(sql, connection);
+            command.Parameters.AddWithValue("ContainerID", rootContainerID);
             command.ExecuteNonQuery();
         }
 
