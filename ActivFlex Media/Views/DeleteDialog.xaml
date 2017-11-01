@@ -6,7 +6,7 @@
         xmlns:Controls="clr-namespace:ActivFlex.Controls"
         x:Name="DeleteDialogWindow"
         mc:Ignorable="d"
-        Title="{Binding Localize[DeleteDialogTitle]}" Height="180" Width="540" FontSize="18" ResizeMode="NoResize"
+        Title="{Binding Localize[DeleteDialogTitle]}" Height="160" Width="540" FontSize="18" ResizeMode="NoResize"
         WindowStyle="None" AllowsTransparency="True" Background="#42434B" WindowStartupLocation="CenterScreen" KeyDown="DeleteDialogWindow_KeyDown">
 
     <WindowChrome.WindowChrome>
@@ -41,6 +41,16 @@
                              ContentPressed="{StaticResource CloseIconPressed}"/>
             </StackPanel>
         </Grid>
+
+        <Border Grid.Row="1" Margin="10,2.5,0,0" Width="50" Height="50" BorderBrush="#E6E6E6" HorizontalAlignment="Left" BorderThickness="3" CornerRadius="25" Background="Transparent">
+            <ContentPresenter x:Name="contentPresenter" Content="?" TextBlock.Foreground="#E6E6E6" TextBlock.FontSize="37" TextBlock.FontWeight="Bold" Margin="0,-2.7,0,0" Focusable="False" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+
+        <TextBlock HorizontalAlignment="Left" Margin="70,24.8,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="20">
+            <Run Text="{Binding Localize[DeleteFirst], Mode=OneWay}"/>
+            <Run FontWeight="Bold" Text="{Binding DeleteName, Mode=OneWay}"/>
+            <Run Text="{Binding Localize[DeleteSecound], Mode=OneWay}"/>
+        </TextBlock>
 
         <!-- Yes button -->
         <Button Content="{Binding Localize[Yes]}" Grid.Row="3" Command="{Binding Confirm}" CommandParameter="{Binding ElementName=DeleteDialogWindow}" Style="{StaticResource LightGreyOrangeButton}" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,150,0"/>

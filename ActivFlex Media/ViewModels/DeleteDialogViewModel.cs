@@ -36,6 +36,15 @@ namespace ActivFlex.ViewModels
         }
 
         /// <summary>
+        /// The name of the object that should be deleted.
+        /// </summary>
+        private string _deleteName;
+        public string DeleteName {
+            get => _deleteName;
+            set => SetProperty(ref _deleteName, value);
+        }
+
+        /// <summary>
         /// True when the user has pressed the yes 
         /// button to confirm the delete process.
         /// </summary>

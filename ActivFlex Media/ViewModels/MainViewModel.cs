@@ -790,6 +790,7 @@ namespace ActivFlex.ViewModels
         {
             DeleteDialog deleteDialog = new DeleteDialog(Localize);
             var deleteContext = deleteDialog.DataContext as DeleteDialogViewModel;
+            deleteContext.DeleteName = library.Name;
             deleteDialog.ShowDialog();
 
             if (deleteContext.DeleteConfirm) {
