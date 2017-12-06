@@ -191,12 +191,41 @@ namespace ActivFlex.Storage
                         string containerName = reader["ContainerName"] as string;
 
                         MediaContainer rootContainer = new MediaContainer(CID, containerName);
+                        UpdateContainers(rootContainer);
+
                         libraries.Add(new MediaLibrary(LID, libName, owner, rootContainer));
                     }
                 }
             }
 
             return libraries;
+        }
+
+        private void UpdateContainers(MediaContainer container)
+        {
+            //Create a new empty container list
+            container.Containers = new List<MediaContainer>();
+            
+            //Resolve all sub media containers
+            var sql = @"SELECT CID, name 
+                        FROM Containers
+                        WHERE parent=@Parent";
+
+            var command = new SQLiteCommand(sql, connection);
+            command.Parameters.AddWithValue("Parent", container.ContainerID);
+
+            //Add all sub containers to the container list
+            using (SQLiteDataReader reader = command.ExecuteReader()) {
+
+                while (reader.Read()) {
+                    int subID = Convert.ToInt32(reader["CID"]);
+                    string subName = reader["name"] as string;
+
+                    MediaContainer subContainer = new MediaContainer(subID, subName);
+                    UpdateContainers(subContainer);
+                    container.Containers.Add(subContainer);
+                }
+            }
         }
 
         public void UpdateMediaLibrary(int libraryID, string name, string owner)

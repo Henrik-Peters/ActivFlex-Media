@@ -38,7 +38,7 @@ namespace ActivFlex.Libraries
         /// <summary>
         /// All subcontainers below the current container.
         /// </summary>
-        List<MediaContainer> containers;
+        public List<MediaContainer> Containers { get; set; }
 
         /// <summary>
         /// Create a new media container without any subcontainers.
@@ -49,7 +49,7 @@ namespace ActivFlex.Libraries
         {
             this.ContainerID = containerID;
             this.Name = name;
-            this.containers = new List<MediaContainer>();
+            this.Containers = new List<MediaContainer>();
         }
     }
 }
