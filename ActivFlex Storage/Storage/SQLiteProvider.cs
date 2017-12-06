@@ -106,6 +106,24 @@ namespace ActivFlex.Storage
                 ON DELETE CASCADE
             )";
 
+            var sqlItems = @"CREATE TABLE Items (
+                IID INTEGER PRIMARY KEY,
+                name VARCHAR(80),
+                path VARCHAR(256)
+            )";
+
+            var sqlContainerItems = @"CREATE TABLE ContainerItems (
+                IID INTEGER,
+                CID INTEGER,
+                PRIMARY KEY(IID, CID),
+                FOREIGN KEY (CID) REFERENCES Containers(CID)
+                ON UPDATE CASCADE
+                ON DELETE CASCADE
+                FOREIGN KEY (IID) REFERENCES Items(IID)
+                ON UPDATE CASCADE
+                ON DELETE CASCADE
+            )";
+
             SQLiteCommand cmd = new SQLiteCommand(sqlContainers, connection);
             int queryCode = cmd.ExecuteNonQuery();
             Debug.WriteLine("CREATE TABLE Containers: " + queryCode.ToString());
@@ -113,6 +131,14 @@ namespace ActivFlex.Storage
             cmd = new SQLiteCommand(sqlLibraries, connection);
             queryCode = cmd.ExecuteNonQuery();
             Debug.WriteLine("CREATE TABLE Libraries: " + queryCode.ToString());
+
+            cmd = new SQLiteCommand(sqlItems, connection);
+            queryCode = cmd.ExecuteNonQuery();
+            Debug.WriteLine("CREATE TABLE Items: " + queryCode.ToString());
+
+            cmd = new SQLiteCommand(sqlContainerItems, connection);
+            queryCode = cmd.ExecuteNonQuery();
+            Debug.WriteLine("CREATE TABLE ContainerItems: " + queryCode.ToString());
         }
 
         public MediaLibrary CreateMediaLibrary(string name, string owner)
