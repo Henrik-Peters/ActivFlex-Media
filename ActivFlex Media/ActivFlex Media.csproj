@@ -84,6 +84,7 @@
     <Compile Include="Converters\NavItemIconConverter.cs" />
     <Compile Include="Localization\Language.cs" />
     <Compile Include="Localization\TranslateManager.cs" />
+    <Compile Include="Navigation\ContainerNavItem.cs" />
     <Compile Include="Navigation\DirectoryNavItem.cs" />
     <Compile Include="Navigation\GroupNavItem.cs" />
     <Compile Include="Navigation\LibraryNavItem.cs" />

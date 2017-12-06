@@ -21,15 +21,15 @@ using ActivFlex.Libraries;
 namespace ActivFlex.Navigation
 {
     /// <summary>
-    /// ViewModel implementation for a media library related nav item.
+    /// ViewModel implementation for a media container navigation item.
     /// </summary>
-    public class LibraryNavItem : NavItem
+    public class ContainerNavItem : NavItem
     {
         private string _displayName;
-        private MediaLibrary _mediaLibrary;
+        private MediaContainer _mediaContainer;
 
         /// <summary>
-        /// Text that represents the library.
+        /// Text that represents the container.
         /// </summary>
         public override string DisplayName {
             get => _displayName;
@@ -37,49 +37,35 @@ namespace ActivFlex.Navigation
         }
 
         /// <summary>
-        /// The represented library of the item.
+        /// The represented media container of the item.
         /// </summary>
-        public MediaLibrary MediaLibrary {
-            get => _mediaLibrary;
-            set => SetProperty(ref _mediaLibrary, value);
+        public MediaContainer MediaContainer {
+            get => _mediaContainer;
+            set => SetProperty(ref _mediaContainer, value);
         }
 
         /// <summary>
-        /// Create a nav item to represent a media library.
-        /// The display text will set by the library name.
+        /// Create a nav item to represent a media container.
+        /// The display text will set by the container name.
         /// </summary>
-        /// <param name="mediaLibrary">The represented media library</param>
-        public LibraryNavItem(MediaLibrary mediaLibrary)
+        /// <param name="container">The represented media container</param>
+        public ContainerNavItem(MediaContainer container)
         {
-            this._mediaLibrary = mediaLibrary;
-            this.DisplayName = mediaLibrary.Name;
-            this.Tag = NavTag.MediaLibrary;
-            this.UpdateContainers();
-        }
-
-        /// <summary>
-        /// Create a nav item to represent a media library.
-        /// The display text will set by the passed name.
-        /// </summary>
-        /// <param name="mediaLibrary">The represented media library</param>
-        /// <param name="name">Custom display text for the nav item</param>
-        public LibraryNavItem(MediaLibrary mediaLibrary, string name)
-        {
-            this._mediaLibrary = mediaLibrary;
-            this.DisplayName = name;
-            this.Tag = NavTag.MediaLibrary;
-            this.UpdateContainers();
+            this._mediaContainer = container;
+            this.DisplayName = container.Name;
+            this.Tag = NavTag.None;
+            UpdateContainers();
         }
 
         /// <summary>
         /// Update the navigation children collection with the
-        /// current media containers stored in the media library.
+        /// current media containers stored in this container.
         /// </summary>
         public void UpdateContainers()
         {
             this.NavChildren = new ObservableCollection<NavItem>();
 
-            foreach (MediaContainer container in _mediaLibrary.RootContainer.Containers) {
+            foreach (MediaContainer container in _mediaContainer.Containers) {
                 this.NavChildren.Add(new ContainerNavItem(container));
             }
         }
