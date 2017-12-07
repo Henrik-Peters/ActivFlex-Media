@@ -25,15 +25,17 @@ namespace ActivFlex.Navigation
     /// </summary>
     public class ContainerNavItem : NavItem
     {
-        private string _displayName;
         private MediaContainer _mediaContainer;
 
         /// <summary>
         /// Text that represents the container.
         /// </summary>
         public override string DisplayName {
-            get => _displayName;
-            set => SetProperty(ref _displayName, value);
+            get => _mediaContainer.Name;
+            set {
+                _mediaContainer.Name = value;
+                NotifyPropertyChanged();
+            }
         }
 
         /// <summary>

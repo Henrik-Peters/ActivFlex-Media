@@ -25,15 +25,17 @@ namespace ActivFlex.Navigation
     /// </summary>
     public class LibraryNavItem : NavItem
     {
-        private string _displayName;
         private MediaLibrary _mediaLibrary;
 
         /// <summary>
         /// Text that represents the library.
         /// </summary>
         public override string DisplayName {
-            get => _displayName;
-            set => SetProperty(ref _displayName, value);
+            get => _mediaLibrary.Name;
+            set {
+                _mediaLibrary.Name = value;
+                NotifyPropertyChanged();
+            }
         }
 
         /// <summary>
