@@ -576,6 +576,11 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public ICommand DeleteMediaLibrary { get; set; }
 
+        /// <summary>
+        /// Create a new media container in the passed container.
+        /// </summary>
+        public ICommand CreateMediaContainer { get; set; }
+
         #endregion
 
         /// <summary>
@@ -664,6 +669,7 @@ namespace ActivFlex.ViewModels
             this.SelectNavigationLibrary = new RelayCommand<MediaLibrary>(SelectMediaLibrary);
             this.ConfigureMediaLibrary = new RelayCommand<MediaLibrary>(ShowMediaLibraryConfig);
             this.DeleteMediaLibrary = new RelayCommand<MediaLibrary>(RemoveMediaLibrary);
+            this.CreateMediaContainer = new RelayCommand<MediaContainer>(NewMediaContainer);
             this.LaunchPresenter = new RelayCommand<MediaImage>(LaunchImagePresenter);
             this.PresentImage = new RelayCommand<MediaImage>(PresentMediaImage);
             this.LaunchMusicPlayback = new RelayCommand<MediaMusic>(StartMusicPlayback);
@@ -804,6 +810,15 @@ namespace ActivFlex.ViewModels
                     
                 this.NavItems[0].NavChildren.Remove(navItem);
             }
+        }
+
+        /// <summary>
+        /// Create a new media container in the source container.
+        /// </summary>
+        /// <param name="source">Container to hold the new container</param>
+        private void NewMediaContainer(MediaContainer source)
+        {
+            Debug.WriteLine("Create media container in: " + source.ContainerID);
         }
 
         /// <summary>

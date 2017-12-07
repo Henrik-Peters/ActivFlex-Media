@@ -50,6 +50,7 @@ namespace ActivFlex.Localization
             ["LibraryWindowTitle"] = new List<string> { "ActivFlex Media - Library configuration", "ActivFlex Media - Bibliotheksoptionen" },
             ["Cancel"] = new List<string> { "Cancel", "Abbrechen" },
             ["Apply"] = new List<string> { "Apply", "Übernehmen" },
+            ["New"] = new List<string> { "New", "Neu" },
             ["Delete"] = new List<string> { "Delete", "Löschen" },
             ["Rename"] = new List<string> { "Rename", "Umbenennen" },
             ["Create"] = new List<string> { "Create", "Erstellen" },
@@ -60,7 +61,8 @@ namespace ActivFlex.Localization
             ["Yes"] = new List<string> { "Yes", "Ja" },
             ["No"] = new List<string> { "No", "Nein" },
             ["DeleteFirst"] = new List<string> { "Are you sure that", "Soll die Bibliothek" },
-            ["DeleteSecound"] = new List<string> { "should be deleted?", "wirklich gelöscht werden?" }
+            ["DeleteSecound"] = new List<string> { "should be deleted?", "wirklich gelöscht werden?" },
+            ["MediaContainer"] = new List<string> { "Media container", "Mediencontainer" }
         };
 
         /// <summary>

@@ -74,7 +74,13 @@
             <ContextMenu x:Key="NavMediaLibraryMenu" DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
                 <MenuItem Header="{Binding Localize[Open]}" Command="{Binding SelectNavigationLibrary}"
                           CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+
                 <Separator/>
+                <MenuItem Header="{Binding Localize[New]}">
+                    <MenuItem Header="{Binding Localize[MediaContainer]}" Command="{Binding CreateMediaContainer}"
+                          CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary.RootContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                </MenuItem>
+                
                 <MenuItem Header="{Binding Localize[Configure]}" Command="{Binding ConfigureMediaLibrary}"
                           CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                 
