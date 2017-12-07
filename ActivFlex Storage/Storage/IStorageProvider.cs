@@ -70,5 +70,12 @@ namespace ActivFlex.Storage
         /// </summary>
         /// <param name="libraryID">Unique identifier of the library</param>
         void DeleteMediaLibrary(int libraryID);
+
+        /// <summary>
+        /// Update a media container only with a new expansion state.
+        /// </summary>
+        /// <param name="containerID">ID of the target media container</param>
+        /// <param name="expanded">New expansion state for the container</param>
+        void UpdateContainerExpansion(int containerID, bool expanded);
     }
 }

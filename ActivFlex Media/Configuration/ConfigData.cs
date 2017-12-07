@@ -50,6 +50,7 @@ namespace ActivFlex.Configuration
             LaunchBehavior.Self,
             LaunchBehavior.Self,
             0.5,
+            true,
             true
         );
 
@@ -151,6 +152,12 @@ namespace ActivFlex.Configuration
         public bool ShowTimelineSideLabels { get; set; }
 
         /// <summary>
+        /// Restore the navigation tree expansions 
+        /// states when the application restarts.
+        /// </summary>
+        public bool RestoreNavExpansions { get; set; }
+
+        /// <summary>
         /// Create a new dataset for a concrete configuration. 
         /// All properties should only be set with this constructor.
         /// </summary>
@@ -169,10 +176,11 @@ namespace ActivFlex.Configuration
         /// <param name="VideoLaunchBehavior">Default launch option for video items</param>
         /// <param name="Volume">The last volume of the media playback</param>
         /// <param name="ShowTimelineSideLabels">Display or hide the media playback time side labels</param>
+        /// <param name="RestoreNavExpansions">Restore the navigation tree view item expansions</param>
         public ConfigData(string Username, Language Language, WindowStartupState NormalStartup, WindowStartupState PresenterStartup, 
                           WindowRestoreState RestoreState, double RestoreWidth, double RestoreHeight, double RestoreLeft, double RestoreTop,
                           int ThumbnailDecodeSize, bool PreloadPresenterImages, LaunchBehavior ImageLaunchBehavior, LaunchBehavior MusicLaunchBehavior,
-                          LaunchBehavior VideoLaunchBehavior, double Volume, bool ShowTimelineSideLabels)
+                          LaunchBehavior VideoLaunchBehavior, double Volume, bool ShowTimelineSideLabels, bool RestoreNavExpansions)
         {
             this.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.Username = Username;
@@ -191,6 +199,7 @@ namespace ActivFlex.Configuration
             this.VideoLaunchBehavior = VideoLaunchBehavior;
             this.Volume = Volume;
             this.ShowTimelineSideLabels = ShowTimelineSideLabels;
+            this.RestoreNavExpansions = RestoreNavExpansions;
         }
     }
 }

@@ -174,7 +174,7 @@ namespace ActivFlex.ViewModels
         /// <summary>
         /// The storage provider for the persistent data storage.
         /// </summary>
-        public IStorageProvider storageEngine;
+        public static IStorageProvider StorageEngine;
 
         /// <summary>
         /// Index of the currently presented image.
@@ -340,12 +340,8 @@ namespace ActivFlex.ViewModels
                 yield return _activeImages[index];
             }
         }
-
-        private ConfigData _config;
-        public ConfigData Config {
-            get => _config;
-            set => SetProperty(ref _config, value);
-        }
+        
+        public static ConfigData Config { get; set; }
 
         private double _currentPlaybackTime;
         public double CurrentPlaybackTime {
@@ -594,14 +590,14 @@ namespace ActivFlex.ViewModels
         public MainViewModel(MediaElement mediaPlayer, TreeView navView, Label currentTimeLabel, Label maxTimeLabel, ContentPresenter mediaInfoIcon)
         {
             //Configuration
-            if (this.Config == null) {
+            if (Config == null) {
 
                 //Create a default config when no config exists
                 if (!ConfigProvider.ConfigExists) {
                     ConfigProvider.SaveConfig(ConfigData.DefaultConfig);
                 }
 
-                this.Config = ConfigProvider.LoadConfig();
+                Config = ConfigProvider.LoadConfig();
             }
 
             this.navView = navView;
@@ -615,7 +611,7 @@ namespace ActivFlex.ViewModels
             };
             this.mediaTimer.Tick += new EventHandler(MediaTimerUpdate);
             this.Localize = new TranslateManager(Config.Language);
-            this.storageEngine = new SQLiteProvider();
+            StorageEngine = new SQLiteProvider();
 
             //Navigation items
             this.NavVisible = true;
@@ -712,7 +708,7 @@ namespace ActivFlex.ViewModels
         private void LoadMediaLibraries()
         {
             this.NavItems[0].NavChildren = new ObservableCollection<NavItem>(
-                storageEngine.ReadMediaLibraries()
+                StorageEngine.ReadMediaLibraries()
                 .Select(library => new LibraryNavItem(library))
             ) {
                 new DirectoryNavItem(Localize["Pictures"], "PictureIcon",
@@ -777,7 +773,7 @@ namespace ActivFlex.ViewModels
                 var name = libraryContext.LibraryName;
                 var owner = libraryContext.OwnerName;
 
-                storageEngine.UpdateMediaLibrary(library.LibraryID, name, owner);
+                StorageEngine.UpdateMediaLibrary(library.LibraryID, name, owner);
                 NavItems[0].NavChildren
                     .Where(item => item is LibraryNavItem)
                     .Cast<LibraryNavItem>()
@@ -799,7 +795,7 @@ namespace ActivFlex.ViewModels
 
             if (deleteContext.DeleteConfirm) {
                 //Delete the media library
-                storageEngine.DeleteMediaLibrary(library.LibraryID);
+                StorageEngine.DeleteMediaLibrary(library.LibraryID);
 
                 LibraryNavItem navItem = NavItems[0].NavChildren
                     .Where(item => item is LibraryNavItem)
@@ -1150,7 +1146,7 @@ namespace ActivFlex.ViewModels
                 var name = libraryContext.LibraryName;
                 var owner = libraryContext.OwnerName;
 
-                MediaLibrary library = storageEngine.CreateMediaLibrary(name, owner);
+                MediaLibrary library = StorageEngine.CreateMediaLibrary(name, owner);
                 int index = NavItems[0].NavChildren.IndexOf(NavItems[0].NavChildren
                                                    .FirstOrDefault(item => item is DirectoryNavItem));
 

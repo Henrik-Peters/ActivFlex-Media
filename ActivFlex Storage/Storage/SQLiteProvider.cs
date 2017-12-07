@@ -91,6 +91,7 @@ namespace ActivFlex.Storage
                 CID INTEGER PRIMARY KEY,
                 name VARCHAR(80),
                 parent INT,
+                expanded BOOL,
                 FOREIGN KEY (parent) REFERENCES Containers(CID)
                 ON UPDATE CASCADE
                 ON DELETE CASCADE
@@ -143,8 +144,8 @@ namespace ActivFlex.Storage
 
         public MediaLibrary CreateMediaLibrary(string name, string owner)
         {
-            var sqlContainer = @"INSERT INTO Containers(name)
-                                 VALUES('Root-Container');";
+            var sqlContainer = @"INSERT INTO Containers(name, expanded)
+                                 VALUES('Root-Container', 0);";
 
             new SQLiteCommand(sqlContainer, connection).ExecuteNonQuery();
 
@@ -172,7 +173,7 @@ namespace ActivFlex.Storage
 
         public List<MediaLibrary> ReadMediaLibraries()
         {
-            var sql = @"SELECT l.LID, c.CID, l.name AS 'LibName', l.owner, c.name AS 'ContainerName'
+            var sql = @"SELECT l.LID, c.CID, l.name AS 'LibName', l.owner, c.name AS 'ContainerName', c.expanded
                         FROM Libraries l
                         INNER JOIN Containers c ON l.rootContainer = c.CID;";
 
@@ -189,8 +190,9 @@ namespace ActivFlex.Storage
 
                         int CID = Convert.ToInt32(reader["CID"]);
                         string containerName = reader["ContainerName"] as string;
+                        bool expanded = Convert.ToBoolean(reader["expanded"]);
 
-                        MediaContainer rootContainer = new MediaContainer(CID, containerName);
+                        MediaContainer rootContainer = new MediaContainer(CID, containerName, expanded);
                         UpdateContainers(rootContainer);
 
                         libraries.Add(new MediaLibrary(LID, libName, owner, rootContainer));
@@ -207,7 +209,7 @@ namespace ActivFlex.Storage
             container.Containers = new List<MediaContainer>();
             
             //Resolve all sub media containers
-            var sql = @"SELECT CID, name 
+            var sql = @"SELECT CID, name, expanded
                         FROM Containers
                         WHERE parent=@Parent";
 
@@ -220,8 +222,9 @@ namespace ActivFlex.Storage
                 while (reader.Read()) {
                     int subID = Convert.ToInt32(reader["CID"]);
                     string subName = reader["name"] as string;
+                    bool expanded = Convert.ToBoolean(reader["expanded"]);
 
-                    MediaContainer subContainer = new MediaContainer(subID, subName);
+                    MediaContainer subContainer = new MediaContainer(subID, subName, expanded);
                     UpdateContainers(subContainer);
                     container.Containers.Add(subContainer);
                 }
@@ -266,6 +269,18 @@ namespace ActivFlex.Storage
 
             command = new SQLiteCommand(sql, connection);
             command.Parameters.AddWithValue("ContainerID", rootContainerID);
+            command.ExecuteNonQuery();
+        }
+
+        public void UpdateContainerExpansion(int containerID, bool expanded)
+        {
+            var sql = @"UPDATE Containers
+                        SET expanded=@Expanded
+                        WHERE CID=@ContainerID";
+
+            var command = new SQLiteCommand(sql, connection);
+            command.Parameters.AddWithValue("ContainerID", containerID);
+            command.Parameters.AddWithValue("Expanded", expanded);
             command.ExecuteNonQuery();
         }
 

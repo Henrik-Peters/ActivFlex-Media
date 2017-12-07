@@ -16,6 +16,7 @@
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
 using System.Collections.ObjectModel;
+using ActivFlex.ViewModels;
 using ActivFlex.Libraries;
 
 namespace ActivFlex.Navigation
@@ -39,6 +40,24 @@ namespace ActivFlex.Navigation
         }
 
         /// <summary>
+        /// Current expand state of the item.
+        /// </summary>
+        public override bool IsExpanded {
+            get => _mediaContainer.Expanded;
+            set {
+                if (_mediaContainer != null && _mediaContainer.Expanded != value) {
+                    _mediaContainer.Expanded = value;
+                    NotifyPropertyChanged();
+
+                    //Save the current expansion state
+                    if (MainViewModel.Config.RestoreNavExpansions) {
+                        MainViewModel.StorageEngine.UpdateContainerExpansion(_mediaContainer.ContainerID, value);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// The represented media container of the item.
         /// </summary>
         public MediaContainer MediaContainer {
@@ -57,6 +76,10 @@ namespace ActivFlex.Navigation
             this.DisplayName = container.Name;
             this.Tag = NavTag.None;
             UpdateContainers();
+
+            if (!MainViewModel.Config.RestoreNavExpansions) {
+                this.IsExpanded = false;
+            }
         }
 
         /// <summary>

@@ -36,6 +36,11 @@ namespace ActivFlex.Libraries
         public string Name { get; set; }
 
         /// <summary>
+        /// Expansion state of the container in the navigation view.
+        /// </summary>
+        public bool Expanded { get; set; }
+
+        /// <summary>
         /// All subcontainers below the current container.
         /// </summary>
         public List<MediaContainer> Containers { get; set; }
@@ -45,9 +50,10 @@ namespace ActivFlex.Libraries
         /// </summary>
         /// <param name="containerID">Unique numeric identifier</param>
         /// <param name="name">Displayname for the container</param>
-        public MediaContainer(int containerID, string name)
+        public MediaContainer(int containerID, string name, bool expanded = false)
         {
             this.ContainerID = containerID;
+            this.Expanded = expanded;
             this.Name = name;
             this.Containers = new List<MediaContainer>();
         }

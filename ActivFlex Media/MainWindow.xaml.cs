@@ -92,7 +92,7 @@ namespace ActivFlex
             //other window properties
             this.vm = new MainViewModel(MediaPlayer, NavView, CurrentTimeLbl, MaxTimeLbl, MediaInfoIcon);
             this.DataContext = vm;
-            this.MediaPlayer.Volume = vm.Config.Volume;
+            this.MediaPlayer.Volume = MainViewModel.Config.Volume;
             this.SourceInitialized += new EventHandler(Window_SourceInitialized);
             Window_StateChanged(this, null);
             ChangeFullscreenMode(false);
@@ -340,7 +340,7 @@ namespace ActivFlex
 
         private void HandleStartupLayout()
         {
-            var startupOptions = vm.ImagePresentActive ? vm.Config.PresenterStartup : vm.Config.NormalStartup;
+            var startupOptions = vm.ImagePresentActive ? MainViewModel.Config.PresenterStartup : MainViewModel.Config.NormalStartup;
 
             switch (startupOptions) {
                 case WindowStartupState.Fullscreen:
@@ -352,17 +352,17 @@ namespace ActivFlex
                     break;
 
                 case WindowStartupState.RestoreSizeCentered:
-                    this.Width = vm.Config.RestoreWidth;
-                    this.Height = vm.Config.RestoreHeight;
+                    this.Width = MainViewModel.Config.RestoreWidth;
+                    this.Height = MainViewModel.Config.RestoreHeight;
                     this.RestoreWindowState();
                     break;
 
                 case WindowStartupState.RestoreAll:
                     this.WindowStartupLocation = WindowStartupLocation.Manual;
-                    this.Width = vm.Config.RestoreWidth;
-                    this.Height = vm.Config.RestoreHeight;
-                    this.Left = vm.Config.RestoreLeft;
-                    this.Top = vm.Config.RestoreTop;
+                    this.Width = MainViewModel.Config.RestoreWidth;
+                    this.Height = MainViewModel.Config.RestoreHeight;
+                    this.Left = MainViewModel.Config.RestoreLeft;
+                    this.Top = MainViewModel.Config.RestoreTop;
                     this.RestoreWindowState();
                     break;
             }
@@ -372,7 +372,7 @@ namespace ActivFlex
 
         private void RestoreWindowState()
         {
-            switch (vm.Config.RestoreState) {
+            switch (MainViewModel.Config.RestoreState) {
                 case WindowRestoreState.Fullscreen:
                     ChangeFullscreenMode(true);
                     break;
@@ -387,14 +387,14 @@ namespace ActivFlex
         {
             vm.loadThumbsInterrupt = true;
             vm.StopPreloadingThreads();
-            vm.storageEngine?.Dispose();
+            MainViewModel.StorageEngine?.Dispose();
 
             //Save the current window layout when restoring is active or volume has changed
-            if (vm.Config.NormalStartup == WindowStartupState.RestoreAll || vm.Config.NormalStartup == WindowStartupState.RestoreSizeCentered ||
-                vm.Config.PresenterStartup == WindowStartupState.RestoreAll || vm.Config.PresenterStartup == WindowStartupState.RestoreSizeCentered ||
-                !vm.Config.Volume.Equals(VolumeSlider.Value)) {
+            if (MainViewModel.Config.NormalStartup == WindowStartupState.RestoreAll || MainViewModel.Config.NormalStartup == WindowStartupState.RestoreSizeCentered ||
+                MainViewModel.Config.PresenterStartup == WindowStartupState.RestoreAll || MainViewModel.Config.PresenterStartup == WindowStartupState.RestoreSizeCentered ||
+                !MainViewModel.Config.Volume.Equals(VolumeSlider.Value)) {
 
-                ConfigData config = vm.Config;
+                ConfigData config = MainViewModel.Config;
                 WindowRestoreState restoreState = WindowRestoreState.Default;
 
                 if (this.WindowState == WindowState.Maximized) {
@@ -408,7 +408,7 @@ namespace ActivFlex
                 ConfigProvider.SaveConfig(new ConfigData(config.Username, config.Language, config.NormalStartup, config.PresenterStartup, restoreState,
                                                          this.Width, this.Height, this.Left, this.Top, config.ThumbnailDecodeSize, config.PreloadPresenterImages,
                                                          config.ImageLaunchBehavior, config.MusicLaunchBehavior, config.VideoLaunchBehavior, VolumeSlider.Value,
-                                                         config.ShowTimelineSideLabels));
+                                                         config.ShowTimelineSideLabels, config.RestoreNavExpansions));
             }
         }
 

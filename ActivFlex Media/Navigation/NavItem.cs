@@ -54,7 +54,7 @@ namespace ActivFlex.Navigation
         /// <summary>
         /// Current expand state of the item.
         /// </summary>
-        public bool IsExpanded {
+        public virtual bool IsExpanded {
             get => _isExpanded;
             set => SetProperty(ref _isExpanded, value);
         }
