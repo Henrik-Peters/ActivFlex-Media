@@ -778,7 +778,11 @@ namespace ActivFlex.ViewModels
                 var owner = libraryContext.OwnerName;
 
                 storageEngine.UpdateMediaLibrary(library.LibraryID, name, owner);
-                LoadMediaLibraries();
+                NavItems[0].NavChildren
+                    .Where(item => item is LibraryNavItem)
+                    .Cast<LibraryNavItem>()
+                    .First(item => item.MediaLibrary.LibraryID == library.LibraryID)
+                    .DisplayName = name;
             }
         }
 
@@ -796,7 +800,13 @@ namespace ActivFlex.ViewModels
             if (deleteContext.DeleteConfirm) {
                 //Delete the media library
                 storageEngine.DeleteMediaLibrary(library.LibraryID);
-                LoadMediaLibraries();
+
+                LibraryNavItem navItem = NavItems[0].NavChildren
+                    .Where(item => item is LibraryNavItem)
+                    .Cast<LibraryNavItem>()
+                    .First(item => item.MediaLibrary.LibraryID == library.LibraryID);
+                    
+                this.NavItems[0].NavChildren.Remove(navItem);
             }
         }
 
