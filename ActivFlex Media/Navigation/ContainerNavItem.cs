@@ -74,7 +74,7 @@ namespace ActivFlex.Navigation
         {
             this._mediaContainer = container;
             this.DisplayName = container.Name;
-            this.Tag = NavTag.None;
+            this.Tag = NavTag.MediaContainer;
             UpdateContainers();
 
             if (!MainViewModel.Config.RestoreNavExpansions) {

@@ -62,7 +62,8 @@ namespace ActivFlex.Localization
             ["No"] = new List<string> { "No", "Nein" },
             ["DeleteFirst"] = new List<string> { "Are you sure that", "Soll die Bibliothek" },
             ["DeleteSecound"] = new List<string> { "should be deleted?", "wirklich gelöscht werden?" },
-            ["MediaContainer"] = new List<string> { "Media container", "Mediencontainer" }
+            ["MediaContainer"] = new List<string> { "Media container", "Mediencontainer" },
+            ["NewContainer"] = new List<string> { "New container", "Neuer Container" }
         };
 
         /// <summary>

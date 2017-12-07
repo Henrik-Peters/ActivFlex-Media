@@ -581,6 +581,21 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public ICommand CreateMediaContainer { get; set; }
 
+        /// <summary>
+        /// Open the passed media container instance.
+        /// </summary>
+        public ICommand OpenMediaContainer { get; set; }
+
+        /// <summary>
+        /// Open the rename dialog for the passed container.
+        /// </summary>
+        public ICommand RenameMediaContainer { get; set; }
+
+        /// <summary>
+        /// Open the delete dialog for the passed container.
+        /// </summary>
+        public ICommand DeleteMediaContainer { get; set; }
+
         #endregion
 
         /// <summary>
@@ -670,6 +685,9 @@ namespace ActivFlex.ViewModels
             this.ConfigureMediaLibrary = new RelayCommand<MediaLibrary>(ShowMediaLibraryConfig);
             this.DeleteMediaLibrary = new RelayCommand<MediaLibrary>(RemoveMediaLibrary);
             this.CreateMediaContainer = new RelayCommand<MediaContainer>(NewMediaContainer);
+            this.OpenMediaContainer = new RelayCommand<MediaContainer>(BrowseMediaContainer);
+            this.RenameMediaContainer = new RelayCommand<MediaContainer>(MediaContainerRename);
+            this.DeleteMediaContainer = new RelayCommand<MediaContainer>(RemoveMediaContainer);
             this.LaunchPresenter = new RelayCommand<MediaImage>(LaunchImagePresenter);
             this.PresentImage = new RelayCommand<MediaImage>(PresentMediaImage);
             this.LaunchMusicPlayback = new RelayCommand<MediaMusic>(StartMusicPlayback);
@@ -819,6 +837,33 @@ namespace ActivFlex.ViewModels
         private void NewMediaContainer(MediaContainer source)
         {
             Debug.WriteLine("Create media container in: " + source.ContainerID);
+        }
+
+        /// <summary>
+        /// Launch the media container item browser.
+        /// </summary>
+        /// <param name="container">Container to display</param>
+        private void BrowseMediaContainer(MediaContainer container)
+        {
+            Debug.WriteLine("Browse media container: " + container.ContainerID);
+        }
+
+        /// <summary>
+        /// Show the rename dialog of the passed media container.
+        /// </summary>
+        /// <param name="container">Container to configure</param>
+        private void MediaContainerRename(MediaContainer container)
+        {
+            Debug.WriteLine("Rename media container: " + container.ContainerID);
+        }
+
+        /// <summary>
+        /// Show the delete dialog for the passed media container.
+        /// </summary>
+        /// <param name="container">Container to delete</param>
+        private void RemoveMediaContainer(MediaContainer container)
+        {
+            Debug.WriteLine("Delete media container: " + container.ContainerID);
         }
 
         /// <summary>
