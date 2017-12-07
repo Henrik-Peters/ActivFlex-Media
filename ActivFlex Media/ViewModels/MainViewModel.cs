@@ -1150,8 +1150,12 @@ namespace ActivFlex.ViewModels
                 var name = libraryContext.LibraryName;
                 var owner = libraryContext.OwnerName;
 
-                storageEngine.CreateMediaLibrary(name, owner);
-                LoadMediaLibraries();
+                MediaLibrary library = storageEngine.CreateMediaLibrary(name, owner);
+                int index = NavItems[0].NavChildren.IndexOf(NavItems[0].NavChildren
+                                                   .FirstOrDefault(item => item is DirectoryNavItem));
+
+                if (index == -1) index = NavItems[0].NavChildren.Count;
+                NavItems[0].NavChildren.Insert(index, new LibraryNavItem(library));
             }
         }
 
