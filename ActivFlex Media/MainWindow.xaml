@@ -89,8 +89,7 @@
         
         <!-- Navigation area -->
         <TreeView x:Name="NavView" Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding NavItems}" Margin="10,10,0,0" Background="Transparent" 
-                  Height="Auto" Width="240" HorizontalContentAlignment="Stretch" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                  SelectedItemChanged="NavView_SelectedItemChanged">
+                  Height="Auto" Width="240" HorizontalContentAlignment="Stretch" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <TreeView.ItemTemplate>
                 <!-- Bind the children of each item to create a recursive pattern -->
                 <HierarchicalDataTemplate ItemsSource="{Binding NavChildren}">
@@ -118,37 +117,37 @@
                         <!-- Context menu for the media library items -->
                         <ContextMenu x:Key="NavMediaLibraryMenu" DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
                             <MenuItem Header="{Binding Localize[Open]}" Command="{Binding SelectNavigationLibrary}"
-                          CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                                      CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
 
                             <Separator/>
                             <MenuItem Header="{Binding Localize[New]}">
                                 <MenuItem Header="{Binding Localize[MediaContainer]}" Command="{Binding CreateMediaContainer}"
-                          CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary.RootContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                                          CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary.RootContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                             </MenuItem>
 
                             <MenuItem Header="{Binding Localize[Configure]}" Command="{Binding ConfigureMediaLibrary}"
-                          CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                                      CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
 
                             <MenuItem Header="{Binding Localize[Delete]}" Command="{Binding DeleteMediaLibrary}"
-                          CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                                      CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                         </ContextMenu>
 
                         <!-- Context menu for the media container items -->
                         <ContextMenu x:Key="NavMediaContainerMenu" DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
                             <MenuItem Header="{Binding Localize[Open]}" Command="{Binding OpenMediaContainer}"
-                          CommandParameter="{Binding PlacementTarget.DataContext.MediaContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                                      CommandParameter="{Binding PlacementTarget.DataContext.MediaContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
 
                             <Separator/>
                             <MenuItem Header="{Binding Localize[New]}">
                                 <MenuItem Header="{Binding Localize[MediaContainer]}" Command="{Binding CreateMediaContainer}"
-                          CommandParameter="{Binding PlacementTarget.DataContext.MediaContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                                          CommandParameter="{Binding PlacementTarget.DataContext.MediaContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                             </MenuItem>
 
                             <MenuItem Header="{Binding Localize[Rename]}" Command="{Binding RenameMediaContainer}"
-                          CommandParameter="{Binding PlacementTarget.DataContext.MediaContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                                      CommandParameter="{Binding PlacementTarget.DataContext.MediaContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
 
                             <MenuItem Header="{Binding Localize[Delete]}" Command="{Binding DeleteMediaContainer}"
-                          CommandParameter="{Binding PlacementTarget.DataContext.MediaContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                                      CommandParameter="{Binding PlacementTarget.DataContext.MediaContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                         </ContextMenu>
                     </Style.Resources>
 
@@ -165,7 +164,7 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type TreeViewItem}">
-                                <StackPanel>
+                                <StackPanel MouseDown="NavViewItem_MouseDown">
                                     <Border Name="Bd"
                                             BorderBrush="{TemplateBinding BorderBrush}"
                                             BorderThickness="{TemplateBinding BorderThickness}"

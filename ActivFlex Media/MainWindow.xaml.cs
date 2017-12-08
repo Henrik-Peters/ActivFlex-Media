@@ -159,21 +159,24 @@ namespace ActivFlex
             }
         }
 
-        private void NavView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private void NavViewItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var item = NavView.SelectedItem;
+            if (e.LeftButton == MouseButtonState.Pressed) {
+                StackPanel stackPanel = (StackPanel)sender;
+                var item = stackPanel.DataContext as NavItem;
 
-            if (item is LogicalDriveNavItem driveItem) {
-                vm.BrowseFileSystem.Execute(driveItem.DisplayName);
+                if (item is LogicalDriveNavItem driveItem) {
+                    vm.BrowseFileSystem.Execute(driveItem.DisplayName);
 
-            } else if (item is DirectoryNavItem directoryItem) {
-                vm.BrowseFileSystem.Execute(directoryItem.Path);
+                } else if (item is DirectoryNavItem directoryItem) {
+                    vm.BrowseFileSystem.Execute(directoryItem.Path);
 
-            } else if (item is LibraryNavItem libraryNavItem) {
-                vm.OpenMediaLibrary.Execute(libraryNavItem.MediaLibrary);
+                } else if (item is LibraryNavItem libraryNavItem) {
+                    vm.OpenMediaLibrary.Execute(libraryNavItem.MediaLibrary);
 
-            } else if (item is ContainerNavItem containerNavItem) {
-                vm.OpenMediaContainer.Execute(containerNavItem.MediaContainer);
+                } else if (item is ContainerNavItem containerNavItem) {
+                    vm.OpenMediaContainer.Execute(containerNavItem.MediaContainer);
+                }
             }
         }
 

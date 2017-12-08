@@ -767,6 +767,7 @@ namespace ActivFlex.ViewModels
             int navIndex = libraryRootItem.Items.IndexOf(libraryNavItem);
             TreeViewItem targetItem = libraryRootItem.ItemContainerGenerator.ContainerFromIndex(navIndex) as TreeViewItem;
             targetItem.IsSelected = true;
+            OpenMediaLibrary.Execute(library);
         }
 
         /// <summary>
