@@ -134,7 +134,7 @@
 
                         <!-- Context menu for the media container items -->
                         <ContextMenu x:Key="NavMediaContainerMenu" DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-                            <MenuItem Header="{Binding Localize[Open]}" Command="{Binding OpenMediaContainer}"
+                            <MenuItem Header="{Binding Localize[Open]}" Command="{Binding SelectMediaContainer}"
                                       CommandParameter="{Binding PlacementTarget.DataContext.MediaContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
 
                             <Separator/>

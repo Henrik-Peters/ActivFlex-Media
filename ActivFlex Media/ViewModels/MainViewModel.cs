@@ -582,6 +582,11 @@ namespace ActivFlex.ViewModels
         public ICommand CreateMediaContainer { get; set; }
 
         /// <summary>
+        /// Select the passed media container in the navigation view.
+        /// </summary>
+        public ICommand SelectMediaContainer { get; set; }
+
+        /// <summary>
         /// Open the passed media container instance.
         /// </summary>
         public ICommand OpenMediaContainer { get; set; }
@@ -685,6 +690,7 @@ namespace ActivFlex.ViewModels
             this.ConfigureMediaLibrary = new RelayCommand<MediaLibrary>(ShowMediaLibraryConfig);
             this.DeleteMediaLibrary = new RelayCommand<MediaLibrary>(RemoveMediaLibrary);
             this.CreateMediaContainer = new RelayCommand<MediaContainer>(NewMediaContainer);
+            this.SelectMediaContainer = new RelayCommand<MediaContainer>(MediaContainerSelect);
             this.OpenMediaContainer = new RelayCommand<MediaContainer>(BrowseMediaContainer);
             this.RenameMediaContainer = new RelayCommand<MediaContainer>(MediaContainerRename);
             this.DeleteMediaContainer = new RelayCommand<MediaContainer>(RemoveMediaContainer);
@@ -754,7 +760,7 @@ namespace ActivFlex.ViewModels
         private void SelectMediaLibrary(MediaLibrary library)
         {
             TreeViewItem libraryRootItem = navView.ItemContainerGenerator.ContainerFromIndex(0) as TreeViewItem;
-
+            
             //Find the view model of the library
             LibraryNavItem libraryNavItem =
                 libraryRootItem.Items
@@ -841,6 +847,20 @@ namespace ActivFlex.ViewModels
         }
 
         /// <summary>
+        /// Select the passed media container in the
+        /// navigation tree view and open the container.
+        /// </summary>
+        /// <param name="container">Container to select</param>
+        private void MediaContainerSelect(MediaContainer container)
+        {
+            TreeViewItem treeItem = FindTreeItem(container);
+            ContainerNavItem navItem = (ContainerNavItem)treeItem.DataContext;
+            OpenMediaContainer.Execute(navItem.MediaContainer);
+            treeItem.IsSelected = true;
+
+        }
+
+        /// <summary>
         /// Launch the media container item browser.
         /// </summary>
         /// <param name="container">Container to display</param>
@@ -890,6 +910,43 @@ namespace ActivFlex.ViewModels
 
                 _playmode = true;
                 NotifyPropertyChanged(nameof(PlayMode));
+            }
+        }
+
+        /// <summary>
+        /// Find the tree view item in the navigation 
+        /// that contains a specific media container.
+        /// </summary>
+        /// <param name="container">Container of the items data context</param>
+        /// <returns>The item or null when no item was found</returns>
+        private TreeViewItem FindTreeItem(MediaContainer container)
+        {
+            return FindTreeItem(container, (TreeViewItem)navView.ItemContainerGenerator.ContainerFromIndex(0));
+        }
+
+        private TreeViewItem FindTreeItem(MediaContainer container, TreeViewItem item)
+        {
+            if (item is TreeViewItem treeItem &&
+                treeItem.DataContext is ContainerNavItem navItem &&
+                navItem.MediaContainer.ContainerID == container.ContainerID) {
+                return item;
+
+            } else if (item == null || !item.HasItems) {
+                return null;
+
+            } else {
+                int length = item.Items.Count;
+
+                for (int i = 0; i < length; i++) {
+                    TreeViewItem subItem = item.ItemContainerGenerator.ContainerFromIndex(i) as TreeViewItem;
+                    TreeViewItem itemFound = FindTreeItem(container, subItem);
+
+                    if (itemFound != null) {
+                        return itemFound;
+                    }
+                }
+
+                return null;
             }
         }
 
