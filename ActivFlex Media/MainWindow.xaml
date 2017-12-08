@@ -6,6 +6,7 @@
         xmlns:Controls="clr-namespace:ActivFlex.Controls"
         xmlns:Converters="clr-namespace:ActivFlex.Converters"
         xmlns:ViewModels="clr-namespace:ActivFlex.ViewModels"
+        xmlns:Navigation="clr-namespace:ActivFlex.Navigation"
         xmlns:Presentation="clr-namespace:ActivFlex.Presentation;assembly=ActivFlex-Presenter"
         mc:Ignorable="d"
         Title="ActivFlex Media" Height="835" Width="1640"
@@ -101,6 +102,160 @@
 
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+
+                    <!-- Converter instances -->
+                    <Style.Resources>
+                        <Converters:TreeViewItemMarginConverter MarginMultiplier="19" x:Key="MarginConverter"/>
+                        <Converters:InvertBoolConverter x:Key="InvertBoolConverter"/>
+
+                        <!-- Context menu for the media library root - should be linked the main data context via the tag -->
+                        <ContextMenu x:Key="NavMediaMenu" DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                            <MenuItem Header="{Binding Localize[NewLibrary]}" Command="{Binding CreateMediaLibrary}"/>
+                        </ContextMenu>
+
+                        <!-- Context menu for the media library items -->
+                        <ContextMenu x:Key="NavMediaLibraryMenu" DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                            <MenuItem Header="{Binding Localize[Open]}" Command="{Binding SelectNavigationLibrary}"
+                          CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+
+                            <Separator/>
+                            <MenuItem Header="{Binding Localize[New]}">
+                                <MenuItem Header="{Binding Localize[MediaContainer]}" Command="{Binding CreateMediaContainer}"
+                          CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary.RootContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                            </MenuItem>
+
+                            <MenuItem Header="{Binding Localize[Configure]}" Command="{Binding ConfigureMediaLibrary}"
+                          CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+
+                            <MenuItem Header="{Binding Localize[Delete]}" Command="{Binding DeleteMediaLibrary}"
+                          CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                        </ContextMenu>
+
+                        <!-- Context menu for the media container items -->
+                        <ContextMenu x:Key="NavMediaContainerMenu" DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                            <MenuItem Header="{Binding Localize[Open]}" Command="{Binding OpenMediaContainer}"
+                          CommandParameter="{Binding PlacementTarget.DataContext.MediaContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+
+                            <Separator/>
+                            <MenuItem Header="{Binding Localize[New]}">
+                                <MenuItem Header="{Binding Localize[MediaContainer]}" Command="{Binding CreateMediaContainer}"
+                          CommandParameter="{Binding PlacementTarget.DataContext.MediaContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                            </MenuItem>
+
+                            <MenuItem Header="{Binding Localize[Rename]}" Command="{Binding RenameMediaContainer}"
+                          CommandParameter="{Binding PlacementTarget.DataContext.MediaContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+
+                            <MenuItem Header="{Binding Localize[Delete]}" Command="{Binding DeleteMediaContainer}"
+                          CommandParameter="{Binding PlacementTarget.DataContext.MediaContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                        </ContextMenu>
+                    </Style.Resources>
+
+                    <!-- Focusable should be false on expandable items to prevent their selection -->
+                    <EventSetter Event="TreeViewItem.Collapsed" Handler="NavViewItem_Collapsed"/>
+                    <Setter Property="Focusable" Value="{Binding Path=HasItems, Converter={StaticResource InvertBoolConverter}, RelativeSource={RelativeSource Self}}"/>
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="HorizontalContentAlignment" Value="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                    <Setter Property="VerticalContentAlignment" Value="{Binding Path=VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                    <Setter Property="Padding" Value="1,0,0,0"/>
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                    <Setter Property="FocusVisualStyle" Value="{StaticResource TreeViewItemFocusVisual}"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TreeViewItem}">
+                                <StackPanel>
+                                    <Border Name="Bd"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            Padding="{TemplateBinding Padding}"
+                                            Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+
+                                        <!-- Pass the TreeViewItem to the MarginConverter, to get the correct margin based on the item depth -->
+                                        <Grid Margin="{Binding Converter={StaticResource MarginConverter}, RelativeSource={RelativeSource TemplatedParent}}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="19" />
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- The toggle button should cover the content presenter (when visible), therefore define the content presenter first -->
+                                            <ContentPresenter x:Name="PART_Header" 
+                                                      Grid.Column="1" 
+                                                      ContentSource="Header" 
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+
+                                            <ToggleButton x:Name="Expander"
+                                                  Style="{StaticResource ExpandCollapseToggleStyle}"
+                                                  IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                                                  ClickMode="Press"
+                                                  Grid.ColumnSpan="2"/>
+                                        </Grid>
+
+                                        <!-- Use the MouseOver-trigger of the border, because on the TreeViewItem the event would bubble up in the visual tree -->
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="{StaticResource TreeViewItem.MouseOver.Color}"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                    </Border>
+                                    <ItemsPresenter x:Name="ItemsHost" />
+                                </StackPanel>
+
+                                <!-- TreeViewItem triggers -->
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding Tag}" Value="{x:Static Navigation:NavTag.MediaLibraryRoot}">
+                                        <Setter TargetName="Bd" Property="ContextMenu" Value="{StaticResource NavMediaMenu}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Tag}" Value="{x:Static Navigation:NavTag.MediaLibrary}">
+                                        <Setter TargetName="Bd" Property="ContextMenu" Value="{StaticResource NavMediaLibraryMenu}"/>
+                                        <Setter TargetName="Expander" Property="Grid.ColumnSpan" Value="1"/>
+                                        <Setter Property="Focusable" Value="True"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Tag}" Value="{x:Static Navigation:NavTag.MediaContainer}">
+                                        <Setter TargetName="Bd" Property="ContextMenu" Value="{StaticResource NavMediaContainerMenu}"/>
+                                        <Setter TargetName="Expander" Property="Grid.ColumnSpan" Value="1"/>
+                                        <Setter Property="Focusable" Value="True"/>
+                                    </DataTrigger>
+                                    <Trigger Property="IsExpanded" Value="false">
+                                        <Setter Property="Visibility" TargetName="ItemsHost" Value="Collapsed"/>
+                                    </Trigger>
+                                    <Trigger Property="HasItems" Value="false">
+                                        <Setter Property="Visibility" TargetName="Expander" Value="Hidden"/>
+                                    </Trigger>
+
+                                    <!-- Selection trigger -->
+                                    <Trigger Property="IsSelected" Value="true">
+                                        <Setter Property="Background" TargetName="Bd" Value="{StaticResource TreeViewItem.Selected.Color}"/>
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="false">
+                                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+
+                    <!-- Optional: Use a VirtualizingPanel to only evaluate the items that should actually be displayed -->
+                    <Style.Triggers>
+                        <Trigger Property="VirtualizingPanel.IsVirtualizing" Value="true">
+                            <Setter Property="ItemsPanel">
+                                <Setter.Value>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel/>
+                                    </ItemsPanelTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TreeView.ItemContainerStyle>
 
             <!-- TreeView visibility toggle animation -->
             <TreeView.Style>

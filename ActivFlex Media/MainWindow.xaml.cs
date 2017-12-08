@@ -171,7 +171,16 @@ namespace ActivFlex
 
             } else if (item is LibraryNavItem libraryNavItem) {
                 vm.OpenMediaLibrary.Execute(libraryNavItem.MediaLibrary);
+
+            } else if (item is ContainerNavItem containerNavItem) {
+                vm.OpenMediaContainer.Execute(containerNavItem.MediaContainer);
             }
+        }
+
+        private void NavViewItem_Collapsed(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem item = (TreeViewItem)sender;
+            item.IsSelected = false;
         }
 
         private void MediaScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
