@@ -72,10 +72,36 @@ namespace ActivFlex.Storage
         void DeleteMediaLibrary(int libraryID);
 
         /// <summary>
+        /// Create a new media container in the database. To link the
+        /// container to the hierarchy the parent container is required.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="parent">Parent container of the new container</param>
+        /// <param name="expanded">Expand state of the container in the navigation</param>
+        /// <returns>The new media container instance</returns>
+        MediaContainer CreateContainer(string name, MediaContainer parent, bool expanded = false);
+
+        /// <summary>
+        /// Update an existing media container in the database.
+        /// </summary>
+        /// <param name="containerID">ID of the target container</param>
+        /// <param name="name">New name for the container</param>
+        /// <param name="parentID">ID of the new parent container</param>
+        /// <param name="expanded">New expand state for the container</param>
+        void UpdateContainer(int containerID, string name, int parentID, bool expanded);
+
+        /// <summary>
         /// Update a media container only with a new expansion state.
         /// </summary>
         /// <param name="containerID">ID of the target media container</param>
         /// <param name="expanded">New expansion state for the container</param>
         void UpdateContainerExpansion(int containerID, bool expanded);
+
+        /// <summary>
+        /// Delete a media container from the database. This will also
+        /// delete all children media containers and linked data.
+        /// </summary>
+        /// <param name="containerID">ID of the container for deletion</param>
+        void DeleteContainer(int containerID);
     }
 }

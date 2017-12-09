@@ -272,6 +272,37 @@ namespace ActivFlex.Storage
             command.ExecuteNonQuery();
         }
 
+        public MediaContainer CreateContainer(string name, MediaContainer parent, bool expanded = false)
+        {
+            var sql = @"INSERT INTO Containers(name, parent, expanded)
+                        VALUES(@Name, @Parent, @Expanded);";
+
+            var command = new SQLiteCommand(sql, connection);
+            command.Parameters.AddWithValue("Name", name);
+            command.Parameters.AddWithValue("Parent", parent.ContainerID);
+            command.Parameters.AddWithValue("Expanded", expanded);
+            command.ExecuteNonQuery();
+
+            //Get the ID of the new container
+            var sqlContainerID = @"SELECT CID FROM Containers ORDER BY CID DESC LIMIT 1;";
+            int containerID = Convert.ToInt32(new SQLiteCommand(sqlContainerID, connection).ExecuteScalar());
+            return new MediaContainer(containerID, name, expanded);
+        }
+
+        public void UpdateContainer(int containerID, string name, int parentID, bool expanded)
+        {
+            var sql = @"UPDATE Containers
+                        SET name=@Name, parent=@Parent, expanded=@Expanded
+                        WHERE CID=@ContainerID";
+
+            var command = new SQLiteCommand(sql, connection);
+            command.Parameters.AddWithValue("ContainerID", containerID);
+            command.Parameters.AddWithValue("Name", name);
+            command.Parameters.AddWithValue("Parent", parentID);
+            command.Parameters.AddWithValue("Expanded", expanded);
+            command.ExecuteNonQuery();
+        }
+
         public void UpdateContainerExpansion(int containerID, bool expanded)
         {
             var sql = @"UPDATE Containers
@@ -281,6 +312,16 @@ namespace ActivFlex.Storage
             var command = new SQLiteCommand(sql, connection);
             command.Parameters.AddWithValue("ContainerID", containerID);
             command.Parameters.AddWithValue("Expanded", expanded);
+            command.ExecuteNonQuery();
+        }
+
+        public void DeleteContainer(int containerID)
+        {
+            var sql = @"DELETE FROM Containers
+                    WHERE CID=@ContainerID";
+
+            var command = new SQLiteCommand(sql, connection);
+            command.Parameters.AddWithValue("ContainerID", containerID);
             command.ExecuteNonQuery();
         }
 
