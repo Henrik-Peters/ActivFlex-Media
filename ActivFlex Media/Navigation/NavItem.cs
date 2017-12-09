@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
+using System.Windows;
 using System.Collections.ObjectModel;
 using ActivFlex.ViewModels;
 
@@ -34,6 +35,8 @@ namespace ActivFlex.Navigation
         private bool _isExpanded;
         private string _localizeKey;
         private ObservableCollection<NavItem> _navChildren;
+        private Visibility _editBox;
+        private Visibility _nameBox;
         private NavTag _tag;
 
         /// <summary>
@@ -57,6 +60,22 @@ namespace ActivFlex.Navigation
         public virtual bool IsExpanded {
             get => _isExpanded;
             set => SetProperty(ref _isExpanded, value);
+        }
+
+        /// <summary>
+        /// The visibility of the name editing box.
+        /// </summary>
+        public virtual Visibility EditBox {
+            get => _editBox;
+            set => SetProperty(ref _editBox, value);
+        }
+
+        /// <summary>
+        /// The visibility of the normal name box.
+        /// </summary>
+        public virtual Visibility NameBox {
+            get => _nameBox;
+            set => SetProperty(ref _nameBox, value);
         }
 
         /// <summary>
@@ -95,6 +114,8 @@ namespace ActivFlex.Navigation
             this.NavChildren = Children ?? _navChildren;
             this.IsExpanded = IsExpanded;
             this.Tag = NavTag.None;
+            this._editBox = Visibility.Collapsed;
+            this._nameBox = Visibility.Visible;
         }
     }
 }

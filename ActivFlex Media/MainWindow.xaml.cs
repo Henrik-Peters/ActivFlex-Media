@@ -186,6 +186,28 @@ namespace ActivFlex
             item.IsSelected = false;
         }
 
+        private void EditBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (vm.editItem != null) {
+                ContainerNavItem navItem = (ContainerNavItem)vm.editItem.DataContext;
+                navItem.EditBox = Visibility.Collapsed;
+                navItem.NameBox = Visibility.Visible;
+
+                if (navItem.MediaContainer.ContainerID == -1) {
+                    //New container created
+                }
+
+                vm.editItem = null;
+            }
+        }
+
+        private void EditBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter || e.Key == Key.Escape) {
+                EditBox_LostFocus(sender, null);
+            }
+        }
+
         private void MediaScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (Keyboard.IsKeyDown(Key.LeftCtrl)) {
@@ -245,51 +267,53 @@ namespace ActivFlex
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.Key) {
-                case Key.Add:
-                    if (vm.ImagePresentActive) {
-                        MediaPresenter.IncreaseZoom();
-                    } else {
-                        vm.IncreaseZoom?.Execute(null);
-                    }
-                    e.Handled = true;
-                    break;
+            if (vm.editItem == null) {
+                switch (e.Key) {
+                    case Key.Add:
+                        if (vm.ImagePresentActive) {
+                            MediaPresenter.IncreaseZoom();
+                        } else {
+                            vm.IncreaseZoom?.Execute(null);
+                        }
+                        e.Handled = true;
+                        break;
 
-                case Key.Subtract:
-                    if (vm.ImagePresentActive) {
-                        MediaPresenter.DecreaseZoom();
-                    } else {
-                        vm.DecreaseZoom?.Execute(null);
-                    }
-                    e.Handled = true;
-                    break;
+                    case Key.Subtract:
+                        if (vm.ImagePresentActive) {
+                            MediaPresenter.DecreaseZoom();
+                        } else {
+                            vm.DecreaseZoom?.Execute(null);
+                        }
+                        e.Handled = true;
+                        break;
 
-                case Key.Left:
-                    if (vm.ImagePresentActive) {
-                        vm.PreviousImage?.Execute(null);
-                    }
-                    break;
+                    case Key.Left:
+                        if (vm.ImagePresentActive) {
+                            vm.PreviousImage?.Execute(null);
+                        }
+                        break;
 
-                case Key.Right:
-                    if (vm.ImagePresentActive) {
-                        vm.NextImage?.Execute(null);
-                    }
-                    break;
+                    case Key.Right:
+                        if (vm.ImagePresentActive) {
+                            vm.NextImage?.Execute(null);
+                        }
+                        break;
 
-                case Key.Space:
-                    vm.PlayMode = !vm.PlayMode;
-                    e.Handled = true;
-                    break;
+                    case Key.Space:
+                        vm.PlayMode = !vm.PlayMode;
+                        e.Handled = true;
+                        break;
 
-                case Key.S:
-                    vm.Stop.Execute(null);
-                    e.Handled = true;
-                    break;
+                    case Key.S:
+                        vm.Stop.Execute(null);
+                        e.Handled = true;
+                        break;
 
-                case Key.M:
-                    MediaPlayer.IsMuted = !MediaPlayer.IsMuted;
-                    e.Handled = true;
-                    break;
+                    case Key.M:
+                        MediaPlayer.IsMuted = !MediaPlayer.IsMuted;
+                        e.Handled = true;
+                        break;
+                }
             }
         }
 

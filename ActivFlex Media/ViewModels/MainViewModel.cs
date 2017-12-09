@@ -157,6 +157,11 @@ namespace ActivFlex.ViewModels
         private TreeView navView;
 
         /// <summary>
+        /// The tree view item with an active edit box.
+        /// </summary>
+        public TreeViewItem editItem;
+
+        /// <summary>
         /// The media player to generate the thumbnail image.
         /// </summary>
         MediaPlayer thumbnailPlayer;
@@ -843,7 +848,44 @@ namespace ActivFlex.ViewModels
         /// <param name="source">Container to hold the new container</param>
         private void NewMediaContainer(MediaContainer source)
         {
-            Debug.WriteLine("Create media container in: " + source.ContainerID);
+            //Find the parent navigation node
+            TreeViewItem treeItem = FindTreeItem(item => {
+                return (item.DataContext is ContainerNavItem containerItem &&
+                       containerItem.MediaContainer.ContainerID == source.ContainerID) ||
+                       (item.DataContext is LibraryNavItem libraryItem &&
+                       libraryItem.MediaLibrary.RootContainer.ContainerID == source.ContainerID);
+            });
+
+            MediaContainer newContainer = new MediaContainer(-1, "", false);
+            ContainerNavItem newItem = new ContainerNavItem(newContainer) {
+                NameBox = Visibility.Collapsed,
+                EditBox = Visibility.Visible
+            };
+
+            //Append the new container item to the navigation
+            source.Containers.Add(newContainer);
+            NavItem navContainer = treeItem.DataContext as NavItem;
+
+            if (!navContainer.IsExpanded) {
+                navContainer.IsExpanded = true;
+            }
+
+            navContainer.NavChildren.Add(newItem);
+
+            //Find the tree view item of the new container item
+            TreeViewItem navItem = FindTreeItem(item => {
+                return (item.DataContext is ContainerNavItem containerItem &&
+                       containerItem.MediaContainer.ContainerID == -1);
+            });
+
+            editItem = navItem;
+            navItem.ApplyTemplate();
+            ContentPresenter presenter = navItem.Template.FindName("PART_Header", navItem) as ContentPresenter;
+
+            presenter.ApplyTemplate();
+            TextBox editBox = presenter.ContentTemplate.FindName("EditBox", presenter) as TextBox;
+
+            editBox.Focus();
         }
 
         /// <summary>
@@ -853,7 +895,11 @@ namespace ActivFlex.ViewModels
         /// <param name="container">Container to select</param>
         private void MediaContainerSelect(MediaContainer container)
         {
-            TreeViewItem treeItem = FindTreeItem(container);
+            TreeViewItem treeItem = FindTreeItem(item => {
+                return item.DataContext is ContainerNavItem containerItem &&
+                       containerItem.MediaContainer.ContainerID == container.ContainerID;
+            });
+
             ContainerNavItem navItem = (ContainerNavItem)treeItem.DataContext;
             OpenMediaContainer.Execute(navItem.MediaContainer);
             treeItem.IsSelected = true;
@@ -917,18 +963,16 @@ namespace ActivFlex.ViewModels
         /// Find the tree view item in the navigation 
         /// that contains a specific media container.
         /// </summary>
-        /// <param name="container">Container of the items data context</param>
+        /// <param name="predicate">Condition for the item to be returned</param>
         /// <returns>The item or null when no item was found</returns>
-        private TreeViewItem FindTreeItem(MediaContainer container)
+        private TreeViewItem FindTreeItem(Predicate<TreeViewItem> predicate)
         {
-            return FindTreeItem(container, (TreeViewItem)navView.ItemContainerGenerator.ContainerFromIndex(0));
+            return FindTreeItem(predicate, (TreeViewItem)navView.ItemContainerGenerator.ContainerFromIndex(0));
         }
 
-        private TreeViewItem FindTreeItem(MediaContainer container, TreeViewItem item)
+        private TreeViewItem FindTreeItem(Predicate<TreeViewItem> predicate, TreeViewItem item)
         {
-            if (item is TreeViewItem treeItem &&
-                treeItem.DataContext is ContainerNavItem navItem &&
-                navItem.MediaContainer.ContainerID == container.ContainerID) {
+            if (item is TreeViewItem treeItem && predicate.Invoke(item)) {
                 return item;
 
             } else if (item == null || !item.HasItems) {
@@ -939,7 +983,7 @@ namespace ActivFlex.ViewModels
 
                 for (int i = 0; i < length; i++) {
                     TreeViewItem subItem = item.ItemContainerGenerator.ContainerFromIndex(i) as TreeViewItem;
-                    TreeViewItem itemFound = FindTreeItem(container, subItem);
+                    TreeViewItem itemFound = FindTreeItem(predicate, subItem);
 
                     if (itemFound != null) {
                         return itemFound;
