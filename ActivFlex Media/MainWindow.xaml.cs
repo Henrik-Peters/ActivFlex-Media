@@ -31,6 +31,7 @@ using System.Windows.Media.Animation;
 using static ActivFlex.Configuration.Parameter;
 using static ActivFlex.FileSystem.FileSystemBrowser;
 using ActivFlex.Configuration;
+using ActivFlex.Libraries;
 using ActivFlex.ViewModels;
 using ActivFlex.Navigation;
 using ActivFlex.Media;
@@ -195,6 +196,10 @@ namespace ActivFlex
 
                 if (navItem.MediaContainer.ContainerID == -1) {
                     //New container created
+                    MediaContainer container = navItem.MediaContainer;
+                    MediaContainer storedContainer = MainViewModel.StorageEngine.CreateContainer(container.Name, container.Parent, false);
+
+                    container.ContainerID = storedContainer.ContainerID;
                 }
 
                 vm.editItem = null;

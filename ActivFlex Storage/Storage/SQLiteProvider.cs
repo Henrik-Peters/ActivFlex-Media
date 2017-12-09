@@ -167,7 +167,7 @@ namespace ActivFlex.Storage
             var sqlLibraryID = @"SELECT LID FROM Libraries ORDER BY LID DESC LIMIT 1;";
             int LibraryID = Convert.ToInt32(new SQLiteCommand(sqlLibraryID, connection).ExecuteScalar());
 
-            MediaContainer rootContainer = new MediaContainer(rootContainerID, "Root-Container");
+            MediaContainer rootContainer = new MediaContainer(rootContainerID, "Root-Container", null);
             return new MediaLibrary(LibraryID, name, owner, rootContainer);
         }
 
@@ -192,7 +192,7 @@ namespace ActivFlex.Storage
                         string containerName = reader["ContainerName"] as string;
                         bool expanded = Convert.ToBoolean(reader["expanded"]);
 
-                        MediaContainer rootContainer = new MediaContainer(CID, containerName, expanded);
+                        MediaContainer rootContainer = new MediaContainer(CID, containerName, null, expanded);
                         UpdateContainers(rootContainer);
 
                         libraries.Add(new MediaLibrary(LID, libName, owner, rootContainer));
@@ -224,7 +224,7 @@ namespace ActivFlex.Storage
                     string subName = reader["name"] as string;
                     bool expanded = Convert.ToBoolean(reader["expanded"]);
 
-                    MediaContainer subContainer = new MediaContainer(subID, subName, expanded);
+                    MediaContainer subContainer = new MediaContainer(subID, subName, container, expanded);
                     UpdateContainers(subContainer);
                     container.Containers.Add(subContainer);
                 }
@@ -286,7 +286,7 @@ namespace ActivFlex.Storage
             //Get the ID of the new container
             var sqlContainerID = @"SELECT CID FROM Containers ORDER BY CID DESC LIMIT 1;";
             int containerID = Convert.ToInt32(new SQLiteCommand(sqlContainerID, connection).ExecuteScalar());
-            return new MediaContainer(containerID, name, expanded);
+            return new MediaContainer(containerID, name, parent, expanded);
         }
 
         public void UpdateContainer(int containerID, string name, int parentID, bool expanded)
