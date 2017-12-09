@@ -27,10 +27,35 @@ namespace ActivFlex.Views
     /// </summary>
     public partial class DeleteDialog : Window
     {
+        private string _deleteTextBefore;
+        private string _deleteTextAfter;
+
         /// <summary>
         /// View model instance for this window.
         /// </summary>
         DeleteDialogViewModel vm;
+
+        /// <summary>
+        /// The text before the name of the object.
+        /// </summary>
+        public string DeleteTextBefore {
+            get => _deleteTextBefore;
+            set {
+                BeforeTextField.Text = value;
+                _deleteTextBefore = value;
+            }
+        }
+
+        /// <summary>
+        /// The text after the name of the object.
+        /// </summary>
+        public string DeleteTextAfter {
+            get => _deleteTextAfter;
+            set {
+                AfterTextField.Text = value;
+                _deleteTextAfter = value;
+            }
+        }
 
         /// <summary>
         /// Create a new delete dialog window instance.

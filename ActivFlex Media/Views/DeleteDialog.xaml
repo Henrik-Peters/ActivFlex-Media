@@ -50,9 +50,9 @@
         </Border>
 
         <TextBlock HorizontalAlignment="Left" Margin="70,24.8,10,0" Grid.Row="1" VerticalAlignment="Top" FontSize="20">
-            <Run Text="{Binding Localize[DeleteFirst], Mode=OneWay}"/>
+            <Run x:Name="BeforeTextField"/>
             <Run FontWeight="Bold" Text="{Binding DeleteName, Mode=OneWay}"/>
-            <Run Text="{Binding Localize[DeleteSecound], Mode=OneWay}"/>
+            <Run x:Name="AfterTextField"/>
         </TextBlock>
 
         <!-- Yes button -->

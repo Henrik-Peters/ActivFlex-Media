@@ -60,8 +60,10 @@ namespace ActivFlex.Localization
             ["DeleteDialogTitle"] = new List<string> { "Confirm deletion", "Löschvorgang bestätigen" },
             ["Yes"] = new List<string> { "Yes", "Ja" },
             ["No"] = new List<string> { "No", "Nein" },
-            ["DeleteFirst"] = new List<string> { "Are you sure that", "Soll die Bibliothek" },
-            ["DeleteSecound"] = new List<string> { "should be deleted?", "wirklich gelöscht werden?" },
+            ["DeleteBeforeLibrary"] = new List<string> { "Are you sure that", "Soll die Bibliothek" },
+            ["DeleteAfterLibrary"] = new List<string> { "should be deleted?", "wirklich gelöscht werden?" },
+            ["DeleteBeforeContainer"] = new List<string> { "Are you sure that", "Soll der Container" },
+            ["DeleteAfterContainer"] = new List<string> { "should be deleted?", "wirklich gelöscht werden?" },
             ["MediaContainer"] = new List<string> { "Media container", "Mediencontainer" },
             ["NewContainer"] = new List<string> { "New container", "Neuer Container" }
         };

@@ -826,6 +826,8 @@ namespace ActivFlex.ViewModels
         {
             DeleteDialog deleteDialog = new DeleteDialog(Localize);
             var deleteContext = deleteDialog.DataContext as DeleteDialogViewModel;
+            deleteDialog.DeleteTextBefore = Localize["DeleteBeforeLibrary"];
+            deleteDialog.DeleteTextAfter = Localize["DeleteAfterLibrary"];
             deleteContext.DeleteName = library.Name;
             deleteDialog.ShowDialog();
 
@@ -930,7 +932,41 @@ namespace ActivFlex.ViewModels
         /// <param name="container">Container to delete</param>
         private void RemoveMediaContainer(MediaContainer container)
         {
-            Debug.WriteLine("Delete media container: " + container.ContainerID);
+            DeleteDialog deleteDialog = new DeleteDialog(Localize);
+            var deleteContext = deleteDialog.DataContext as DeleteDialogViewModel;
+            deleteDialog.DeleteTextBefore = Localize["DeleteBeforeContainer"];
+            deleteDialog.DeleteTextAfter = Localize["DeleteAfterContainer"];
+            deleteContext.DeleteName = container.Name;
+            deleteDialog.ShowDialog();
+
+            if (deleteContext.DeleteConfirm) {
+                //Delete the media container
+                StorageEngine.DeleteContainer(container.ContainerID);
+
+                TreeViewItem treeItem = FindTreeItem(item => {
+                    return (item.DataContext is ContainerNavItem containerItem &&
+                           containerItem.MediaContainer.ContainerID == container.Parent.ContainerID) ||
+                           (item.DataContext is LibraryNavItem libraryItem &&
+                           libraryItem.MediaLibrary.RootContainer.ContainerID == container.Parent.ContainerID);
+                });
+
+                NavItem parentItem = (NavItem)treeItem.DataContext;
+
+                if (parentItem is ContainerNavItem containerParent) {
+                    containerParent.MediaContainer.Containers.Remove(container);
+
+                } else if (parentItem is LibraryNavItem libraryParent) {
+                    libraryParent.MediaLibrary.RootContainer.Containers.Remove(container);
+                }
+
+                //Delete the navigation item
+                ContainerNavItem navItem = parentItem.NavChildren
+                    .Where(item => item is ContainerNavItem)
+                    .Cast<ContainerNavItem>()
+                    .First(item => item.MediaContainer.ContainerID == container.ContainerID);
+
+                parentItem.NavChildren.Remove(navItem);
+            }
         }
 
         /// <summary>
