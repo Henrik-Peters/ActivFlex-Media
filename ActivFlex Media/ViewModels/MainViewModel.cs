@@ -860,8 +860,7 @@ namespace ActivFlex.ViewModels
 
             MediaContainer newContainer = new MediaContainer(-1, "", source, false);
             ContainerNavItem newItem = new ContainerNavItem(newContainer) {
-                NameBox = Visibility.Collapsed,
-                EditBox = Visibility.Visible
+                NameBox = Visibility.Collapsed
             };
 
             //Append the new container item to the navigation
@@ -930,9 +929,8 @@ namespace ActivFlex.ViewModels
 
             ContainerNavItem navItem = (ContainerNavItem)treeItem.DataContext;
             navItem.NameBox = Visibility.Collapsed;
-            navItem.EditBox = Visibility.Visible;
 
-            editItem = treeItem;
+            //Find the edit box of the tree item
             treeItem.ApplyTemplate();
             ContentPresenter presenter = treeItem.Template.FindName("PART_Header", treeItem) as ContentPresenter;
 
@@ -940,8 +938,13 @@ namespace ActivFlex.ViewModels
             TextBox editBox = presenter.ContentTemplate.FindName("EditBox", presenter) as TextBox;
 
             editBox.Focus();
+            editBox.Text = navItem.MediaContainer.Name;
+            editBox.Height = presenter.ActualHeight;
             editBox.SelectionStart = editBox.Text.Length;
             editBox.SelectionLength = 0;
+
+            //Store the tree item after setting the focus to prevent double updating
+            editItem = treeItem;
         }
 
         /// <summary>

@@ -35,7 +35,6 @@ namespace ActivFlex.Navigation
         private bool _isExpanded;
         private string _localizeKey;
         private ObservableCollection<NavItem> _navChildren;
-        private Visibility _editBox;
         private Visibility _nameBox;
         private NavTag _tag;
 
@@ -60,14 +59,6 @@ namespace ActivFlex.Navigation
         public virtual bool IsExpanded {
             get => _isExpanded;
             set => SetProperty(ref _isExpanded, value);
-        }
-
-        /// <summary>
-        /// The visibility of the name editing box.
-        /// </summary>
-        public virtual Visibility EditBox {
-            get => _editBox;
-            set => SetProperty(ref _editBox, value);
         }
 
         /// <summary>
@@ -114,7 +105,6 @@ namespace ActivFlex.Navigation
             this.NavChildren = Children ?? _navChildren;
             this.IsExpanded = IsExpanded;
             this.Tag = NavTag.None;
-            this._editBox = Visibility.Collapsed;
             this._nameBox = Visibility.Visible;
         }
     }

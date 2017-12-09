@@ -191,8 +191,15 @@ namespace ActivFlex
         {
             if (vm.editItem != null) {
                 ContainerNavItem navItem = (ContainerNavItem)vm.editItem.DataContext;
-                navItem.EditBox = Visibility.Collapsed;
+                this.Focus();
                 navItem.NameBox = Visibility.Visible;
+
+                //Hide the edit box
+                ContentPresenter presenter = vm.editItem.Template.FindName("PART_Header", vm.editItem) as ContentPresenter;
+                TextBlock nameBox = presenter.ContentTemplate.FindName("NameBox", presenter) as TextBlock;
+                TextBox editBox = presenter.ContentTemplate.FindName("EditBox", presenter) as TextBox;
+                navItem.DisplayName = editBox.Text;
+                editBox.Height = 0;
 
                 if (navItem.MediaContainer.ContainerID == -1) {
                     //New container created
@@ -208,13 +215,6 @@ namespace ActivFlex
                 }
 
                 vm.editItem = null;
-            }
-        }
-
-        private void EditBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter || e.Key == Key.Escape) {
-                EditBox_LostFocus(sender, null);
             }
         }
 
@@ -321,6 +321,15 @@ namespace ActivFlex
 
                     case Key.M:
                         MediaPlayer.IsMuted = !MediaPlayer.IsMuted;
+                        e.Handled = true;
+                        break;
+                }
+            } else {
+                //Container name edit mode
+                switch (e.Key) {
+                    case Key.Enter:
+                    case Key.Escape:
+                        EditBox_LostFocus(sender, null);
                         e.Handled = true;
                         break;
                 }
