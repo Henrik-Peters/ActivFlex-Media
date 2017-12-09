@@ -1036,6 +1036,7 @@ namespace ActivFlex.ViewModels
                 int length = item.Items.Count;
 
                 for (int i = 0; i < length; i++) {
+                    item.UpdateLayout();
                     TreeViewItem subItem = item.ItemContainerGenerator.ContainerFromIndex(i) as TreeViewItem;
                     TreeViewItem itemFound = FindTreeItem(predicate, subItem);
 
