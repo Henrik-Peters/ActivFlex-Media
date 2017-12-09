@@ -923,7 +923,25 @@ namespace ActivFlex.ViewModels
         /// <param name="container">Container to configure</param>
         private void MediaContainerRename(MediaContainer container)
         {
-            Debug.WriteLine("Rename media container: " + container.ContainerID);
+            TreeViewItem treeItem = FindTreeItem(item => {
+                return item.DataContext is ContainerNavItem containerItem &&
+                       containerItem.MediaContainer.ContainerID == container.ContainerID;
+            });
+
+            ContainerNavItem navItem = (ContainerNavItem)treeItem.DataContext;
+            navItem.NameBox = Visibility.Collapsed;
+            navItem.EditBox = Visibility.Visible;
+
+            editItem = treeItem;
+            treeItem.ApplyTemplate();
+            ContentPresenter presenter = treeItem.Template.FindName("PART_Header", treeItem) as ContentPresenter;
+
+            presenter.ApplyTemplate();
+            TextBox editBox = presenter.ContentTemplate.FindName("EditBox", presenter) as TextBox;
+
+            editBox.Focus();
+            editBox.SelectionStart = editBox.Text.Length;
+            editBox.SelectionLength = 0;
         }
 
         /// <summary>

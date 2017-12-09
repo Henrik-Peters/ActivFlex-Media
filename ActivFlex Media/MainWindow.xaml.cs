@@ -200,6 +200,11 @@ namespace ActivFlex
                     MediaContainer storedContainer = MainViewModel.StorageEngine.CreateContainer(container.Name, container.Parent, false);
 
                     container.ContainerID = storedContainer.ContainerID;
+
+                } else {
+                    //Container update
+                    MediaContainer container = navItem.MediaContainer;
+                    MainViewModel.StorageEngine.UpdateContainer(container.ContainerID, container.Name, container.Parent.ContainerID, container.Expanded);
                 }
 
                 vm.editItem = null;
