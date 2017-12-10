@@ -332,7 +332,48 @@ namespace ActivFlex
                         EditBox_LostFocus(sender, null);
                         e.Handled = true;
                         break;
+
+                    //Replace these hotkeys with an input for the edit box
+                    case Key.Add:
+                        HotkeyEditBox(e.Key);
+                        e.Handled = true;
+                        break;
+
+                    case Key.Subtract:
+                        HotkeyEditBox(e.Key);
+                        e.Handled = true;
+                        break;
                 }
+            }
+        }
+
+        private void HotkeyEditBox(Key key)
+        {
+            if (vm.editItem != null) {
+                ContentPresenter presenter = vm.editItem.Template.FindName("PART_Header", vm.editItem) as ContentPresenter;
+                TextBlock nameBox = presenter.ContentTemplate.FindName("NameBox", presenter) as TextBlock;
+                TextBox editBox = presenter.ContentTemplate.FindName("EditBox", presenter) as TextBox;
+
+                switch (key) {
+                    case Key.Add:
+                        editBox.Text += "+";
+                        break;
+
+                    case Key.Subtract:
+                        editBox.Text += "-";
+                        break;
+                }
+
+                editBox.SelectionStart = editBox.Text.Length;
+                editBox.SelectionLength = 0;
+            }
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (vm.editItem != null) {
+                EditBox_LostFocus(sender, null);
+                e.Handled = true;
             }
         }
 

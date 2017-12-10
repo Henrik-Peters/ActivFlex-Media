@@ -12,7 +12,7 @@
         Title="ActivFlex Media" Height="835" Width="1640"
         WindowStyle="None" AllowsTransparency="True" Background="#494A52"
         WindowStartupLocation="CenterScreen" Icon="Images/ActivFlexIcon.ico" FontSize="18"
-        StateChanged="Window_StateChanged" Loaded="Window_Loaded" PreviewKeyDown="Window_PreviewKeyDown" Closing="Window_Closing">
+        StateChanged="Window_StateChanged" Loaded="Window_Loaded" PreviewKeyDown="Window_PreviewKeyDown" MouseDown="Window_MouseDown" Closing="Window_Closing">
 
     <!-- Converter instances and window specific styles -->
     <Window.Resources>

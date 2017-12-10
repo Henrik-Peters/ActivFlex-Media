@@ -940,8 +940,8 @@ namespace ActivFlex.ViewModels
             editBox.Focus();
             editBox.Text = navItem.MediaContainer.Name;
             editBox.Height = presenter.ActualHeight;
-            editBox.SelectionStart = editBox.Text.Length;
-            editBox.SelectionLength = 0;
+            editBox.SelectionStart = 0;
+            editBox.SelectionLength = editBox.Text.Length;
 
             //Store the tree item after setting the focus to prevent double updating
             editItem = treeItem;
