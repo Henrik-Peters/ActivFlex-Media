@@ -878,8 +878,7 @@ namespace ActivFlex.ViewModels
                 return (item.DataContext is ContainerNavItem containerItem &&
                        containerItem.MediaContainer.ContainerID == -1);
             });
-
-            editItem = navItem;
+            
             navItem.ApplyTemplate();
             ContentPresenter presenter = navItem.Template.FindName("PART_Header", navItem) as ContentPresenter;
 
@@ -887,6 +886,10 @@ namespace ActivFlex.ViewModels
             TextBox editBox = presenter.ContentTemplate.FindName("EditBox", presenter) as TextBox;
 
             editBox.Focus();
+            editBox.Height = presenter.ActualHeight;
+
+            //Store the tree item after setting the focus to prevent double updating
+            editItem = navItem;
         }
 
         /// <summary>
