@@ -43,6 +43,7 @@ namespace ActivFlex.Views
             InitializeComponent();
             this.vm = new LibraryWindowViewModel(localizeManager);
             this.DataContext = vm;
+            this.LibraryNameBox.Focus();
         }
 
         private void LibraryConfig_KeyDown(object sender, KeyEventArgs e)

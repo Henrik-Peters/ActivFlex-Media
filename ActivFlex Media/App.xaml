@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="Styles/Fonts.xaml"/>
                 <ResourceDictionary Source="Styles/Thumbnails.xaml"/>
                 <ResourceDictionary Source="Styles/ContextMenus.xaml"/>
+                <ResourceDictionary Source="Styles/ScrollViews.xaml"/>
                 <ResourceDictionary Source="Styles/Hyperlinks.xaml"/>
                 <ResourceDictionary Source="Styles/BrowseNavigation.xaml"/>
                 <ResourceDictionary Source="Styles/TreeViewItem.xaml"/>
