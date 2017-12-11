@@ -377,7 +377,7 @@
 
         </Grid>
 
-        <!-- Media presentation area -->
+        <!-- File browsing area -->
         <ScrollViewer x:Name="MediaScrollViewer" Template="{StaticResource ScrollViewerControlTemplate}" Margin="0,0,4,0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="3" PreviewMouseWheel="MediaScrollViewer_PreviewMouseWheel">
             <ItemsControl x:Name="MediaItemControl" ItemsSource="{Binding FileSystemItems}" Focusable="False">
                 <ItemsControl.ItemsPanel>
@@ -516,6 +516,47 @@
                         </Controls:ImageThumbnail>
                     </DataTemplate>
 
+                </ItemsControl.Resources>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Library browsing area -->
+        <ScrollViewer x:Name="LibraryScrollViewer" Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolVisibilityConverter}}" Template="{StaticResource ScrollViewerControlTemplate}"
+                      Margin="0,0,4,0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="3" PreviewMouseWheel="MediaScrollViewer_PreviewMouseWheel">
+            <ItemsControl x:Name="LibraryItemControl" Background="Gray" Focusable="False">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+
+                        <!-- Wrapping area for media thumbnails -->
+                        <WrapPanel x:Name="LibraryWrapPanel" FlowDirection="LeftToRight">
+                            <WrapPanel.LayoutTransform>
+                                <ScaleTransform x:Name="LibraryScaleTransform" ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"/>
+                            </WrapPanel.LayoutTransform>
+
+                            <WrapPanel.Triggers>
+                                <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                                    <BeginStoryboard>
+                                        <Storyboard Name="MyStoryboard">
+                                            <DoubleAnimation x:Name="thumbScaleAnimationX"
+                                                             Storyboard.TargetName="LibraryScaleTransform"
+                                                             Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
+                                                             To="{Binding Zoom, NotifyOnTargetUpdated=True}" Duration="0:0:0.2"/>
+
+                                            <DoubleAnimation x:Name="thumbScaleAnimationY"
+                                                             Storyboard.TargetName="LibraryScaleTransform"
+                                                             Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
+                                                             To="{Binding Zoom, NotifyOnTargetUpdated=True}" Duration="0:0:0.2"/>
+
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </WrapPanel.Triggers>
+                        </WrapPanel>
+
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.Resources>
+                    <!-- Library browsing templates -->
                 </ItemsControl.Resources>
             </ItemsControl>
         </ScrollViewer>

@@ -514,6 +514,7 @@ namespace ActivFlex
             //The EventTrigger of the scale animation will miss the first UpdateTarget-Event.
             //This is fixed by firing the UpdateTarget-Event or changing the zoom again:
             try {
+                //Filesystem browsing
                 Border border = VisualTreeHelper.GetChild(this.MediaItemControl, 0) as Border;
                 ItemsPresenter itemsPresenter = VisualTreeHelper.GetChild(border, 0) as ItemsPresenter;
                 WrapPanel wrapPanel = VisualTreeHelper.GetChild(itemsPresenter, 0) as WrapPanel;
@@ -521,6 +522,18 @@ namespace ActivFlex
                 DoubleAnimation animationX = wrapPanel.FindName("thumbScaleAnimationX") as DoubleAnimation;
                 DoubleAnimation animationY = wrapPanel.FindName("thumbScaleAnimationY") as DoubleAnimation;
                 
+                BindingOperations.GetBindingExpression(animationX, DoubleAnimation.ToProperty).UpdateTarget();
+                BindingOperations.GetBindingExpression(animationY, DoubleAnimation.ToProperty).UpdateTarget();
+
+
+                //Library browsing
+                border = VisualTreeHelper.GetChild(this.LibraryItemControl, 0) as Border;
+                itemsPresenter = VisualTreeHelper.GetChild(border, 0) as ItemsPresenter;
+                wrapPanel = VisualTreeHelper.GetChild(itemsPresenter, 0) as WrapPanel;
+
+                animationX = wrapPanel.FindName("thumbScaleAnimationX") as DoubleAnimation;
+                animationY = wrapPanel.FindName("thumbScaleAnimationY") as DoubleAnimation;
+
                 BindingOperations.GetBindingExpression(animationX, DoubleAnimation.ToProperty).UpdateTarget();
                 BindingOperations.GetBindingExpression(animationY, DoubleAnimation.ToProperty).UpdateTarget();
             } catch {

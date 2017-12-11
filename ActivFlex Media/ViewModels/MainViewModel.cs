@@ -233,6 +233,12 @@ namespace ActivFlex.ViewModels
             set => SetProperty(ref _mediaBarVisible, value);
         }
 
+        private bool _libraryBrowsing;
+        public bool LibraryBrowsing {
+            get => _libraryBrowsing;
+            set => SetProperty(ref _libraryBrowsing, value);
+        }
+
         private ObservableCollection<IThumbnailViewModel> _fileSystemItems;
         public ObservableCollection<IThumbnailViewModel> FileSystemItems {
             get => _fileSystemItems;
@@ -665,6 +671,7 @@ namespace ActivFlex.ViewModels
             //Presentation startup
             this.ActiveImages = new MediaImage[0];
             this.ImagePresentActive = false;
+            this.LibraryBrowsing = false;
 
             //Threads
             this.thumbnailThread = new Thread(LoadThumbnails);
@@ -788,7 +795,7 @@ namespace ActivFlex.ViewModels
         /// <param name="library">Library to display</param>
         private void BrowseMediaLibrary(MediaLibrary library)
         {
-            Debug.WriteLine("Browse: " + library.Name);
+            BrowseMediaContainer(library.RootContainer);
         }
 
         /// <summary>
@@ -916,7 +923,8 @@ namespace ActivFlex.ViewModels
         /// <param name="container">Container to display</param>
         private void BrowseMediaContainer(MediaContainer container)
         {
-            Debug.WriteLine("Browse media container: " + container.ContainerID);
+            Debug.WriteLine("Browse media container: " + container.Name);
+            LibraryBrowsing = true;
         }
 
         /// <summary>
@@ -1324,13 +1332,14 @@ namespace ActivFlex.ViewModels
         /// <summary>
         /// Run the FileSystemBrowser for the provided path.
         /// This will also create the related view model
-        /// implementation for the object and store them 
+        /// implementation for the object and store them
         /// in the FileSystemItems collection.
         /// </summary>
         /// <param name="path">Filesystem path for the browser</param>
         private void BrowseToPath(string path)
         {
             this.Path = path;
+            this.LibraryBrowsing = false;
             FileSystemItems = new ObservableCollection<IThumbnailViewModel>(FileSystemBrowser.Browse(path)
                 .Where(item => item is DirectoryItem || item is MediaImage || item is MediaMusic || item is MediaVideo)
                 .Select<IFileObject, IThumbnailViewModel>(item => {
