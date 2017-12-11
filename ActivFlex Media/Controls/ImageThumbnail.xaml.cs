@@ -199,7 +199,7 @@ namespace ActivFlex.Controls
         /// </summary>
         /// <param name="proxy">Represented object of the thumbnail</param>
         /// <param name="CanSelect">Enables or disables the select ability</param>
-        public ImageThumbnail(IMediaObject proxy, bool CanSelect = false)
+        public ImageThumbnail(IFileObject proxy, bool CanSelect = false)
         {
             InitializeComponent();
             this.CanSelect = CanSelect;

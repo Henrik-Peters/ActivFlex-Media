@@ -78,7 +78,7 @@ namespace ActivFlex.Media
         /// </summary>
         /// <param name="DecodePixelWidth">Width in pixels to decode the thumbnail</param>
         /// <returns>The loaded bitmap image instance</returns>
-        public override BitmapImage LoadThumbnail(int DecodePixelWidth)
+        public BitmapImage LoadThumbnail(int DecodePixelWidth)
         {
             if (File.Exists(Path)) {
                 try {

@@ -53,18 +53,5 @@ namespace ActivFlex.Media
         /// <param name="path">Path of the video</param>
         /// <param name="name">Custom name of the video</param>
         public MediaVideo(string path, string name) : base(path, name) {}
-
-        /// <summary>
-        /// Load a thumbnail image representing the
-        /// content of the media object by the path.
-        /// The height of the image is calculated by
-        /// the videos aspect ratio.
-        /// </summary>
-        /// <param name="DecodePixelWidth">Width in pixels of the thumbnail</param>
-        /// <returns>The loaded bitmap image instance</returns>
-        public override BitmapImage LoadThumbnail(int DecodePixelWidth)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

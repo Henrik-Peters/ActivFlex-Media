@@ -82,7 +82,7 @@ namespace ActivFlex.Controls
         /// to set the thumbnail image data.
         /// </summary>
         /// <param name="proxy">Represented object of the thumbnail</param>
-        public SimpleThumbnail(IMediaObject proxy)
+        public SimpleThumbnail(IFileObject proxy)
         {
             InitializeComponent();
             this.Proxy = proxy;

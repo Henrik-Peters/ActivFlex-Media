@@ -16,6 +16,7 @@
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
 using System.Windows.Media.Imaging;
+using ActivFlex.FileSystem;
 
 namespace ActivFlex.Media
 {
@@ -25,7 +26,7 @@ namespace ActivFlex.Media
     /// in the filesystem. If a custom name is not provided
     /// the fileName of the path is used as name.
     /// </summary>
-    public abstract class MediaObject : IMediaObject
+    public abstract class MediaObject : IFileObject
     {
         /// <summary>
         /// Text to describe the media object.
@@ -36,14 +37,6 @@ namespace ActivFlex.Media
         /// Location of the media object in the filesystem.
         /// </summary>
         public string Path { get; }
-
-        /// <summary>
-        /// Load a thumbnail image representing the
-        /// content of the media object by the path.
-        /// </summary>
-        /// <param name="DecodePixelWidth">Width in pixels to decode the thumbnail</param>
-        /// <returns>The loaded bitmap image instance</returns>
-        public abstract BitmapImage LoadThumbnail(int DecodePixelWidth);
 
         /// <summary>
         /// Set the path of the media object in the filesystem

@@ -57,10 +57,5 @@ namespace ActivFlex.Media
         /// <param name="path">Path of the music file</param>
         /// <param name="name">Custom name of the music item</param>
         public MediaMusic(string path, string name) : base(path, name) { }
-        
-        public override BitmapImage LoadThumbnail(int DecodePixelWidth)
-        {
-            throw new NotSupportedException("Loading of music thumbnails is not supported!");
-        }
     }
 }

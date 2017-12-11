@@ -52,7 +52,6 @@
     <Compile Include="Libraries\MediaContainer.cs" />
     <Compile Include="Libraries\MediaLibrary.cs" />
     <Compile Include="Media\ImageLoadState.cs" />
-    <Compile Include="Media\IMediaObject.cs" />
     <Compile Include="Media\MediaImage.cs" />
     <Compile Include="Media\MediaMusic.cs" />
     <Compile Include="Media\MediaObject.cs" />
