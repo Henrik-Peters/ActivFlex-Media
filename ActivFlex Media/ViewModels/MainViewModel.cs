@@ -55,7 +55,7 @@ namespace ActivFlex.ViewModels
         /// <summary>
         /// Enqueue thumbnails to set them up for loading.
         /// </summary>
-        Queue<IThumbnailViewModel> loadingQueue = new Queue<IThumbnailViewModel>();
+        Queue<ViewModel> loadingQueue = new Queue<ViewModel>();
 
         /// <summary>
         /// Interrupt flag to stop the thumbnail loading thread.
@@ -245,8 +245,8 @@ namespace ActivFlex.ViewModels
             set {
                 if (_fileSystemItems != value) {
                     _fileSystemItems = value;
-                    _fileSystemItems.CollectionChanged += FileSystemItems_CollectionChanged;
-                    FileSystemItems_CollectionChanged(this, null);
+                    _fileSystemItems.CollectionChanged += Items_CollectionChanged;
+                    Items_CollectionChanged(this, null);
                     NotifyPropertyChanged();
                 }
             }
@@ -258,6 +258,8 @@ namespace ActivFlex.ViewModels
             set {
                 if (_libraryItems != value) {
                     _libraryItems = value;
+                    LibraryItems.CollectionChanged += Items_CollectionChanged;
+                    Items_CollectionChanged(this, null);
                     NotifyPropertyChanged();
                 }
             }
@@ -1268,16 +1270,22 @@ namespace ActivFlex.ViewModels
         /// Update the thumbnail loading queue when
         /// the FileSystemItems collection changed.
         /// </summary>
-        private void FileSystemItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             loadThumbsInterrupt = true;
             if (thumbnailThread.IsAlive)
                 thumbnailThread.Join();
 
             loadingQueue.Clear();
-            
-            foreach (var item in FileSystemItems.Where(item => item is ImageItemViewModel)) {
-                loadingQueue.Enqueue(item);
+
+            if (LibraryBrowsing) {
+                foreach (var item in LibraryItems.Where(item => item is LibraryImageViewModel)) {
+                    loadingQueue.Enqueue((ViewModel)item);
+                }
+            } else {
+                foreach (var item in FileSystemItems.Where(item => item is ImageItemViewModel)) {
+                    loadingQueue.Enqueue((ViewModel)item);
+                }
             }
 
             thumbnailThread = new Thread(LoadThumbnails);
@@ -1293,10 +1301,13 @@ namespace ActivFlex.ViewModels
         private void LoadThumbnails()
         {
             while (!loadThumbsInterrupt && loadingQueue.Any()) {
-                IThumbnailViewModel viewModelItem = loadingQueue.Dequeue();
+                ViewModel viewModelItem = loadingQueue.Dequeue();
 
                 if (viewModelItem is ImageItemViewModel item) {
                     item.LoadThumbnail(Config.ThumbnailDecodeSize);
+
+                } else if (viewModelItem is LibraryImageViewModel LibraryItem) {
+                    LibraryItem.LoadThumbnail(Config.ThumbnailDecodeSize);
                 }
             }
         }
