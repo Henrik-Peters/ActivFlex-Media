@@ -891,7 +891,7 @@ namespace ActivFlex.ViewModels
                        libraryItem.MediaLibrary.RootContainer.ContainerID == source.ContainerID);
             });
 
-            MediaContainer newContainer = new MediaContainer(-1, "", source, false);
+            MediaContainer newContainer = new MediaContainer(-1, "", source, source.Library, false);
             ContainerNavItem newItem = new ContainerNavItem(newContainer) {
                 NameBox = Visibility.Collapsed
             };

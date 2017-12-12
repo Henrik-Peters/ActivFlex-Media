@@ -77,9 +77,10 @@ namespace ActivFlex.Storage
         /// </summary>
         /// <param name="name"></param>
         /// <param name="parent">Parent container of the new container</param>
+        /// <param name="library">Media library instance for the container</param>
         /// <param name="expanded">Expand state of the container in the navigation</param>
         /// <returns>The new media container instance</returns>
-        MediaContainer CreateContainer(string name, MediaContainer parent, bool expanded = false);
+        MediaContainer CreateContainer(string name, MediaContainer parent, MediaLibrary library, bool expanded = false);
 
         /// <summary>
         /// Update an existing media container in the database.

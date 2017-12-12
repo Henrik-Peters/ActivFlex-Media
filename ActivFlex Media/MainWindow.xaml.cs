@@ -204,7 +204,7 @@ namespace ActivFlex
                 if (navItem.MediaContainer.ContainerID == -1) {
                     //New container created
                     MediaContainer container = navItem.MediaContainer;
-                    MediaContainer storedContainer = MainViewModel.StorageEngine.CreateContainer(container.Name, container.Parent, false);
+                    MediaContainer storedContainer = MainViewModel.StorageEngine.CreateContainer(container.Name, container.Parent, container.Library, false);
 
                     container.ContainerID = storedContainer.ContainerID;
 

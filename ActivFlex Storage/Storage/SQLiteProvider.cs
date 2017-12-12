@@ -167,8 +167,9 @@ namespace ActivFlex.Storage
             var sqlLibraryID = @"SELECT LID FROM Libraries ORDER BY LID DESC LIMIT 1;";
             int LibraryID = Convert.ToInt32(new SQLiteCommand(sqlLibraryID, connection).ExecuteScalar());
 
-            MediaContainer rootContainer = new MediaContainer(rootContainerID, "Root-Container", null);
-            return new MediaLibrary(LibraryID, name, owner, rootContainer);
+            MediaLibrary library = new MediaLibrary(LibraryID, name, owner, null);
+            library.RootContainer = new MediaContainer(rootContainerID, "Root-Container", null, library);
+            return library;
         }
 
         public List<MediaLibrary> ReadMediaLibraries()
@@ -192,10 +193,12 @@ namespace ActivFlex.Storage
                         string containerName = reader["ContainerName"] as string;
                         bool expanded = Convert.ToBoolean(reader["expanded"]);
 
-                        MediaContainer rootContainer = new MediaContainer(CID, containerName, null, expanded);
-                        UpdateContainers(rootContainer);
+                        MediaLibrary library = new MediaLibrary(LID, libName, owner, null);
+                        MediaContainer rootContainer = new MediaContainer(CID, containerName, null, library, expanded);
+                        library.RootContainer = rootContainer;
 
-                        libraries.Add(new MediaLibrary(LID, libName, owner, rootContainer));
+                        UpdateContainers(rootContainer, library);
+                        libraries.Add(library);
                     }
                 }
             }
@@ -203,7 +206,7 @@ namespace ActivFlex.Storage
             return libraries;
         }
 
-        private void UpdateContainers(MediaContainer container)
+        private void UpdateContainers(MediaContainer container, MediaLibrary library)
         {
             //Create a new empty container list
             container.Containers = new List<MediaContainer>();
@@ -224,8 +227,8 @@ namespace ActivFlex.Storage
                     string subName = reader["name"] as string;
                     bool expanded = Convert.ToBoolean(reader["expanded"]);
 
-                    MediaContainer subContainer = new MediaContainer(subID, subName, container, expanded);
-                    UpdateContainers(subContainer);
+                    MediaContainer subContainer = new MediaContainer(subID, subName, container, library, expanded);
+                    UpdateContainers(subContainer, library);
                     container.Containers.Add(subContainer);
                 }
             }
@@ -272,7 +275,7 @@ namespace ActivFlex.Storage
             command.ExecuteNonQuery();
         }
 
-        public MediaContainer CreateContainer(string name, MediaContainer parent, bool expanded = false)
+        public MediaContainer CreateContainer(string name, MediaContainer parent, MediaLibrary library, bool expanded = false)
         {
             var sql = @"INSERT INTO Containers(name, parent, expanded)
                         VALUES(@Name, @Parent, @Expanded);";
@@ -286,7 +289,7 @@ namespace ActivFlex.Storage
             //Get the ID of the new container
             var sqlContainerID = @"SELECT CID FROM Containers ORDER BY CID DESC LIMIT 1;";
             int containerID = Convert.ToInt32(new SQLiteCommand(sqlContainerID, connection).ExecuteScalar());
-            return new MediaContainer(containerID, name, parent, expanded);
+            return new MediaContainer(containerID, name, parent, library, expanded);
         }
 
         public void UpdateContainer(int containerID, string name, int parentID, bool expanded)

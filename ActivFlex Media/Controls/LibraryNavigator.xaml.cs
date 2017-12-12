@@ -84,13 +84,14 @@ namespace ActivFlex.Controls
 
             //Add the container segments to the navigation
             control.ContainerStackPanel.Children.Clear();
-            bool rootSegment = true;
+            int segmentAmount = segments.Count;
+            int segmentIndex = 0;
 
             foreach (MediaContainer segment in segments) {
 
                 Button pathElement = new Button() {
                     Style = (Style)Application.Current.Resources["PathElement"],
-                    Content = segment.Name,
+                    Content = (segmentIndex == 0 ? segment.Library.Name : segment.Name),
                     Tag = segment
                 };
 
@@ -98,15 +99,15 @@ namespace ActivFlex.Controls
                     control.Command?.Execute(((Button)sender).Tag);
                 };
 
-                if (!rootSegment) {
+                control.ContainerStackPanel.Children.Add(pathElement);
+
+                if (segmentIndex == 0 || segmentIndex < segmentAmount - 1) {
                     control.ContainerStackPanel.Children.Add(new Path() {
                         Style = (Style)Application.Current.Resources["PathSeperator"]
                     });
-                } else {
-                    rootSegment = false;
                 }
-                
-                control.ContainerStackPanel.Children.Add(pathElement);
+
+                segmentIndex++;
             }
         }
     }

@@ -46,6 +46,11 @@ namespace ActivFlex.Libraries
         public MediaContainer Parent { get; set; }
 
         /// <summary>
+        /// The media library of the media container.
+        /// </summary>
+        public MediaLibrary Library { get; }
+
+        /// <summary>
         /// All subcontainers below the current container.
         /// </summary>
         public List<MediaContainer> Containers { get; set; }
@@ -55,13 +60,15 @@ namespace ActivFlex.Libraries
         /// </summary>
         /// <param name="containerID">Unique numeric identifier</param>
         /// <param name="parent">The parent media container</param>
+        /// <param name="library">The media library of the container</param>
         /// <param name="name">Displayname for the container</param>
-        public MediaContainer(int containerID, string name, MediaContainer parent, bool expanded = false)
+        public MediaContainer(int containerID, string name, MediaContainer parent, MediaLibrary library, bool expanded = false)
         {
             this.ContainerID = containerID;
             this.Expanded = expanded;
             this.Name = name;
             this.Parent = parent;
+            this.Library = library;
             this.Containers = new List<MediaContainer>();
         }
     }
