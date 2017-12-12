@@ -1448,12 +1448,21 @@ namespace ActivFlex.ViewModels
             PresentMediaImage(mediaImage);
 
             //Store all images of the parent location in the active media collection
-            ActiveImages = FileSystemItems
-                .Select(item => item.Proxy)
-                .Where(item => item is MediaImage)
-                .Cast<MediaImage>()
-                .ToArray();
+            if (LibraryBrowsing) {
+                ActiveImages = LibraryItems
+                    .Select(item => item.Proxy)
+                    .Where(item => item is MediaImage)
+                    .Cast<MediaImage>()
+                    .ToArray();
 
+            } else {
+                ActiveImages = FileSystemItems
+                    .Select(item => item.Proxy)
+                    .Where(item => item is MediaImage)
+                    .Cast<MediaImage>()
+                    .ToArray();
+            }
+            
             ImageIndex = Array.IndexOf(ActiveImages, mediaImage);
             StartPreloadingThreads();
         }
