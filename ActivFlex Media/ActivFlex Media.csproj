@@ -92,9 +92,13 @@
     <Compile Include="Navigation\NavItem.cs" />
     <Compile Include="ViewModels\DeleteDialogViewModel.cs" />
     <Compile Include="ViewModels\DirectoryItemViewModel.cs" />
+    <Compile Include="ViewModels\ILibraryItemViewModel.cs" />
     <Compile Include="ViewModels\ImageItemViewModel.cs" />
     <Compile Include="ViewModels\InfoWindowViewModel.cs" />
     <Compile Include="ViewModels\IThumbnailViewModel.cs" />
+    <Compile Include="ViewModels\LibraryImageViewModel.cs" />
+    <Compile Include="ViewModels\LibraryMusicViewModel.cs" />
+    <Compile Include="ViewModels\LibraryVideoViewModel.cs" />
     <Compile Include="ViewModels\LibraryWindowViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MusicItemViewModel.cs" />

@@ -252,6 +252,17 @@ namespace ActivFlex.ViewModels
             }
         }
 
+        private ObservableCollection<ILibraryItemViewModel> _libraryItems;
+        public ObservableCollection<ILibraryItemViewModel> LibraryItems {
+            get => _libraryItems;
+            set {
+                if (_libraryItems != value) {
+                    _libraryItems = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
         private TranslateManager _translateManager;
         public TranslateManager Localize {
             get => _translateManager;
@@ -925,6 +936,26 @@ namespace ActivFlex.ViewModels
         {
             Debug.WriteLine("Browse media container: " + container.Name);
             LibraryBrowsing = true;
+            
+            LibraryItems = new ObservableCollection<ILibraryItemViewModel>(testList
+                .Where(item => item is LibraryImage || item is LibraryMusic || item is LibraryVideo)
+                .Select<ILibraryItem, ILibraryItemViewModel>(item => {
+
+                    if (item is LibraryImage imageItem) {
+                        return new LibraryImageViewModel(imageItem);
+                    }
+
+                    if (item is LibraryMusic musicItem) {
+                        return new LibraryMusicViewModel(musicItem);
+                    }
+
+                    if (item is LibraryVideo videoItem) {
+                        return new LibraryVideoViewModel(videoItem);
+                    }
+
+                    return null;
+                })
+            );
         }
 
         /// <summary>

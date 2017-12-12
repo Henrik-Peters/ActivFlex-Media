@@ -523,7 +523,7 @@
         <!-- Library browsing area -->
         <ScrollViewer x:Name="LibraryScrollViewer" Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolVisibilityConverter}}" Template="{StaticResource ScrollViewerControlTemplate}"
                       Margin="0,0,4,0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="3" PreviewMouseWheel="MediaScrollViewer_PreviewMouseWheel">
-            <ItemsControl x:Name="LibraryItemControl" Background="Gray" Focusable="False">
+            <ItemsControl x:Name="LibraryItemControl" ItemsSource="{Binding LibraryItems}" Background="Gray" Focusable="False">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
 
@@ -556,7 +556,91 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.Resources>
-                    <!-- Library browsing templates -->
+
+                    <!-- Image library item template -->
+                    <DataTemplate DataType="{x:Type ViewModels:LibraryImageViewModel}">
+                        <Controls:ImageThumbnail Margin="20,5,20,20"
+                                                 Width="150"
+                                                 Height="150"
+                                                 CanSelect="False"
+                                                 Proxy="{Binding Proxy}"
+                                                 Text="{Binding Name}"
+                                                 Image="{Binding ThumbImage}"
+                                                 DefaultContent="{StaticResource PictureIcon}"
+                                                 Click="{Binding DataContext.DefaultImageLaunch,
+                                                         RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                 Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+
+                            <Controls:ImageThumbnail.ContextMenu>
+                                <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                                    <MenuItem Header="{Binding Localize[Open]}" 
+                                              Command="{Binding LaunchPresenter}"
+                                              CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+
+                                    <MenuItem Header="{Binding Localize[OpenProcess]}" 
+                                              Command="{Binding LaunchDefault}"
+                                              CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                                </ContextMenu>
+                            </Controls:ImageThumbnail.ContextMenu>
+                        </Controls:ImageThumbnail>
+                    </DataTemplate>
+
+                    <!-- Music library item template -->
+                    <DataTemplate DataType="{x:Type ViewModels:LibraryMusicViewModel}">
+                        <Controls:MusicThumbnail Margin="20,5,20,20"
+                                                 Width="150"
+                                                 Height="150"
+                                                 CanSelect="False"
+                                                 Proxy="{Binding Proxy}"
+                                                 Text="{Binding Name}"
+                                                 Extension="{Binding Extension}"
+                                                 Click="{Binding DataContext.DefaultMusicLaunch,
+                                                         RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                 Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+
+                            <Controls:MusicThumbnail.ContextMenu>
+                                <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                                    <MenuItem Header="{Binding Localize[Play]}" 
+                                              Command="{Binding LaunchMusicPlayback}"
+                                              CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+
+                                    <MenuItem Header="{Binding Localize[PlayProcess]}" 
+                                              Command="{Binding LaunchDefault}"
+                                              CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                                </ContextMenu>
+                            </Controls:MusicThumbnail.ContextMenu>
+                        </Controls:MusicThumbnail>
+                    </DataTemplate>
+
+                    <!-- Video library item template -->
+                    <DataTemplate DataType="{x:Type ViewModels:LibraryVideoViewModel}">
+                        <Controls:ImageThumbnail Margin="20,5,20,20"
+                                                 Width="150"
+                                                 Height="150"
+                                                 CanSelect="False"
+                                                 Proxy="{Binding Proxy}"
+                                                 Text="{Binding Name}"
+                                                 Image="{Binding ThumbImage}"
+                                                 VideoIndicator="{Binding IndicatorVisibility}"
+                                                 DefaultContent="{StaticResource VideoIcon}"
+                                                 Click="{Binding DataContext.DefaultVideoLaunch,
+                                                         RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                 Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+
+                            <Controls:ImageThumbnail.ContextMenu>
+                                <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                                    <MenuItem Header="{Binding Localize[Play]}" 
+                                              Command="{Binding LaunchVideoPlayback}"
+                                              CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+
+                                    <MenuItem Header="{Binding Localize[PlayProcess]}" 
+                                              Command="{Binding LaunchDefault}"
+                                              CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                                </ContextMenu>
+                            </Controls:ImageThumbnail.ContextMenu>
+                        </Controls:ImageThumbnail>
+                    </DataTemplate>
+
                 </ItemsControl.Resources>
             </ItemsControl>
         </ScrollViewer>
