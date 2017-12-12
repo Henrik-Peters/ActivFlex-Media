@@ -291,8 +291,8 @@ namespace ActivFlex.ViewModels
             get => _path;
             set {
                 SetProperty(ref _path, value);
+                BrowseUpAvailable = true;
                 NotifyPropertyChanged(nameof(PathAvailable));
-                NotifyPropertyChanged(nameof(BrowseUpAvailable));
             }
         }
 
@@ -300,10 +300,10 @@ namespace ActivFlex.ViewModels
             get => !string.IsNullOrEmpty(Path);
         }
 
+        private bool _browseUpAvailable;
         public bool BrowseUpAvailable {
-            get => string.IsNullOrEmpty(Path) 
-                ? false 
-                : !Path.EndsWith(DirectorySeparatorChar.ToString());
+            get => _browseUpAvailable;
+            set => SetProperty(ref _browseUpAvailable, value);
         }
 
         private bool _imagePresentActive;
@@ -671,6 +671,7 @@ namespace ActivFlex.ViewModels
             //Navigation items
             this.NavVisible = true;
             this.MediaBarVisible = true;
+            this.BrowseUpAvailable = false;
             this.NavItems = new ObservableCollection<NavItem>(
                 new List<NavItem>(new[] {
                     new GroupNavItem(Localize["MediaLibraries"], "MediaLibraries", "MediaLibraryIcon", true, NavTag.MediaLibraryRoot),
@@ -708,6 +709,12 @@ namespace ActivFlex.ViewModels
             this.BrowseUp = new RelayCommand(() => {
                 if (ImagePresentActive) {
                     this.ExitMode?.Execute(null);
+
+                } else if (LibraryBrowsing) {
+                    if (ActiveContainer.Parent != null) {
+                        OpenMediaContainer.Execute(ActiveContainer.Parent);
+                    }
+
                 } else {
                     BrowseFileSystem.Execute(FileSystemBrowser.GetParentPath(Path));
                 }
@@ -944,6 +951,7 @@ namespace ActivFlex.ViewModels
         {
             Debug.WriteLine("Browse media container: " + container.Name);
             ActiveContainer = container;
+            BrowseUpAvailable = true;
             LibraryBrowsing = true;
 
             LibraryItems = new ObservableCollection<ILibraryItemViewModel>(testList
