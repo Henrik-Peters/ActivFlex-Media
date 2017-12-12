@@ -174,7 +174,7 @@ namespace ActivFlex.ViewModels
         /// <summary>
         /// This queue holds video items for thumbnail loading.
         /// </summary>
-        Queue<VideoItemViewModel> vidLoadQueue;
+        Queue<ViewModel> vidLoadQueue;
 
         /// <summary>
         /// The storage provider for the persistent data storage.
@@ -938,7 +938,7 @@ namespace ActivFlex.ViewModels
         {
             Debug.WriteLine("Browse media container: " + container.Name);
             LibraryBrowsing = true;
-            
+
             LibraryItems = new ObservableCollection<ILibraryItemViewModel>(testList
                 .Where(item => item is LibraryImage || item is LibraryMusic || item is LibraryVideo)
                 .Select<ILibraryItem, ILibraryItemViewModel>(item => {
@@ -1318,12 +1318,21 @@ namespace ActivFlex.ViewModels
         /// </summary>
         private void LoadVideoThumbnails()
         {
-            vidLoadQueue = new Queue<VideoItemViewModel>(
-                FileSystemItems
-                .Where(item => item is VideoItemViewModel)
-                .Cast<VideoItemViewModel>()
-                .Where(videoItem => videoItem.ThumbImage == null)
-            );
+            if (LibraryBrowsing) {
+                vidLoadQueue = new Queue<ViewModel>(
+                    LibraryItems
+                    .Where(item => item is LibraryVideoViewModel)
+                    .Cast<LibraryVideoViewModel>()
+                    .Where(videoItem => videoItem.ThumbImage == null)
+                );
+            } else {
+                vidLoadQueue = new Queue<ViewModel>(
+                    FileSystemItems
+                    .Where(item => item is VideoItemViewModel)
+                    .Cast<VideoItemViewModel>()
+                    .Where(videoItem => videoItem.ThumbImage == null)
+                );
+            }
 
             if (vidLoadQueue.Any()) {
                 LoadNextVideoThumbnail();
@@ -1338,7 +1347,7 @@ namespace ActivFlex.ViewModels
         private void LoadNextVideoThumbnail()
         {
             if (vidLoadQueue.Any()) {
-                VideoItemViewModel videoItem = vidLoadQueue.Dequeue();
+                ViewModel videoItem = vidLoadQueue.Dequeue();
                 thumbnailPlayer = new MediaPlayer { Volume = 0, ScrubbingEnabled = true };
 
                 //Because the media opening process is done asynchronously by another thread, the loading
@@ -1360,12 +1369,26 @@ namespace ActivFlex.ViewModels
                         thumbnailPlayer.Close();
 
                         //no image freezing necessary; assignment is on the UI-thread
-                        videoItem.ThumbImage = renderTarget;
-                        videoItem.IndicatorVisibility = Visibility.Visible;
+                        if (videoItem is VideoItemViewModel vidItem) {
+                            vidItem.ThumbImage = renderTarget;
+                            vidItem.IndicatorVisibility = Visibility.Visible;
+
+                        } else if (videoItem is LibraryVideoViewModel libraryItem) {
+                            libraryItem.ThumbImage = renderTarget;
+                            libraryItem.IndicatorVisibility = Visibility.Visible;
+                        }
+
                         LoadNextVideoThumbnail();
                     }
                 };
-                thumbnailPlayer.Open(new Uri(videoItem.Path));
+
+                if (videoItem is VideoItemViewModel item) {
+                    thumbnailPlayer.Open(new Uri(item.Path));
+
+                } else if (videoItem is LibraryVideoViewModel libraryItem) {
+                    thumbnailPlayer.Open(new Uri(libraryItem.Path));
+                }
+
                 thumbnailPlayer.Pause();
                 thumbnailPlayer.Position = DefaultThumbnailTime;
             }
