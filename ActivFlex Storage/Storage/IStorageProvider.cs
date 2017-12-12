@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
+using System;
 using System.Collections.Generic;
 using ActivFlex.Libraries;
 
@@ -104,5 +105,21 @@ namespace ActivFlex.Storage
         /// </summary>
         /// <param name="containerID">ID of the container for deletion</param>
         void DeleteContainer(int containerID);
+
+        /// <summary>
+        /// Create a new media item for a library.
+        /// </summary>
+        /// <param name="name">Name for displaying the item</param>
+        /// <param name="path">Absolute filesystem path</param>
+        /// <param name="container">Container to store the item</param>
+        /// <param name="creationTime">Time of adding the item to the container</param>
+        ILibraryItem CreateLibraryItem(string name, string path, MediaContainer container, DateTime creationTime);
+
+        /// <summary>
+        /// Read all items that are in a specific media container.
+        /// </summary>
+        /// <param name="container">Read the items of this container</param>
+        /// <returns>List with the library items of the container</returns>
+        List<ILibraryItem> ReadItemsFromContainer(MediaContainer container);
     }
 }

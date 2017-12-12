@@ -64,7 +64,7 @@ namespace ActivFlex.Libraries
         public LibraryVideo(int itemID, string name, string path, MediaContainer container) : base(path, name)
         {
             this.ItemID = itemID;
-            this.Container = Container;
+            this.Container = container;
             this.AccessCount = 0;
             this.CreationTime = DateTime.Now;
         }
@@ -84,7 +84,7 @@ namespace ActivFlex.Libraries
                             ulong accessCount, DateTime creationTime, DateTime lastAccessTime) : base(path, name)
         {
             this.ItemID = itemID;
-            this.Container = Container;
+            this.Container = container;
             this.AccessCount = accessCount;
             this.CreationTime = creationTime;
             this.LastAccessTime = lastAccessTime;

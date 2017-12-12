@@ -949,12 +949,12 @@ namespace ActivFlex.ViewModels
         /// <param name="container">Container to display</param>
         private void BrowseMediaContainer(MediaContainer container)
         {
-            Debug.WriteLine("Browse media container: " + container.Name);
             ActiveContainer = container;
             BrowseUpAvailable = true;
             LibraryBrowsing = true;
 
-            LibraryItems = new ObservableCollection<ILibraryItemViewModel>(testList
+            LibraryItems = new ObservableCollection<ILibraryItemViewModel>(
+                StorageEngine.ReadItemsFromContainer(container)
                 .Where(item => item is LibraryImage || item is LibraryMusic || item is LibraryVideo)
                 .Select<ILibraryItem, ILibraryItemViewModel>(item => {
 

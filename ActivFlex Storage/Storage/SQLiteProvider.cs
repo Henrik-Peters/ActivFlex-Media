@@ -17,10 +17,13 @@
 #endregion
 using System;
 using System.IO;
+using System.Linq;
 using System.Diagnostics;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using ActivFlex.Libraries;
+using ActivFlex.Media;
 
 namespace ActivFlex.Storage
 {
@@ -45,6 +48,11 @@ namespace ActivFlex.Storage
         /// Name of the local database file.
         /// </summary>
         const string DatabaseFileName = "MediaLibraries.db";
+
+        /// <summary>
+        /// The format string used to store dates and times.
+        /// </summary>
+        private const string DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
         /// <summary>
         /// Create a new SQLite database engine provider.
@@ -109,8 +117,11 @@ namespace ActivFlex.Storage
 
             var sqlItems = @"CREATE TABLE Items (
                 IID INTEGER PRIMARY KEY,
-                name VARCHAR(80),
-                path VARCHAR(256)
+                name TEXT,
+                path VARCHAR(255),
+                accessCount LONG,
+                creationTime TEXT,
+                lastAccessTime TEXT
             )";
 
             var sqlContainerItems = @"CREATE TABLE ContainerItems (
@@ -321,11 +332,98 @@ namespace ActivFlex.Storage
         public void DeleteContainer(int containerID)
         {
             var sql = @"DELETE FROM Containers
-                    WHERE CID=@ContainerID";
+                        WHERE CID=@ContainerID";
 
             var command = new SQLiteCommand(sql, connection);
             command.Parameters.AddWithValue("ContainerID", containerID);
             command.ExecuteNonQuery();
+        }
+
+        public ILibraryItem CreateLibraryItem(string name, string path, MediaContainer container, DateTime creationTime)
+        {
+            var sql = @"INSERT INTO Items(name, path, accessCount, creationTime, lastAccessTime)
+                        VALUES(@Name, @Path, @AccessCount, @CreationTime, @LastAccessTime);";
+
+            var command = new SQLiteCommand(sql, connection);
+            command.Parameters.AddWithValue("Name", name);
+            command.Parameters.AddWithValue("Path", path);
+            command.Parameters.AddWithValue("AccessCount", 0);
+            command.Parameters.AddWithValue("CreationTime", creationTime.ToString(DateTimeFormat));
+            command.Parameters.AddWithValue("LastAccessTime", default(DateTime));
+            command.ExecuteNonQuery();
+
+            //Get the ID of the new item
+            var sqlItemID = @"SELECT IID FROM Items ORDER BY IID DESC LIMIT 1;";
+            int itemID = Convert.ToInt32(new SQLiteCommand(sqlItemID, connection).ExecuteScalar());
+
+            //Link the item to the container
+            sql = @"INSERT INTO ContainerItems(IID, CID)
+                    VALUES(@ItemID, @ContainerID);";
+
+            command = new SQLiteCommand(sql, connection);
+            command.Parameters.AddWithValue("ItemID", itemID);
+            command.Parameters.AddWithValue("ContainerID", container.ContainerID);
+            command.ExecuteNonQuery();
+
+            return CreateItemByExtension(itemID, name, path, container, creationTime);
+        }
+
+        public List<ILibraryItem> ReadItemsFromContainer(MediaContainer container)
+        {
+            List<ILibraryItem> items = new List<ILibraryItem>();
+
+            var sql = @"SELECT Items.IID, name, path, accessCount, creationTime, lastAccessTime
+                        FROM ContainerItems
+                        INNER JOIN Items ON Items.IID = ContainerItems.IID
+                        WHERE CID=@ContainerID";
+
+            var command = new SQLiteCommand(sql, connection);
+            command.Parameters.AddWithValue("ContainerID", container.ContainerID);
+            
+            //Create all library items and add them to the list
+            using (SQLiteDataReader reader = command.ExecuteReader()) {
+
+                while (reader.Read()) {
+                    int itemID = Convert.ToInt32(reader["IID"]);
+                    string name = reader["name"] as string;
+                    string path = reader["path"] as string;
+                    ulong accessCount = Convert.ToUInt64(reader["accessCount"]);
+                    DateTime creationTime = DateTime.ParseExact((string)reader["creationTime"], DateTimeFormat, CultureInfo.InvariantCulture);
+                    DateTime lastAccessTime = DateTime.ParseExact((string)reader["lastAccessTime"], DateTimeFormat, CultureInfo.InvariantCulture);
+
+                    items.Add(CreateItemByExtension(itemID, name, path, container, creationTime, accessCount, lastAccessTime));
+                }
+            }
+
+            return items;
+        }
+
+        private ILibraryItem CreateItemByExtension(int itemID, string name, string path, MediaContainer container, DateTime creationTime, ulong accessCount = 0, DateTime lastAccessTime = default(DateTime))
+        {
+            ILibraryItem item = null;
+
+            if (MediaImage.ImageExtensions.Contains(GetPathExtension(path))) {
+                item = new LibraryImage(itemID, name, path, container, accessCount, creationTime, lastAccessTime);
+
+            } else if (MediaMusic.MusicExtensions.Contains(GetPathExtension(path))) {
+                item = new LibraryMusic(itemID, name, path, container, accessCount, creationTime, lastAccessTime);
+
+            } else if (MediaVideo.VideoExtensions.Contains(GetPathExtension(path))) {
+                item = new LibraryVideo(itemID, name, path, container, accessCount, creationTime, lastAccessTime);
+            }
+
+            return item;
+        }
+
+        private string GetPathExtension(string path)
+        {
+            int lastIndex = path.LastIndexOf('.');
+
+            if (lastIndex < 0 || lastIndex > path.Length) {
+                return String.Empty;
+            } else {
+                return path.Substring(lastIndex + 1).ToLower();
+            }
         }
 
         public void Dispose()
