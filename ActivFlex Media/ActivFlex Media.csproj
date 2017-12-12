@@ -69,6 +69,9 @@
     <Compile Include="Controls\ImageThumbnail.xaml.cs">
       <DependentUpon>ImageThumbnail.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LibraryNavigator.xaml.cs">
+      <DependentUpon>LibraryNavigator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MusicThumbnail.xaml.cs">
       <DependentUpon>MusicThumbnail.xaml</DependentUpon>
     </Compile>
@@ -78,6 +81,7 @@
     <Compile Include="Controls\SimpleThumbnail.xaml.cs">
       <DependentUpon>SimpleThumbnail.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BooleanInvertVisibilityConverter.cs" />
     <Compile Include="Converters\BooleanVisibilityConverter.cs" />
     <Compile Include="Converters\IsNullConverter.cs" />
     <Compile Include="Converters\TimeSpanStringConverter.cs" />
@@ -123,6 +127,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ImageThumbnail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LibraryNavigator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

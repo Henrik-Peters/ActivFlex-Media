@@ -327,6 +327,12 @@ namespace ActivFlex.ViewModels
             }
         }
 
+        private MediaContainer _activeContainer;
+        public MediaContainer ActiveContainer {
+            get => _activeContainer;
+            set => SetProperty(ref _activeContainer, value);
+        }
+
         /// <summary>
         /// Iterate over all images to the left side of the active image.
         /// When an overflow happens the iteration will continue at the end
@@ -937,6 +943,7 @@ namespace ActivFlex.ViewModels
         private void BrowseMediaContainer(MediaContainer container)
         {
             Debug.WriteLine("Browse media container: " + container.Name);
+            ActiveContainer = container;
             LibraryBrowsing = true;
 
             LibraryItems = new ObservableCollection<ILibraryItemViewModel>(testList

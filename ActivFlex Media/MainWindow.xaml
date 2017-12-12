@@ -18,6 +18,7 @@
     <Window.Resources>
         <Converters:NavItemIconConverter x:Key="NavIconConverter"/>
         <Converters:BooleanVisibilityConverter x:Key="BoolVisibilityConverter"/>
+        <Converters:BooleanInvertVisibilityConverter x:Key="BoolInvertVisibilityConverter"/>
         <KeyTime x:Key="NavTreeFadeTime">0:0:0.2</KeyTime>
         <KeyTime x:Key="MediaBarFadeTime">0:0:0.2</KeyTime>
     </Window.Resources>
@@ -351,8 +352,12 @@
                                  ContentHover="{StaticResource BackIconHover}"
                                  ContentPressed="{StaticResource BackIconPressed}"/>
 
-            <Controls:PathNavigator Grid.Column="1" Margin="5,0,0,0" Path="{Binding Path}" Command="{Binding BrowseFileSystem}"/>
-            
+            <Controls:PathNavigator Grid.Column="1" Margin="5,0,0,0" Path="{Binding Path}" Command="{Binding BrowseFileSystem}"
+                                    Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolInvertVisibilityConverter}}"/>
+
+            <Controls:LibraryNavigator Grid.Column="1" Margin="5,0,0,0" Container="{Binding ActiveContainer}" Command="{Binding OpenMediaContainer}"
+                                       Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolVisibilityConverter}}"/>
+
             <Slider x:Name="ZoomSlider"
                     Width="200" 
                     Grid.Column="2"
