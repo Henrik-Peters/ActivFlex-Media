@@ -50,6 +50,7 @@
     <Compile Include="FileSystem\IFileObject.cs" />
     <Compile Include="FileSystem\LogicalDriveItem.cs" />
     <Compile Include="Libraries\ILibraryItem.cs" />
+    <Compile Include="Libraries\LibraryItemFactory.cs" />
     <Compile Include="Libraries\LibraryImage.cs" />
     <Compile Include="Libraries\LibraryMusic.cs" />
     <Compile Include="Libraries\LibraryVideo.cs" />

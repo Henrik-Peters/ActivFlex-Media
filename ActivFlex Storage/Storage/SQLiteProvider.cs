@@ -17,13 +17,11 @@
 #endregion
 using System;
 using System.IO;
-using System.Linq;
 using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using ActivFlex.Libraries;
-using ActivFlex.Media;
 
 namespace ActivFlex.Storage
 {
@@ -365,7 +363,7 @@ namespace ActivFlex.Storage
             command.Parameters.AddWithValue("ContainerID", container.ContainerID);
             command.ExecuteNonQuery();
 
-            return CreateItemByExtension(itemID, name, path, container, creationTime);
+            return LibraryItemFactory.CreateItemByExtension(itemID, name, path, container, creationTime);
         }
 
         public List<ILibraryItem> ReadItemsFromContainer(MediaContainer container)
@@ -391,39 +389,11 @@ namespace ActivFlex.Storage
                     DateTime creationTime = DateTime.ParseExact((string)reader["creationTime"], DateTimeFormat, CultureInfo.InvariantCulture);
                     DateTime lastAccessTime = DateTime.ParseExact((string)reader["lastAccessTime"], DateTimeFormat, CultureInfo.InvariantCulture);
 
-                    items.Add(CreateItemByExtension(itemID, name, path, container, creationTime, accessCount, lastAccessTime));
+                    items.Add(LibraryItemFactory.CreateItemByExtension(itemID, name, path, container, creationTime, accessCount, lastAccessTime));
                 }
             }
 
             return items;
-        }
-
-        private ILibraryItem CreateItemByExtension(int itemID, string name, string path, MediaContainer container, DateTime creationTime, ulong accessCount = 0, DateTime lastAccessTime = default(DateTime))
-        {
-            ILibraryItem item = null;
-
-            if (MediaImage.ImageExtensions.Contains(GetPathExtension(path))) {
-                item = new LibraryImage(itemID, name, path, container, accessCount, creationTime, lastAccessTime);
-
-            } else if (MediaMusic.MusicExtensions.Contains(GetPathExtension(path))) {
-                item = new LibraryMusic(itemID, name, path, container, accessCount, creationTime, lastAccessTime);
-
-            } else if (MediaVideo.VideoExtensions.Contains(GetPathExtension(path))) {
-                item = new LibraryVideo(itemID, name, path, container, accessCount, creationTime, lastAccessTime);
-            }
-
-            return item;
-        }
-
-        private string GetPathExtension(string path)
-        {
-            int lastIndex = path.LastIndexOf('.');
-
-            if (lastIndex < 0 || lastIndex > path.Length) {
-                return String.Empty;
-            } else {
-                return path.Substring(lastIndex + 1).ToLower();
-            }
         }
 
         public void Dispose()
