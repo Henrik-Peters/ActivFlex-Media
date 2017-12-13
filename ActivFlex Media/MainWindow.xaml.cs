@@ -16,12 +16,14 @@
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
 using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls.Primitives;
 using System.Diagnostics;
 using System.ComponentModel;
+using System.Collections.Specialized;
 using System.Runtime.InteropServices;
 using WinInterop = System.Windows.Interop;
 using System.Windows.Data;
@@ -387,6 +389,41 @@ namespace ActivFlex
         {
             ChangeFullscreenMode(!Fullscreen);
             e.Handled = true;
+        }
+
+        private void LibraryScrollViewer_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                e.Effects = DragDropEffects.Copy;
+            } else {
+                e.Effects = DragDropEffects.None;
+            }
+        }
+
+        private void LibraryScrollViewer_Drop(object sender, DragEventArgs e)
+        {
+            var dataObject = e.Data as DataObject;
+
+            if (dataObject.ContainsFileDropList()) {
+                StringCollection fileList = dataObject.GetFileDropList();
+                string[] mediaExtensions = MediaImage.ImageExtensions
+                    .Concat(MediaMusic.MusicExtensions)
+                    .Concat(MediaVideo.VideoExtensions)
+                    .ToArray();
+
+                //Only add valid drag and drop items
+                foreach (string filePath in fileList) {
+                    string extension = LibraryItemFactory.GetPathExtension(filePath);
+
+                    if (File.Exists(filePath) && mediaExtensions.Contains(extension)) {
+                        string name = Path.GetFileNameWithoutExtension(filePath);
+                        MainViewModel.StorageEngine.CreateLibraryItem(name, filePath, vm.ActiveContainer, DateTime.Now);
+                    }
+                }
+
+                //Update the current library browsing view
+                vm.OpenMediaContainer.Execute(vm.ActiveContainer);
+            }
         }
 
         private void HandleStartupArguments()

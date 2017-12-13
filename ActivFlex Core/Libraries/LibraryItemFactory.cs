@@ -54,7 +54,7 @@ namespace ActivFlex.Libraries
             return item;
         }
 
-        private static string GetPathExtension(string path)
+        public static string GetPathExtension(string path)
         {
             int lastIndex = path.LastIndexOf('.');
 
