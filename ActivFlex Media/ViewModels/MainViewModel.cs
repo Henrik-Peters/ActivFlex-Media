@@ -18,9 +18,11 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Diagnostics;
 using System.Windows;
+using Microsoft.Win32;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -29,7 +31,6 @@ using System.Windows.Threading;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Collections.ObjectModel;
-using static System.IO.Path;
 using ActivFlex.Configuration;
 using ActivFlex.Converters;
 using ActivFlex.Localization;
@@ -631,6 +632,12 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public ICommand DeleteMediaContainer { get; set; }
 
+        /// <summary>
+        /// Show the library item import dialog. The items
+        /// will be added to the passed media container.
+        /// </summary>
+        public ICommand LaunchMediaImport { get; set; }
+
         #endregion
 
         /// <summary>
@@ -732,6 +739,7 @@ namespace ActivFlex.ViewModels
             this.OpenMediaContainer = new RelayCommand<MediaContainer>(BrowseMediaContainer);
             this.RenameMediaContainer = new RelayCommand<MediaContainer>(MediaContainerRename);
             this.DeleteMediaContainer = new RelayCommand<MediaContainer>(RemoveMediaContainer);
+            this.LaunchMediaImport = new RelayCommand<MediaContainer>(StartMediaImport);
             this.LaunchPresenter = new RelayCommand<MediaImage>(LaunchImagePresenter);
             this.PresentImage = new RelayCommand<MediaImage>(PresentMediaImage);
             this.LaunchMusicPlayback = new RelayCommand<MediaMusic>(StartMusicPlayback);
@@ -1046,6 +1054,120 @@ namespace ActivFlex.ViewModels
                     .First(item => item.MediaContainer.ContainerID == container.ContainerID);
 
                 parentItem.NavChildren.Remove(navItem);
+            }
+        }
+
+        /// <summary>
+        /// Open the library item import dialog. The selection can only contain
+        /// files and no folders. The import container will be selected afterwards.
+        /// </summary>
+        /// <param name="container">Container to store the new items</param>
+        private void StartMediaImport(MediaContainer container)
+        {
+            string filterS = GetMediaImportFilter();
+
+            OpenFileDialog importDialog = new OpenFileDialog {
+                Title = Localize["ImportDialogTitle"],
+                InitialDirectory = "::{20D04FE0-3AEA-1069-A2D8-08002B30309D}",
+                Filter = GetMediaImportFilter(),
+                Multiselect = true
+            };
+
+            if (importDialog.ShowDialog() == true) {
+
+                //Store the new items in the database
+                foreach (string filePath in importDialog.FileNames) {
+                    string name = System.IO.Path.GetFileNameWithoutExtension(filePath);
+                    StorageEngine.CreateLibraryItem(name, filePath, container, DateTime.Now);
+                }
+
+                //Select the import container
+                if (container.Parent == null) {
+                    SelectNavigationLibrary.Execute(container.Library);
+                } else {
+                    SelectMediaContainer.Execute(container);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Create the library item dialog filter string with the
+        /// current localization and the specific item extensions.
+        /// </summary>
+        /// <returns>Filter string for the media import dialog</returns>
+        private string GetMediaImportFilter()
+        {
+            int maxAmount = 8;
+            StringBuilder sb = new StringBuilder();
+            string[] mediaExtensions = MediaImage.ImageExtensions
+                .Concat(MediaMusic.MusicExtensions)
+                .Concat(MediaVideo.VideoExtensions)
+                .ToArray();
+
+            //Media extensions
+            sb.Append(Localize["MediaFiles"]);
+            sb.Append(" (");
+            AppendFilterExtension(mediaExtensions, sb, maxAmount);
+            sb.Append(")|");
+            AppendFilterExtension(mediaExtensions, sb);
+
+            //Image extensions
+            sb.Append("|");
+            sb.Append(Localize["ImageFiles"]);
+            sb.Append(" (");
+            AppendFilterExtension(MediaImage.ImageExtensions, sb, maxAmount);
+            sb.Append(")|");
+            AppendFilterExtension(MediaImage.ImageExtensions, sb);
+
+            //Audio extensions
+            sb.Append("|");
+            sb.Append(Localize["AudioFiles"]);
+            sb.Append(" (");
+            AppendFilterExtension(MediaMusic.MusicExtensions, sb, maxAmount);
+            sb.Append(")|");
+            AppendFilterExtension(MediaMusic.MusicExtensions, sb);
+
+            //Video extensions
+            sb.Append("|");
+            sb.Append(Localize["VideoFiles"]);
+            sb.Append(" (");
+            AppendFilterExtension(MediaVideo.VideoExtensions, sb, maxAmount);
+            sb.Append(")|");
+            AppendFilterExtension(MediaVideo.VideoExtensions, sb);
+
+            //All extensions
+            sb.Append("|");
+            sb.Append(Localize["AllFiles"]);
+            sb.Append(" (*.*)|*.*");
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Append maxAmount extensions to the string builder.
+        /// </summary>
+        private void AppendFilterExtension(string[] extensions, StringBuilder builder, int maxAmount = -1)
+        {
+            bool firstExtension = true;
+            foreach (string extension in extensions) {
+
+                if (maxAmount != -1) {
+                    if (maxAmount == 0) {
+                        builder.Append(";...");
+                        return;
+                    } else {
+                        maxAmount--;
+                    }
+                }
+
+                if (firstExtension) {
+                    firstExtension = false;
+                } else {
+                    builder.Append(";");
+                }
+
+                builder.Append("*.");
+                builder.Append(extension);
             }
         }
 

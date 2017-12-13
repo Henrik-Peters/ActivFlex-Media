@@ -127,6 +127,10 @@
                                           CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary.RootContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                             </MenuItem>
 
+                            <MenuItem Header="{Binding Localize[ImportMedia]}" Command="{Binding LaunchMediaImport}"
+                                      CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary.RootContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+
+                            <Separator/>
                             <MenuItem Header="{Binding Localize[Configure]}" Command="{Binding ConfigureMediaLibrary}"
                                       CommandParameter="{Binding PlacementTarget.DataContext.MediaLibrary, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
 
@@ -145,6 +149,10 @@
                                           CommandParameter="{Binding PlacementTarget.DataContext.MediaContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                             </MenuItem>
 
+                            <MenuItem Header="{Binding Localize[ImportMedia]}" Command="{Binding LaunchMediaImport}"
+                                      CommandParameter="{Binding PlacementTarget.DataContext.MediaContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+
+                            <Separator/>
                             <MenuItem Header="{Binding Localize[Rename]}" Command="{Binding RenameMediaContainer}"
                                       CommandParameter="{Binding PlacementTarget.DataContext.MediaContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
 

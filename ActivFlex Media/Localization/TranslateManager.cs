@@ -57,6 +57,8 @@ namespace ActivFlex.Localization
             ["Name:"] = new List<string> { "Name:", "Name:" },
             ["Owner:"] = new List<string> { "Owner:", "Besitzer:" },
             ["Configure"] = new List<string> { "Configure", "Konfigurieren" },
+            ["ImportMedia"] = new List<string> { "Import media", "Medienimport" },
+            ["ImportDialogTitle"] = new List<string> { "Import media files", "Mediendateien importieren" },
             ["DeleteDialogTitle"] = new List<string> { "Confirm deletion", "Löschvorgang bestätigen" },
             ["Yes"] = new List<string> { "Yes", "Ja" },
             ["No"] = new List<string> { "No", "Nein" },
@@ -65,7 +67,12 @@ namespace ActivFlex.Localization
             ["DeleteBeforeContainer"] = new List<string> { "Are you sure that", "Soll der Container" },
             ["DeleteAfterContainer"] = new List<string> { "should be deleted?", "wirklich gelöscht werden?" },
             ["MediaContainer"] = new List<string> { "Media container", "Mediencontainer" },
-            ["NewContainer"] = new List<string> { "New container", "Neuer Container" }
+            ["NewContainer"] = new List<string> { "New container", "Neuer Container" },
+            ["MediaFiles"] = new List<string> { "Media files", "Mediendateien" },
+            ["ImageFiles"] = new List<string> { "Image files", "Bilddateien" },
+            ["AudioFiles"] = new List<string> { "Sound files", "Audiodateien" },
+            ["VideoFiles"] = new List<string> { "Video files", "Videodateien" },
+            ["AllFiles"] = new List<string> { "All files", "Alle Dateien" }
         };
 
         /// <summary>
