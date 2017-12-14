@@ -68,11 +68,16 @@ namespace ActivFlex.Controls
             InitializeComponent();
         }
 
-        private static void Container_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public static void Container_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = (LibraryNavigator)d;
             List<MediaContainer> segments = new List<MediaContainer>();
             MediaContainer curContainer = control.Container;
+
+            if (control.Container == null) {
+                control.ContainerStackPanel.Children.Clear();
+                return;
+            }
 
             while (curContainer.Parent != null) {
                 segments.Add(curContainer);

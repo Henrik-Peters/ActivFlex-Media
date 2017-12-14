@@ -856,6 +856,13 @@ namespace ActivFlex.ViewModels
                     .Cast<LibraryNavItem>()
                     .First(item => item.MediaLibrary.LibraryID == library.LibraryID)
                     .DisplayName = name;
+
+                //Update the path segment navigator
+                if (LibraryBrowsing) {
+                    MediaContainer oldActiveContainer = ActiveContainer;
+                    ActiveContainer = null;
+                    ActiveContainer = oldActiveContainer;
+                }
             }
         }
 

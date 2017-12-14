@@ -34,6 +34,7 @@ using static ActivFlex.Configuration.Parameter;
 using static ActivFlex.FileSystem.FileSystemBrowser;
 using ActivFlex.Configuration;
 using ActivFlex.Libraries;
+using ActivFlex.Controls;
 using ActivFlex.ViewModels;
 using ActivFlex.Navigation;
 using ActivFlex.Media;
@@ -214,6 +215,7 @@ namespace ActivFlex
                     //Container update
                     MediaContainer container = navItem.MediaContainer;
                     MainViewModel.StorageEngine.UpdateContainer(container.ContainerID, container.Name, container.Parent.ContainerID, container.Expanded);
+                    LibraryNavigator.Container_PropertyChanged(LibraryPathNavigator, new DependencyPropertyChangedEventArgs());
                 }
 
                 vm.editItem = null;
