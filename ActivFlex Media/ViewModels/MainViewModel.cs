@@ -719,7 +719,7 @@ namespace ActivFlex.ViewModels
 
                 } else if (LibraryBrowsing) {
                     if (ActiveContainer.Parent != null) {
-                        OpenMediaContainer.Execute(ActiveContainer.Parent);
+                        SelectMediaContainer.Execute(ActiveContainer.Parent);
                     }
 
                 } else {
@@ -891,14 +891,7 @@ namespace ActivFlex.ViewModels
         /// <param name="source">Container to hold the new container</param>
         private void NewMediaContainer(MediaContainer source)
         {
-            //Find the parent navigation node
-            TreeViewItem treeItem = FindTreeItem(item => {
-                return (item.DataContext is ContainerNavItem containerItem &&
-                       containerItem.MediaContainer.ContainerID == source.ContainerID) ||
-                       (item.DataContext is LibraryNavItem libraryItem &&
-                       libraryItem.MediaLibrary.RootContainer.ContainerID == source.ContainerID);
-            });
-
+            TreeViewItem treeItem = FindNavItem(source);
             MediaContainer newContainer = new MediaContainer(-1, "", source, source.Library, false);
             ContainerNavItem newItem = new ContainerNavItem(newContainer) {
                 NameBox = Visibility.Collapsed
@@ -919,7 +912,7 @@ namespace ActivFlex.ViewModels
                 return (item.DataContext is ContainerNavItem containerItem &&
                        containerItem.MediaContainer.ContainerID == -1);
             });
-            
+
             navItem.ApplyTemplate();
             ContentPresenter presenter = navItem.Template.FindName("PART_Header", navItem) as ContentPresenter;
 
@@ -940,15 +933,16 @@ namespace ActivFlex.ViewModels
         /// <param name="container">Container to select</param>
         private void MediaContainerSelect(MediaContainer container)
         {
-            TreeViewItem treeItem = FindTreeItem(item => {
-                return item.DataContext is ContainerNavItem containerItem &&
-                       containerItem.MediaContainer.ContainerID == container.ContainerID;
-            });
+            TreeViewItem treeItem = FindNavItem(container);
 
-            ContainerNavItem navItem = (ContainerNavItem)treeItem.DataContext;
-            OpenMediaContainer.Execute(navItem.MediaContainer);
+            if (treeItem.DataContext is ContainerNavItem navItem) {
+                OpenMediaContainer.Execute(navItem.MediaContainer);
+
+            } else if (treeItem.DataContext is LibraryNavItem libraryItem) {
+                OpenMediaContainer.Execute(libraryItem.MediaLibrary.RootContainer);
+            }
+            
             treeItem.IsSelected = true;
-
         }
 
         /// <summary>
@@ -989,11 +983,7 @@ namespace ActivFlex.ViewModels
         /// <param name="container">Container to configure</param>
         private void MediaContainerRename(MediaContainer container)
         {
-            TreeViewItem treeItem = FindTreeItem(item => {
-                return item.DataContext is ContainerNavItem containerItem &&
-                       containerItem.MediaContainer.ContainerID == container.ContainerID;
-            });
-
+            TreeViewItem treeItem = FindNavItem(container);
             ContainerNavItem navItem = (ContainerNavItem)treeItem.DataContext;
             navItem.NameBox = Visibility.Collapsed;
 
@@ -1195,6 +1185,21 @@ namespace ActivFlex.ViewModels
                 _playmode = true;
                 NotifyPropertyChanged(nameof(PlayMode));
             }
+        }
+
+        /// <summary>
+        /// Find the tree view item of a media container
+        /// by searching in the navigation tree view.
+        /// </summary>
+        /// <param name="container">ID of this container is used for matching</param>
+        private TreeViewItem FindNavItem(MediaContainer container)
+        {
+            return FindTreeItem(item => {
+                return (item.DataContext is ContainerNavItem containerItem &&
+                       containerItem.MediaContainer.ContainerID == container.ContainerID) ||
+                       (item.DataContext is LibraryNavItem libraryItem &&
+                       libraryItem.MediaLibrary.RootContainer.ContainerID == container.ContainerID);
+            });
         }
 
         /// <summary>

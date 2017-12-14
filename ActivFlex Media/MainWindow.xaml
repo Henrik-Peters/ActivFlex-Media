@@ -363,7 +363,7 @@
             <Controls:PathNavigator Grid.Column="1" Margin="5,0,0,0" Path="{Binding Path}" Command="{Binding BrowseFileSystem}"
                                     Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolInvertVisibilityConverter}}"/>
 
-            <Controls:LibraryNavigator Grid.Column="1" Margin="5,0,0,0" Container="{Binding ActiveContainer}" Command="{Binding OpenMediaContainer}"
+            <Controls:LibraryNavigator Grid.Column="1" Margin="5,0,0,0" Container="{Binding ActiveContainer}" Command="{Binding SelectMediaContainer}"
                                        Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolVisibilityConverter}}"/>
 
             <Slider x:Name="ZoomSlider"
