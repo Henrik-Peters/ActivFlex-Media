@@ -882,6 +882,21 @@ namespace ActivFlex.ViewModels
                     .First(item => item.MediaLibrary.LibraryID == library.LibraryID);
                     
                 this.NavItems[0].NavChildren.Remove(navItem);
+
+                //The active container was deleted
+                if (ActiveContainer != null && ActiveContainer.Library.LibraryID == navItem.MediaLibrary.LibraryID) {
+                    BrowseUpAvailable = false;
+                    LibraryBrowsing = false;
+                    var navSelection = navView.SelectedItem;
+
+                    if (navSelection != null) {
+                        TreeViewItem treeItem = FindTreeItem(item => item.DataContext == navSelection);
+
+                        if (treeItem != null) {
+                            treeItem.IsSelected = false;
+                        }
+                    }
+                }
             }
         }
 
@@ -1044,6 +1059,24 @@ namespace ActivFlex.ViewModels
                     .First(item => item.MediaContainer.ContainerID == container.ContainerID);
 
                 parentItem.NavChildren.Remove(navItem);
+
+                //When the the active container is deleted try to browse up
+                bool activeContainerDelete = false;
+                MediaContainer curContainer = ActiveContainer;
+
+                while (curContainer.Parent != null) {
+
+                    if (curContainer == container) {
+                        activeContainerDelete = true;
+                        break;
+                    }
+
+                    curContainer = curContainer.Parent;
+                }
+
+                if (activeContainerDelete && container.Parent != null) {
+                    SelectMediaContainer.Execute(container.Parent);
+                }
             }
         }
 
