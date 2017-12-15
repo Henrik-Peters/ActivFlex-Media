@@ -1254,6 +1254,13 @@ namespace ActivFlex.ViewModels
                 ILibraryItemViewModel viewModel = LibraryItems.First(vm => vm.ItemID == item.ItemID);
                 StorageEngine.DeleteLibraryItem(item.ItemID);
                 LibraryItems.Remove(viewModel);
+
+                //Empty media container info box
+                if (LibraryBrowsing && LibraryItems.Count == 0) {
+                    EmptyContainerInfo = Visibility.Visible;
+                } else {
+                    EmptyContainerInfo = Visibility.Collapsed;
+                }
             }
         }
 
