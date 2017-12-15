@@ -657,6 +657,11 @@ namespace ActivFlex.ViewModels
         public ICommand LaunchMediaImport { get; set; }
 
         /// <summary>
+        /// Start the explorer and select the passed file item.
+        /// </summary>
+        public ICommand ExplorerItemLaunch { get; set; }
+
+        /// <summary>
         /// Open the delete dialog for a single library item.
         /// </summary>
         public ICommand DeleteLibraryItem { get; set; }
@@ -764,6 +769,7 @@ namespace ActivFlex.ViewModels
             this.RenameMediaContainer = new RelayCommand<MediaContainer>(MediaContainerRename);
             this.DeleteMediaContainer = new RelayCommand<MediaContainer>(RemoveMediaContainer);
             this.LaunchMediaImport = new RelayCommand<MediaContainer>(StartMediaImport);
+            this.ExplorerItemLaunch = new RelayCommand<IFileObject>(LaunchFileExplorer);
             this.DeleteLibraryItem = new RelayCommand<ILibraryItem>(RemoveLibraryItem);
             this.LaunchPresenter = new RelayCommand<MediaImage>(LaunchImagePresenter);
             this.PresentImage = new RelayCommand<MediaImage>(PresentMediaImage);
@@ -1224,6 +1230,15 @@ namespace ActivFlex.ViewModels
                 builder.Append("*.");
                 builder.Append(extension);
             }
+        }
+
+        /// <summary>
+        /// Start the explorer and select the passed file item.
+        /// </summary>
+        /// <param name="fileItem">Path of this item will be used</param>
+        private void LaunchFileExplorer(IFileObject fileItem)
+        {
+            Process.Start("explorer.exe", "/select, " + fileItem.Path);
         }
 
         /// <summary>

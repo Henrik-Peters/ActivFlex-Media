@@ -47,6 +47,7 @@ namespace ActivFlex.Localization
             ["Play"] = new List<string> { "Play", "Wiedergabe" },
             ["PlayProcess"] = new List<string> { "Play (default player)", "Wiedergabe (Standardprogramm)" },
             ["OpenProcess"] = new List<string> { "Open (default program)", "Öffnen (Standardprogramm)" },
+            ["OpenInExplorer"] = new List<string> { "Show in explorer", "In Datei-Explorer anzeigen" },
             ["LibraryWindowTitle"] = new List<string> { "ActivFlex Media - Library configuration", "ActivFlex Media - Bibliotheksoptionen" },
             ["Cancel"] = new List<string> { "Cancel", "Abbrechen" },
             ["Apply"] = new List<string> { "Apply", "Übernehmen" },
