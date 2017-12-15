@@ -121,5 +121,11 @@ namespace ActivFlex.Storage
         /// <param name="container">Read the items of this container</param>
         /// <returns>List with the library items of the container</returns>
         List<ILibraryItem> ReadItemsFromContainer(MediaContainer container);
+
+        /// <summary>
+        /// Delete a media library item by the identifier.
+        /// </summary>
+        /// <param name="itemID">ID of the library item</param>
+        void DeleteLibraryItem(int itemID);
     }
 }

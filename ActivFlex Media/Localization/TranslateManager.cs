@@ -66,6 +66,8 @@ namespace ActivFlex.Localization
             ["DeleteAfterLibrary"] = new List<string> { "should be deleted?", "wirklich gelöscht werden?" },
             ["DeleteBeforeContainer"] = new List<string> { "Are you sure that", "Soll der Container" },
             ["DeleteAfterContainer"] = new List<string> { "should be deleted?", "wirklich gelöscht werden?" },
+            ["DeleteBeforeItem"] = new List<string> { "Are you sure that", "Soll" },
+            ["DeleteAfterItem"] = new List<string> { "should be deleted?", "wirklich gelöscht werden?" },
             ["MediaContainer"] = new List<string> { "Media container", "Mediencontainer" },
             ["NewContainer"] = new List<string> { "New container", "Neuer Container" },
             ["MediaFiles"] = new List<string> { "Media files", "Mediendateien" },

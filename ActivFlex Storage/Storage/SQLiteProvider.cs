@@ -396,6 +396,16 @@ namespace ActivFlex.Storage
             return items;
         }
 
+        public void DeleteLibraryItem(int itemID)
+        {
+            var sql = @"DELETE FROM Items
+                        WHERE IID=@ItemID";
+
+            var command = new SQLiteCommand(sql, connection);
+            command.Parameters.AddWithValue("ItemID", itemID);
+            command.ExecuteNonQuery();
+        }
+
         public void Dispose()
         {
             if (connection != null) {

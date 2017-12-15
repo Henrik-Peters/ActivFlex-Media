@@ -638,6 +638,11 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public ICommand LaunchMediaImport { get; set; }
 
+        /// <summary>
+        /// Open the delete dialog for a single library item.
+        /// </summary>
+        public ICommand DeleteLibraryItem { get; set; }
+
         #endregion
 
         /// <summary>
@@ -740,6 +745,7 @@ namespace ActivFlex.ViewModels
             this.RenameMediaContainer = new RelayCommand<MediaContainer>(MediaContainerRename);
             this.DeleteMediaContainer = new RelayCommand<MediaContainer>(RemoveMediaContainer);
             this.LaunchMediaImport = new RelayCommand<MediaContainer>(StartMediaImport);
+            this.DeleteLibraryItem = new RelayCommand<ILibraryItem>(RemoveLibraryItem);
             this.LaunchPresenter = new RelayCommand<MediaImage>(LaunchImagePresenter);
             this.PresentImage = new RelayCommand<MediaImage>(PresentMediaImage);
             this.LaunchMusicPlayback = new RelayCommand<MediaMusic>(StartMusicPlayback);
@@ -1198,6 +1204,27 @@ namespace ActivFlex.ViewModels
 
                 builder.Append("*.");
                 builder.Append(extension);
+            }
+        }
+
+        /// <summary>
+        /// Open the delete dialog for a single library item.
+        /// </summary>
+        /// <param name="item">Target item for deletion</param>
+        private void RemoveLibraryItem(ILibraryItem item)
+        {
+            DeleteDialog deleteDialog = new DeleteDialog(Localize);
+            var deleteContext = deleteDialog.DataContext as DeleteDialogViewModel;
+            deleteDialog.DeleteTextBefore = Localize["DeleteBeforeItem"];
+            deleteDialog.DeleteTextAfter = Localize["DeleteAfterItem"];
+            deleteContext.DeleteName = item.Name;
+            deleteDialog.ShowDialog();
+
+            if (deleteContext.DeleteConfirm) {
+                //Delete the library item
+                ILibraryItemViewModel viewModel = LibraryItems.First(vm => vm.ItemID == item.ItemID);
+                StorageEngine.DeleteLibraryItem(item.ItemID);
+                LibraryItems.Remove(viewModel);
             }
         }
 
