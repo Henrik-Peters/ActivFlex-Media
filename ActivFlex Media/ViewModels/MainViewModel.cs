@@ -237,7 +237,12 @@ namespace ActivFlex.ViewModels
         private bool _libraryBrowsing;
         public bool LibraryBrowsing {
             get => _libraryBrowsing;
-            set => SetProperty(ref _libraryBrowsing, value);
+            set {
+                if (!value) {
+                    EmptyContainerInfo = Visibility.Collapsed;
+                }
+                SetProperty(ref _libraryBrowsing, value);
+            }
         }
 
         private ObservableCollection<IThumbnailViewModel> _fileSystemItems;
@@ -262,6 +267,13 @@ namespace ActivFlex.ViewModels
                     LibraryItems.CollectionChanged += Items_CollectionChanged;
                     Items_CollectionChanged(this, null);
                     NotifyPropertyChanged();
+                }
+
+                //Empty media container info box
+                if (LibraryBrowsing && _libraryItems.Count == 0) {
+                    EmptyContainerInfo = Visibility.Visible;
+                } else {
+                    EmptyContainerInfo = Visibility.Collapsed;
                 }
             }
         }
@@ -419,6 +431,12 @@ namespace ActivFlex.ViewModels
         public Visibility ShowVideoPlayback {
             get => _ShowVideoPlayback;
             set => SetProperty(ref _ShowVideoPlayback, value);
+        }
+
+        private Visibility _emptyContainerInfo;
+        public Visibility EmptyContainerInfo {
+            get => _emptyContainerInfo;
+            set => SetProperty(ref _emptyContainerInfo, value);
         }
 
         private string _mediaInfoName = String.Empty;
@@ -672,6 +690,7 @@ namespace ActivFlex.ViewModels
             this.currentTimeLabel = currentTimeLabel;
             this.maxTimeLabel = maxTimeLabel;
             this.mediaInfoIcon = mediaInfoIcon;
+            this.EmptyContainerInfo = Visibility.Collapsed;
             this.mediaInfoIcon.Visibility = Visibility.Hidden;
             this.mediaTimer = new DispatcherTimer(DispatcherPriority.Send) {
                 Interval = TimeSpan.FromMilliseconds(mediaTimerUpdateInterval)

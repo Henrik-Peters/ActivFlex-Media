@@ -533,6 +533,17 @@
             </ItemsControl>
         </ScrollViewer>
 
+        <!-- Empty media container info box -->
+        <Grid Visibility="{Binding EmptyContainerInfo}" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="600"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="{Binding Localize[EmptyContainer]}" FontSize="20" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+        </Grid>
+
         <!-- Library browsing area -->
         <ScrollViewer x:Name="LibraryScrollViewer" Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolVisibilityConverter}}" Template="{StaticResource ScrollViewerControlTemplate}"
                       Margin="0,0,4,0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="3" PreviewMouseWheel="MediaScrollViewer_PreviewMouseWheel"

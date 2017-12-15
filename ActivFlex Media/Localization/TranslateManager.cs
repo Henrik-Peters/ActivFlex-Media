@@ -74,7 +74,8 @@ namespace ActivFlex.Localization
             ["ImageFiles"] = new List<string> { "Image files", "Bilddateien" },
             ["AudioFiles"] = new List<string> { "Sound files", "Audiodateien" },
             ["VideoFiles"] = new List<string> { "Video files", "Videodateien" },
-            ["AllFiles"] = new List<string> { "All files", "Alle Dateien" }
+            ["AllFiles"] = new List<string> { "All files", "Alle Dateien" },
+            ["EmptyContainer"] = new List<string> { "There are no media items in this container", "Es befinden sich keine Medien in diesem Container" }
         };
 
         /// <summary>
