@@ -1213,14 +1213,24 @@ namespace ActivFlex.ViewModels
         /// <param name="item">Target item for deletion</param>
         private void RemoveLibraryItem(ILibraryItem item)
         {
-            DeleteDialog deleteDialog = new DeleteDialog(Localize);
-            var deleteContext = deleteDialog.DataContext as DeleteDialogViewModel;
-            deleteDialog.DeleteTextBefore = Localize["DeleteBeforeItem"];
-            deleteDialog.DeleteTextAfter = Localize["DeleteAfterItem"];
-            deleteContext.DeleteName = item.Name;
-            deleteDialog.ShowDialog();
+            bool deleteConfirm = false;
+            if (Config.DirectLibraryItemDelete) {
+                deleteConfirm = true;
 
-            if (deleteContext.DeleteConfirm) {
+            } else {
+                DeleteDialog deleteDialog = new DeleteDialog(Localize);
+                var deleteContext = deleteDialog.DataContext as DeleteDialogViewModel;
+                deleteDialog.DeleteTextBefore = Localize["DeleteBeforeItem"];
+                deleteDialog.DeleteTextAfter = Localize["DeleteAfterItem"];
+                deleteContext.DeleteName = item.Name;
+                deleteDialog.ShowDialog();
+
+                if (deleteContext.DeleteConfirm) {
+                    deleteConfirm = true;
+                }
+            }
+
+            if (deleteConfirm) {
                 //Delete the library item
                 ILibraryItemViewModel viewModel = LibraryItems.First(vm => vm.ItemID == item.ItemID);
                 StorageEngine.DeleteLibraryItem(item.ItemID);

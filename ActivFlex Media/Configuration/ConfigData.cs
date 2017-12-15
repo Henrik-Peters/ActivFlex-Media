@@ -51,7 +51,8 @@ namespace ActivFlex.Configuration
             LaunchBehavior.Self,
             0.5,
             true,
-            true
+            true,
+            false
         );
 
         /// <summary>
@@ -158,6 +159,11 @@ namespace ActivFlex.Configuration
         public bool RestoreNavExpansions { get; set; }
 
         /// <summary>
+        /// Directly delete items without the confirmation dialog.
+        /// </summary>
+        public bool DirectLibraryItemDelete { get; set; }
+
+        /// <summary>
         /// Create a new dataset for a concrete configuration. 
         /// All properties should only be set with this constructor.
         /// </summary>
@@ -177,10 +183,11 @@ namespace ActivFlex.Configuration
         /// <param name="Volume">The last volume of the media playback</param>
         /// <param name="ShowTimelineSideLabels">Display or hide the media playback time side labels</param>
         /// <param name="RestoreNavExpansions">Restore the navigation tree view item expansions</param>
+        /// <param name="DirectLibraryItemDelete">Directly delete items without the confirmation dialog</param>
         public ConfigData(string Username, Language Language, WindowStartupState NormalStartup, WindowStartupState PresenterStartup, 
                           WindowRestoreState RestoreState, double RestoreWidth, double RestoreHeight, double RestoreLeft, double RestoreTop,
                           int ThumbnailDecodeSize, bool PreloadPresenterImages, LaunchBehavior ImageLaunchBehavior, LaunchBehavior MusicLaunchBehavior,
-                          LaunchBehavior VideoLaunchBehavior, double Volume, bool ShowTimelineSideLabels, bool RestoreNavExpansions)
+                          LaunchBehavior VideoLaunchBehavior, double Volume, bool ShowTimelineSideLabels, bool RestoreNavExpansions, bool DirectLibraryItemDelete)
         {
             this.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.Username = Username;
@@ -200,6 +207,7 @@ namespace ActivFlex.Configuration
             this.Volume = Volume;
             this.ShowTimelineSideLabels = ShowTimelineSideLabels;
             this.RestoreNavExpansions = RestoreNavExpansions;
+            this.DirectLibraryItemDelete = DirectLibraryItemDelete;
         }
     }
 }
