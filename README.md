@@ -1,9 +1,9 @@
 # ActivFlex Media
 
 ActivFlex can be used for various media functionalities like managing, displaying or grouping media items.
-At the moment this is an early version and just provides some basic features like media browsing and playing.
+Logical media libraries offer you an easy way to handle different storage locations of media files.
 
-**Latest released version: 0.3**
+**Latest released version: 0.4**
 
 ## Prerequisites / Tools
 

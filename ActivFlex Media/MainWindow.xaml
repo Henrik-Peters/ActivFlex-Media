@@ -710,7 +710,8 @@
         </ScrollViewer>
 
         <!-- Empty media container info box -->
-        <Grid Visibility="{Binding EmptyContainerInfo}" Margin="0,0,0,40" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Grid Visibility="{Binding EmptyContainerInfo}" Margin="0,0,0,40" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"
+              AllowDrop="True" DragEnter="LibraryScrollViewer_DragEnter" Drop="LibraryScrollViewer_Drop">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="110"/>
