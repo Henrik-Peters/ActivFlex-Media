@@ -395,7 +395,7 @@
             <ItemsControl x:Name="MediaItemControl" ItemsSource="{Binding FileSystemItems}" Focusable="False">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        
+
                         <!-- Wrapping area for media thumbnails -->
                         <WrapPanel x:Name="MediaWrapPanel" FlowDirection="LeftToRight">
                             <WrapPanel.LayoutTransform>
@@ -421,11 +421,11 @@
                                 </EventTrigger>
                             </WrapPanel.Triggers>
                         </WrapPanel>
-                        
+
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.Resources>
-                    
+
                     <!-- Directory template -->
                     <DataTemplate DataType="{x:Type ViewModels:DirectoryItemViewModel}">
                         <Controls:DirectoryThumbnail Margin="20,5,20,20"
@@ -532,18 +532,7 @@
                 </ItemsControl.Resources>
             </ItemsControl>
         </ScrollViewer>
-
-        <!-- Empty media container info box -->
-        <Grid Visibility="{Binding EmptyContainerInfo}" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="200"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="600"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="{Binding Localize[EmptyContainer]}" FontSize="20" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-        </Grid>
-
+        
         <!-- Library browsing area -->
         <ScrollViewer x:Name="LibraryScrollViewer" Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolVisibilityConverter}}" Template="{StaticResource ScrollViewerControlTemplate}"
                       Margin="0,0,4,0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="3" PreviewMouseWheel="MediaScrollViewer_PreviewMouseWheel"
@@ -687,6 +676,27 @@
                 </ItemsControl.Resources>
             </ItemsControl>
         </ScrollViewer>
+
+        <!-- Empty media container info box -->
+        <Grid Visibility="{Binding EmptyContainerInfo}" Margin="0,0,0,40" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="110"/>
+                <RowDefinition Height="55"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="600"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="{Binding Localize[EmptyContainer]}" Grid.Row="0" FontSize="22" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+            <ContentPresenter Content="{StaticResource DragAndDrop}" Grid.Row="1"/>
+            <StackPanel Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding Localize[EmptyTextFirstLine]}" FontSize="18" Foreground="White"/>
+                <TextBlock Text="{Binding Localize[EmptyTextSecoundLine]}" FontSize="18" Foreground="White" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <Button Content="{Binding Localize[AddMediaItems]}" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Style="{StaticResource LightGreyOrangeButton}" Command="{Binding LaunchMediaImport}" CommandParameter="{Binding ActiveContainer}"/>
+        </Grid>
 
         <!-- Media control area -->
         <Grid x:Name="MediaControlBar" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Height="60" Margin="0,5,0,0">

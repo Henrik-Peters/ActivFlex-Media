@@ -75,7 +75,10 @@ namespace ActivFlex.Localization
             ["AudioFiles"] = new List<string> { "Sound files", "Audiodateien" },
             ["VideoFiles"] = new List<string> { "Video files", "Videodateien" },
             ["AllFiles"] = new List<string> { "All files", "Alle Dateien" },
-            ["EmptyContainer"] = new List<string> { "There are no media items in this container", "Es befinden sich keine Medien in diesem Container" }
+            ["EmptyContainer"] = new List<string> { "There are no media items in this container", "Es befinden sich keine Medien in diesem Container" },
+            ["EmptyTextFirstLine"] = new List<string> { "You can use the media import or", "Sie können den Medienimport verwenden oder" },
+            ["EmptyTextSecoundLine"] = new List<string> { "drag and drop media files", "mit Drag and Drop Medien hinzufügen" },
+            ["AddMediaItems"] = new List<string> { "Add media items", "Medien hinzufügen" },
         };
 
         /// <summary>

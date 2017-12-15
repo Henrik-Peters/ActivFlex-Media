@@ -4,6 +4,7 @@
     <!-- Colors for the media icons -->
     <SolidColorBrush x:Key="MusicIcon.InnerColor" Color="#ADAEB5"/>
     <SolidColorBrush x:Key="MusicIcon.OuterColor" Color="#26272F"/>
+    <SolidColorBrush x:Key="DragDrop.Color" Color="White"/>
 
     <!-- Music media icon -->
     <Viewbox x:Key="MusicMediaIcon" x:Shared="False" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
@@ -28,6 +29,24 @@
                 </Canvas>
             </Canvas>
         </Border>
+    </Viewbox>
+
+    <!-- Drag and drop icon -->
+    <Viewbox x:Key="DragAndDrop" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="64" Height="64">
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="{StaticResource DragDrop.Color}" StrokeThickness="0" Stroke="#7DFF0000" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1">
+                    <Path.Data>
+                        <PathGeometry Figures="m 43.474647 48.95936 10.501569 10.457837 c 0.315152 0.283311 0.820806 0.26116 1.103114 0.0025 l 3.37953 -3.421199 c 0.26487 -0.294122 0.158589 -0.827826 -0.0955 -1.046489 L 47.848659 44.386385 53.425576 39.443251 c 0.444634 -0.395623 0.39659 -1.070431 -0.268944 -1.403647 L 27.379996 27.063416 c -0.782913 -0.267378 -1.273508 0.4933 -1.08421 0.987931 l 10.916251 25.875169 c 0.260769 0.592716 0.981367 0.886541 1.774227 0.01108 z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StrokeThickness="2.5" Stroke="{StaticResource DragDrop.Color}" StrokeMiterLimit="4" StrokeDashArray="2.5, 1" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                    <Path.Data>
+                        <PathGeometry Figures="M 31.875317 50.29003 H 11.376394 c -2.7699997 0 -4.9999993 -2.23 -4.9999993 -5 v -35 c 0 -2.7699999 2.2299996 -4.9999999 4.9999993 -4.9999999 h 35.000001 c 2.77 0 5 2.23 5 4.9999999 l 0 24.412374" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
     </Viewbox>
 
 </ResourceDictionary>
