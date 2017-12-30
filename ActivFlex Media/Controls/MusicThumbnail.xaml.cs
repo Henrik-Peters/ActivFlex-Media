@@ -164,10 +164,6 @@ namespace ActivFlex.Controls
 
         private void Thumbnail_Click(object sender, RoutedEventArgs e)
         {
-            if (CanSelect) {
-                IsSelected = !IsSelected;
-            }
-
             Click?.Execute(ClickParameter);
         }
 
