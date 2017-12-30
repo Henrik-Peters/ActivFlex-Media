@@ -346,7 +346,7 @@
         <Button Command="{Binding ToggleNavVisibility}" Style="{StaticResource toggleNavButton}" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Width="10" Height="40"/>
 
         <!-- Media header presentation area -->
-        <Grid Grid.Row="1" Grid.Column="2">
+        <Grid Name="MediaHeader" Grid.Row="1" Grid.Column="2" MouseLeftButtonUp="ResetSelection_MouseLeftButtonUp" Background="Transparent">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="45"/>
                 <ColumnDefinition Width="*"/>
@@ -559,7 +559,7 @@
         <!-- Library browsing area -->
         <ScrollViewer x:Name="LibraryScrollViewer" Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolVisibilityConverter}}" Template="{StaticResource ScrollViewerControlTemplate}"
                       Margin="0,0,4,0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="3" PreviewMouseWheel="MediaScrollViewer_PreviewMouseWheel"
-                      AllowDrop="True" DragEnter="LibraryScrollViewer_DragEnter" Drop="LibraryScrollViewer_Drop">
+                      AllowDrop="True" DragEnter="LibraryScrollViewer_DragEnter" Drop="LibraryScrollViewer_Drop" MouseLeftButtonUp="ResetSelection_MouseLeftButtonUp">
             <ItemsControl x:Name="LibraryItemControl" ItemsSource="{Binding LibraryItems}" Focusable="False">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

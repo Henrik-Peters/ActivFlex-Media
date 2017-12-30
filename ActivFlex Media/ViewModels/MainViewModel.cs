@@ -878,6 +878,18 @@ namespace ActivFlex.ViewModels
         }
 
         /// <summary>
+        /// Set the selection of all media items to false.
+        /// </summary>
+        public void ResetItemSelection()
+        {
+            if (LibraryItems != null) {
+                foreach (ILibraryItemViewModel item in LibraryItems) {
+                    item.IsSelected = false;
+                }
+            }
+        }
+
+        /// <summary>
         /// Load the media libraries from the storage provider 
         /// and convert them to navigation view models.
         /// </summary>
@@ -1063,7 +1075,7 @@ namespace ActivFlex.ViewModels
             } else if (treeItem.DataContext is LibraryNavItem libraryItem) {
                 OpenMediaContainer.Execute(libraryItem.MediaLibrary.RootContainer);
             }
-            
+
             treeItem.IsSelected = true;
         }
 
@@ -1447,9 +1459,10 @@ namespace ActivFlex.ViewModels
                 } else {
                     ShowTimelineSideLabels = Visibility.Collapsed;
                 }
-
+                
                 _playmode = true;
                 NotifyPropertyChanged(nameof(PlayMode));
+                ResetItemSelection();
             }
         }
 
@@ -1825,7 +1838,8 @@ namespace ActivFlex.ViewModels
                     .Cast<MediaImage>()
                     .ToArray();
             }
-            
+
+            ResetItemSelection();
             ImageIndex = Array.IndexOf(ActiveImages, mediaImage);
             StartPreloadingThreads();
         }

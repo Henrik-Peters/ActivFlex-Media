@@ -428,6 +428,11 @@ namespace ActivFlex
             }
         }
 
+        private void ResetSelection_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            vm.ResetItemSelection();
+        }
+
         private void HandleStartupArguments()
         {
             if (StartupOptions.HasOptions) {
