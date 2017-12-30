@@ -163,6 +163,11 @@ namespace ActivFlex.ViewModels
         public TreeViewItem editItem;
 
         /// <summary>
+        /// The last item that was selected.
+        /// </summary>
+        private ILibraryItemViewModel lastSelection;
+
+        /// <summary>
         /// The media player to generate the thumbnail image.
         /// </summary>
         MediaPlayer thumbnailPlayer;
@@ -827,61 +832,107 @@ namespace ActivFlex.ViewModels
         }
 
         /// <summary>
-        /// Click on a media library item during library browsing.
+        /// Click on an image library item during library browsing.
         /// </summary>
         private void ImageItemClick(LibraryImageViewModel image)
         {
-            if (Keyboard.IsKeyDown(Key.LeftCtrl)) {
-                image.IsSelected = !image.IsSelected;
-
-            } else {
-                if (Config.ImageLaunchBehavior == LaunchBehavior.Self) {
-                    this.LaunchPresenter.Execute(image.Proxy);
-                } else {
-                    this.LaunchDefault.Execute(image.Proxy);
-                }
+            if (!HandleItemSelection(image)) {
+                DefaultImageLaunch.Execute(image.Proxy);
             }
         }
 
         /// <summary>
-        /// Click on a media library item during library browsing.
+        /// Click on a music library item during library browsing.
         /// </summary>
         private void MusicItemClick(LibraryMusicViewModel music)
         {
-            if (Keyboard.IsKeyDown(Key.LeftCtrl)) {
-                music.IsSelected = !music.IsSelected;
-
-            } else {
-                if (Config.MusicLaunchBehavior == LaunchBehavior.Self) {
-                    this.LaunchMusicPlayback.Execute(music.Proxy);
-                } else {
-                    this.LaunchDefault.Execute(music.Proxy);
-                }
+            if (!HandleItemSelection(music)) {
+                DefaultMusicLaunch.Execute(music.Proxy);
             }
         }
 
         /// <summary>
-        /// Click on a media library item during library browsing.
+        /// Click on a video library item during library browsing.
         /// </summary>
         private void VideoItemClick(LibraryVideoViewModel video)
         {
-            if (Keyboard.IsKeyDown(Key.LeftCtrl)) {
-                video.IsSelected = !video.IsSelected;
+            if (!HandleItemSelection(video)) {
+                DefaultVideoLaunch.Execute(video.Proxy);
+            }
+        }
+
+        /// <summary>
+        /// Handle the selection of media items.
+        /// </summary>
+        /// <param name="item">Current media item</param>
+        /// <returns>True when a selection was made</returns>
+        private bool HandleItemSelection(ILibraryItemViewModel item) {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.LeftShift)) {
+                ShiftItemSelection(item, false);
+                return true;
+
+            } else if (Keyboard.IsKeyDown(Key.LeftCtrl)) {
+                item.IsSelected = !item.IsSelected;
+                lastSelection = item;
+                return true;
+
+            } else if (Keyboard.IsKeyDown(Key.LeftShift)) {
+                ShiftItemSelection(item);
+                return true;
 
             } else {
-                if (Config.VideoLaunchBehavior == LaunchBehavior.Self) {
-                    this.LaunchVideoPlayback.Execute(video.Proxy);
-                } else {
-                    this.LaunchDefault.Execute(video.Proxy);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Create a new selection area between
+        /// the last item and the passed item.
+        /// </summary>
+        /// <param name="item">Target item of new selection</param>
+        /// <param name="resetSelection">Remove an existing selection</param>
+        private void ShiftItemSelection(ILibraryItemViewModel item, bool resetSelection = true)
+        {
+            if (lastSelection == null) {
+                item.IsSelected = !item.IsSelected;
+                lastSelection = item;
+
+            } else {
+                bool selectItems = false;
+
+                if (resetSelection) {
+                    ResetItemSelection(false);
                 }
+
+                //Select all items between lastSelection and item
+                if (item.ItemID != lastSelection.ItemID) {
+                    foreach (ILibraryItemViewModel curItem in LibraryItems) {
+
+                        if (curItem.ItemID == lastSelection.ItemID || curItem.ItemID == item.ItemID) {
+                            selectItems = !selectItems;
+                        }
+
+                        if (selectItems) {
+                            curItem.IsSelected = true;
+                        }
+                    }
+                }
+
+                item.IsSelected = true;
+                lastSelection.IsSelected = true;
             }
         }
 
         /// <summary>
         /// Set the selection of all media items to false.
         /// </summary>
-        public void ResetItemSelection()
+        /// <param name="resetLastSelection">Enable the reset for the last selection</param>
+        public void ResetItemSelection(bool resetLastSelection = true)
         {
+            if (resetLastSelection) {
+                lastSelection = null;
+            }
+            
             if (LibraryItems != null) {
                 foreach (ILibraryItemViewModel item in LibraryItems) {
                     item.IsSelected = false;
