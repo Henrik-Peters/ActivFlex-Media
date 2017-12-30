@@ -60,6 +60,20 @@ namespace ActivFlex.Controls
         }
 
         /// <summary>
+        /// Identifies the ClickParameter dependency property
+        /// </summary>
+        public static readonly DependencyProperty ClickParameterProperty = DependencyProperty.Register(
+            "ClickParameter", typeof(object), typeof(MusicThumbnail), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the parameter for the click command.
+        /// </summary>
+        public object ClickParameter {
+            get => this.GetValue(ClickParameterProperty);
+            set => this.SetValue(ClickParameterProperty, value);
+        }
+
+        /// <summary>
         /// Identifies the DoubleClickCommand dependency property
         /// </summary>
         public static readonly DependencyProperty DoubleClickCommandProperty = DependencyProperty.Register(
@@ -154,12 +168,12 @@ namespace ActivFlex.Controls
                 IsSelected = !IsSelected;
             }
 
-            Click?.Execute(Proxy);
+            Click?.Execute(ClickParameter);
         }
 
         private void Thumbnail_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            DoubleClick?.Execute(Proxy);
+            DoubleClick?.Execute(ClickParameter);
             e.Handled = true;
         }
     }

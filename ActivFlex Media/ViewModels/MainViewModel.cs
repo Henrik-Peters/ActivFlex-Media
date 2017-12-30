@@ -666,6 +666,21 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public ICommand DeleteLibraryItem { get; set; }
 
+        /// <summary>
+        /// Executed when an image library item is clicked.
+        /// </summary>
+        public ICommand LibraryImageClick { get; set; }
+
+        /// <summary>
+        /// Executed when a music library item is clicked.
+        /// </summary>
+        public ICommand LibraryMusicClick { get; set; }
+
+        /// <summary>
+        /// Executed when a video library item is clicked.
+        /// </summary>
+        public ICommand LibraryVideoClick { get; set; }
+
         #endregion
 
         /// <summary>
@@ -775,6 +790,9 @@ namespace ActivFlex.ViewModels
             this.PresentImage = new RelayCommand<MediaImage>(PresentMediaImage);
             this.LaunchMusicPlayback = new RelayCommand<MediaMusic>(StartMusicPlayback);
             this.LaunchVideoPlayback = new RelayCommand<MediaVideo>(StartVideoPlayback);
+            this.LibraryImageClick = new RelayCommand<LibraryImageViewModel>(ImageItemClick);
+            this.LibraryMusicClick = new RelayCommand<LibraryMusicViewModel>(MusicItemClick);
+            this.LibraryVideoClick = new RelayCommand<LibraryVideoViewModel>(VideoItemClick);
             this.LaunchDefault = new RelayCommand<IFileObject>(media => {
                 if (File.Exists(media.Path)) {
                     Process.Start(media.Path);
@@ -806,6 +824,57 @@ namespace ActivFlex.ViewModels
             this.Stop = new RelayCommand(StopCurrentPlayback);
             this.Next = new RelayCommand(() => ChangeActiveImage(true));
             this.Previous = new RelayCommand(() => ChangeActiveImage(false));
+        }
+
+        /// <summary>
+        /// Click on a media library item during library browsing.
+        /// </summary>
+        private void ImageItemClick(LibraryImageViewModel image)
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl)) {
+                image.IsSelected = !image.IsSelected;
+
+            } else {
+                if (Config.ImageLaunchBehavior == LaunchBehavior.Self) {
+                    this.LaunchPresenter.Execute(image.Proxy);
+                } else {
+                    this.LaunchDefault.Execute(image.Proxy);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Click on a media library item during library browsing.
+        /// </summary>
+        private void MusicItemClick(LibraryMusicViewModel music)
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl)) {
+                music.IsSelected = !music.IsSelected;
+
+            } else {
+                if (Config.MusicLaunchBehavior == LaunchBehavior.Self) {
+                    this.LaunchMusicPlayback.Execute(music.Proxy);
+                } else {
+                    this.LaunchDefault.Execute(music.Proxy);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Click on a media library item during library browsing.
+        /// </summary>
+        private void VideoItemClick(LibraryVideoViewModel video)
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl)) {
+                video.IsSelected = !video.IsSelected;
+
+            } else {
+                if (Config.VideoLaunchBehavior == LaunchBehavior.Self) {
+                    this.LaunchVideoPlayback.Execute(video.Proxy);
+                } else {
+                    this.LaunchDefault.Execute(video.Proxy);
+                }
+            }
         }
 
         /// <summary>

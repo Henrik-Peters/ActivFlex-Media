@@ -88,6 +88,19 @@ namespace ActivFlex.ViewModels
         public string Path => _proxy.Path;
 
         /// <summary>
+        /// True when the item is selected in a view.
+        /// </summary>
+        public bool IsSelected {
+            get => _proxy.IsSelected;
+            set {
+                if (_proxy.IsSelected != value) {
+                    _proxy.IsSelected = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
         /// Create a new view model for a library video item.
         /// </summary>
         /// <param name="proxy">The represented video music</param>

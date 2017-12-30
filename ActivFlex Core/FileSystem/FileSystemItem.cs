@@ -37,6 +37,11 @@ namespace ActivFlex.FileSystem
         public abstract String Name { get; set; }
 
         /// <summary>
+        /// True when the item is selected in a view.
+        /// </summary>
+        public bool IsSelected { get; set; }
+
+        /// <summary>
         /// Check if the object still exists.
         /// </summary>
         public abstract bool Exists { get; }

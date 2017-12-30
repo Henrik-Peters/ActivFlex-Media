@@ -48,7 +48,22 @@ namespace ActivFlex.Controls
             get => (ICommand)this.GetValue(ClickCommandProperty);
             set => this.SetValue(ClickCommandProperty, value);
         }
-        
+
+        /// <summary>
+        /// Identifies the ClickParameter dependency property
+        /// </summary>
+        public static readonly DependencyProperty ClickParameterProperty = DependencyProperty.Register(
+            "ClickParameter", typeof(object), typeof(ImageThumbnail), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the parameter for the click command.
+        /// </summary>
+        [Bindable(true)]
+        public object ClickParameter {
+            get => this.GetValue(ClickParameterProperty);
+            set => this.SetValue(ClickParameterProperty, value);
+        }
+
         /// <summary>
         /// Identifies the DoubleClickCommand dependency property
         /// </summary>
@@ -243,12 +258,12 @@ namespace ActivFlex.Controls
 
         private void Thumbnail_Click(object sender, RoutedEventArgs e)
         {
-            Click?.Execute(Proxy);
+            Click?.Execute(ClickParameter);
         }
 
         private void Thumbnail_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            DoubleClick?.Execute(Proxy);
+            DoubleClick?.Execute(ClickParameter);
             e.Handled = true;
         }
 

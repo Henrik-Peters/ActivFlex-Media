@@ -49,5 +49,10 @@ namespace ActivFlex.ViewModels
         /// Absolute filesystem path of this item.
         /// </summary>
         string Path { get; }
+
+        /// <summary>
+        /// True when the item is selected in a view.
+        /// </summary>
+        bool IsSelected { get; set; }
     }
 }

@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
-using System.Windows.Media.Imaging;
 using ActivFlex.FileSystem;
 
 namespace ActivFlex.Media
@@ -39,6 +38,11 @@ namespace ActivFlex.Media
         public string Path { get; }
 
         /// <summary>
+        /// True when the item is selected in a view.
+        /// </summary>
+        public bool IsSelected { get; set; }
+
+        /// <summary>
         /// Set the path of the media object in the filesystem
         /// and use Path.GetFileName() to create the name.
         /// </summary>
@@ -59,6 +63,7 @@ namespace ActivFlex.Media
         {
             this.Path = path;
             this.Name = name;
+            this.IsSelected = false;
         }
     }
 }

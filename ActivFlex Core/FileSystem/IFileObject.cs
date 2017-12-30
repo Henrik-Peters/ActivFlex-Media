@@ -34,5 +34,10 @@ namespace ActivFlex.FileSystem
         /// This should be a full path (absolute).
         /// </summary>
         string Path { get; }
+
+        /// <summary>
+        /// True when the item is selected in a view.
+        /// </summary>
+        bool IsSelected { get; set; }
     }
 }
