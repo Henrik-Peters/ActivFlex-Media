@@ -499,6 +499,16 @@ namespace ActivFlex
                 //Force mouse event forwarding to the selection control
                 LibraryScrollViewer.CaptureMouse();
                 e.Handled = true;
+
+            } else if (e.ChangedButton == MouseButton.Right && vm.HasItemSelection && e.OriginalSource != LibraryScrollViewer) {
+
+                if (e.OriginalSource is FrameworkElement source) {
+                    ILibraryItemViewModel sourceContext = source.DataContext as ILibraryItemViewModel;
+
+                    if (!sourceContext.IsSelected) {
+                        vm.ResetItemSelection();
+                    }
+                }
             }
         }
 
@@ -625,6 +635,16 @@ namespace ActivFlex
                 //Force mouse event forwarding to the selection control
                 MediaScrollViewer.CaptureMouse();
                 e.Handled = true;
+
+            } else if (e.ChangedButton == MouseButton.Right && vm.HasItemSelection && e.OriginalSource != MediaScrollViewer) {
+
+                if (e.OriginalSource is FrameworkElement source) {
+                    IThumbnailViewModel sourceContext = source.DataContext as IThumbnailViewModel;
+
+                    if (!sourceContext.IsSelected) {
+                        vm.ResetItemSelection();
+                    }
+                }
             }
         }
 

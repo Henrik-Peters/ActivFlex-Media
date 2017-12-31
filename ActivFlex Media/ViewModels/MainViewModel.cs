@@ -484,6 +484,11 @@ namespace ActivFlex.ViewModels
             }
         }
 
+        public bool HasItemSelection {
+            get => (LibraryItems != null && LibraryItems.Any(item => item.IsSelected))
+                || (FileSystemItems != null && FileSystemItems.Any(item => item.IsSelected));
+        }
+
         #endregion
         #region Commands
 
