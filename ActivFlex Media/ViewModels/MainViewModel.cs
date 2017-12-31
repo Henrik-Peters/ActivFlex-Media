@@ -168,6 +168,11 @@ namespace ActivFlex.ViewModels
         private ILibraryItemViewModel lastSelection;
 
         /// <summary>
+        /// The last filesystem item that was selected.
+        /// </summary>
+        private IThumbnailViewModel lastFileSelection;
+
+        /// <summary>
         /// The media player to generate the thumbnail image.
         /// </summary>
         MediaPlayer thumbnailPlayer;
@@ -686,6 +691,21 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public ICommand LibraryVideoClick { get; set; }
 
+        /// <summary>
+        /// Executed when a filesystem image item is clicked.
+        /// </summary>
+        public ICommand FileImageClick { get; set; }
+
+        /// <summary>
+        /// Executed when a filesystem music item is clicked.
+        /// </summary>
+        public ICommand FileMusicClick { get; set; }
+
+        /// <summary>
+        /// Executed when a filesystem video item is clicked.
+        /// </summary>
+        public ICommand FileVideoClick { get; set; }
+
         #endregion
 
         /// <summary>
@@ -798,6 +818,9 @@ namespace ActivFlex.ViewModels
             this.LibraryImageClick = new RelayCommand<LibraryImageViewModel>(ImageItemClick);
             this.LibraryMusicClick = new RelayCommand<LibraryMusicViewModel>(MusicItemClick);
             this.LibraryVideoClick = new RelayCommand<LibraryVideoViewModel>(VideoItemClick);
+            this.FileImageClick = new RelayCommand<ImageItemViewModel>(ImageFileItemClick);
+            this.FileMusicClick = new RelayCommand<MusicItemViewModel>(MusicFileItemClick);
+            this.FileVideoClick = new RelayCommand<VideoItemViewModel>(VideoFileItemClick);
             this.LaunchDefault = new RelayCommand<IFileObject>(media => {
                 if (File.Exists(media.Path)) {
                     Process.Start(media.Path);
@@ -857,6 +880,36 @@ namespace ActivFlex.ViewModels
         private void VideoItemClick(LibraryVideoViewModel video)
         {
             if (!HandleItemSelection(video)) {
+                DefaultVideoLaunch.Execute(video.Proxy);
+            }
+        }
+
+        /// <summary>
+        /// Click on an image filesystem item during file browsing.
+        /// </summary>
+        private void ImageFileItemClick(ImageItemViewModel image)
+        {
+            if (!HandleFileSystemSelection(image)) {
+                DefaultImageLaunch.Execute(image.Proxy);
+            }
+        }
+
+        /// <summary>
+        /// Click on a music filesystem item during file browsing.
+        /// </summary>
+        private void MusicFileItemClick(MusicItemViewModel music)
+        {
+            if (!HandleFileSystemSelection(music)) {
+                DefaultMusicLaunch.Execute(music.Proxy);
+            }
+        }
+
+        /// <summary>
+        /// Click on a video filesystem item during file browsing.
+        /// </summary>
+        private void VideoFileItemClick(VideoItemViewModel video)
+        {
+            if (!HandleFileSystemSelection(video)) {
                 DefaultVideoLaunch.Execute(video.Proxy);
             }
         }
@@ -924,6 +977,69 @@ namespace ActivFlex.ViewModels
         }
 
         /// <summary>
+        /// Handle the selection of filesystem items.
+        /// </summary>
+        /// <param name="item">Current media item</param>
+        /// <returns>True when a selection was made</returns>
+        private bool HandleFileSystemSelection(IThumbnailViewModel item)
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.LeftShift)) {
+                ShiftFileSystemSelection(item, false);
+                return true;
+
+            } else if (Keyboard.IsKeyDown(Key.LeftCtrl)) {
+                item.IsSelected = !item.IsSelected;
+                lastFileSelection = item;
+                return true;
+
+            } else if (Keyboard.IsKeyDown(Key.LeftShift)) {
+                ShiftFileSystemSelection(item);
+                return true;
+
+            } else {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Create a new selection area between
+        /// the last item and the passed item.
+        /// </summary>
+        /// <param name="item">Target item of new selection</param>
+        /// <param name="resetSelection">Remove an existing selection</param>
+        private void ShiftFileSystemSelection(IThumbnailViewModel item, bool resetSelection = true)
+        {
+            if (lastFileSelection == null) {
+                item.IsSelected = !item.IsSelected;
+                lastFileSelection = item;
+
+            } else {
+                bool selectItems = false;
+
+                if (resetSelection) {
+                    ResetItemSelection(false);
+                }
+
+                //Select all items between lastFileSelection and item
+                if (item != lastFileSelection) {
+                    foreach (IThumbnailViewModel curItem in FileSystemItems) {
+
+                        if (curItem == lastFileSelection || curItem == item) {
+                            selectItems = !selectItems;
+                        }
+
+                        if (selectItems) {
+                            curItem.IsSelected = true;
+                        }
+                    }
+                }
+
+                item.IsSelected = true;
+                lastFileSelection.IsSelected = true;
+            }
+        }
+
+        /// <summary>
         /// Set the selection of all media items to false.
         /// </summary>
         /// <param name="resetLastSelection">Enable the reset for the last selection</param>
@@ -931,10 +1047,17 @@ namespace ActivFlex.ViewModels
         {
             if (resetLastSelection) {
                 lastSelection = null;
+                lastFileSelection = null;
             }
             
             if (LibraryItems != null) {
                 foreach (ILibraryItemViewModel item in LibraryItems) {
+                    item.IsSelected = false;
+                }
+            }
+
+            if (FileSystemItems != null) {
+                foreach (IThumbnailViewModel item in FileSystemItems) {
                     item.IsSelected = false;
                 }
             }

@@ -62,6 +62,19 @@ namespace ActivFlex.ViewModels
         }
 
         /// <summary>
+        /// True when the item is selected in a view.
+        /// </summary>
+        public bool IsSelected {
+            get => _proxy.IsSelected;
+            set {
+                if (_proxy.IsSelected != value) {
+                    _proxy.IsSelected = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
         /// Create a new view model for a directory thumbnail.
         /// </summary>
         /// <param name="Proxy">The represented directory item</param>

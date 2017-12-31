@@ -29,5 +29,6 @@ namespace ActivFlex.ViewModels
         IFileObject Proxy { get; set; }
         string Name { get; set; }
         string Path { get; }
+        bool IsSelected { get; set; }
     }
 }

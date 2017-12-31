@@ -64,6 +64,19 @@ namespace ActivFlex.ViewModels
         }
 
         /// <summary>
+        /// True when the item is selected in a view.
+        /// </summary>
+        public bool IsSelected {
+            get => _proxy.IsSelected;
+            set {
+                if (_proxy.IsSelected != value) {
+                    _proxy.IsSelected = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
         /// The thumbnail image of the represented image.
         /// Will be null when the thumbnail is not loaded.
         /// </summary>

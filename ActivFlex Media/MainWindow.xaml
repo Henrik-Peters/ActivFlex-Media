@@ -391,7 +391,8 @@
         </Grid>
 
         <!-- File browsing area -->
-        <ScrollViewer x:Name="MediaScrollViewer" Template="{StaticResource ScrollViewerControlTemplate}" Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolInvertVisibilityConverter}}" Margin="0,0,4,0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="3" PreviewMouseWheel="MediaScrollViewer_PreviewMouseWheel">
+        <ScrollViewer x:Name="MediaScrollViewer" Template="{StaticResource ScrollViewerControlTemplate}" Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolInvertVisibilityConverter}}"
+                      Margin="0,0,4,0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="3" PreviewMouseWheel="MediaScrollViewer_PreviewMouseWheel" MouseLeftButtonUp="ResetSelection_MouseLeftButtonUp">
             <ItemsControl x:Name="MediaItemControl" ItemsSource="{Binding FileSystemItems}" Focusable="False">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -455,13 +456,14 @@
                         <Controls:ImageThumbnail Margin="20,5,20,20"
                                                  Width="150"
                                                  Height="150"
-                                                 CanSelect="False"
+                                                 CanSelect="True"
                                                  Proxy="{Binding Proxy}"
                                                  Text="{Binding Name}"
                                                  Image="{Binding ThumbImage}"
                                                  DefaultContent="{StaticResource PictureIcon}"
-                                                 ClickParameter="{Binding Proxy}"
-                                                 Click="{Binding DataContext.DefaultImageLaunch,
+                                                 IsSelected="{Binding IsSelected}"
+                                                 ClickParameter="{Binding}"
+                                                 Click="{Binding DataContext.FileImageClick,
                                                          RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                                                  Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
 
@@ -489,12 +491,13 @@
                         <Controls:MusicThumbnail Margin="20,5,20,20"
                                                  Width="150"
                                                  Height="150"
-                                                 CanSelect="False"
+                                                 CanSelect="True"
                                                  Proxy="{Binding Proxy}"
                                                  Text="{Binding Name}"
                                                  Extension="{Binding Extension}"
-                                                 ClickParameter="{Binding Proxy}"
-                                                 Click="{Binding DataContext.DefaultMusicLaunch,
+                                                 IsSelected="{Binding IsSelected}"
+                                                 ClickParameter="{Binding}"
+                                                 Click="{Binding DataContext.FileMusicClick,
                                                          RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                                                  Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
 
@@ -522,14 +525,15 @@
                         <Controls:ImageThumbnail Margin="20,5,20,20"
                                                  Width="150"
                                                  Height="150"
-                                                 CanSelect="False"
+                                                 CanSelect="True"
                                                  Proxy="{Binding Proxy}"
                                                  Text="{Binding Name}"
                                                  Image="{Binding ThumbImage}"
                                                  VideoIndicator="{Binding IndicatorVisibility}"
                                                  DefaultContent="{StaticResource VideoIcon}"
-                                                 ClickParameter="{Binding Proxy}"
-                                                 Click="{Binding DataContext.DefaultVideoLaunch,
+                                                 IsSelected="{Binding IsSelected}"
+                                                 ClickParameter="{Binding}"
+                                                 Click="{Binding DataContext.FileVideoClick,
                                                          RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                                                  Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
 
