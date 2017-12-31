@@ -62,6 +62,36 @@ namespace ActivFlex
         /// </summary>
         private RepeatButton TimeSliderActiveButton;
 
+        /// <summary>
+        /// True when the selection rectangle is currently dragged.
+        /// </summary>
+        private bool IsDragging = false;
+
+        /// <summary>
+        /// The starting point of the selection rectangle.
+        /// </summary>
+        private Point SelectionAnchor = new Point();
+
+        /// <summary>
+        /// The point with both coordinates zero.
+        /// </summary>
+        private static readonly Point Origin = new Point(0, 0);
+
+        /// <summary>
+        /// True when the left mouse button is down.
+        /// </summary>
+        private bool LeftMouseButtonDown = false;
+
+        /// <summary>
+        /// The panel that contains the items for drag selections.
+        /// </summary>
+        private WrapPanel WrapSelectionPanel;
+
+        /// <summary>
+        /// Distance the cursor has to move before the selection starts.
+        /// </summary>
+        private static readonly double DragThreshold = 5;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -431,6 +461,118 @@ namespace ActivFlex
         private void ResetSelection_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             vm.ResetItemSelection();
+        }
+
+        private void LibraryScrollViewer_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left && e.OriginalSource == LibraryScrollViewer) {
+
+                LeftMouseButtonDown = true;
+                SelectionAnchor = e.GetPosition(LibraryScrollViewer);
+
+                var border = VisualTreeHelper.GetChild(LibraryItemControl, 0);
+                var itemPresenter = VisualTreeHelper.GetChild(border, 0);
+                WrapSelectionPanel = VisualTreeHelper.GetChild(itemPresenter, 0) as WrapPanel;
+
+                vm.ResetItemSelection();
+                LibraryScrollViewer.CaptureMouse();
+                e.Handled = true;
+            }
+        }
+
+        private void LibraryScrollViewer_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left) {
+
+                if (IsDragging) {
+                    IsDragging = false;
+                    LibraryDragSelection.Visibility = Visibility.Collapsed;
+                    e.Handled = true;
+                }
+
+                if (LeftMouseButtonDown) {
+                    LeftMouseButtonDown = false;
+                    LibraryScrollViewer.ReleaseMouseCapture();
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private void LibraryScrollViewer_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (IsDragging) {
+                Point mousePos = e.GetPosition(LibraryScrollViewer);
+                UpdateDragSelection(mousePos);
+                e.Handled = true;
+
+            } else if (LeftMouseButtonDown) {
+                Point mousePos = e.GetPosition(LibraryScrollViewer);
+                var dragDelta = mousePos - SelectionAnchor;
+                double dragDistance = Math.Abs(dragDelta.Length);
+
+                if (dragDistance > DragThreshold) {
+                    IsDragging = true;
+                    UpdateDragSelection(mousePos);
+                    LibraryDragSelection.Visibility = Visibility.Visible;
+                }
+                
+                e.Handled = true;
+            }
+        }
+
+        private void UpdateDragSelection(Point mousePos)
+        {
+            if (IsDragging) {
+
+                //limit the mouse area to the browsing area
+                mousePos.X = Math.Min(LibraryScrollViewer.ActualWidth, mousePos.X);
+                mousePos.Y = Math.Min(LibraryScrollViewer.ActualHeight, mousePos.Y);
+
+                //Update the selection rectangle
+                double x = Math.Max(0, mousePos.X);
+                double y = Math.Max(0, mousePos.Y);
+                double width = Math.Abs(x - SelectionAnchor.X);
+                double height = Math.Abs(y - SelectionAnchor.Y);
+
+                LibraryDragRect.SetValue(Canvas.LeftProperty, Math.Min(x, SelectionAnchor.X));
+                LibraryDragRect.SetValue(Canvas.TopProperty, Math.Min(y, SelectionAnchor.Y));
+                LibraryDragRect.Width = width;
+                LibraryDragRect.Height = height;
+                
+                //Update the item selection
+                Rect dragRect = new Rect(Math.Min(x, SelectionAnchor.X), Math.Min(y, SelectionAnchor.Y), width, height);
+                
+                foreach (var child in WrapSelectionPanel.Children) {
+
+                    if (child is ContentPresenter item) {
+                        object thumbnailControl = VisualTreeHelper.GetChild(item, 0);
+                        ILibraryItemViewModel itemContext = item.DataContext as ILibraryItemViewModel;
+
+                        Point itemPos = new Point(0, 0);
+                        double ItemWidth = 0;
+                        double ItemHeight = 0;
+                        
+                        if (thumbnailControl is ImageThumbnail imageThumb) {
+                            ItemWidth = imageThumb.ActualWidth;
+                            ItemHeight = imageThumb.ActualHeight;
+                            itemPos = imageThumb.TransformToAncestor(WrapSelectionPanel).Transform(Origin);
+
+                        } else if (thumbnailControl is MusicThumbnail musicThumb) {
+                            ItemWidth = musicThumb.ActualWidth;
+                            ItemHeight = musicThumb.ActualHeight;
+                            itemPos = musicThumb.TransformToAncestor(WrapSelectionPanel).Transform(Origin);
+                        }
+
+                        Rect itemRect = new Rect(itemPos.X, itemPos.Y, ItemWidth, ItemHeight - 7);
+                        
+                        if (dragRect.IntersectsWith(itemRect)) {
+                            itemContext.IsSelected = true;
+                        } else {
+                            itemContext.IsSelected = false;
+                        }
+                    }
+                }
+            }
         }
 
         private void HandleStartupArguments()

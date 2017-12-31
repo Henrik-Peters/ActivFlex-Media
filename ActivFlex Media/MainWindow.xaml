@@ -563,7 +563,7 @@
         <!-- Library browsing area -->
         <ScrollViewer x:Name="LibraryScrollViewer" Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolVisibilityConverter}}" Template="{StaticResource ScrollViewerControlTemplate}"
                       Margin="0,0,4,0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="3" PreviewMouseWheel="MediaScrollViewer_PreviewMouseWheel"
-                      AllowDrop="True" DragEnter="LibraryScrollViewer_DragEnter" Drop="LibraryScrollViewer_Drop" MouseLeftButtonUp="ResetSelection_MouseLeftButtonUp">
+                      AllowDrop="True" DragEnter="LibraryScrollViewer_DragEnter" Drop="LibraryScrollViewer_Drop" MouseUp="LibraryScrollViewer_MouseUp" MouseMove="LibraryScrollViewer_MouseMove" PreviewMouseDown="LibraryScrollViewer_PreviewMouseDown">
             <ItemsControl x:Name="LibraryItemControl" ItemsSource="{Binding LibraryItems}" Focusable="False">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -721,6 +721,11 @@
                 </ItemsControl.Resources>
             </ItemsControl>
         </ScrollViewer>
+
+        <!-- Library selection dragging rectangle -->
+        <Canvas x:Name="LibraryDragSelection" Grid.Row="2" Grid.Column="3" Visibility="Collapsed">
+            <Rectangle x:Name="LibraryDragRect" Stroke="DarkOrange" Fill="#77FFFFFF"/>
+        </Canvas>
 
         <!-- Empty media container info box -->
         <Grid Visibility="{Binding EmptyContainerInfo}" Margin="0,0,0,40" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"
