@@ -392,7 +392,8 @@
 
         <!-- File browsing area -->
         <ScrollViewer x:Name="MediaScrollViewer" Template="{StaticResource ScrollViewerControlTemplate}" Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolInvertVisibilityConverter}}"
-                      Margin="0,0,4,0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="3" PreviewMouseWheel="MediaScrollViewer_PreviewMouseWheel" MouseLeftButtonUp="ResetSelection_MouseLeftButtonUp">
+                      Margin="0,0,4,0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="3" PreviewMouseWheel="MediaScrollViewer_PreviewMouseWheel"
+                      PreviewMouseDown="MediaScrollViewer_PreviewMouseDown" MouseUp="MediaScrollViewer_MouseUp" MouseMove="MediaScrollViewer_MouseMove">
             <ItemsControl x:Name="MediaItemControl" ItemsSource="{Binding FileSystemItems}" Focusable="False">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -722,9 +723,9 @@
             </ItemsControl>
         </ScrollViewer>
 
-        <!-- Library selection dragging rectangle -->
-        <Canvas x:Name="LibraryDragSelection" Grid.Row="2" Grid.Column="3" Visibility="Collapsed">
-            <Rectangle x:Name="LibraryDragRect" Stroke="DarkOrange" Fill="#77FFFFFF"/>
+        <!-- Selection dragging rectangle -->
+        <Canvas x:Name="DragSelection" Grid.Row="2" Grid.Column="3" Visibility="Collapsed">
+            <Rectangle x:Name="DragSelectionRect" Stroke="DarkOrange" Fill="#77FFFFFF"/>
         </Canvas>
 
         <!-- Empty media container info box -->

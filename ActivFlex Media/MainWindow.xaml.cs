@@ -481,7 +481,6 @@ namespace ActivFlex
         private void LibraryScrollViewer_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left && e.OriginalSource == LibraryScrollViewer) {
-
                 LeftMouseButtonDown = true;
                 SelectionAnchor = e.GetPosition(LibraryScrollViewer);
 
@@ -509,7 +508,7 @@ namespace ActivFlex
 
                 if (IsDragging) {
                     IsDragging = false;
-                    LibraryDragSelection.Visibility = Visibility.Collapsed;
+                    DragSelection.Visibility = Visibility.Collapsed;
                     e.Handled = true;
                 }
 
@@ -536,7 +535,7 @@ namespace ActivFlex
                 if (dragDistance > DragThreshold) {
                     IsDragging = true;
                     UpdateDragSelection(mousePos);
-                    LibraryDragSelection.Visibility = Visibility.Visible;
+                    DragSelection.Visibility = Visibility.Visible;
                 }
                 
                 e.Handled = true;
@@ -556,10 +555,10 @@ namespace ActivFlex
                 double width = Math.Abs(x - SelectionAnchor.X);
                 double height = Math.Abs(y - SelectionAnchor.Y);
 
-                LibraryDragRect.SetValue(Canvas.LeftProperty, Math.Min(x, SelectionAnchor.X));
-                LibraryDragRect.SetValue(Canvas.TopProperty, Math.Min(y, SelectionAnchor.Y));
-                LibraryDragRect.Width = width;
-                LibraryDragRect.Height = height;
+                DragSelectionRect.SetValue(Canvas.LeftProperty, Math.Min(x, SelectionAnchor.X));
+                DragSelectionRect.SetValue(Canvas.TopProperty, Math.Min(y, SelectionAnchor.Y));
+                DragSelectionRect.Width = width;
+                DragSelectionRect.Height = height;
 
                 //Update the item selection
                 int i = 0;
@@ -578,6 +577,138 @@ namespace ActivFlex
                         double ItemHeight = 0;
                         
                         if (thumbnailControl is ImageThumbnail imageThumb) {
+                            ItemWidth = imageThumb.ActualWidth;
+                            ItemHeight = imageThumb.ActualHeight;
+                            ItemPos = imageThumb.TransformToAncestor(WrapSelectionPanel).Transform(Origin);
+
+                        } else if (thumbnailControl is MusicThumbnail musicThumb) {
+                            ItemWidth = musicThumb.ActualWidth;
+                            ItemHeight = musicThumb.ActualHeight;
+                            ItemPos = musicThumb.TransformToAncestor(WrapSelectionPanel).Transform(Origin);
+                        }
+
+                        ItemRectangles[i].X = ItemPos.X;
+                        ItemRectangles[i].Y = ItemPos.Y;
+                        ItemRectangles[i].Width = ItemWidth;
+                        ItemRectangles[i].Height = ItemHeight - 7;
+
+                        if (DragRect.IntersectsWith(ItemRectangles[i])) {
+                            itemContext.IsSelected = true;
+                        } else {
+                            itemContext.IsSelected = false;
+                        }
+
+                        i++;
+                    }
+                }
+            }
+        }
+
+        private void MediaScrollViewer_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left && e.OriginalSource == MediaScrollViewer) {
+                LeftMouseButtonDown = true;
+                SelectionAnchor = e.GetPosition(MediaScrollViewer);
+
+                //Find the wrap panel of the media items
+                var border = VisualTreeHelper.GetChild(MediaItemControl, 0);
+                var itemPresenter = VisualTreeHelper.GetChild(border, 0);
+                WrapSelectionPanel = VisualTreeHelper.GetChild(itemPresenter, 0) as WrapPanel;
+                ItemRectangles = new Rect[WrapSelectionPanel.Children.Count];
+
+                for (int i = 0; i < ItemRectangles.Length; i++) {
+                    ItemRectangles[i] = new Rect(0, 0, 10, 10);
+                }
+
+                vm.ResetItemSelection();
+
+                //Force mouse event forwarding to the selection control
+                MediaScrollViewer.CaptureMouse();
+                e.Handled = true;
+            }
+        }
+
+        private void MediaScrollViewer_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left) {
+
+                if (IsDragging) {
+                    IsDragging = false;
+                    DragSelection.Visibility = Visibility.Collapsed;
+                    e.Handled = true;
+                }
+
+                if (LeftMouseButtonDown) {
+                    LeftMouseButtonDown = false;
+                    MediaScrollViewer.ReleaseMouseCapture();
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private void MediaScrollViewer_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (IsDragging) {
+                Point mousePos = e.GetPosition(MediaScrollViewer);
+                UpdateFileSystemSelection(mousePos);
+                e.Handled = true;
+
+            } else if (LeftMouseButtonDown) {
+                Point mousePos = e.GetPosition(MediaScrollViewer);
+                var dragDelta = mousePos - SelectionAnchor;
+                double dragDistance = Math.Abs(dragDelta.Length);
+
+                if (dragDistance > DragThreshold) {
+                    IsDragging = true;
+                    UpdateFileSystemSelection(mousePos);
+                    DragSelection.Visibility = Visibility.Visible;
+                }
+
+                e.Handled = true;
+            }
+        }
+
+        private void UpdateFileSystemSelection(Point mousePos)
+        {
+            if (IsDragging) {
+                //limit the mouse area to the browsing area
+                mousePos.X = Math.Min(MediaScrollViewer.ActualWidth, mousePos.X);
+                mousePos.Y = Math.Min(MediaScrollViewer.ActualHeight, mousePos.Y);
+
+                //Update the selection rectangle
+                double x = Math.Max(0, mousePos.X);
+                double y = Math.Max(0, mousePos.Y);
+                double width = Math.Abs(x - SelectionAnchor.X);
+                double height = Math.Abs(y - SelectionAnchor.Y);
+
+                DragSelectionRect.SetValue(Canvas.LeftProperty, Math.Min(x, SelectionAnchor.X));
+                DragSelectionRect.SetValue(Canvas.TopProperty, Math.Min(y, SelectionAnchor.Y));
+                DragSelectionRect.Width = width;
+                DragSelectionRect.Height = height;
+
+                //Update the item selection
+                int i = 0;
+                DragRect.X = Math.Min(x, SelectionAnchor.X);
+                DragRect.Y = Math.Min(y, SelectionAnchor.Y);
+                DragRect.Width = width;
+                DragRect.Height = height;
+
+                foreach (var child in WrapSelectionPanel.Children) {
+
+                    if (child is ContentPresenter item) {
+                        object thumbnailControl = VisualTreeHelper.GetChild(item, 0);
+                        IThumbnailViewModel itemContext = item.DataContext as IThumbnailViewModel;
+
+                        double ItemWidth = 0;
+                        double ItemHeight = 0;
+
+                        if (thumbnailControl is DirectoryThumbnail directoryThumb) {
+                            ItemWidth = directoryThumb.ActualWidth;
+                            ItemHeight = directoryThumb.ActualHeight;
+                            ItemPos = directoryThumb.TransformToAncestor(WrapSelectionPanel).Transform(Origin);
+                            i++; continue;
+
+                        } else if (thumbnailControl is ImageThumbnail imageThumb) {
                             ItemWidth = imageThumb.ActualWidth;
                             ItemHeight = imageThumb.ActualHeight;
                             ItemPos = imageThumb.TransformToAncestor(WrapSelectionPanel).Transform(Origin);
