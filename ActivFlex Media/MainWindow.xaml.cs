@@ -88,6 +88,21 @@ namespace ActivFlex
         private WrapPanel WrapSelectionPanel;
 
         /// <summary>
+        /// Selection rectangles of drag selection items.
+        /// </summary>
+        private Rect[] ItemRectangles;
+
+        /// <summary>
+        /// Point for the position of selection items.
+        /// </summary>
+        private Point ItemPos = new Point(0, 0);
+
+        /// <summary>
+        /// Rectangle for the current selection area.
+        /// </summary>
+        private Rect DragRect = new Rect(0, 0, 0, 0);
+
+        /// <summary>
         /// Distance the cursor has to move before the selection starts.
         /// </summary>
         private static readonly double DragThreshold = 5;
@@ -470,11 +485,19 @@ namespace ActivFlex
                 LeftMouseButtonDown = true;
                 SelectionAnchor = e.GetPosition(LibraryScrollViewer);
 
+                //Find the wrap panel of the media items
                 var border = VisualTreeHelper.GetChild(LibraryItemControl, 0);
                 var itemPresenter = VisualTreeHelper.GetChild(border, 0);
                 WrapSelectionPanel = VisualTreeHelper.GetChild(itemPresenter, 0) as WrapPanel;
+                ItemRectangles = new Rect[WrapSelectionPanel.Children.Count];
+
+                for (int i = 0; i < ItemRectangles.Length; i++) {
+                    ItemRectangles[i] = new Rect(0, 0, 10, 10);
+                }
 
                 vm.ResetItemSelection();
+
+                //Force mouse event forwarding to the selection control
                 LibraryScrollViewer.CaptureMouse();
                 e.Handled = true;
             }
@@ -523,7 +546,6 @@ namespace ActivFlex
         private void UpdateDragSelection(Point mousePos)
         {
             if (IsDragging) {
-
                 //limit the mouse area to the browsing area
                 mousePos.X = Math.Min(LibraryScrollViewer.ActualWidth, mousePos.X);
                 mousePos.Y = Math.Min(LibraryScrollViewer.ActualHeight, mousePos.Y);
@@ -538,38 +560,46 @@ namespace ActivFlex
                 LibraryDragRect.SetValue(Canvas.TopProperty, Math.Min(y, SelectionAnchor.Y));
                 LibraryDragRect.Width = width;
                 LibraryDragRect.Height = height;
-                
+
                 //Update the item selection
-                Rect dragRect = new Rect(Math.Min(x, SelectionAnchor.X), Math.Min(y, SelectionAnchor.Y), width, height);
+                int i = 0;
+                DragRect.X = Math.Min(x, SelectionAnchor.X);
+                DragRect.Y = Math.Min(y, SelectionAnchor.Y);
+                DragRect.Width = width;
+                DragRect.Height = height;
                 
                 foreach (var child in WrapSelectionPanel.Children) {
 
                     if (child is ContentPresenter item) {
                         object thumbnailControl = VisualTreeHelper.GetChild(item, 0);
                         ILibraryItemViewModel itemContext = item.DataContext as ILibraryItemViewModel;
-
-                        Point itemPos = new Point(0, 0);
+                        
                         double ItemWidth = 0;
                         double ItemHeight = 0;
                         
                         if (thumbnailControl is ImageThumbnail imageThumb) {
                             ItemWidth = imageThumb.ActualWidth;
                             ItemHeight = imageThumb.ActualHeight;
-                            itemPos = imageThumb.TransformToAncestor(WrapSelectionPanel).Transform(Origin);
+                            ItemPos = imageThumb.TransformToAncestor(WrapSelectionPanel).Transform(Origin);
 
                         } else if (thumbnailControl is MusicThumbnail musicThumb) {
                             ItemWidth = musicThumb.ActualWidth;
                             ItemHeight = musicThumb.ActualHeight;
-                            itemPos = musicThumb.TransformToAncestor(WrapSelectionPanel).Transform(Origin);
+                            ItemPos = musicThumb.TransformToAncestor(WrapSelectionPanel).Transform(Origin);
                         }
 
-                        Rect itemRect = new Rect(itemPos.X, itemPos.Y, ItemWidth, ItemHeight - 7);
-                        
-                        if (dragRect.IntersectsWith(itemRect)) {
+                        ItemRectangles[i].X = ItemPos.X;
+                        ItemRectangles[i].Y = ItemPos.Y;
+                        ItemRectangles[i].Width = ItemWidth;
+                        ItemRectangles[i].Height = ItemHeight - 7;
+
+                        if (DragRect.IntersectsWith(ItemRectangles[i])) {
                             itemContext.IsSelected = true;
                         } else {
                             itemContext.IsSelected = false;
                         }
+
+                        i++;
                     }
                 }
             }
