@@ -870,28 +870,30 @@ namespace ActivFlex.ViewModels
         /// </summary>
         private void FileItemDragInit(IThumbnailViewModel dragItem)
         {
-            string[] fileList;
-            if (FileSystemItems.Any(item => item.IsSelected)) {
+            if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.LeftShift)) {
+                string[] fileList;
+                if (FileSystemItems.Any(item => item.IsSelected)) {
 
-                if (dragItem.IsSelected) {
-                    fileList = FileSystemItems
-                                .Where(item => item.IsSelected)
-                                .Select(item => item.Path)
-                                .ToArray();
+                    if (dragItem.IsSelected) {
+                        fileList = FileSystemItems
+                                    .Where(item => item.IsSelected)
+                                    .Select(item => item.Path)
+                                    .ToArray();
+
+                    } else {
+                        ResetItemSelection();
+                        dragItem.IsSelected = true;
+                        fileList = new string[] { dragItem.Path };
+                    }
 
                 } else {
-                    ResetItemSelection();
                     dragItem.IsSelected = true;
                     fileList = new string[] { dragItem.Path };
                 }
 
-            } else {
-                dragItem.IsSelected = true;
-                fileList = new string[] { dragItem.Path };
+                var dropData = new DataObject(DataFormats.FileDrop, fileList);
+                DragDrop.DoDragDrop(navView, dropData, DragDropEffects.All);
             }
-
-            var dropData = new DataObject(DataFormats.FileDrop, fileList);
-            DragDrop.DoDragDrop(navView, dropData, DragDropEffects.All);
         }
 
         /// <summary>
