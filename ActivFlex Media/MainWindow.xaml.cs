@@ -549,6 +549,24 @@ namespace ActivFlex
             }
         }
 
+        private void EditBox_PreviewDragOver(object sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.Move;
+            e.Handled = true;
+        }
+
+        private void EditBox_PreviewDragEnter(object sender, DragEventArgs e)
+        {
+            NavViewItem_DragEnter(sender, e);
+            e.Handled = true;
+        }
+
+        private void EditBox_PreviewDragLeave(object sender, DragEventArgs e)
+        {
+            NavViewItem_DragLeave(sender, e);
+            e.Handled = true;
+        }
+
         private void ResetSelection_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             vm.ResetItemSelection();
