@@ -471,6 +471,8 @@
                                                  ClickParameter="{Binding}"
                                                  Click="{Binding DataContext.FileImageClick,
                                                          RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                 LeftMouseDown="{Binding DataContext.FileItemMouseDown,
+                                                                 RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                                                  Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
 
                             <Controls:ImageThumbnail.ContextMenu>
@@ -505,6 +507,8 @@
                                                  ClickParameter="{Binding}"
                                                  Click="{Binding DataContext.FileMusicClick,
                                                          RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                 LeftMouseDown="{Binding DataContext.FileItemMouseDown,
+                                                                 RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                                                  Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
 
                             <Controls:MusicThumbnail.ContextMenu>
@@ -541,6 +545,8 @@
                                                  ClickParameter="{Binding}"
                                                  Click="{Binding DataContext.FileVideoClick,
                                                          RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                 LeftMouseDown="{Binding DataContext.FileItemMouseDown,
+                                                                 RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                                                  Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
 
                             <Controls:ImageThumbnail.ContextMenu>

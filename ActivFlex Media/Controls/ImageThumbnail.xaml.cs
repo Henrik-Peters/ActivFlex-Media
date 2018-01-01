@@ -43,7 +43,6 @@ namespace ActivFlex.Controls
         /// Gets or sets the command to be execute
         /// when the user clicks the thumbnail image
         /// </summary>
-        [Bindable(true)]
         public ICommand Click {
             get => (ICommand)this.GetValue(ClickCommandProperty);
             set => this.SetValue(ClickCommandProperty, value);
@@ -58,7 +57,6 @@ namespace ActivFlex.Controls
         /// <summary>
         /// Gets or sets the parameter for the click command.
         /// </summary>
-        [Bindable(true)]
         public object ClickParameter {
             get => this.GetValue(ClickParameterProperty);
             set => this.SetValue(ClickParameterProperty, value);
@@ -74,12 +72,26 @@ namespace ActivFlex.Controls
         /// Gets or sets the command to be execute
         /// when the user double clicks the thumbnail
         /// </summary>
-        [Bindable(true)]
         public ICommand DoubleClick {
             get => (ICommand)this.GetValue(DoubleClickCommandProperty);
             set => this.SetValue(DoubleClickCommandProperty, value);
         }
-        
+
+        /// <summary>
+        /// Identifies the LeftMouseDown dependency property
+        /// </summary>
+        public static readonly DependencyProperty LeftMouseDownProperty = DependencyProperty.Register(
+            "LeftMouseDown", typeof(ICommand), typeof(ImageThumbnail), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the command to be execute
+        /// when the mouse is pressed on the control
+        /// </summary>
+        public ICommand LeftMouseDown {
+            get => (ICommand)this.GetValue(LeftMouseDownProperty);
+            set => this.SetValue(LeftMouseDownProperty, value);
+        }
+
         /// <summary>
         /// Identifies the IsSelectedProperty dependency property
         /// </summary>
@@ -90,7 +102,6 @@ namespace ActivFlex.Controls
         /// Gets or sets the selected value of the control.
         /// The thumbnail will be highlighted when selected.
         /// </summary>
-        [Bindable(true)]
         public bool IsSelected {
             get => (bool)this.GetValue(IsSelectedProperty);
             set {
@@ -110,7 +121,6 @@ namespace ActivFlex.Controls
         /// to false on an active selection, the selection
         /// will be lost (IsSelected will be set to false).
         /// </summary>
-        [Bindable(true)]
         public bool CanSelect {
             get => (bool)this.GetValue(CanSelectProperty);
             set {
@@ -128,7 +138,6 @@ namespace ActivFlex.Controls
         /// <summary>
         /// Gets or sets the content of the text label.
         /// </summary>
-        [Bindable(true)]
         public string Text {
             get => (string)this.GetValue(TextProperty);
             set => this.SetValue(TextProperty, value);
@@ -145,7 +154,6 @@ namespace ActivFlex.Controls
         /// thumbnail control. The proxy object should never
         /// be empty. The proxy will be used in the commands.
         /// </summary>
-        [Bindable(true)]
         public IFileObject Proxy {
             get => (IFileObject)this.GetValue(ProxyProperty);
             set => this.SetValue(ProxyProperty, value);
@@ -265,6 +273,11 @@ namespace ActivFlex.Controls
         {
             DoubleClick?.Execute(ClickParameter);
             e.Handled = true;
+        }
+
+        private void ImgThumbnail_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LeftMouseDown?.Execute(ClickParameter);
         }
 
         #endregion

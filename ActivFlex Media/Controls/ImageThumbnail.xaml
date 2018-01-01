@@ -7,6 +7,7 @@
              x:Name="imgThumbnail"
              d:DesignHeight="150" d:DesignWidth="150"
              MaxWidth="150" MaxHeight="150"
+             PreviewMouseLeftButtonDown="ImgThumbnail_PreviewMouseLeftButtonDown"
              Foreground="{StaticResource Thumbnail.Text.Color}">
 
     <Grid Style="{StaticResource TextThumbnailStyle}">

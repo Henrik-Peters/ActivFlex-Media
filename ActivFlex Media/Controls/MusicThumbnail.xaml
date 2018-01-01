@@ -8,6 +8,7 @@
              Focusable="False"
              Width="150" Height="150"
              d:DesignHeight="150" d:DesignWidth="150"
+             PreviewMouseLeftButtonDown="MusicThumbnail_PreviewMouseLeftButtonDown"
              Foreground="{StaticResource Thumbnail.Text.Color}">
 
     <Grid Style="{StaticResource MusicThumbnailStyle}">

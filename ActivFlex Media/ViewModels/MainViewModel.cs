@@ -711,6 +711,11 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public ICommand FileVideoClick { get; set; }
 
+        /// <summary>
+        /// Executed when the mouse is pressed on a filesystem item.
+        /// </summary>
+        public ICommand FileItemMouseDown { get; set; }
+
         #endregion
 
         /// <summary>
@@ -826,6 +831,7 @@ namespace ActivFlex.ViewModels
             this.FileImageClick = new RelayCommand<ImageItemViewModel>(ImageFileItemClick);
             this.FileMusicClick = new RelayCommand<MusicItemViewModel>(MusicFileItemClick);
             this.FileVideoClick = new RelayCommand<VideoItemViewModel>(VideoFileItemClick);
+            this.FileItemMouseDown = new RelayCommand<IThumbnailViewModel>(FileItemDragInit);
             this.LaunchDefault = new RelayCommand<IFileObject>(media => {
                 if (File.Exists(media.Path)) {
                     Process.Start(media.Path);
@@ -857,6 +863,35 @@ namespace ActivFlex.ViewModels
             this.Stop = new RelayCommand(StopCurrentPlayback);
             this.Next = new RelayCommand(() => ChangeActiveImage(true));
             this.Previous = new RelayCommand(() => ChangeActiveImage(false));
+        }
+
+        /// <summary>
+        /// Drag and drop initializer for filesystem items.
+        /// </summary>
+        private void FileItemDragInit(IThumbnailViewModel dragItem)
+        {
+            string[] fileList;
+            if (FileSystemItems.Any(item => item.IsSelected)) {
+
+                if (dragItem.IsSelected) {
+                    fileList = FileSystemItems
+                                .Where(item => item.IsSelected)
+                                .Select(item => item.Path)
+                                .ToArray();
+
+                } else {
+                    ResetItemSelection();
+                    dragItem.IsSelected = true;
+                    fileList = new string[] { dragItem.Path };
+                }
+
+            } else {
+                dragItem.IsSelected = true;
+                fileList = new string[] { dragItem.Path };
+            }
+
+            var dropData = new DataObject(DataFormats.FileDrop, fileList);
+            DragDrop.DoDragDrop(navView, dropData, DragDropEffects.All);
         }
 
         /// <summary>

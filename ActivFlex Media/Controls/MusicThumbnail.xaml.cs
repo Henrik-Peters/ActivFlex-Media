@@ -89,6 +89,21 @@ namespace ActivFlex.Controls
         }
 
         /// <summary>
+        /// Identifies the LeftMouseDown dependency property
+        /// </summary>
+        public static readonly DependencyProperty LeftMouseDownProperty = DependencyProperty.Register(
+            "LeftMouseDown", typeof(ICommand), typeof(MusicThumbnail), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the command to be execute
+        /// when the mouse is pressed on the control
+        /// </summary>
+        public ICommand LeftMouseDown {
+            get => (ICommand)this.GetValue(LeftMouseDownProperty);
+            set => this.SetValue(LeftMouseDownProperty, value);
+        }
+
+        /// <summary>
         /// Identifies the IsSelectedProperty dependency property
         /// </summary>
         public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register(
@@ -171,6 +186,11 @@ namespace ActivFlex.Controls
         {
             DoubleClick?.Execute(ClickParameter);
             e.Handled = true;
+        }
+
+        private void MusicThumbnail_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LeftMouseDown?.Execute(ClickParameter);
         }
     }
 }
