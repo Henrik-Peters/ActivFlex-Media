@@ -4,6 +4,7 @@
     <!-- TreeViewItem border and TreeArrow color definitions -->
     <SolidColorBrush x:Key="TreeViewItem.Selected.Color" Color="#F2418CFF"/>
     <SolidColorBrush x:Key="TreeViewItem.MouseOver.Color" Color="#C8465064"/>
+    <SolidColorBrush x:Key="TreeViewItem.DragDrop.Color" Color="#ED9300"/>
     <SolidColorBrush x:Key="TreeViewItem.TreeArrow.Static.Stroke" Color="#FF818181"/>
     <SolidColorBrush x:Key="TreeViewItem.TreeArrow.Static.Checked.Stroke" Color="#FF818181"/>
     <SolidColorBrush x:Key="TreeViewItem.TreeArrow.MouseOver.Stroke" Color="#50BEFF"/>

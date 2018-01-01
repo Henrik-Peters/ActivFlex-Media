@@ -70,7 +70,7 @@ namespace ActivFlex.Navigation
         /// The display text will set by the library name.
         /// </summary>
         /// <param name="mediaLibrary">The represented media library</param>
-        public LibraryNavItem(MediaLibrary mediaLibrary)
+        public LibraryNavItem(MediaLibrary mediaLibrary) : base(null, false, true)
         {
             this._mediaLibrary = mediaLibrary;
             this.DisplayName = mediaLibrary.Name;
@@ -88,7 +88,7 @@ namespace ActivFlex.Navigation
         /// </summary>
         /// <param name="mediaLibrary">The represented media library</param>
         /// <param name="name">Custom display text for the nav item</param>
-        public LibraryNavItem(MediaLibrary mediaLibrary, string name)
+        public LibraryNavItem(MediaLibrary mediaLibrary, string name) : base(null, false, true)
         {
             this._mediaLibrary = mediaLibrary;
             this.DisplayName = name;

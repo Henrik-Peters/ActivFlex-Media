@@ -70,7 +70,7 @@ namespace ActivFlex.Navigation
         /// The display text will set by the container name.
         /// </summary>
         /// <param name="container">The represented media container</param>
-        public ContainerNavItem(MediaContainer container)
+        public ContainerNavItem(MediaContainer container) : base(null, false, true)
         {
             this._mediaContainer = container;
             this.DisplayName = container.Name;

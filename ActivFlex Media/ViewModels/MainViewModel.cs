@@ -1570,7 +1570,7 @@ namespace ActivFlex.ViewModels
         /// by searching in the navigation tree view.
         /// </summary>
         /// <param name="container">ID of this container is used for matching</param>
-        private TreeViewItem FindNavItem(MediaContainer container)
+        public TreeViewItem FindNavItem(MediaContainer container)
         {
             return FindTreeItem(item => {
                 return (item.DataContext is ContainerNavItem containerItem &&

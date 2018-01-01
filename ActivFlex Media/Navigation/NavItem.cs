@@ -33,6 +33,8 @@ namespace ActivFlex.Navigation
     public abstract class NavItem : ViewModel
     {
         private bool _isExpanded;
+        private bool _allowDrop;
+        private bool _isDropOver;
         private string _localizeKey;
         private ObservableCollection<NavItem> _navChildren;
         private Visibility _nameBox;
@@ -59,6 +61,22 @@ namespace ActivFlex.Navigation
         public virtual bool IsExpanded {
             get => _isExpanded;
             set => SetProperty(ref _isExpanded, value);
+        }
+
+        /// <summary>
+        /// The ability of this item to receive dragged items.
+        /// </summary>
+        public bool AllowDrop {
+            get => _allowDrop;
+            set => SetProperty(ref _allowDrop, value);
+        }
+
+        /// <summary>
+        /// True when the mouse hovers over this item during dragging.
+        /// </summary>
+        public bool IsDropOver {
+            get => _isDropOver;
+            set => SetProperty(ref _isDropOver, value);
         }
 
         /// <summary>
@@ -99,13 +117,16 @@ namespace ActivFlex.Navigation
         /// </summary>
         /// <param name="Children">The navigation children of the item</param>
         /// <param name="IsExpanded">The startup expand state of the item</param>
-        protected NavItem(ObservableCollection<NavItem> Children = null, bool IsExpanded = false)
+        /// <param name="AllowDrop">The ability of this item to receive dragged items</param>
+        protected NavItem(ObservableCollection<NavItem> Children = null, bool IsExpanded = false, bool AllowDrop = false)
         {
             this._navChildren = new ObservableCollection<NavItem>();
             this.NavChildren = Children ?? _navChildren;
             this.IsExpanded = IsExpanded;
+            this.AllowDrop = AllowDrop;
             this.Tag = NavTag.None;
             this._nameBox = Visibility.Visible;
+            this._isDropOver = false;
         }
     }
 }

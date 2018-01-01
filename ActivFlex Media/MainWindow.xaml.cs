@@ -452,24 +452,100 @@ namespace ActivFlex
             var dataObject = e.Data as DataObject;
 
             if (dataObject.ContainsFileDropList()) {
-                StringCollection fileList = dataObject.GetFileDropList();
-                string[] mediaExtensions = MediaImage.ImageExtensions
+                ImportFiles(dataObject.GetFileDropList(), vm.ActiveContainer);
+
+                //Update the current library browsing view
+                vm.OpenMediaContainer.Execute(vm.ActiveContainer);
+            }
+        }
+
+        private int ImportFiles(StringCollection fileList, MediaContainer container)
+        {
+            int importCount = 0;
+            string[] mediaExtensions = MediaImage.ImageExtensions
                     .Concat(MediaMusic.MusicExtensions)
                     .Concat(MediaVideo.VideoExtensions)
                     .ToArray();
 
-                //Only add valid drag and drop items
-                foreach (string filePath in fileList) {
-                    string extension = LibraryItemFactory.GetPathExtension(filePath);
+            foreach (string filePath in fileList) {
+                string extension = LibraryItemFactory.GetPathExtension(filePath);
 
-                    if (File.Exists(filePath) && mediaExtensions.Contains(extension)) {
-                        string name = Path.GetFileNameWithoutExtension(filePath);
-                        MainViewModel.StorageEngine.CreateLibraryItem(name, filePath, vm.ActiveContainer, DateTime.Now);
+                if (File.Exists(filePath) && mediaExtensions.Contains(extension)) {
+                    string name = Path.GetFileNameWithoutExtension(filePath);
+                    MainViewModel.StorageEngine.CreateLibraryItem(name, filePath, container, DateTime.Now);
+                    importCount++;
+                }
+            }
+
+            return importCount;
+        }
+
+        private void NavViewItem_DragEnter(object sender, DragEventArgs e)
+        {
+            if (sender is FrameworkElement frameworkElement) {
+
+                if (frameworkElement.DataContext is LibraryNavItem libraryItem) {
+                    libraryItem.IsDropOver = true;
+
+                } else if (frameworkElement.DataContext is ContainerNavItem navItem) {
+                    navItem.IsDropOver = true;
+                }
+
+                if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                    e.Effects = DragDropEffects.Copy;
+                } else {
+                    e.Effects = DragDropEffects.None;
+                }
+            }
+
+            e.Handled = true;
+        }
+        
+        private void NavViewItem_DragLeave(object sender, DragEventArgs e)
+        {
+            if (sender is FrameworkElement frameworkElement) {
+
+                if (frameworkElement.DataContext is LibraryNavItem libraryItem) {
+                    libraryItem.IsDropOver = false;
+
+                } else if (frameworkElement.DataContext is ContainerNavItem navItem) {
+                    navItem.IsDropOver = false;
+                }
+            }
+
+            e.Handled = true;
+        }
+
+        private void NavViewItem_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                MediaContainer targetContainer = null;
+                var dataObject = e.Data as DataObject;
+                StringCollection fileList = dataObject.GetFileDropList();
+
+                //Find the media container for the import
+                if (sender is FrameworkElement frameworkElement) {
+
+                    if (frameworkElement.DataContext is LibraryNavItem libraryItem) {
+                        libraryItem.IsDropOver = false;
+                        targetContainer = libraryItem.MediaLibrary.RootContainer;
+
+                    } else if (frameworkElement.DataContext is ContainerNavItem navItem) {
+                        navItem.IsDropOver = false;
+                        targetContainer = navItem.MediaContainer;
                     }
                 }
 
-                //Update the current library browsing view
-                vm.OpenMediaContainer.Execute(vm.ActiveContainer);
+                int importCount = 0;
+                if (targetContainer != null) {
+                    importCount = ImportFiles(dataObject.GetFileDropList(), targetContainer);
+                }
+
+                //Show the import container
+                if (importCount > 0) {
+                    vm.SelectMediaContainer.Execute(targetContainer);
+                }
+                e.Handled = true;
             }
         }
 
