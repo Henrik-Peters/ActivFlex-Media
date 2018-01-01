@@ -491,11 +491,7 @@ namespace ActivFlex
                     navItem.IsDropOver = true;
                 }
 
-                if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
-                    e.Effects = DragDropEffects.Copy;
-                } else {
-                    e.Effects = DragDropEffects.None;
-                }
+                NavViewItem_DragOver(sender, e);
             }
 
             e.Handled = true;
@@ -549,10 +545,20 @@ namespace ActivFlex
             }
         }
 
+        private void NavViewItem_DragOver(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                e.Effects = DragDropEffects.Copy;
+            } else {
+                e.Effects = DragDropEffects.None;
+            }
+
+            e.Handled = true;
+        }
+
         private void EditBox_PreviewDragOver(object sender, DragEventArgs e)
         {
-            e.Effects = DragDropEffects.Move;
-            e.Handled = true;
+            NavViewItem_DragOver(sender, e);
         }
 
         private void EditBox_PreviewDragEnter(object sender, DragEventArgs e)

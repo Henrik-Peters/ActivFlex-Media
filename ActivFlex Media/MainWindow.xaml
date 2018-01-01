@@ -174,7 +174,7 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type TreeViewItem}">
-                                <StackPanel Name="NavViewItem" MouseDown="NavViewItem_MouseDown" AllowDrop="{Binding AllowDrop}" DragEnter="NavViewItem_DragEnter" DragLeave="NavViewItem_DragLeave" Drop="NavViewItem_Drop">
+                                <StackPanel Name="NavViewItem" MouseDown="NavViewItem_MouseDown" AllowDrop="{Binding AllowDrop}" DragEnter="NavViewItem_DragEnter" DragOver="NavViewItem_DragOver" DragLeave="NavViewItem_DragLeave" Drop="NavViewItem_Drop">
                                     <Border Name="Bd"
                                             BorderBrush="{TemplateBinding BorderBrush}"
                                             BorderThickness="{TemplateBinding BorderThickness}"
