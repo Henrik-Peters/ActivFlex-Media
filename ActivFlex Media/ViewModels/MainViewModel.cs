@@ -677,6 +677,11 @@ namespace ActivFlex.ViewModels
         public ICommand ExplorerItemLaunch { get; set; }
 
         /// <summary>
+        /// Show the renaming editbox for a library item.
+        /// </summary>
+        public ICommand RenameLibraryItem { get; set; }
+
+        /// <summary>
         /// Open the delete dialog for a single library item.
         /// </summary>
         public ICommand DeleteLibraryItem { get; set; }
@@ -820,6 +825,7 @@ namespace ActivFlex.ViewModels
             this.DeleteMediaContainer = new RelayCommand<MediaContainer>(RemoveMediaContainer);
             this.LaunchMediaImport = new RelayCommand<MediaContainer>(StartMediaImport);
             this.ExplorerItemLaunch = new RelayCommand<IFileObject>(LaunchFileExplorer);
+            this.RenameLibraryItem = new RelayCommand<ILibraryItemViewModel>(EditLibraryItemName);
             this.DeleteLibraryItem = new RelayCommand<ILibraryItem>(RemoveLibraryItem);
             this.LaunchPresenter = new RelayCommand<MediaImage>(LaunchImagePresenter);
             this.PresentImage = new RelayCommand<MediaImage>(PresentMediaImage);
@@ -1536,6 +1542,15 @@ namespace ActivFlex.ViewModels
         private void LaunchFileExplorer(IFileObject fileItem)
         {
             Process.Start("explorer.exe", "/select, " + fileItem.Path);
+        }
+
+        /// <summary>
+        /// Show the naming editbox for a single library item.
+        /// </summary>
+        /// <param name="item">Item to rename</param>
+        private void EditLibraryItemName(ILibraryItemViewModel item)
+        {
+            Console.WriteLine("Rename: " + item.Name);
         }
 
         /// <summary>

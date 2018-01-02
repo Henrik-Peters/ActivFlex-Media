@@ -641,6 +641,11 @@
                                               Command="{Binding ExplorerItemLaunch}"
                                               CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
 
+                                    <MenuItem Header="{Binding Localize[Rename]}"
+                                              Command="{Binding RenameLibraryItem}"
+                                              CommandParameter="{Binding PlacementTarget.ClickParameter, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+
+                                    <Separator/>
                                     <MenuItem Header="{Binding Localize[Delete]}" 
                                               Command="{Binding DeleteLibraryItem}"
                                               CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
@@ -679,7 +684,12 @@
                                     <MenuItem Header="{Binding Localize[OpenInExplorer]}" 
                                               Command="{Binding ExplorerItemLaunch}"
                                               CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
-                                    
+
+                                    <MenuItem Header="{Binding Localize[Rename]}"
+                                              Command="{Binding RenameLibraryItem}"
+                                              CommandParameter="{Binding PlacementTarget.ClickParameter, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+
+                                    <Separator/>
                                     <MenuItem Header="{Binding Localize[Delete]}" 
                                               Command="{Binding DeleteLibraryItem}"
                                               CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
@@ -720,7 +730,12 @@
                                     <MenuItem Header="{Binding Localize[OpenInExplorer]}" 
                                               Command="{Binding ExplorerItemLaunch}"
                                               CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
-                                    
+
+                                    <MenuItem Header="{Binding Localize[Rename]}"
+                                              Command="{Binding RenameLibraryItem}"
+                                              CommandParameter="{Binding PlacementTarget.ClickParameter, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+
+                                    <Separator/>
                                     <MenuItem Header="{Binding Localize[Delete]}" 
                                               Command="{Binding DeleteLibraryItem}"
                                               CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
