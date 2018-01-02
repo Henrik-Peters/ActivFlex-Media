@@ -1646,21 +1646,32 @@ namespace ActivFlex.ViewModels
         }
 
         /// <summary>
-        /// Open the delete dialog for a single library item.
+        /// Open the delete dialog for library items.
         /// </summary>
         /// <param name="item">Target item for deletion</param>
         private void RemoveLibraryItem(ILibraryItem item)
         {
             bool deleteConfirm = false;
+            int selectionCount = LibraryItems.Where(libItem => libItem.IsSelected).Count();
+
             if (Config.DirectLibraryItemDelete) {
                 deleteConfirm = true;
 
             } else {
                 DeleteDialog deleteDialog = new DeleteDialog(Localize);
                 var deleteContext = deleteDialog.DataContext as DeleteDialogViewModel;
-                deleteDialog.DeleteTextBefore = Localize["DeleteBeforeItem"];
-                deleteDialog.DeleteTextAfter = Localize["DeleteAfterItem"];
-                deleteContext.DeleteName = item.Name;
+                
+                if (HasItemSelection && selectionCount > 1) {
+                    deleteDialog.DeleteTextBefore = Localize["DeleteBeforeMultiItem"];
+                    deleteDialog.DeleteTextAfter = Localize["DeleteAfterMultiItem"];
+                    deleteContext.DeleteName = selectionCount.ToString() + " " + Localize["MediaItems"];
+
+                } else {
+                    deleteDialog.DeleteTextBefore = Localize["DeleteBeforeItem"];
+                    deleteDialog.DeleteTextAfter = Localize["DeleteAfterItem"];
+                    deleteContext.DeleteName = item.Name;
+                }
+
                 deleteDialog.ShowDialog();
 
                 if (deleteContext.DeleteConfirm) {
@@ -1669,11 +1680,22 @@ namespace ActivFlex.ViewModels
             }
 
             if (deleteConfirm) {
-                //Delete the library item
-                ILibraryItemViewModel viewModel = LibraryItems.First(vm => vm.ItemID == item.ItemID);
-                StorageEngine.DeleteLibraryItem(item.ItemID);
-                LibraryItems.Remove(viewModel);
+                if (HasItemSelection && selectionCount > 1) {
+                    //Multi library item delete
+                    var items = LibraryItems.Where(libItem => libItem.IsSelected).ToArray();
 
+                    foreach (ILibraryItemViewModel viewModel in items) {
+                        StorageEngine.DeleteLibraryItem(viewModel.ItemID);
+                        LibraryItems.Remove(viewModel);
+                    }
+
+                } else {
+                    //Single library item delete
+                    ILibraryItemViewModel viewModel = LibraryItems.First(vm => vm.ItemID == item.ItemID);
+                    StorageEngine.DeleteLibraryItem(item.ItemID);
+                    LibraryItems.Remove(viewModel);
+                }
+                
                 //Empty media container info box
                 if (LibraryBrowsing && LibraryItems.Count == 0) {
                     EmptyContainerInfo = Visibility.Visible;
