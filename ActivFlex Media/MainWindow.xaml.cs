@@ -414,6 +414,15 @@ namespace ActivFlex
                         break;
                 }
             }
+
+            //Delete hotkey
+            if (e.Key == Key.Delete &&
+                vm.renameItem == null &&
+                vm.LibraryBrowsing &&
+                vm.LibraryItems.Any(item => item.IsSelected)) {
+
+                vm.DeleteLibraryItem.Execute(vm.LibraryItems.First(item => item.IsSelected).Proxy);
+            }
         }
 
         private void HotkeyEditBox(Key key)
