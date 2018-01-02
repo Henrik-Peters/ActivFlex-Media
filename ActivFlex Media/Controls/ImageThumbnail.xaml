@@ -25,6 +25,6 @@
         <Button x:Name="btnThumbnail" ClickMode="Press" Grid.Row="1" Grid.Column="1" MaxWidth="{Binding Path=MaxWidth, ElementName=imgThumbnail}" MaxHeight="120" Click="Thumbnail_Click" MouseDoubleClick="Thumbnail_DoubleClick"/>
         <Rectangle x:Name="nameBackground" Style="{StaticResource RectThumbnailImageStyle}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Height="20" Margin="0,3,0,0" Width="{Binding Path=ActualWidth, ElementName=nameDisplay}" VerticalAlignment="Top" RadiusX="7" RadiusY="7"/>
         <Label x:Name="nameDisplay" Style="{StaticResource LabelThumbnailImageStyle}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Content="{Binding Text, ElementName=imgThumbnail}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="12" FontWeight="Bold"/>
-        <TextBox x:Name="NameEditBox" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,4,0,0" FontSize="12" FontWeight="Bold" Text="" Width="0" Height="0"/>
+        <TextBox x:Name="NameEditBox" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,4,0,0" FontSize="12" FontWeight="Bold" Text="" Cursor="IBeam" Width="0" Height="0"/>
     </Grid>
 </UserControl>

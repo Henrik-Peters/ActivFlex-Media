@@ -1572,9 +1572,19 @@ namespace ActivFlex.ViewModels
             UIElement itemPresenter = (UIElement)libraryItemControl.ItemContainerGenerator.ContainerFromItem(item);
             var itemControl = VisualTreeHelper.GetChild(itemPresenter, 0);
 
+            TextBox editBox = null;
+            Label nameDisplay = null;
+            
             if (itemControl is ImageThumbnail imgThumb) {
-                TextBox editBox = imgThumb.FindName("NameEditBox") as TextBox;
-                Label nameDisplay = imgThumb.FindName("nameDisplay") as Label;
+                editBox = imgThumb.FindName("NameEditBox") as TextBox;
+                nameDisplay = imgThumb.FindName("nameDisplay") as Label;
+
+            } else if (itemControl is MusicThumbnail musicThumb) {
+                editBox = musicThumb.FindName("NameEditBox") as TextBox;
+                nameDisplay = musicThumb.FindName("nameDisplay") as Label;
+            }
+            
+            if (editBox != null && nameDisplay != null) {
                 nameDisplay.Visibility = Visibility.Hidden;
                 nameDisplay.Width = 0;
                 nameDisplay.Height = 0;
@@ -1600,10 +1610,19 @@ namespace ActivFlex.ViewModels
                 UIElement itemPresenter = (UIElement)libraryItemControl.ItemContainerGenerator.ContainerFromItem(item);
                 var itemControl = VisualTreeHelper.GetChild(itemPresenter, 0);
 
-                if (itemControl is ImageThumbnail imgThumb) {
-                    TextBox editBox = imgThumb.FindName("NameEditBox") as TextBox;
-                    Label nameDisplay = imgThumb.FindName("nameDisplay") as Label;
+                TextBox editBox = null;
+                Label nameDisplay = null;
 
+                if (itemControl is ImageThumbnail imgThumb) {
+                    editBox = imgThumb.FindName("NameEditBox") as TextBox;
+                    nameDisplay = imgThumb.FindName("nameDisplay") as Label;
+
+                } else if (itemControl is MusicThumbnail musicThumb) {
+                    editBox = musicThumb.FindName("NameEditBox") as TextBox;
+                    nameDisplay = musicThumb.FindName("nameDisplay") as Label;
+                }
+
+                if (editBox != null && nameDisplay != null) {
                     //Update the name
                     item.Name = editBox.Text;
                     nameDisplay.Content = item.Name;

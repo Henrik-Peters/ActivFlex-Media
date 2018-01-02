@@ -443,10 +443,17 @@ namespace ActivFlex
             if (vm.renameItem != null) {
                 UIElement itemPresenter = (UIElement)LibraryItemControl.ItemContainerGenerator.ContainerFromItem(vm.renameItem);
                 var itemControl = VisualTreeHelper.GetChild(itemPresenter, 0);
+                TextBox editBox = null;
 
                 if (itemControl is ImageThumbnail imgThumb) {
-                    TextBox editBox = imgThumb.FindName("NameEditBox") as TextBox;
+                    editBox = imgThumb.FindName("NameEditBox") as TextBox;
 
+                } else if (itemControl is MusicThumbnail musicThumb) {
+                    editBox = musicThumb.FindName("NameEditBox") as TextBox;
+                }
+
+                if (editBox != null) {
+                    //Append the keyboard input to the editbox
                     switch (key) {
                         case Key.Add:
                             editBox.Text += "+";

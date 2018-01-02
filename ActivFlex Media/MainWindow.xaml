@@ -98,7 +98,7 @@
                     <StackPanel Orientation="Horizontal">
                         <ContentPresenter Height="30" Width="20" Content="{Binding Converter={StaticResource NavIconConverter}}"/>
                         <TextBlock x:Name="NameBox" Text="{Binding DisplayName}" Visibility="{Binding NameBox}" Foreground="#E6E6E6" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                        <TextBox x:Name="EditBox" Width="150" Text="" Height="0" LostFocus="EditBox_LostFocus" AllowDrop="{Binding AllowDrop}" PreviewDragOver="EditBox_PreviewDragOver" PreviewDragEnter="EditBox_PreviewDragEnter" PreviewDragLeave="EditBox_PreviewDragLeave"/>
+                        <TextBox x:Name="EditBox" Width="150" Text="" Height="0" Cursor="IBeam" LostFocus="EditBox_LostFocus" AllowDrop="{Binding AllowDrop}" PreviewDragOver="EditBox_PreviewDragOver" PreviewDragEnter="EditBox_PreviewDragEnter" PreviewDragLeave="EditBox_PreviewDragLeave"/>
                     </StackPanel>
 
                 </HierarchicalDataTemplate>
