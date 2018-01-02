@@ -630,6 +630,11 @@ namespace ActivFlex
 
         private void LibraryScrollViewer_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (vm.editItem != null) {
+                EditBox_LostFocus(sender, null);
+                e.Handled = true;
+            }
+
             if (vm.renameItem != null) {
                 //Only finish the renaming when the source is not the editbox
                 if (e.OriginalSource.GetType().FullName != "System.Windows.Controls.TextBoxView") {
@@ -638,6 +643,7 @@ namespace ActivFlex
                 }
             }
 
+            //Drag selection initializer
             if (e.ChangedButton == MouseButton.Left && e.OriginalSource == LibraryScrollViewer) {
                 LeftMouseButtonDown = true;
                 SelectionAnchor = e.GetPosition(LibraryScrollViewer);
