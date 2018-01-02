@@ -123,6 +123,13 @@ namespace ActivFlex.Storage
         List<ILibraryItem> ReadItemsFromContainer(MediaContainer container);
 
         /// <summary>
+        /// Update a media library item with a new name.
+        /// </summary>
+        /// <param name="itemID">ID of the library item</param>
+        /// <param name="name">New name for the item</param>
+        void UpdateLibraryItemName(int itemID, string name);
+
+        /// <summary>
         /// Delete a media library item by the identifier.
         /// </summary>
         /// <param name="itemID">ID of the library item</param>

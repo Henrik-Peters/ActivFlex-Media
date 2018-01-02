@@ -1636,6 +1636,9 @@ namespace ActivFlex.ViewModels
                     nameDisplay.Width = Double.NaN;
                     nameDisplay.Height = Double.NaN;
                     nameDisplay.Visibility = Visibility.Visible;
+
+                    //Update the item storage
+                    StorageEngine.UpdateLibraryItemName(item.ItemID, item.Name);
                 }
 
                 renameItem = null;
