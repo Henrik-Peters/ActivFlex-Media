@@ -139,7 +139,7 @@ namespace ActivFlex
             TimeSlider_ValueChanged(this, null);
 
             //other window properties
-            this.vm = new MainViewModel(MediaPlayer, NavView, CurrentTimeLbl, MaxTimeLbl, MediaInfoIcon);
+            this.vm = new MainViewModel(MediaPlayer, NavView, CurrentTimeLbl, MaxTimeLbl, MediaInfoIcon, LibraryItemControl);
             this.DataContext = vm;
             this.MediaPlayer.Volume = MainViewModel.Config.Volume;
             this.SourceInitialized += new EventHandler(Window_SourceInitialized);
@@ -326,7 +326,7 @@ namespace ActivFlex
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (vm.editItem == null) {
+            if (vm.editItem == null && vm.renameItem == null) {
                 switch (e.Key) {
                     case Key.Add:
                         if (vm.ImagePresentActive) {
@@ -373,7 +373,7 @@ namespace ActivFlex
                         e.Handled = true;
                         break;
                 }
-            } else {
+            } else if (vm.editItem != null) {
                 //Container name edit mode
                 switch (e.Key) {
                     case Key.Enter:
@@ -390,6 +390,26 @@ namespace ActivFlex
 
                     case Key.Subtract:
                         HotkeyEditBox(e.Key);
+                        e.Handled = true;
+                        break;
+                }
+            } else if (vm.renameItem != null) {
+                //Library item rename mode
+                switch (e.Key) {
+                    case Key.Enter:
+                    case Key.Escape:
+                        vm.FinishLibraryItemRename.Execute(vm.renameItem);
+                        e.Handled = true;
+                        break;
+
+                    //Replace these hotkeys with an input for the edit box
+                    case Key.Add:
+                        HotkeyRenameBox(e.Key);
+                        e.Handled = true;
+                        break;
+
+                    case Key.Subtract:
+                        HotkeyRenameBox(e.Key);
                         e.Handled = true;
                         break;
                 }
@@ -418,10 +438,40 @@ namespace ActivFlex
             }
         }
 
+        private void HotkeyRenameBox(Key key)
+        {
+            if (vm.renameItem != null) {
+                UIElement itemPresenter = (UIElement)LibraryItemControl.ItemContainerGenerator.ContainerFromItem(vm.renameItem);
+                var itemControl = VisualTreeHelper.GetChild(itemPresenter, 0);
+
+                if (itemControl is ImageThumbnail imgThumb) {
+                    TextBox editBox = imgThumb.FindName("NameEditBox") as TextBox;
+
+                    switch (key) {
+                        case Key.Add:
+                            editBox.Text += "+";
+                            break;
+
+                        case Key.Subtract:
+                            editBox.Text += "-";
+                            break;
+                    }
+
+                    editBox.SelectionStart = editBox.Text.Length;
+                    editBox.SelectionLength = 0;
+                }
+            }
+        }
+
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (vm.editItem != null) {
                 EditBox_LostFocus(sender, null);
+                e.Handled = true;
+            }
+
+            if (vm.renameItem != null) {
+                vm.FinishLibraryItemRename.Execute(vm.renameItem);
                 e.Handled = true;
             }
         }
@@ -580,6 +630,14 @@ namespace ActivFlex
 
         private void LibraryScrollViewer_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (vm.renameItem != null) {
+                //Only finish the renaming when the source is not the editbox
+                if (e.OriginalSource.GetType().FullName != "System.Windows.Controls.TextBoxView") {
+                    vm.FinishLibraryItemRename.Execute(vm.renameItem);
+                    e.Handled = true;
+                }
+            }
+
             if (e.ChangedButton == MouseButton.Left && e.OriginalSource == LibraryScrollViewer) {
                 LeftMouseButtonDown = true;
                 SelectionAnchor = e.GetPosition(LibraryScrollViewer);

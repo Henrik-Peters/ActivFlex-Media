@@ -33,6 +33,7 @@ using System.Collections.Specialized;
 using System.Collections.ObjectModel;
 using ActivFlex.Configuration;
 using ActivFlex.Converters;
+using ActivFlex.Controls;
 using ActivFlex.Localization;
 using ActivFlex.Navigation;
 using ActivFlex.FileSystem;
@@ -161,6 +162,16 @@ namespace ActivFlex.ViewModels
         /// The tree view item with an active edit box.
         /// </summary>
         public TreeViewItem editItem;
+
+        /// <summary>
+        /// The library item with an active edit box.
+        /// </summary>
+        public ILibraryItemViewModel renameItem;
+
+        /// <summary>
+        /// The item control that contains library items.
+        /// </summary>
+        public ItemsControl libraryItemControl;
 
         /// <summary>
         /// The last item that was selected.
@@ -682,6 +693,11 @@ namespace ActivFlex.ViewModels
         public ICommand RenameLibraryItem { get; set; }
 
         /// <summary>
+        /// Apply the new name of the editbox for a library item. 
+        /// </summary>
+        public ICommand FinishLibraryItemRename { get; set; }
+
+        /// <summary>
         /// Open the delete dialog for a single library item.
         /// </summary>
         public ICommand DeleteLibraryItem { get; set; }
@@ -720,7 +736,7 @@ namespace ActivFlex.ViewModels
         /// Executed when the mouse is pressed on a filesystem item.
         /// </summary>
         public ICommand FileItemMouseDown { get; set; }
-
+        
         #endregion
 
         /// <summary>
@@ -731,8 +747,9 @@ namespace ActivFlex.ViewModels
         /// <param name="navView">Instance of the navigation tree view control</param>
         /// <param name="currentTimeLabel">Reference to the label for displaying the current playback time</param>
         /// <param name="maxTimeLabel">Reference to the label for displaying the maximum playback time</param>
-        /// <param name="mediaInfoIcon">The info icon in the media playback areae</param>
-        public MainViewModel(MediaElement mediaPlayer, TreeView navView, Label currentTimeLabel, Label maxTimeLabel, ContentPresenter mediaInfoIcon)
+        /// <param name="mediaInfoIcon">The info icon in the media playback area</param>
+        /// <param name="libraryItemControl">The item control that contains library items</param>
+        public MainViewModel(MediaElement mediaPlayer, TreeView navView, Label currentTimeLabel, Label maxTimeLabel, ContentPresenter mediaInfoIcon, ItemsControl libraryItemControl)
         {
             //Configuration
             if (Config == null) {
@@ -750,6 +767,7 @@ namespace ActivFlex.ViewModels
             this.currentTimeLabel = currentTimeLabel;
             this.maxTimeLabel = maxTimeLabel;
             this.mediaInfoIcon = mediaInfoIcon;
+            this.libraryItemControl = libraryItemControl;
             this.EmptyContainerInfo = Visibility.Collapsed;
             this.mediaInfoIcon.Visibility = Visibility.Hidden;
             this.mediaTimer = new DispatcherTimer(DispatcherPriority.Send) {
@@ -826,6 +844,7 @@ namespace ActivFlex.ViewModels
             this.LaunchMediaImport = new RelayCommand<MediaContainer>(StartMediaImport);
             this.ExplorerItemLaunch = new RelayCommand<IFileObject>(LaunchFileExplorer);
             this.RenameLibraryItem = new RelayCommand<ILibraryItemViewModel>(EditLibraryItemName);
+            this.FinishLibraryItemRename = new RelayCommand<ILibraryItemViewModel>(ApplyItemName);
             this.DeleteLibraryItem = new RelayCommand<ILibraryItem>(RemoveLibraryItem);
             this.LaunchPresenter = new RelayCommand<MediaImage>(LaunchImagePresenter);
             this.PresentImage = new RelayCommand<MediaImage>(PresentMediaImage);
@@ -1550,7 +1569,58 @@ namespace ActivFlex.ViewModels
         /// <param name="item">Item to rename</param>
         private void EditLibraryItemName(ILibraryItemViewModel item)
         {
-            Console.WriteLine("Rename: " + item.Name);
+            UIElement itemPresenter = (UIElement)libraryItemControl.ItemContainerGenerator.ContainerFromItem(item);
+            var itemControl = VisualTreeHelper.GetChild(itemPresenter, 0);
+
+            if (itemControl is ImageThumbnail imgThumb) {
+                TextBox editBox = imgThumb.FindName("NameEditBox") as TextBox;
+                Label nameDisplay = imgThumb.FindName("nameDisplay") as Label;
+                nameDisplay.Visibility = Visibility.Hidden;
+                nameDisplay.Width = 0;
+                nameDisplay.Height = 0;
+
+                editBox.Focus();
+                editBox.Text = item.Name;
+                editBox.Height = Double.NaN;
+                editBox.Width = Double.NaN;
+                editBox.SelectionStart = 0;
+                editBox.SelectionLength = editBox.Text.Length;
+
+                renameItem = item;
+            }
+        }
+
+        /// <summary>
+        /// Apply the name of the editbox to a library item.
+        /// </summary>
+        /// <param name="item">Item for the new name</param>
+        private void ApplyItemName(ILibraryItemViewModel item)
+        {
+            if (renameItem != null) {
+                UIElement itemPresenter = (UIElement)libraryItemControl.ItemContainerGenerator.ContainerFromItem(item);
+                var itemControl = VisualTreeHelper.GetChild(itemPresenter, 0);
+
+                if (itemControl is ImageThumbnail imgThumb) {
+                    TextBox editBox = imgThumb.FindName("NameEditBox") as TextBox;
+                    Label nameDisplay = imgThumb.FindName("nameDisplay") as Label;
+
+                    //Update the name
+                    item.Name = editBox.Text;
+                    nameDisplay.Content = item.Name;
+
+                    //Hide the editBox
+                    editBox.Text = "";
+                    editBox.Height = 0;
+                    editBox.Width = 0;
+
+                    //Show the name label
+                    nameDisplay.Width = Double.NaN;
+                    nameDisplay.Height = Double.NaN;
+                    nameDisplay.Visibility = Visibility.Visible;
+                }
+
+                renameItem = null;
+            }
         }
 
         /// <summary>
