@@ -1352,6 +1352,10 @@ namespace ActivFlex.ViewModels
                     }
                 }
             });
+
+            if (LibraryItems.Count > 0) {
+                EmptyContainerInfo = Visibility.Collapsed;
+            }
         }
 
         /// <summary>
