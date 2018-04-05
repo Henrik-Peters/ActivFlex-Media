@@ -100,6 +100,7 @@
     <Compile Include="ViewModels\ImageItemViewModel.cs" />
     <Compile Include="ViewModels\InfoWindowViewModel.cs" />
     <Compile Include="ViewModels\IThumbnailViewModel.cs" />
+    <Compile Include="ViewModels\LibraryContainerViewModel.cs" />
     <Compile Include="ViewModels\LibraryImageViewModel.cs" />
     <Compile Include="ViewModels\LibraryMusicViewModel.cs" />
     <Compile Include="ViewModels\LibraryVideoViewModel.cs" />

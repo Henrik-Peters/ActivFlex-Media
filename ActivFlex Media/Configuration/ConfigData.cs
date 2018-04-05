@@ -52,7 +52,8 @@ namespace ActivFlex.Configuration
             0.5,
             true,
             true,
-            false
+            false,
+            true
         );
 
         /// <summary>
@@ -164,6 +165,11 @@ namespace ActivFlex.Configuration
         public bool DirectLibraryItemDelete { get; set; }
 
         /// <summary>
+        /// Show or hide media containers during library browsing.
+        /// </summary>
+        public bool ShowMediaContainers { get; set; }
+
+        /// <summary>
         /// Create a new dataset for a concrete configuration. 
         /// All properties should only be set with this constructor.
         /// </summary>
@@ -184,10 +190,12 @@ namespace ActivFlex.Configuration
         /// <param name="ShowTimelineSideLabels">Display or hide the media playback time side labels</param>
         /// <param name="RestoreNavExpansions">Restore the navigation tree view item expansions</param>
         /// <param name="DirectLibraryItemDelete">Directly delete items without the confirmation dialog</param>
+        /// <param name="ShowMediaContainers">Show or hide media containers during library browsing</param>
         public ConfigData(string Username, Language Language, WindowStartupState NormalStartup, WindowStartupState PresenterStartup, 
                           WindowRestoreState RestoreState, double RestoreWidth, double RestoreHeight, double RestoreLeft, double RestoreTop,
                           int ThumbnailDecodeSize, bool PreloadPresenterImages, LaunchBehavior ImageLaunchBehavior, LaunchBehavior MusicLaunchBehavior,
-                          LaunchBehavior VideoLaunchBehavior, double Volume, bool ShowTimelineSideLabels, bool RestoreNavExpansions, bool DirectLibraryItemDelete)
+                          LaunchBehavior VideoLaunchBehavior, double Volume, bool ShowTimelineSideLabels, bool RestoreNavExpansions, bool DirectLibraryItemDelete,
+                          bool ShowMediaContainers)
         {
             this.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.Username = Username;
@@ -208,6 +216,7 @@ namespace ActivFlex.Configuration
             this.ShowTimelineSideLabels = ShowTimelineSideLabels;
             this.RestoreNavExpansions = RestoreNavExpansions;
             this.DirectLibraryItemDelete = DirectLibraryItemDelete;
+            this.ShowMediaContainers = ShowMediaContainers;
         }
     }
 }

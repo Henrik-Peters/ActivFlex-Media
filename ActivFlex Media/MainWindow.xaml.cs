@@ -1051,7 +1051,7 @@ namespace ActivFlex
                 ConfigProvider.SaveConfig(new ConfigData(config.Username, config.Language, config.NormalStartup, config.PresenterStartup, restoreState,
                                                          this.Width, this.Height, this.Left, this.Top, config.ThumbnailDecodeSize, config.PreloadPresenterImages,
                                                          config.ImageLaunchBehavior, config.MusicLaunchBehavior, config.VideoLaunchBehavior, VolumeSlider.Value,
-                                                         config.ShowTimelineSideLabels, config.RestoreNavExpansions, config.DirectLibraryItemDelete));
+                                                         config.ShowTimelineSideLabels, config.RestoreNavExpansions, config.DirectLibraryItemDelete, config.ShowMediaContainers));
             }
         }
 

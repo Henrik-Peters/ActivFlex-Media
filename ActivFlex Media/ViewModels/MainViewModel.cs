@@ -1330,26 +1330,28 @@ namespace ActivFlex.ViewModels
             BrowseUpAvailable = true;
             LibraryBrowsing = true;
 
-            LibraryItems = new ObservableCollection<ILibraryItemViewModel>(
-                StorageEngine.ReadItemsFromContainer(container)
-                .Where(item => item is LibraryImage || item is LibraryMusic || item is LibraryVideo)
-                .Select<ILibraryItem, ILibraryItemViewModel>(item => {
+            LibraryItems = new ObservableCollection<ILibraryItemViewModel>();
+
+            if (Config.ShowMediaContainers) {
+                container.Containers.ForEach(subContainer => LibraryItems.Add(new LibraryContainerViewModel(subContainer)));
+            }
+
+            StorageEngine.ReadItemsFromContainer(container).ForEach(item => {
+                if (item is LibraryImage || item is LibraryMusic || item is LibraryVideo) {
 
                     if (item is LibraryImage imageItem) {
-                        return new LibraryImageViewModel(imageItem);
+                        LibraryItems.Add(new LibraryImageViewModel(imageItem));
                     }
 
                     if (item is LibraryMusic musicItem) {
-                        return new LibraryMusicViewModel(musicItem);
+                        LibraryItems.Add(new LibraryMusicViewModel(musicItem));
                     }
 
                     if (item is LibraryVideo videoItem) {
-                        return new LibraryVideoViewModel(videoItem);
+                        LibraryItems.Add(new LibraryVideoViewModel(videoItem));
                     }
-
-                    return null;
-                })
-            );
+                }
+            });
         }
 
         /// <summary>
