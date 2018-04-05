@@ -263,6 +263,11 @@ namespace ActivFlex
                     LibraryNavigator.Container_PropertyChanged(LibraryPathNavigator, new DependencyPropertyChangedEventArgs());
                 }
 
+                //Update the current browsing view when the new container should be visible
+                if (MainViewModel.Config.ShowMediaContainers && vm.ActiveContainer.ContainerID == navItem.MediaContainer.Parent.ContainerID) {
+                    vm.OpenMediaContainer.Execute(vm.ActiveContainer);
+                }
+
                 vm.editItem = null;
             }
         }
