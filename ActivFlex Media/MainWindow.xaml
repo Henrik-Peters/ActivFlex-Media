@@ -636,8 +636,8 @@
 
                                     <Separator/>
                                     <MenuItem Header="{Binding Localize[Rename]}"
-                                              Command="{Binding RenameMediaContainer}"
-                                              CommandParameter="{Binding PlacementTarget.ClickParameter, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                                              Command="{Binding RenameLibraryItem}"
+                                              CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                                     
                                     <MenuItem Header="{Binding Localize[Delete]}" 
                                               Command="{Binding DeleteMediaContainer}"

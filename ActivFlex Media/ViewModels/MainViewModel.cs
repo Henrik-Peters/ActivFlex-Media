@@ -1664,7 +1664,19 @@ namespace ActivFlex.ViewModels
                     nameDisplay.Visibility = Visibility.Visible;
 
                     //Update the item storage
-                    StorageEngine.UpdateLibraryItemName(item.ItemID, item.Name);
+                    if (item is LibraryContainerViewModel containerViewModel) {
+                        MediaContainer container = containerViewModel.ProxyContainer;
+                        StorageEngine.UpdateContainer(container.ContainerID, container.Name, container.Parent.ContainerID, container.Expanded);
+
+                        //Update the name in the navigation
+                        TreeViewItem treeItem = FindNavItem(container);
+                        ContainerNavItem navItem = (ContainerNavItem)treeItem.DataContext;
+                        navItem.DisplayName = container.Name;
+
+                    } else {
+                        StorageEngine.UpdateLibraryItemName(item.ItemID, item.Name);
+                    }
+                    
                 }
 
                 renameItem = null;
