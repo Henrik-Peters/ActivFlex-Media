@@ -1443,6 +1443,26 @@ namespace ActivFlex.ViewModels
                 if (activeContainerDelete && container.Parent != null) {
                     SelectMediaContainer.Execute(container.Parent);
                 }
+
+                //When the deleted container is visible in the current browsing view remove it
+                if (Config.ShowMediaContainers && LibraryItems != null) {
+
+                    LibraryContainerViewModel targetViewModel = null;
+
+                    foreach (var item in LibraryItems) {
+
+                        if (item is LibraryContainerViewModel containerViewModel &&
+                            containerViewModel.ItemID == container.ContainerID) {
+
+                            targetViewModel = containerViewModel;
+                            break;
+                        }
+                    }
+
+                    if (targetViewModel != null) {
+                        LibraryItems.Remove(targetViewModel);
+                    }
+                }
             }
         }
 
