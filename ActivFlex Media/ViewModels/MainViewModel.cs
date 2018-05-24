@@ -1261,6 +1261,11 @@ namespace ActivFlex.ViewModels
         /// <param name="source">Container to hold the new container</param>
         private void NewMediaContainer(MediaContainer source)
         {
+            //Make sure the editbox is visible
+            if (!NavVisible) {
+                NavVisible = true;
+            }
+
             TreeViewItem treeItem = FindNavItem(source);
             MediaContainer newContainer = new MediaContainer(-1, "", source, source.Library, false);
             ContainerNavItem newItem = new ContainerNavItem(newContainer) {
@@ -1360,6 +1365,11 @@ namespace ActivFlex.ViewModels
         /// <param name="container">Container to configure</param>
         private void MediaContainerRename(MediaContainer container)
         {
+            //Make sure the editbox is visible
+            if (!NavVisible) {
+                NavVisible = true;
+            }
+
             TreeViewItem treeItem = FindNavItem(container);
             ContainerNavItem navItem = (ContainerNavItem)treeItem.DataContext;
             navItem.NameBox = Visibility.Collapsed;
