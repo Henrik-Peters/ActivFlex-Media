@@ -272,8 +272,6 @@ namespace ActivFlex.ViewModels
             set {
                 if (_fileSystemItems != value) {
                     _fileSystemItems = value;
-                    _fileSystemItems.CollectionChanged += Items_CollectionChanged;
-                    Items_CollectionChanged(this, null);
                     NotifyPropertyChanged();
                 }
             }
@@ -285,8 +283,6 @@ namespace ActivFlex.ViewModels
             set {
                 if (_libraryItems != value) {
                     _libraryItems = value;
-                    LibraryItems.CollectionChanged += Items_CollectionChanged;
-                    Items_CollectionChanged(this, null);
                     NotifyPropertyChanged();
                 }
 
@@ -1353,8 +1349,9 @@ namespace ActivFlex.ViewModels
                 }
             });
 
-            if (LibraryItems.Count > 0) {
+            if (LibraryItems.Any()) {
                 EmptyContainerInfo = Visibility.Collapsed;
+                StartThumbnailThreads();
             }
         }
 
@@ -1995,7 +1992,7 @@ namespace ActivFlex.ViewModels
         /// Update the thumbnail loading queue when
         /// the FileSystemItems collection changed.
         /// </summary>
-        private void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void StartThumbnailThreads()
         {
             loadThumbsInterrupt = true;
             if (thumbnailThread.IsAlive)
@@ -2013,6 +2010,7 @@ namespace ActivFlex.ViewModels
                 }
             }
 
+            Console.WriteLine("New thread started!");
             thumbnailThread = new Thread(LoadThumbnails);
             loadThumbsInterrupt = false;
             thumbnailThread.Start();
@@ -2040,6 +2038,8 @@ namespace ActivFlex.ViewModels
                     }
                 }
             }
+
+            Console.WriteLine("Thread stopped!");
         }
 
         /// <summary>
@@ -2159,6 +2159,10 @@ namespace ActivFlex.ViewModels
                     return new DirectoryItemViewModel((DirectoryItem)item);
                 })
             );
+            
+            if (FileSystemItems.Any()) {
+                StartThumbnailThreads();
+            }
         }
 
         /// <summary>
