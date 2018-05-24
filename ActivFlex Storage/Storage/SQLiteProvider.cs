@@ -380,14 +380,14 @@ namespace ActivFlex.Storage
             command.Parameters.AddWithValue("ContainerID", container.ContainerID);
             command.ExecuteNonQuery();
 
-            return LibraryItemFactory.CreateItemByExtension(itemID, name, path, container, creationTime);
+            return LibraryItemFactory.CreateItemByExtension(itemID, name, path, container, creationTime, 0, default(DateTime), thumbnail);
         }
 
         public List<ILibraryItem> ReadItemsFromContainer(MediaContainer container)
         {
             List<ILibraryItem> items = new List<ILibraryItem>();
 
-            var sql = @"SELECT Items.IID, name, path, accessCount, creationTime, lastAccessTime
+            var sql = @"SELECT Items.IID, name, path, thumbnail, accessCount, creationTime, lastAccessTime
                         FROM ContainerItems
                         INNER JOIN Items ON Items.IID = ContainerItems.IID
                         WHERE CID=@ContainerID";
@@ -406,7 +406,20 @@ namespace ActivFlex.Storage
                     DateTime creationTime = DateTime.ParseExact((string)reader["creationTime"], DateTimeFormat, CultureInfo.InvariantCulture);
                     DateTime lastAccessTime = DateTime.ParseExact((string)reader["lastAccessTime"], DateTimeFormat, CultureInfo.InvariantCulture);
 
-                    items.Add(LibraryItemFactory.CreateItemByExtension(itemID, name, path, container, creationTime, accessCount, lastAccessTime));
+                    //Thumbnail data
+                    BitmapSource thumbnailSource = null;
+
+                    if (!reader.IsDBNull(3)) {
+                        byte[] thumbData = new byte[reader.GetBytes(3, 0, null, 0, int.MaxValue) - 1];
+                        reader.GetBytes(3, 0, thumbData, 0, thumbData.Length);
+
+                        using (MemoryStream imgStream = new MemoryStream(thumbData)) {
+                            JpegBitmapDecoder decoder = new JpegBitmapDecoder(imgStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
+                            thumbnailSource = decoder.Frames[0];
+                        }
+                    }
+
+                    items.Add(LibraryItemFactory.CreateItemByExtension(itemID, name, path, container, creationTime, accessCount, lastAccessTime, thumbnailSource));
                 }
             }
 

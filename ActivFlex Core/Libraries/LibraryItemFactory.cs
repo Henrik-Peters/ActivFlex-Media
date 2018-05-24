@@ -17,6 +17,7 @@
 #endregion
 using System;
 using System.Linq;
+using System.Windows.Media.Imaging;
 using ActivFlex.Media;
 
 namespace ActivFlex.Libraries
@@ -36,8 +37,10 @@ namespace ActivFlex.Libraries
         /// <param name="creationTime">Time when the item was added to the container</param>
         /// <param name="accessCount">Number of opening accesses</param>
         /// <param name="lastAccessTime">Time of the last opening accesses</param>
+        /// <param name="thumbnail">Optional thumbnail data</param>
         /// <returns>The concrete library item or null for an invalid path</returns>
-        public static ILibraryItem CreateItemByExtension(int itemID, string name, string path, MediaContainer container, DateTime creationTime, ulong accessCount = 0, DateTime lastAccessTime = default(DateTime))
+        public static ILibraryItem CreateItemByExtension(int itemID, string name, string path, MediaContainer container, DateTime creationTime,
+                                                         ulong accessCount = 0, DateTime lastAccessTime = default(DateTime), BitmapSource thumbnail = null)
         {
             ILibraryItem item = null;
 
