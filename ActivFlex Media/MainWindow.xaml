@@ -575,7 +575,9 @@
         <!-- Library browsing area -->
         <ScrollViewer x:Name="LibraryScrollViewer" Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolVisibilityConverter}}" Template="{StaticResource ScrollViewerControlTemplate}"
                       Margin="0,0,4,0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="3" PreviewMouseWheel="MediaScrollViewer_PreviewMouseWheel"
-                      AllowDrop="True" DragEnter="LibraryScrollViewer_DragEnter" Drop="LibraryScrollViewer_Drop" MouseUp="LibraryScrollViewer_MouseUp" MouseMove="LibraryScrollViewer_MouseMove" PreviewMouseDown="LibraryScrollViewer_PreviewMouseDown">
+                      AllowDrop="True" DragEnter="LibraryScrollViewer_DragEnter" Drop="LibraryScrollViewer_Drop" MouseUp="LibraryScrollViewer_MouseUp" MouseMove="LibraryScrollViewer_MouseMove" PreviewMouseDown="LibraryScrollViewer_PreviewMouseDown"
+                      Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+            
             <ItemsControl x:Name="LibraryItemControl" ItemsSource="{Binding LibraryItems}" Focusable="False">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -638,7 +640,7 @@
                                     <MenuItem Header="{Binding Localize[Rename]}"
                                               Command="{Binding RenameLibraryItem}"
                                               CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
-                                    
+
                                     <MenuItem Header="{Binding Localize[Delete]}" 
                                               Command="{Binding DeleteMediaContainer}"
                                               CommandParameter="{Binding PlacementTarget.ClickParameter, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
@@ -687,7 +689,7 @@
                                     <MenuItem Header="{Binding Localize[Delete]}" 
                                               Command="{Binding DeleteLibraryItem}"
                                               CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
-                                    
+
                                 </ContextMenu>
                             </Controls:ImageThumbnail.ContextMenu>
                         </Controls:ImageThumbnail>
@@ -731,7 +733,7 @@
                                     <MenuItem Header="{Binding Localize[Delete]}" 
                                               Command="{Binding DeleteLibraryItem}"
                                               CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
-                                    
+
                                 </ContextMenu>
                             </Controls:MusicThumbnail.ContextMenu>
                         </Controls:MusicThumbnail>
@@ -777,7 +779,7 @@
                                     <MenuItem Header="{Binding Localize[Delete]}" 
                                               Command="{Binding DeleteLibraryItem}"
                                               CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
-                                    
+
                                 </ContextMenu>
                             </Controls:ImageThumbnail.ContextMenu>
                         </Controls:ImageThumbnail>
@@ -785,6 +787,27 @@
 
                 </ItemsControl.Resources>
             </ItemsControl>
+            <ScrollViewer.ContextMenu>
+
+                <!-- Context menu for browsing area -->
+                <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                    <MenuItem Header="{Binding Localize[New]}">
+                        <MenuItem Header="{Binding Localize[MediaContainer]}" Command="{Binding CreateMediaContainer}"
+                                          CommandParameter="{Binding PlacementTarget.DataContext.ActiveContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                    </MenuItem>
+
+                    <MenuItem Header="{Binding Localize[ImportMedia]}" Command="{Binding LaunchMediaImport}"
+                                      CommandParameter="{Binding PlacementTarget.DataContext.ActiveContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+
+                    <Separator/>
+                    <MenuItem Header="{Binding Localize[Rename]}" Command="{Binding RenameMediaContainer}"
+                                      CommandParameter="{Binding PlacementTarget.DataContext.ActiveContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+
+                    <MenuItem Header="{Binding Localize[Delete]}" Command="{Binding DeleteMediaContainer}"
+                                      CommandParameter="{Binding PlacementTarget.DataContext.ActiveContainer, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                </ContextMenu>
+
+            </ScrollViewer.ContextMenu>
         </ScrollViewer>
 
         <!-- Selection dragging rectangle -->

@@ -29,7 +29,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Collections.ObjectModel;
 using ActivFlex.Configuration;
 using ActivFlex.Converters;
