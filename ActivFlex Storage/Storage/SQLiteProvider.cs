@@ -383,14 +383,14 @@ namespace ActivFlex.Storage
             return LibraryItemFactory.CreateItemByExtension(itemID, name, path, container, creationTime, 0, default(DateTime), thumbnail);
         }
 
-        public List<ILibraryItem> ReadItemsFromContainer(MediaContainer container)
+        public List<ILibraryItem> ReadItemsFromContainer(MediaContainer container, bool loadThumbnails)
         {
             List<ILibraryItem> items = new List<ILibraryItem>();
 
-            var sql = @"SELECT Items.IID, name, path, thumbnail, accessCount, creationTime, lastAccessTime
-                        FROM ContainerItems
-                        INNER JOIN Items ON Items.IID = ContainerItems.IID
-                        WHERE CID=@ContainerID";
+            string sql = @"SELECT Items.IID, name, path, " + (loadThumbnails ? "thumbnail, " : "") + "accessCount, creationTime, lastAccessTime " +
+                        "FROM ContainerItems " +
+                        "INNER JOIN Items ON Items.IID = ContainerItems.IID " +
+                        "WHERE CID=@ContainerID";
 
             var command = new SQLiteCommand(sql, connection);
             command.Parameters.AddWithValue("ContainerID", container.ContainerID);
@@ -408,8 +408,8 @@ namespace ActivFlex.Storage
 
                     //Thumbnail data
                     BitmapSource thumbnailSource = null;
-
-                    if (!reader.IsDBNull(3)) {
+                    
+                    if (loadThumbnails && !reader.IsDBNull(3)) {
                         byte[] thumbData = new byte[reader.GetBytes(3, 0, null, 0, int.MaxValue) - 1];
                         reader.GetBytes(3, 0, thumbData, 0, thumbData.Length);
 

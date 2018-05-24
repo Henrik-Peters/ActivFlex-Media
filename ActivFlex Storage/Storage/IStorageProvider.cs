@@ -121,8 +121,9 @@ namespace ActivFlex.Storage
         /// Read all items that are in a specific media container.
         /// </summary>
         /// <param name="container">Read the items of this container</param>
+        /// <param name="loadThumbnails">Load the thumbnails directly</param>
         /// <returns>List with the library items of the container</returns>
-        List<ILibraryItem> ReadItemsFromContainer(MediaContainer container);
+        List<ILibraryItem> ReadItemsFromContainer(MediaContainer container, bool loadThumbnails);
 
         /// <summary>
         /// Update a media library item with a new name.

@@ -1332,7 +1332,7 @@ namespace ActivFlex.ViewModels
                 container.Containers.ForEach(subContainer => LibraryItems.Add(new LibraryContainerViewModel(subContainer)));
             }
 
-            StorageEngine.ReadItemsFromContainer(container).ForEach(item => {
+            StorageEngine.ReadItemsFromContainer(container, Config.UseThumbnailCache).ForEach(item => {
                 if (item is LibraryImage || item is LibraryMusic || item is LibraryVideo) {
 
                     if (item is LibraryImage imageItem) {
