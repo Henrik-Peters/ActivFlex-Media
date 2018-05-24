@@ -36,6 +36,12 @@ namespace ActivFlex.ViewModels
             set {
                 if (_proxy != value && value is LibraryVideo) {
                     _proxy = (LibraryVideo)value;
+
+                    //Video indicator for cached thumbnails
+                    if (_proxy.Thumbnail != null) {
+                        IndicatorVisibility = Visibility.Visible;
+                    }
+
                     NotifyPropertyChanged();
                 }
             }
@@ -48,6 +54,11 @@ namespace ActivFlex.ViewModels
         public BitmapSource ThumbImage {
             get => _proxy.Thumbnail;
             set {
+                //Video indicator
+                if (value != null) {
+                    IndicatorVisibility = Visibility.Visible;
+                }
+
                 _proxy.Thumbnail = value;
                 NotifyPropertyChanged();
             }
@@ -106,7 +117,7 @@ namespace ActivFlex.ViewModels
         /// <param name="proxy">The represented video music</param>
         public LibraryVideoViewModel(LibraryVideo proxy)
         {
-            this._proxy = proxy;
+            this.Proxy = proxy;
         }
     }
 }

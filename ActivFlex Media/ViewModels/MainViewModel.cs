@@ -2106,6 +2106,11 @@ namespace ActivFlex.ViewModels
                         } else if (videoItem is LibraryVideoViewModel libraryItem) {
                             libraryItem.ThumbImage = renderTarget;
                             libraryItem.IndicatorVisibility = Visibility.Visible;
+
+                            if (Config.UseThumbnailCache) {
+                                //Thumbnail cache is active and thumbnail was loaded from disk
+                                StorageEngine.UpdateLibraryItemThumbnail(libraryItem.ItemID, BitmapFrame.Create(libraryItem.ThumbImage));
+                            }
                         }
 
                         LoadNextVideoThumbnail();
