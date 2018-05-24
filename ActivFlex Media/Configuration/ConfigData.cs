@@ -53,6 +53,7 @@ namespace ActivFlex.Configuration
             true,
             true,
             false,
+            true,
             true
         );
 
@@ -170,6 +171,11 @@ namespace ActivFlex.Configuration
         public bool ShowMediaContainers { get; set; }
 
         /// <summary>
+        /// Store the thumbnail images in the database for faster thumbnail loading.
+        /// </summary>
+        public bool UseThumbnailCache { get; set; }
+
+        /// <summary>
         /// Create a new dataset for a concrete configuration. 
         /// All properties should only be set with this constructor.
         /// </summary>
@@ -191,11 +197,12 @@ namespace ActivFlex.Configuration
         /// <param name="RestoreNavExpansions">Restore the navigation tree view item expansions</param>
         /// <param name="DirectLibraryItemDelete">Directly delete items without the confirmation dialog</param>
         /// <param name="ShowMediaContainers">Show or hide media containers during library browsing</param>
+        /// <param name="UseThumbnailCache">Store the thumbnail images in the database for faster thumbnail loading</param>
         public ConfigData(string Username, Language Language, WindowStartupState NormalStartup, WindowStartupState PresenterStartup, 
                           WindowRestoreState RestoreState, double RestoreWidth, double RestoreHeight, double RestoreLeft, double RestoreTop,
                           int ThumbnailDecodeSize, bool PreloadPresenterImages, LaunchBehavior ImageLaunchBehavior, LaunchBehavior MusicLaunchBehavior,
                           LaunchBehavior VideoLaunchBehavior, double Volume, bool ShowTimelineSideLabels, bool RestoreNavExpansions, bool DirectLibraryItemDelete,
-                          bool ShowMediaContainers)
+                          bool ShowMediaContainers, bool UseThumbnailCache)
         {
             this.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.Username = Username;
@@ -217,6 +224,7 @@ namespace ActivFlex.Configuration
             this.RestoreNavExpansions = RestoreNavExpansions;
             this.DirectLibraryItemDelete = DirectLibraryItemDelete;
             this.ShowMediaContainers = ShowMediaContainers;
+            this.UseThumbnailCache = UseThumbnailCache;
         }
     }
 }
