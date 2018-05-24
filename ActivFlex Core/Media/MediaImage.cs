@@ -49,7 +49,7 @@ namespace ActivFlex.Media
         /// <summary>
         /// The thumbnail data of the image itself.
         /// </summary>
-        public BitmapImage Thumbnail { get; private set; }
+        public BitmapSource Thumbnail { get; protected set; }
         
         /// <summary>
         /// Create a new image only by the filesystem path.
@@ -78,7 +78,7 @@ namespace ActivFlex.Media
         /// </summary>
         /// <param name="DecodePixelWidth">Width in pixels to decode the thumbnail</param>
         /// <returns>The loaded bitmap image instance</returns>
-        public BitmapImage LoadThumbnail(int DecodePixelWidth)
+        public BitmapSource LoadThumbnail(int DecodePixelWidth)
         {
             if (File.Exists(Path)) {
                 try {

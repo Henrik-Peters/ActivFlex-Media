@@ -44,7 +44,7 @@ namespace ActivFlex.ViewModels
         /// The thumbnail image of the represented image.
         /// Will be null when the thumbnail is not loaded.
         /// </summary>
-        public BitmapImage ThumbImage {
+        public BitmapSource ThumbImage {
             get => _proxy.Thumbnail;
         }
 

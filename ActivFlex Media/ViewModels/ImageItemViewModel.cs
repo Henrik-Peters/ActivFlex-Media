@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
-using System.Windows.Media.Imaging;
 using ActivFlex.Media;
+using System.Windows.Media.Imaging;
 using ActivFlex.FileSystem;
 
 namespace ActivFlex.ViewModels
@@ -80,7 +80,7 @@ namespace ActivFlex.ViewModels
         /// The thumbnail image of the represented image.
         /// Will be null when the thumbnail is not loaded.
         /// </summary>
-        public BitmapImage ThumbImage {
+        public BitmapSource ThumbImage {
             get => _proxy.Thumbnail;
         }
 

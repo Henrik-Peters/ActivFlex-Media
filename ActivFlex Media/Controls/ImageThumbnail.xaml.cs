@@ -20,9 +20,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.ComponentModel;
 using ActivFlex.FileSystem;
-using ActivFlex.Media;
 
 namespace ActivFlex.Controls
 {

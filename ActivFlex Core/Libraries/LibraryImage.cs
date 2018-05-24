@@ -16,6 +16,7 @@
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
 using System;
+using System.Windows.Media.Imaging;
 using ActivFlex.Media;
 
 namespace ActivFlex.Libraries
@@ -80,14 +81,16 @@ namespace ActivFlex.Libraries
         /// <param name="accessCount">Number of opening accesses</param>
         /// <param name="creationTime">Time when the item was added to the container</param>
         /// <param name="lastAccessTime">Time of the last opening accesses</param>
+        /// <param name="thumbnail">Thumbnail data of the image (can be null)</param>
         public LibraryImage(int itemID, string name, string path, MediaContainer container,
-                            ulong accessCount, DateTime creationTime, DateTime lastAccessTime) : base(path, name)
+                            ulong accessCount, DateTime creationTime, DateTime lastAccessTime, BitmapSource thumbnail) : base(path, name)
         {
             this.ItemID = itemID;
             this.Container = container;
             this.AccessCount = accessCount;
             this.CreationTime = creationTime;
             this.LastAccessTime = lastAccessTime;
+            this.Thumbnail = thumbnail;
         }
     }
 }

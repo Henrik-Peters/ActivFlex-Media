@@ -45,13 +45,13 @@ namespace ActivFlex.Libraries
             ILibraryItem item = null;
 
             if (MediaImage.ImageExtensions.Contains(GetPathExtension(path))) {
-                item = new LibraryImage(itemID, name, path, container, accessCount, creationTime, lastAccessTime);
+                item = new LibraryImage(itemID, name, path, container, accessCount, creationTime, lastAccessTime, thumbnail);
 
             } else if (MediaMusic.MusicExtensions.Contains(GetPathExtension(path))) {
                 item = new LibraryMusic(itemID, name, path, container, accessCount, creationTime, lastAccessTime);
 
             } else if (MediaVideo.VideoExtensions.Contains(GetPathExtension(path))) {
-                item = new LibraryVideo(itemID, name, path, container, accessCount, creationTime, lastAccessTime);
+                item = new LibraryVideo(itemID, name, path, container, accessCount, creationTime, lastAccessTime, thumbnail);
             }
 
             return item;
