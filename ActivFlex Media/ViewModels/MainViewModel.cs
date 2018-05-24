@@ -1487,7 +1487,7 @@ namespace ActivFlex.ViewModels
                 //Store the new items in the database
                 foreach (string filePath in importDialog.FileNames) {
                     string name = System.IO.Path.GetFileNameWithoutExtension(filePath);
-                    StorageEngine.CreateLibraryItem(name, filePath, container, DateTime.Now);
+                    StorageEngine.CreateLibraryItem(name, filePath, container, DateTime.Now, null);
                 }
 
                 //Select the import container

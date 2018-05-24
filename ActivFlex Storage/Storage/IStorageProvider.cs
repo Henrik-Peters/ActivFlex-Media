@@ -17,6 +17,7 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.Windows.Media.Imaging;
 using ActivFlex.Libraries;
 
 namespace ActivFlex.Storage
@@ -113,7 +114,8 @@ namespace ActivFlex.Storage
         /// <param name="path">Absolute filesystem path</param>
         /// <param name="container">Container to store the item</param>
         /// <param name="creationTime">Time of adding the item to the container</param>
-        ILibraryItem CreateLibraryItem(string name, string path, MediaContainer container, DateTime creationTime);
+        /// <param name="thumbnail">Thumbnail data of the item</param>
+        ILibraryItem CreateLibraryItem(string name, string path, MediaContainer container, DateTime creationTime, BitmapFrame thumbnail);
 
         /// <summary>
         /// Read all items that are in a specific media container.

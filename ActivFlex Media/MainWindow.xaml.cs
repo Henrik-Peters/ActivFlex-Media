@@ -543,7 +543,7 @@ namespace ActivFlex
 
                 if (File.Exists(filePath) && mediaExtensions.Contains(extension)) {
                     string name = Path.GetFileNameWithoutExtension(filePath);
-                    MainViewModel.StorageEngine.CreateLibraryItem(name, filePath, container, DateTime.Now);
+                    MainViewModel.StorageEngine.CreateLibraryItem(name, filePath, container, DateTime.Now, null);
                     importCount++;
                 }
             }

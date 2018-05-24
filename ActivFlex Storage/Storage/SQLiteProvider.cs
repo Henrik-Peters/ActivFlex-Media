@@ -20,6 +20,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
+using System.Windows.Media.Imaging;
 using System.Data.SQLite;
 using ActivFlex.Libraries;
 
@@ -117,6 +118,7 @@ namespace ActivFlex.Storage
                 IID INTEGER PRIMARY KEY,
                 name TEXT,
                 path VARCHAR(255),
+                thumbnail BLOB,
                 accessCount LONG,
                 creationTime TEXT,
                 lastAccessTime TEXT
@@ -337,14 +339,29 @@ namespace ActivFlex.Storage
             command.ExecuteNonQuery();
         }
 
-        public ILibraryItem CreateLibraryItem(string name, string path, MediaContainer container, DateTime creationTime)
+        public ILibraryItem CreateLibraryItem(string name, string path, MediaContainer container, DateTime creationTime, BitmapFrame thumbnail)
         {
-            var sql = @"INSERT INTO Items(name, path, accessCount, creationTime, lastAccessTime)
-                        VALUES(@Name, @Path, @AccessCount, @CreationTime, @LastAccessTime);";
+            var sql = @"INSERT INTO Items(name, path, thumbnail, accessCount, creationTime, lastAccessTime)
+                        VALUES(@Name, @Path, @Thumbnail, @AccessCount, @CreationTime, @LastAccessTime);";
 
+            //Create the thumbnail data
+            byte[] thumbData = null;
+
+            if (thumbnail != null) {
+                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                encoder.Frames.Add(thumbnail);
+
+                using (MemoryStream ms = new MemoryStream()) {
+                    encoder.Save(ms);
+                    thumbData = ms.ToArray();
+                }
+            }
+
+            //Create the item
             var command = new SQLiteCommand(sql, connection);
             command.Parameters.AddWithValue("Name", name);
             command.Parameters.AddWithValue("Path", path);
+            command.Parameters.AddWithValue("Thumbnail", thumbData);
             command.Parameters.AddWithValue("AccessCount", 0);
             command.Parameters.AddWithValue("CreationTime", creationTime.ToString(DateTimeFormat));
             command.Parameters.AddWithValue("LastAccessTime", default(DateTime));
