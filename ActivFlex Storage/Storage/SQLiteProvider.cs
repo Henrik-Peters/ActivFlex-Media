@@ -438,6 +438,32 @@ namespace ActivFlex.Storage
             command.ExecuteNonQuery();
         }
 
+        public void UpdateLibraryItemThumbnail(int itemID, BitmapFrame thumbnail)
+        {
+            //Create the thumbnail data
+            byte[] thumbData = null;
+
+            if (thumbnail != null) {
+                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                encoder.Frames.Add(thumbnail);
+
+                using (MemoryStream ms = new MemoryStream()) {
+                    encoder.Save(ms);
+                    thumbData = ms.ToArray();
+                }
+            }
+
+            //Update the thumbnail in the database
+            var sql = @"UPDATE Items
+                        SET thumbnail=@Thumbnail
+                        WHERE IID=@ItemID";
+
+            var command = new SQLiteCommand(sql, connection);
+            command.Parameters.AddWithValue("ItemID", itemID);
+            command.Parameters.AddWithValue("Thumbnail", thumbData);
+            command.ExecuteNonQuery();
+        }
+
         public void DeleteLibraryItem(int itemID)
         {
             var sql = @"DELETE FROM Items

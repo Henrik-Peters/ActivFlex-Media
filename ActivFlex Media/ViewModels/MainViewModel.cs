@@ -2004,11 +2004,11 @@ namespace ActivFlex.ViewModels
             loadingQueue.Clear();
 
             if (LibraryBrowsing) {
-                foreach (var item in LibraryItems.Where(item => item is LibraryImageViewModel)) {
+                foreach (var item in LibraryItems.Where(item => item is LibraryImageViewModel libItem && libItem.ThumbImage == null)) {
                     loadingQueue.Enqueue((ViewModel)item);
                 }
             } else {
-                foreach (var item in FileSystemItems.Where(item => item is ImageItemViewModel)) {
+                foreach (var item in FileSystemItems.Where(item => item is ImageItemViewModel imgItem && imgItem.ThumbImage == null)) {
                     loadingQueue.Enqueue((ViewModel)item);
                 }
             }
@@ -2031,8 +2031,13 @@ namespace ActivFlex.ViewModels
                 if (viewModelItem is ImageItemViewModel item) {
                     item.LoadThumbnail(Config.ThumbnailDecodeSize);
 
-                } else if (viewModelItem is LibraryImageViewModel LibraryItem) {
-                    LibraryItem.LoadThumbnail(Config.ThumbnailDecodeSize);
+                } else if (viewModelItem is LibraryImageViewModel libraryItem) {
+                    libraryItem.LoadThumbnail(Config.ThumbnailDecodeSize);
+
+                    if (Config.UseThumbnailCache) {
+                        //Thumbnail cache is active and thumbnail was loaded from disk
+                        StorageEngine.UpdateLibraryItemThumbnail(libraryItem.ItemID, BitmapFrame.Create(libraryItem.ThumbImage));
+                    }
                 }
             }
         }
