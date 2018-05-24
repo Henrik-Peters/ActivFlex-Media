@@ -264,7 +264,8 @@ namespace ActivFlex
                 }
 
                 //Update the current browsing view when the new container should be visible
-                if (MainViewModel.Config.ShowMediaContainers && vm.ActiveContainer.ContainerID == navItem.MediaContainer.Parent.ContainerID) {
+                if (MainViewModel.Config.ShowMediaContainers &&
+                    vm.ActiveContainer != null && vm.ActiveContainer.ContainerID == navItem.MediaContainer.Parent.ContainerID) {
                     vm.OpenMediaContainer.Execute(vm.ActiveContainer);
                 }
 
