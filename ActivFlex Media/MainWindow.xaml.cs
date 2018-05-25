@@ -139,7 +139,15 @@ namespace ActivFlex
             TimeSlider_ValueChanged(this, null);
 
             //other window properties
-            this.vm = new MainViewModel(MediaPlayer, NavView, CurrentTimeLbl, MaxTimeLbl, MediaInfoIcon, LibraryItemControl);
+            this.vm = new MainViewModel(MediaPlayer, NavView, CurrentTimeLbl, MaxTimeLbl, MediaInfoIcon, LibraryItemControl,
+                () => {
+                    if (Fullscreen) {
+                        this.Cursor = Cursors.None;
+                    }
+                },
+                () => this.Cursor = null
+            );
+
             this.DataContext = vm;
             this.MediaPlayer.Volume = MainViewModel.Config.Volume;
             this.SourceInitialized += new EventHandler(Window_SourceInitialized);
@@ -165,6 +173,13 @@ namespace ActivFlex
 
             //toggle the window state
             this.WindowState = (Fullscreen ? WindowState.Maximized : WindowState.Normal);
+
+            //cursor during video
+            if (Fullscreen && vm.ShowVideoPlayback == Visibility.Visible) {
+                this.Cursor = Cursors.None;
+            } else {
+                this.Cursor = null;
+            }
 
             //Set the image presenter
             if (enableFullscreen) {

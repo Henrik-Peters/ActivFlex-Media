@@ -118,6 +118,16 @@ namespace ActivFlex.ViewModels
         private volatile int imageIndex = 0;
 
         /// <summary>
+        /// Method to call when starting a video playback.
+        /// </summary>
+        private Action startVideoCallback;
+
+        /// <summary>
+        /// Method to call when stopping a video playback.
+        /// </summary>
+        private Action stopVideoCallback;
+
+        /// <summary>
         /// The media playback control of the ui.
         /// </summary>
         private MediaElement mediaPlayer;
@@ -731,7 +741,7 @@ namespace ActivFlex.ViewModels
         /// Executed when the mouse is pressed on a filesystem item.
         /// </summary>
         public ICommand FileItemMouseDown { get; set; }
-        
+
         #endregion
 
         /// <summary>
@@ -744,7 +754,10 @@ namespace ActivFlex.ViewModels
         /// <param name="maxTimeLabel">Reference to the label for displaying the maximum playback time</param>
         /// <param name="mediaInfoIcon">The info icon in the media playback area</param>
         /// <param name="libraryItemControl">The item control that contains library items</param>
-        public MainViewModel(MediaElement mediaPlayer, TreeView navView, Label currentTimeLabel, Label maxTimeLabel, ContentPresenter mediaInfoIcon, ItemsControl libraryItemControl)
+        /// <param name="startVideoCallback">Method to call when starting a video playback.</param>
+        /// <param name="stopVideoCallback">Method to call when stopping a video playback.</param>
+        public MainViewModel(MediaElement mediaPlayer, TreeView navView, Label currentTimeLabel, Label maxTimeLabel,
+                            ContentPresenter mediaInfoIcon, ItemsControl libraryItemControl, Action startVideoCallback, Action stopVideoCallback)
         {
             //Configuration
             if (Config == null) {
@@ -771,6 +784,10 @@ namespace ActivFlex.ViewModels
             this.mediaTimer.Tick += new EventHandler(MediaTimerUpdate);
             this.Localize = new TranslateManager(Config.Language);
             StorageEngine = new SQLiteProvider();
+
+            //Cursor actions
+            this.startVideoCallback = startVideoCallback;
+            this.stopVideoCallback = stopVideoCallback;
 
             //Navigation items
             this.NavVisible = true;
@@ -1848,7 +1865,9 @@ namespace ActivFlex.ViewModels
                 } else {
                     ShowTimelineSideLabels = Visibility.Collapsed;
                 }
-                
+
+                startVideoCallback.Invoke();
+
                 _playmode = true;
                 NotifyPropertyChanged(nameof(PlayMode));
                 ResetItemSelection();
@@ -1865,6 +1884,7 @@ namespace ActivFlex.ViewModels
                 mediaTimer.Stop();
                 mediaPlayer.Stop();
 
+                stopVideoCallback.Invoke();
                 _currentPlaybackTime = 0;
                 _playmode = false;
                 currentTimeLabel.Content = "00:00";
