@@ -898,8 +898,21 @@ namespace ActivFlex.ViewModels
 
             //Media playback commands
             this.Stop = new RelayCommand(StopCurrentPlayback);
+            this.Stop = new RelayCommand(SortLibraryItems);
             this.Next = new RelayCommand(() => ChangeActiveImage(true));
             this.Previous = new RelayCommand(() => ChangeActiveImage(false));
+        }
+
+        /// <summary>
+        /// Sort the current library item collection.
+        /// </summary>
+        private void SortLibraryItems()
+        {
+            ObservableCollection<ILibraryItemViewModel> sortedItems =
+                new ObservableCollection<ILibraryItemViewModel>(LibraryItems.OrderBy(item => {
+                    return item.Name;
+                }));
+            LibraryItems = sortedItems;
         }
 
         /// <summary>
