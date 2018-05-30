@@ -898,7 +898,6 @@ namespace ActivFlex.ViewModels
 
             //Media playback commands
             this.Stop = new RelayCommand(StopCurrentPlayback);
-            this.Stop = new RelayCommand(SortLibraryItems);
             this.Next = new RelayCommand(() => ChangeActiveImage(true));
             this.Previous = new RelayCommand(() => ChangeActiveImage(false));
         }
@@ -906,13 +905,39 @@ namespace ActivFlex.ViewModels
         /// <summary>
         /// Sort the current library item collection.
         /// </summary>
-        private void SortLibraryItems()
+        private void SortLibraryItems(LibrarySortMode sortMode, LibrarySortOrder sortOrder)
         {
-            ObservableCollection<ILibraryItemViewModel> sortedItems =
-                new ObservableCollection<ILibraryItemViewModel>(LibraryItems.OrderBy(item => {
-                    return item.Name;
-                }));
-            LibraryItems = sortedItems;
+            //Sort the current collection by the sort mode
+            IEnumerable<ILibraryItemViewModel> sortedItems;
+
+            switch (sortMode) {
+                case LibrarySortMode.Chronological:
+                    sortedItems = LibraryItems.OrderBy(item => item.Proxy.CreationTime);
+                    break;
+
+                case LibrarySortMode.FrequencyOfUse:
+                    sortedItems = LibraryItems.OrderBy(item => item.Proxy.AccessCount);
+                    break;
+
+                case LibrarySortMode.Names:
+                    sortedItems = LibraryItems.OrderBy(item => item.Name);
+                    break;
+
+                case LibrarySortMode.Rating:
+                    //TODO use rating
+                    sortedItems = LibraryItems.OrderBy(item => item.Proxy.CreationTime);
+                    break;
+
+                default:
+                    throw new InvalidOperationException("Unknown library item sort mode: " + sortMode);
+            }
+
+            //Reverse the order when necessary
+            if (sortOrder == LibrarySortOrder.Descending) {
+                sortedItems = sortedItems.Reverse();
+            }
+            
+            LibraryItems = new ObservableCollection<ILibraryItemViewModel>(sortedItems);
         }
 
         /// <summary>

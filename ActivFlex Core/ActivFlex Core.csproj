@@ -53,6 +53,8 @@
     <Compile Include="Libraries\LibraryItemFactory.cs" />
     <Compile Include="Libraries\LibraryImage.cs" />
     <Compile Include="Libraries\LibraryMusic.cs" />
+    <Compile Include="Libraries\LibrarySortMode.cs" />
+    <Compile Include="Libraries\LibrarySortOrder.cs" />
     <Compile Include="Libraries\LibraryVideo.cs" />
     <Compile Include="Libraries\MediaContainer.cs" />
     <Compile Include="Libraries\MediaLibrary.cs" />
