@@ -18,6 +18,7 @@
 using System;
 using System.Reflection;
 using System.Xml.Serialization;
+using ActivFlex.Libraries;
 using ActivFlex.Localization;
 
 namespace ActivFlex.Configuration
@@ -54,7 +55,9 @@ namespace ActivFlex.Configuration
             true,
             false,
             true,
-            true
+            true,
+            LibrarySortMode.Chronological,
+            LibrarySortOrder.Ascending
         );
 
         /// <summary>
@@ -176,6 +179,16 @@ namespace ActivFlex.Configuration
         public bool UseThumbnailCache { get; set; }
 
         /// <summary>
+        /// Mode for sorting library items inside media containers.
+        /// </summary>
+        public LibrarySortMode ItemSortMode { get; set; }
+
+        /// <summary>
+        /// The order for sorting library items inside media containers.
+        /// </summary>
+        public LibrarySortOrder ItemSortOrder { get; set; }
+
+        /// <summary>
         /// Create a new dataset for a concrete configuration. 
         /// All properties should only be set with this constructor.
         /// </summary>
@@ -198,11 +211,13 @@ namespace ActivFlex.Configuration
         /// <param name="DirectLibraryItemDelete">Directly delete items without the confirmation dialog</param>
         /// <param name="ShowMediaContainers">Show or hide media containers during library browsing</param>
         /// <param name="UseThumbnailCache">Store the thumbnail images in the database for faster thumbnail loading</param>
+        /// <param name="ItemSortMode">Mode for sorting library items inside media containers</param>
+        /// <param name="ItemSortOrder">The order for sorting library items inside media containers.</param>
         public ConfigData(string Username, Language Language, WindowStartupState NormalStartup, WindowStartupState PresenterStartup, 
                           WindowRestoreState RestoreState, double RestoreWidth, double RestoreHeight, double RestoreLeft, double RestoreTop,
                           int ThumbnailDecodeSize, bool PreloadPresenterImages, LaunchBehavior ImageLaunchBehavior, LaunchBehavior MusicLaunchBehavior,
                           LaunchBehavior VideoLaunchBehavior, double Volume, bool ShowTimelineSideLabels, bool RestoreNavExpansions, bool DirectLibraryItemDelete,
-                          bool ShowMediaContainers, bool UseThumbnailCache)
+                          bool ShowMediaContainers, bool UseThumbnailCache, LibrarySortMode ItemSortMode, LibrarySortOrder ItemSortOrder)
         {
             this.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.Username = Username;
@@ -225,6 +240,8 @@ namespace ActivFlex.Configuration
             this.DirectLibraryItemDelete = DirectLibraryItemDelete;
             this.ShowMediaContainers = ShowMediaContainers;
             this.UseThumbnailCache = UseThumbnailCache;
+            this.ItemSortMode = ItemSortMode;
+            this.ItemSortOrder = ItemSortOrder;
         }
     }
 }

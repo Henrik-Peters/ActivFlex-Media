@@ -1073,7 +1073,7 @@ namespace ActivFlex
                                                          this.Width, this.Height, this.Left, this.Top, config.ThumbnailDecodeSize, config.PreloadPresenterImages,
                                                          config.ImageLaunchBehavior, config.MusicLaunchBehavior, config.VideoLaunchBehavior, VolumeSlider.Value,
                                                          config.ShowTimelineSideLabels, config.RestoreNavExpansions, config.DirectLibraryItemDelete, config.ShowMediaContainers,
-                                                         config.UseThumbnailCache));
+                                                         config.UseThumbnailCache, config.ItemSortMode, config.ItemSortOrder));
             }
         }
 
