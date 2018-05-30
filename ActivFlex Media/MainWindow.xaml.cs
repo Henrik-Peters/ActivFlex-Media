@@ -790,12 +790,12 @@ namespace ActivFlex
                         if (thumbnailControl is ImageThumbnail imageThumb) {
                             ItemWidth = imageThumb.ActualWidth;
                             ItemHeight = imageThumb.ActualHeight;
-                            ItemPos = imageThumb.TransformToAncestor(WrapSelectionPanel).Transform(Origin);
+                            ItemPos = imageThumb.TransformToAncestor(LibraryScrollViewer).Transform(Origin);
 
                         } else if (thumbnailControl is MusicThumbnail musicThumb) {
                             ItemWidth = musicThumb.ActualWidth;
                             ItemHeight = musicThumb.ActualHeight;
-                            ItemPos = musicThumb.TransformToAncestor(WrapSelectionPanel).Transform(Origin);
+                            ItemPos = musicThumb.TransformToAncestor(LibraryScrollViewer).Transform(Origin);
                         }
 
                         ItemRectangles[i].X = ItemPos.X;
