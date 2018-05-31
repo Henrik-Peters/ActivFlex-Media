@@ -148,4 +148,52 @@
         </Setter>
     </Style>
 
+    <!-- Style definitions for the media bar toggle button -->
+    <Style x:Key="SortOrderButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Viewbox Stretch="Uniform">
+                        <Canvas Background="Transparent" Width="64" Height="64">
+                            <Canvas.Resources/>
+                            <Canvas>
+                                <Rectangle Name="RectBorder" Canvas.Left="3" Canvas.Top="3" Width="58" Height="58" RadiusY="15" RadiusX="15" StrokeThickness="3.77952766" Stroke="#FFE6E6E6" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                                <Path Name="ArrowUp" Fill="#FFE6E6E6" StrokeThickness="0" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                                    <Path.Data>
+                                        <PathGeometry Figures="m 19.161275 21.506499 c 0.01005 -0.249995 -0.0385 -0.332031 -0.44252 -0.140625 0 0 -6.252611 2.585208 -7.025946 2.902345 -0.773335 0.317137 -1.169863 -0.480956 -0.813573 -0.945878 0.35629 -0.464922 11.371458 -14.7638946 11.371458 -14.7638946 0.379794 -0.4801088 0.630681 -0.4797487 0.940163 -0.049701 0 0 11.131822 14.4405426 11.447422 14.9511976 0.3156 0.510656 -0.137989 1.031421 -0.793925 0.813936 -0.655936 -0.217485 -7.123917 -2.92754 -7.123917 -2.92754 -0.251673 -0.113281 -0.390064 -0.08984 -0.391738 0.195313 v 31.691797 c 0.0043 0.30599 -0.06957 0.416667 -0.362168 0.414063 h -6.446994 c -0.357702 0.0026 -0.348216 -0.244792 -0.358262 -0.414063 z" FillRule="NonZero"/>
+                                    </Path.Data>
+                                </Path>
+                                <Path Name="ArrowDown" Fill="#FFE6E6E6" StrokeThickness="0" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                                    <Path.Data>
+                                        <PathGeometry Figures="m 37.608974 42.109144 c 0.01005 0.249995 -0.0385 0.332031 -0.44252 0.140625 0 0 -6.252611 -2.585208 -7.025946 -2.902345 -0.773335 -0.317137 -1.169863 0.480956 -0.813573 0.945878 0.35629 0.464922 11.371458 14.763895 11.371458 14.763895 0.379794 0.480108 0.630681 0.479748 0.940163 0.0497 0 0 11.131822 -14.440543 11.447422 -14.951198 0.3156 -0.510656 -0.137989 -1.031421 -0.793925 -0.813936 -0.655936 0.217485 -7.123917 2.92754 -7.123917 2.92754 -0.251673 0.113281 -0.390064 0.08984 -0.391738 -0.195313 V 10.382194 c 0.0043 -0.30599 -0.06957 -0.416667 -0.362168 -0.414063 h -6.446994 c -0.357702 -0.0026 -0.348216 0.244792 -0.358262 0.414063 z" FillRule="NonZero"/>
+                                    </Path.Data>
+                                </Path>
+                            </Canvas>
+                        </Canvas>
+                    </Viewbox>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="true">
+                            <Setter Property="Fill" TargetName="ArrowUp" Value="{StaticResource MediaBarButton.Default.Color}"/>
+                            <Setter Property="Fill" TargetName="ArrowDown" Value="{StaticResource MediaBarButton.Default.Color}"/>
+                            <Setter Property="Stroke" TargetName="RectBorder" Value="{StaticResource MediaBarButton.Default.Color}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Fill" TargetName="ArrowUp" Value="{StaticResource MediaBarButton.Hover.Color}"/>
+                            <Setter Property="Fill" TargetName="ArrowDown" Value="{StaticResource MediaBarButton.Hover.Color}"/>
+                            <Setter Property="Stroke" TargetName="RectBorder" Value="{StaticResource MediaBarButton.Hover.Color}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Fill" TargetName="ArrowUp" Value="{StaticResource MediaBarButton.Pressed.Color}"/>
+                            <Setter Property="Fill" TargetName="ArrowDown" Value="{StaticResource MediaBarButton.Pressed.Color}"/>
+                            <Setter Property="Stroke" TargetName="RectBorder" Value="{StaticResource MediaBarButton.Pressed.Color}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
