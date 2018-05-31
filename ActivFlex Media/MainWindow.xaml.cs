@@ -513,6 +513,14 @@ namespace ActivFlex
             }
         }
 
+        private void SortModeButton_Click(object sender, RoutedEventArgs e)
+        {
+            //DropDown context menu for the sort modes
+            SortModeButton.ContextMenu.PlacementTarget = SortModeButton;
+            SortModeButton.ContextMenu.Placement = PlacementMode.Bottom;
+            SortModeButton.ContextMenu.IsOpen = true;
+        }
+
         private void MediaPresenter_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ChangeFullscreenMode(!Fullscreen);
