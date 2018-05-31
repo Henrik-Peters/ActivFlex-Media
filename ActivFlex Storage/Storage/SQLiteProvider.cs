@@ -407,7 +407,7 @@ namespace ActivFlex.Storage
                     break;
 
                 case LibrarySortMode.Names:
-                    sql += "ORDER BY name";
+                    sql += "ORDER BY name COLLATE NOCASE";
                     break;
 
                 default:
