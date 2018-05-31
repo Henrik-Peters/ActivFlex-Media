@@ -1064,7 +1064,7 @@ namespace ActivFlex
             //Save the current window layout when restoring is active or volume has changed
             if (MainViewModel.Config.NormalStartup == WindowStartupState.RestoreAll || MainViewModel.Config.NormalStartup == WindowStartupState.RestoreSizeCentered ||
                 MainViewModel.Config.PresenterStartup == WindowStartupState.RestoreAll || MainViewModel.Config.PresenterStartup == WindowStartupState.RestoreSizeCentered ||
-                !MainViewModel.Config.Volume.Equals(VolumeSlider.Value)) {
+                !MainViewModel.Config.Volume.Equals(VolumeSlider.Value) || !MainViewModel.Config.ItemSortMode.Equals(vm.sortMode) || !MainViewModel.Config.ItemSortOrder.Equals(vm.sortOrder)) {
 
                 ConfigData config = MainViewModel.Config;
                 WindowRestoreState restoreState = WindowRestoreState.Default;
@@ -1081,7 +1081,7 @@ namespace ActivFlex
                                                          this.Width, this.Height, this.Left, this.Top, config.ThumbnailDecodeSize, config.PreloadPresenterImages,
                                                          config.ImageLaunchBehavior, config.MusicLaunchBehavior, config.VideoLaunchBehavior, VolumeSlider.Value,
                                                          config.ShowTimelineSideLabels, config.RestoreNavExpansions, config.DirectLibraryItemDelete, config.ShowMediaContainers,
-                                                         config.UseThumbnailCache, config.ItemSortMode, config.ItemSortOrder));
+                                                         config.UseThumbnailCache, vm.sortMode, vm.sortOrder));
             }
         }
 

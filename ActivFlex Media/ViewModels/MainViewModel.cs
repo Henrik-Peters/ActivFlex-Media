@@ -195,12 +195,12 @@ namespace ActivFlex.ViewModels
         /// <summary>
         /// The current sorting mode for library items.
         /// </summary>
-        private LibrarySortMode sortMode;
+        public LibrarySortMode sortMode;
 
         /// <summary>
         /// The current sorting order for library items-
         /// </summary>
-        private LibrarySortOrder sortOrder;
+        public LibrarySortOrder sortOrder;
 
         /// <summary>
         /// The media player to generate the thumbnail image.
@@ -935,7 +935,6 @@ namespace ActivFlex.ViewModels
         private void ApplySortMode(LibrarySortMode sortMode)
         {
             this.sortMode = sortMode;
-            Config.ItemSortMode = sortMode;
             SortLibraryItems(sortMode, sortOrder);
         }
 
@@ -949,7 +948,7 @@ namespace ActivFlex.ViewModels
                 ? LibrarySortOrder.Descending
                 : LibrarySortOrder.Ascending;
 
-            Config.ItemSortOrder = swapedOrder;
+            sortOrder = swapedOrder;
             SortLibraryItems(sortMode, swapedOrder);
         }
 
