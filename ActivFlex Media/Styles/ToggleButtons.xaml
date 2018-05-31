@@ -148,7 +148,7 @@
         </Setter>
     </Style>
 
-    <!-- Style definitions for the media bar toggle button -->
+    <!-- Style definitions for the sort order toggle button -->
     <Style x:Key="SortOrderButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="Transparent"/>
@@ -188,6 +188,79 @@
                         <Trigger Property="IsPressed" Value="true">
                             <Setter Property="Fill" TargetName="ArrowUp" Value="{StaticResource MediaBarButton.Pressed.Color}"/>
                             <Setter Property="Fill" TargetName="ArrowDown" Value="{StaticResource MediaBarButton.Pressed.Color}"/>
+                            <Setter Property="Stroke" TargetName="RectBorder" Value="{StaticResource MediaBarButton.Pressed.Color}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Style definitions for the sort mode button -->
+    <Style x:Key="SortModeButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Viewbox Stretch="Uniform">
+                        <Canvas Background="Transparent" Width="64" Height="64">
+                            <Canvas.Resources/>
+                            <Canvas>
+                                <Rectangle Name="RectBorder" Canvas.Left="3" Canvas.Top="3" Width="58" Height="58" RadiusY="15" RadiusX="15" StrokeThickness="3.77952766" Stroke="#FFE6E6E6" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                                <Canvas>
+                                    <Canvas.RenderTransform>
+                                        <TranslateTransform X="1.2110357" Y="-1.463107"/>
+                                    </Canvas.RenderTransform>
+                                    <Rectangle Name="TopBox" Canvas.Left="21.48086" Canvas.Top="16.163" Width="30.954491" Height="5.4346223" RadiusY="2.7173111" RadiusX="2.7173111" Fill="#FFE6E6E6" StrokeThickness="0" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                                    <Rectangle Name="MiddleBox" Canvas.Left="21.48086" Canvas.Top="30.745796" Width="30.954491" Height="5.4346223" RadiusY="2.7173111" RadiusX="2.7173111" Fill="#FFE6E6E6" StrokeThickness="0" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                                    <Rectangle Name="BottomBox" Canvas.Left="21.48086" Canvas.Top="45.32859" Width="30.954491" Height="5.4346223" RadiusY="2.7173111" RadiusX="2.7173111" Fill="#FFE6E6E6" StrokeThickness="0" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+                                    <Path Name="TopCircle" Fill="#FFE6E6E6" StrokeThickness="0" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                                        <Path.Data>
+                                            <PathGeometry Figures="m 13.501953 12.520936 a 6.3593751 6.3593751 0 0 0 -6.3593749 6.359375 6.3593751 6.3593751 0 0 0 6.3593749 6.359375 6.3593751 6.3593751 0 0 0 6.359375 -6.359375 6.3593751 6.3593751 0 0 0 -6.359375 -6.359375 z m 0 2.95189 a 3.4062807 3.4062807 0 0 1 3.405114 3.407485 3.4062807 3.4062807 0 0 1 -3.405114 3.405113 3.4062807 3.4062807 0 0 1 -3.407486 -3.405113 3.4062807 3.4062807 0 0 1 3.407486 -3.407485 z" FillRule="NonZero"/>
+                                        </Path.Data>
+                                    </Path>
+                                    <Path Name="MiddleCircle" Fill="#FFE6E6E6" StrokeThickness="0" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                                        <Path.Data>
+                                            <PathGeometry Figures="m 13.501953 27.103732 a 6.3593751 6.3593751 0 0 0 -6.3593749 6.359375 6.3593751 6.3593751 0 0 0 6.3593749 6.359375 6.3593751 6.3593751 0 0 0 6.359375 -6.359375 6.3593751 6.3593751 0 0 0 -6.359375 -6.359375 z m 0 2.95189 a 3.4062807 3.4062807 0 0 1 3.405114 3.407485 3.4062807 3.4062807 0 0 1 -3.405114 3.405113 3.4062807 3.4062807 0 0 1 -3.407486 -3.405113 3.4062807 3.4062807 0 0 1 3.407486 -3.407485 z" FillRule="NonZero"/>
+                                        </Path.Data>
+                                    </Path>
+                                    <Path Name="BottomCircle" Fill="#FFE6E6E6" StrokeThickness="0" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                                        <Path.Data>
+                                            <PathGeometry Figures="m 13.501953 41.686528 a 6.3593751 6.3593751 0 0 0 -6.3593749 6.359375 6.3593751 6.3593751 0 0 0 6.3593749 6.359375 6.3593751 6.3593751 0 0 0 6.359375 -6.359375 6.3593751 6.3593751 0 0 0 -6.359375 -6.359375 z m 0 2.95189 a 3.4062807 3.4062807 0 0 1 3.405114 3.407485 3.4062807 3.4062807 0 0 1 -3.405114 3.405113 3.4062807 3.4062807 0 0 1 -3.407486 -3.405113 3.4062807 3.4062807 0 0 1 3.407486 -3.407485 z" FillRule="NonZero"/>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                            </Canvas>
+                        </Canvas>
+                    </Viewbox>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="true">
+                            <Setter Property="Fill" TargetName="TopBox" Value="{StaticResource MediaBarButton.Default.Color}"/>
+                            <Setter Property="Fill" TargetName="MiddleBox" Value="{StaticResource MediaBarButton.Default.Color}"/>
+                            <Setter Property="Fill" TargetName="BottomBox" Value="{StaticResource MediaBarButton.Default.Color}"/>
+                            <Setter Property="Fill" TargetName="TopCircle" Value="{StaticResource MediaBarButton.Default.Color}"/>
+                            <Setter Property="Fill" TargetName="MiddleCircle" Value="{StaticResource MediaBarButton.Default.Color}"/>
+                            <Setter Property="Fill" TargetName="BottomCircle" Value="{StaticResource MediaBarButton.Default.Color}"/>
+                            <Setter Property="Stroke" TargetName="RectBorder" Value="{StaticResource MediaBarButton.Default.Color}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Fill" TargetName="TopBox" Value="{StaticResource MediaBarButton.Hover.Color}"/>
+                            <Setter Property="Fill" TargetName="MiddleBox" Value="{StaticResource MediaBarButton.Hover.Color}"/>
+                            <Setter Property="Fill" TargetName="BottomBox" Value="{StaticResource MediaBarButton.Hover.Color}"/>
+                            <Setter Property="Fill" TargetName="TopCircle" Value="{StaticResource MediaBarButton.Hover.Color}"/>
+                            <Setter Property="Fill" TargetName="MiddleCircle" Value="{StaticResource MediaBarButton.Hover.Color}"/>
+                            <Setter Property="Fill" TargetName="BottomCircle" Value="{StaticResource MediaBarButton.Hover.Color}"/>
+                            <Setter Property="Stroke" TargetName="RectBorder" Value="{StaticResource MediaBarButton.Hover.Color}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Fill" TargetName="TopBox" Value="{StaticResource MediaBarButton.Pressed.Color}"/>
+                            <Setter Property="Fill" TargetName="MiddleBox" Value="{StaticResource MediaBarButton.Pressed.Color}"/>
+                            <Setter Property="Fill" TargetName="BottomBox" Value="{StaticResource MediaBarButton.Pressed.Color}"/>
+                            <Setter Property="Fill" TargetName="TopCircle" Value="{StaticResource MediaBarButton.Pressed.Color}"/>
+                            <Setter Property="Fill" TargetName="MiddleCircle" Value="{StaticResource MediaBarButton.Pressed.Color}"/>
+                            <Setter Property="Fill" TargetName="BottomCircle" Value="{StaticResource MediaBarButton.Pressed.Color}"/>
                             <Setter Property="Stroke" TargetName="RectBorder" Value="{StaticResource MediaBarButton.Pressed.Color}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>

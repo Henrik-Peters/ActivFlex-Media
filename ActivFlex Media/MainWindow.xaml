@@ -355,7 +355,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="45"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="410"/>
+                <ColumnDefinition Width="380"/>
             </Grid.ColumnDefinitions>
 
             <Controls:IconButton x:Name="BtnBack" Width="35" Height="35" Grid.Column="0" Margin="10,0,0,0" VerticalAlignment="Center"
@@ -371,7 +371,11 @@
             <Controls:LibraryNavigator x:Name="LibraryPathNavigator" Grid.Column="1" Margin="5,0,0,0" Container="{Binding ActiveContainer}" Command="{Binding SelectMediaContainer}"
                                        Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolVisibilityConverter}}"/>
 
-            <!-- Info launch button -->
+            <!-- Sort mode button -->
+            <Button x:Name="SortModeButton" Command="{Binding ShowInfo}" Style="{StaticResource SortModeButtonStyle}"
+                    Grid.Column="2" Height="22" Width="22" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,350,0"/>
+            
+            <!-- Sort order button -->
             <Button x:Name="SortOrderButton" Command="{Binding ShowInfo}" Style="{StaticResource SortOrderButtonStyle}"
                     Grid.Column="2" Height="22" Width="22" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,320,0"/>
 
