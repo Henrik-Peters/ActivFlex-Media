@@ -83,6 +83,10 @@ namespace ActivFlex.Localization
             ["EmptyTextFirstLine"] = new List<string> { "You can use the media import or", "Sie können den Medienimport verwenden oder" },
             ["EmptyTextSecoundLine"] = new List<string> { "drag and drop media files", "mit Drag and Drop Medien hinzufügen" },
             ["AddMediaItems"] = new List<string> { "Add media items", "Medien hinzufügen" },
+            ["Chronological"] = new List<string> { "Chronological", "Chronologisch" },
+            ["FrequencyOfUse"] = new List<string> { "Frequency of use", "Verwendungshäufigkeit" },
+            ["Rating"] = new List<string> { "Rating", "Bewertung" },
+            ["Names"] = new List<string> { "Names", "Namen" }
         };
 
         /// <summary>

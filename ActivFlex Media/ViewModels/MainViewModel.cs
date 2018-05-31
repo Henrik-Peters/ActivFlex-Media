@@ -742,6 +742,16 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public ICommand FileItemMouseDown { get; set; }
 
+        /// <summary>
+        /// Change the current sort mode for the library items.
+        /// </summary>
+        public ICommand ChangeSortMode { get; set; }
+
+        /// <summary>
+        /// Toggle the order between ascending and descending for library items.
+        /// </summary>
+        public ICommand ToggleSortOrder { get; set; }
+
         #endregion
 
         /// <summary>
@@ -869,6 +879,8 @@ namespace ActivFlex.ViewModels
             this.FileMusicClick = new RelayCommand<MusicItemViewModel>(MusicFileItemClick);
             this.FileVideoClick = new RelayCommand<VideoItemViewModel>(VideoFileItemClick);
             this.FileItemMouseDown = new RelayCommand<IThumbnailViewModel>(FileItemDragInit);
+            this.ChangeSortMode = new RelayCommand<LibrarySortMode>(ApplySortMode);
+            this.ToggleSortOrder = new RelayCommand(SwapSortOrder);
             this.LaunchDefault = new RelayCommand<IFileObject>(media => {
                 if (File.Exists(media.Path)) {
                     Process.Start(media.Path);
@@ -900,6 +912,24 @@ namespace ActivFlex.ViewModels
             this.Stop = new RelayCommand(StopCurrentPlayback);
             this.Next = new RelayCommand(() => ChangeActiveImage(true));
             this.Previous = new RelayCommand(() => ChangeActiveImage(false));
+        }
+
+        /// <summary>
+        /// Apply a new sort mode for the current media container view.
+        /// </summary>
+        /// <param name="sortMode">The new sort mode</param>
+        private void ApplySortMode(LibrarySortMode sortMode)
+        {
+
+        }
+
+        /// <summary>
+        /// Swap the sort direction between ascending and descending
+        /// for the items in the current media container view.
+        /// </summary>
+        private void SwapSortOrder()
+        {
+
         }
 
         /// <summary>
