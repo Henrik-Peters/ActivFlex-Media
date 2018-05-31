@@ -958,24 +958,25 @@ namespace ActivFlex.ViewModels
         private void SortLibraryItems(LibrarySortMode sortMode, LibrarySortOrder sortOrder)
         {
             //Sort the current collection by the sort mode
-            IEnumerable<ILibraryItemViewModel> sortedItems;
+            IEnumerable<ILibraryItemViewModel> containers = LibraryItems.Where(item => item is LibraryContainerViewModel);
+            IEnumerable<ILibraryItemViewModel> sortedItems = LibraryItems.Where(item => !(item is LibraryContainerViewModel));
 
             switch (sortMode) {
                 case LibrarySortMode.Chronological:
-                    sortedItems = LibraryItems.OrderBy(item => item.Proxy.ItemID);
+                    sortedItems = sortedItems.OrderBy(item => item.Proxy.ItemID);
                     break;
 
                 case LibrarySortMode.FrequencyOfUse:
-                    sortedItems = LibraryItems.OrderBy(item => item.Proxy.AccessCount);
+                    sortedItems = sortedItems.OrderBy(item => item.Proxy.AccessCount);
                     break;
 
                 case LibrarySortMode.Names:
-                    sortedItems = LibraryItems.OrderBy(item => item.Name);
+                    sortedItems = sortedItems.OrderBy(item => item.Name);
                     break;
 
                 case LibrarySortMode.Rating:
                     //TODO use rating
-                    sortedItems = LibraryItems.OrderBy(item => item.Proxy.CreationTime);
+                    sortedItems = sortedItems.OrderBy(item => item.Proxy.ItemID);
                     break;
 
                 default:
@@ -987,7 +988,7 @@ namespace ActivFlex.ViewModels
                 sortedItems = sortedItems.Reverse();
             }
             
-            LibraryItems = new ObservableCollection<ILibraryItemViewModel>(sortedItems);
+            LibraryItems = new ObservableCollection<ILibraryItemViewModel>(containers.Concat(sortedItems));
         }
 
         /// <summary>
