@@ -971,7 +971,7 @@ namespace ActivFlex.ViewModels
                     break;
 
                 case LibrarySortMode.Names:
-                    sortedItems = sortedItems.OrderBy(item => item.Name);
+                    sortedItems = sortedItems.OrderBy(item => item.Name, StringComparer.Ordinal);
                     break;
 
                 case LibrarySortMode.Rating:
