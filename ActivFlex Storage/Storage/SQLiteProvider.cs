@@ -383,14 +383,38 @@ namespace ActivFlex.Storage
             return LibraryItemFactory.CreateItemByExtension(itemID, name, path, container, creationTime, 0, default(DateTime), thumbnail);
         }
 
-        public List<ILibraryItem> ReadItemsFromContainer(MediaContainer container, bool loadThumbnails)
+        public List<ILibraryItem> ReadItemsFromContainer(MediaContainer container, bool loadThumbnails, LibrarySortMode sortMode, LibrarySortOrder sortOrder)
         {
             List<ILibraryItem> items = new List<ILibraryItem>();
 
             string sql = @"SELECT Items.IID, name, path, " + (loadThumbnails ? "thumbnail, " : "") + "accessCount, creationTime, lastAccessTime " +
                         "FROM ContainerItems " +
                         "INNER JOIN Items ON Items.IID = ContainerItems.IID " +
-                        "WHERE CID=@ContainerID";
+                        "WHERE CID=@ContainerID ";
+
+            switch (sortMode) {
+                case LibrarySortMode.Chronological:
+                    sql += "ORDER BY Items.IID";
+                    break;
+
+                case LibrarySortMode.FrequencyOfUse:
+                    sql += "ORDER BY accessCount";
+                    break;
+
+                case LibrarySortMode.Rating:
+                    //TODO use rating
+                    sql += "ORDER BY Items.IID";
+                    break;
+
+                case LibrarySortMode.Names:
+                    sql += "ORDER BY name";
+                    break;
+
+                default:
+                    throw new InvalidOperationException("Unknown library item sort mode: " + sortMode);
+            }
+
+            sql += (sortOrder == LibrarySortOrder.Ascending) ? " ASC" : " DESC";
 
             var command = new SQLiteCommand(sql, connection);
             command.Parameters.AddWithValue("ContainerID", container.ContainerID);

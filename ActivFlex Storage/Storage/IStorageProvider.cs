@@ -122,8 +122,10 @@ namespace ActivFlex.Storage
         /// </summary>
         /// <param name="container">Read the items of this container</param>
         /// <param name="loadThumbnails">Load the thumbnails directly</param>
+        /// <param name="sortMode">Mode to be used for sorting media items</param>
+        /// <param name="sortOrder">Order of the media item sorting</param>
         /// <returns>List with the library items of the container</returns>
-        List<ILibraryItem> ReadItemsFromContainer(MediaContainer container, bool loadThumbnails);
+        List<ILibraryItem> ReadItemsFromContainer(MediaContainer container, bool loadThumbnails, LibrarySortMode sortMode, LibrarySortOrder sortOrder);
 
         /// <summary>
         /// Update a media library item with a new name.
