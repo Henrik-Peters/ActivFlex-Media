@@ -193,6 +193,16 @@ namespace ActivFlex.ViewModels
         private IThumbnailViewModel lastFileSelection;
 
         /// <summary>
+        /// The current sorting mode for library items.
+        /// </summary>
+        private LibrarySortMode sortMode;
+
+        /// <summary>
+        /// The current sorting order for library items-
+        /// </summary>
+        private LibrarySortOrder sortOrder;
+
+        /// <summary>
         /// The media player to generate the thumbnail image.
         /// </summary>
         MediaPlayer thumbnailPlayer;
@@ -819,6 +829,10 @@ namespace ActivFlex.ViewModels
             this.Zoom = 1.0;
             this.ZoomDelta = 0.1;
 
+            //Media container sorting
+            sortMode = Config.ItemSortMode;
+            sortOrder = Config.ItemSortOrder;
+
             //Presentation startup
             this.ActiveImages = new MediaImage[0];
             this.ImagePresentActive = false;
@@ -920,7 +934,9 @@ namespace ActivFlex.ViewModels
         /// <param name="sortMode">The new sort mode</param>
         private void ApplySortMode(LibrarySortMode sortMode)
         {
-
+            this.sortMode = sortMode;
+            Config.ItemSortMode = sortMode;
+            SortLibraryItems(sortMode, sortOrder);
         }
 
         /// <summary>
@@ -929,7 +945,12 @@ namespace ActivFlex.ViewModels
         /// </summary>
         private void SwapSortOrder()
         {
+            LibrarySortOrder swapedOrder = (sortOrder == LibrarySortOrder.Ascending)
+                ? LibrarySortOrder.Descending
+                : LibrarySortOrder.Ascending;
 
+            Config.ItemSortOrder = swapedOrder;
+            SortLibraryItems(sortMode, swapedOrder);
         }
 
         /// <summary>
@@ -942,7 +963,7 @@ namespace ActivFlex.ViewModels
 
             switch (sortMode) {
                 case LibrarySortMode.Chronological:
-                    sortedItems = LibraryItems.OrderBy(item => item.Proxy.CreationTime);
+                    sortedItems = LibraryItems.OrderBy(item => item.Proxy.ItemID);
                     break;
 
                 case LibrarySortMode.FrequencyOfUse:
