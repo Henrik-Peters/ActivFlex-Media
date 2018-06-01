@@ -958,37 +958,39 @@ namespace ActivFlex.ViewModels
         private void SortLibraryItems(LibrarySortMode sortMode, LibrarySortOrder sortOrder)
         {
             //Sort the current collection by the sort mode
-            IEnumerable<ILibraryItemViewModel> containers = LibraryItems.Where(item => item is LibraryContainerViewModel);
-            IEnumerable<ILibraryItemViewModel> sortedItems = LibraryItems.Where(item => !(item is LibraryContainerViewModel));
+            if (LibraryItems != null) {
+                IEnumerable<ILibraryItemViewModel> containers = LibraryItems.Where(item => item is LibraryContainerViewModel);
+                IEnumerable<ILibraryItemViewModel> sortedItems = LibraryItems.Where(item => !(item is LibraryContainerViewModel));
 
-            switch (sortMode) {
-                case LibrarySortMode.Chronological:
-                    sortedItems = sortedItems.OrderBy(item => item.Proxy.ItemID);
-                    break;
+                switch (sortMode) {
+                    case LibrarySortMode.Chronological:
+                        sortedItems = sortedItems.OrderBy(item => item.Proxy.ItemID);
+                        break;
 
-                case LibrarySortMode.FrequencyOfUse:
-                    sortedItems = sortedItems.OrderBy(item => item.Proxy.AccessCount);
-                    break;
+                    case LibrarySortMode.FrequencyOfUse:
+                        sortedItems = sortedItems.OrderBy(item => item.Proxy.AccessCount);
+                        break;
 
-                case LibrarySortMode.Names:
-                    sortedItems = sortedItems.OrderBy(item => item.Name, StringComparer.OrdinalIgnoreCase);
-                    break;
+                    case LibrarySortMode.Names:
+                        sortedItems = sortedItems.OrderBy(item => item.Name, StringComparer.OrdinalIgnoreCase);
+                        break;
 
-                case LibrarySortMode.Rating:
-                    //TODO use rating
-                    sortedItems = sortedItems.OrderBy(item => item.Proxy.ItemID);
-                    break;
+                    case LibrarySortMode.Rating:
+                        //TODO use rating
+                        sortedItems = sortedItems.OrderBy(item => item.Proxy.ItemID);
+                        break;
 
-                default:
-                    throw new InvalidOperationException("Unknown library item sort mode: " + sortMode);
-            }
+                    default:
+                        throw new InvalidOperationException("Unknown library item sort mode: " + sortMode);
+                }
 
-            //Reverse the order when necessary
-            if (sortOrder == LibrarySortOrder.Descending) {
-                sortedItems = sortedItems.Reverse();
-            }
+                //Reverse the order when necessary
+                if (sortOrder == LibrarySortOrder.Descending) {
+                    sortedItems = sortedItems.Reverse();
+                }
             
-            LibraryItems = new ObservableCollection<ILibraryItemViewModel>(containers.Concat(sortedItems));
+                LibraryItems = new ObservableCollection<ILibraryItemViewModel>(containers.Concat(sortedItems));
+            }
         }
 
         /// <summary>

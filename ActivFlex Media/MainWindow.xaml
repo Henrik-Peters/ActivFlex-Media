@@ -374,8 +374,9 @@
 
             <!-- Sort mode button -->
             <Button x:Name="SortModeButton" Click="SortModeButton_Click" Style="{StaticResource SortModeButtonStyle}"
-                    Grid.Column="2" Height="22" Width="22" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,350,0"
-                    ContextMenuService.IsEnabled="False" Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                    Grid.Column="2" Height="24" Width="24" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,350,0"
+                    ContextMenuService.IsEnabled="False" Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                    Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolVisibilityConverter}}">
                 <Button.ContextMenu>
                     <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
                         <MenuItem Name="SortChronologicalMenuItem" Header="{Binding Localize[Chronological]}" Command="{Binding ChangeSortMode}"
@@ -399,7 +400,8 @@
 
             <!-- Sort order button -->
             <Button x:Name="SortOrderButton" Command="{Binding ToggleSortOrder}" Style="{StaticResource SortOrderButtonStyle}"
-                    Grid.Column="2" Height="22" Width="22" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,320,0"/>
+                    Grid.Column="2" Height="24" Width="24" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,317,0"
+                    Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolVisibilityConverter}}"/>
 
             <Slider x:Name="ZoomSlider"
                     Width="200" 
