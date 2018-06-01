@@ -378,17 +378,17 @@
                     ContextMenuService.IsEnabled="False" Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
                 <Button.ContextMenu>
                     <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-                        <MenuItem Header="{Binding Localize[Chronological]}" Command="{Binding ChangeSortMode}"
-                                  CommandParameter="{x:Static Libraries:LibrarySortMode.Chronological}"/>
+                        <MenuItem Name="SortChronologicalMenuItem" Header="{Binding Localize[Chronological]}" Command="{Binding ChangeSortMode}"
+                                  CommandParameter="{x:Static Libraries:LibrarySortMode.Chronological}" IsCheckable="True" Checked="SortModeItem_Checked"/>
 
-                        <MenuItem Header="{Binding Localize[FrequencyOfUse]}" Command="{Binding ChangeSortMode}"
-                                  CommandParameter="{x:Static Libraries:LibrarySortMode.FrequencyOfUse}"/>
+                        <MenuItem Name="SortFrequencyMenuItem" Header="{Binding Localize[FrequencyOfUse]}" Command="{Binding ChangeSortMode}"
+                                  CommandParameter="{x:Static Libraries:LibrarySortMode.FrequencyOfUse}" IsCheckable="True" Checked="SortModeItem_Checked"/>
 
-                        <MenuItem Header="{Binding Localize[Rating]}" Command="{Binding ChangeSortMode}"
-                                  CommandParameter="{x:Static Libraries:LibrarySortMode.Rating}"/>
+                        <MenuItem Name="SortRatingMenuItem" Header="{Binding Localize[Rating]}" Command="{Binding ChangeSortMode}"
+                                  CommandParameter="{x:Static Libraries:LibrarySortMode.Rating}" IsCheckable="True" Checked="SortModeItem_Checked"/>
 
-                        <MenuItem Header="{Binding Localize[Names]}" Command="{Binding ChangeSortMode}"
-                                  CommandParameter="{x:Static Libraries:LibrarySortMode.Names}"/>
+                        <MenuItem Name="SortNamesMenuItem" Header="{Binding Localize[Names]}" Command="{Binding ChangeSortMode}"
+                                  CommandParameter="{x:Static Libraries:LibrarySortMode.Names}" IsCheckable="True" Checked="SortModeItem_Checked"/>
                     </ContextMenu>
                 </Button.ContextMenu>
             </Button>

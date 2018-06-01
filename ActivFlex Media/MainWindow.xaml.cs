@@ -83,6 +83,11 @@ namespace ActivFlex
         private bool LeftMouseButtonDown = false;
 
         /// <summary>
+        /// All menu items that are in the sort mode context menu.
+        /// </summary>
+        private MenuItem[] sortModeMenuItems;
+
+        /// <summary>
         /// The panel that contains the items for drag selections.
         /// </summary>
         private WrapPanel WrapSelectionPanel;
@@ -147,6 +152,36 @@ namespace ActivFlex
                 },
                 () => this.Cursor = null
             );
+
+            //sort mode context menu items
+            sortModeMenuItems = new MenuItem[] {
+                SortChronologicalMenuItem,
+                SortFrequencyMenuItem,
+                SortRatingMenuItem,
+                SortNamesMenuItem
+            };
+
+            //check the current sort mode
+            switch (MainViewModel.Config.ItemSortMode) {
+                case LibrarySortMode.Chronological:
+                    SortChronologicalMenuItem.IsChecked = true;
+                    break;
+
+                case LibrarySortMode.FrequencyOfUse:
+                    SortFrequencyMenuItem.IsChecked = true;
+                    break;
+
+                case LibrarySortMode.Rating:
+                    SortRatingMenuItem.IsChecked = true;
+                    break;
+
+                case LibrarySortMode.Names:
+                    SortNamesMenuItem.IsChecked = true;
+                    break;
+
+                default:
+                    throw new InvalidOperationException("Unknown library item sort mode: " + MainViewModel.Config.ItemSortMode);
+            }
 
             this.DataContext = vm;
             this.MediaPlayer.Volume = MainViewModel.Config.Volume;
@@ -519,6 +554,18 @@ namespace ActivFlex
             SortModeButton.ContextMenu.PlacementTarget = SortModeButton;
             SortModeButton.ContextMenu.Placement = PlacementMode.Bottom;
             SortModeButton.ContextMenu.IsOpen = true;
+        }
+
+        private void SortModeItem_Checked(object sender, RoutedEventArgs e)
+        {
+            //Uncheck all other items to make sure that only 1 item is checked
+            if (sortModeMenuItems != null) {
+                foreach (MenuItem curItem in sortModeMenuItems.Where(item => item != sender)) {
+                    if (curItem.IsCheckable && curItem.IsChecked) {
+                        curItem.IsChecked = false;
+                    }
+                }
+            }
         }
 
         private void MediaPresenter_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
