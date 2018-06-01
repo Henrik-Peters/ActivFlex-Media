@@ -60,6 +60,7 @@
     </ApplicationDefinition>
     <Compile Include="Configuration\ConfigData.cs" />
     <Compile Include="Configuration\ConfigProvider.cs" />
+    <Compile Include="Configuration\ConfigUpdater.cs" />
     <Compile Include="Configuration\LaunchBehavior.cs" />
     <Compile Include="Configuration\Parameter.cs" />
     <Compile Include="Configuration\WindowStartupState.cs" />

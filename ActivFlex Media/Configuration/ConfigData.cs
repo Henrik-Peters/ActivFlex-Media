@@ -30,7 +30,7 @@ namespace ActivFlex.Configuration
     /// </summary>
     [Serializable]
     [XmlRoot("ActivFlex-Config")]
-    public sealed class ConfigData
+    public sealed class ConfigData : ICloneable
     {
         #region Config Metadata
 
@@ -242,6 +242,11 @@ namespace ActivFlex.Configuration
             this.UseThumbnailCache = UseThumbnailCache;
             this.ItemSortMode = ItemSortMode;
             this.ItemSortOrder = ItemSortOrder;
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
     }
 }

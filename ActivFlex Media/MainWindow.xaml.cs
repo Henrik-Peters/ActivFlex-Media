@@ -1119,7 +1119,7 @@ namespace ActivFlex
                 MainViewModel.Config.PresenterStartup == WindowStartupState.RestoreAll || MainViewModel.Config.PresenterStartup == WindowStartupState.RestoreSizeCentered ||
                 !MainViewModel.Config.Volume.Equals(VolumeSlider.Value) || !MainViewModel.Config.ItemSortMode.Equals(vm.sortMode) || !MainViewModel.Config.ItemSortOrder.Equals(vm.sortOrder)) {
 
-                ConfigData config = MainViewModel.Config;
+                //ConfigData config = MainViewModel.Config;
                 WindowRestoreState restoreState = WindowRestoreState.Default;
 
                 if (this.WindowState == WindowState.Maximized) {
@@ -1130,11 +1130,14 @@ namespace ActivFlex
                     restoreState = WindowRestoreState.Fullscreen;
                 }
 
-                ConfigProvider.SaveConfig(new ConfigData(config.Username, config.Language, config.NormalStartup, config.PresenterStartup, restoreState,
-                                                         this.Width, this.Height, this.Left, this.Top, config.ThumbnailDecodeSize, config.PreloadPresenterImages,
-                                                         config.ImageLaunchBehavior, config.MusicLaunchBehavior, config.VideoLaunchBehavior, VolumeSlider.Value,
-                                                         config.ShowTimelineSideLabels, config.RestoreNavExpansions, config.DirectLibraryItemDelete, config.ShowMediaContainers,
-                                                         config.UseThumbnailCache, vm.sortMode, vm.sortOrder));
+                ConfigUpdater.UpdateConfig(config => {
+                    config.RestoreWidth = this.Width;
+                    config.RestoreHeight = this.Height;
+                    config.RestoreLeft = this.Left;
+                    config.RestoreTop = this.Top;
+                    config.RestoreState = restoreState;
+                    config.Volume = VolumeSlider.Value;
+                });
             }
         }
 

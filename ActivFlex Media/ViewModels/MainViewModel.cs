@@ -936,6 +936,7 @@ namespace ActivFlex.ViewModels
         {
             this.sortMode = sortMode;
             SortLibraryItems(sortMode, sortOrder);
+            ConfigUpdater.UpdateConfig(config => config.ItemSortMode = sortMode);
         }
 
         /// <summary>
@@ -950,6 +951,7 @@ namespace ActivFlex.ViewModels
 
             sortOrder = swapedOrder;
             SortLibraryItems(sortMode, swapedOrder);
+            ConfigUpdater.UpdateConfig(config => config.ItemSortOrder = swapedOrder);
         }
 
         /// <summary>
