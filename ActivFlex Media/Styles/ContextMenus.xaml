@@ -79,9 +79,11 @@
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">
                 <Setter TargetName="Border" Property="Background" Value="{StaticResource ContextMenu.Background.Hover}"/>
+                <Setter TargetName="Check" Property="Background" Value="{StaticResource ContextMenu.Background.Hover}"/>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
                 <Setter TargetName="Border" Property="Background" Value="{StaticResource ContextMenu.Background.Pressed}"/>
+                <Setter TargetName="Check" Property="Background" Value="{StaticResource ContextMenu.Background.Pressed}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="DarkGray"/>
