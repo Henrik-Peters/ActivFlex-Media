@@ -81,6 +81,7 @@
     <Compile Include="Controls\SimpleThumbnail.xaml.cs">
       <DependentUpon>SimpleThumbnail.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BooleanCollapsedConverter.cs" />
     <Compile Include="Converters\BooleanInvertVisibilityConverter.cs" />
     <Compile Include="Converters\BooleanVisibilityConverter.cs" />
     <Compile Include="Converters\IsNullConverter.cs" />

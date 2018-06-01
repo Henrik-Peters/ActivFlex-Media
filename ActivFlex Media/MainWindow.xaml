@@ -19,6 +19,7 @@
     <Window.Resources>
         <Converters:NavItemIconConverter x:Key="NavIconConverter"/>
         <Converters:BooleanVisibilityConverter x:Key="BoolVisibilityConverter"/>
+        <Converters:BooleanCollapsedConverter x:Key="BoolCollapsedConverter"/>
         <Converters:BooleanInvertVisibilityConverter x:Key="BoolInvertVisibilityConverter"/>
         <KeyTime x:Key="NavTreeFadeTime">0:0:0.2</KeyTime>
         <KeyTime x:Key="MediaBarFadeTime">0:0:0.2</KeyTime>
@@ -356,7 +357,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="45"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="380"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <Controls:IconButton x:Name="BtnBack" Width="35" Height="35" Grid.Column="0" Margin="10,0,0,0" VerticalAlignment="Center"
@@ -374,9 +375,9 @@
 
             <!-- Sort mode button -->
             <Button x:Name="SortModeButton" Click="SortModeButton_Click" Style="{StaticResource SortModeButtonStyle}"
-                    Grid.Column="2" Height="24" Width="24" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,350,0"
+                    Grid.Column="2" Height="24" Width="24" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,350,0"
                     ContextMenuService.IsEnabled="False" Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
-                    Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolVisibilityConverter}}">
+                    Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolCollapsedConverter}}">
                 <Button.ContextMenu>
                     <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
                         <MenuItem Name="SortChronologicalMenuItem" Header="{Binding Localize[Chronological]}" Command="{Binding ChangeSortMode}"
@@ -401,12 +402,12 @@
             <!-- Sort order button -->
             <Button x:Name="SortOrderButton" Command="{Binding ToggleSortOrder}" Style="{StaticResource SortOrderButtonStyle}"
                     Grid.Column="2" Height="24" Width="24" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,317,0"
-                    Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolVisibilityConverter}}"/>
+                    Visibility="{Binding LibraryBrowsing, Converter={StaticResource BoolCollapsedConverter}}"/>
 
             <Slider x:Name="ZoomSlider"
                     Width="200" 
                     Grid.Column="2"
-                    Margin="0,0,100,0"
+                    Margin="5,0,100,0"
                     Minimum="0.5"
                     Maximum="3.0"
                     Focusable="False"
