@@ -127,4 +127,56 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+
+    <!-- Alternative styles -->
+    <!-- ContextMenu item style with radio button instead of a checkbox -->
+    <ControlTemplate x:Key="RadioMenuItemTemplate" TargetType="{x:Type MenuItem}">
+        <Border Name="Border" Padding="0,5,0,5" Background="{StaticResource ContextMenu.Background.Color}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Icon"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="ItemText"/>
+                    <ColumnDefinition Width="13"/>
+                </Grid.ColumnDefinitions>
+                <ContentPresenter Name="Icon" MaxWidth="20" MaxHeight="20" Margin="6,0,6,0" VerticalAlignment="Center" ContentSource="Icon"/>
+
+                <!-- Radio button instead of a checkbox -->
+                <Border Name="Check" Width="20" Height="20" Visibility="Collapsed" Margin="5,0,5,0" Background="{StaticResource ContextMenu.Background.Color}" BorderThickness="1" BorderBrush="Transparent">
+                    <Grid Name="CheckMark" Visibility="Hidden">
+                        <Ellipse Name="OuterCircle" Width="17" Height="17" Fill="#578EB2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Ellipse Name="MidCircle" Width="14" Height="14" Fill="{StaticResource ContextMenu.Background.Color}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Ellipse Name="InnerCircle" Width="9" Height="9" Fill="#578EB2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+                <ContentPresenter Name="HeaderHost" Grid.Column="1" ContentSource="Header"/>
+                <TextBlock x:Name="InputGestureText" Grid.Column="2" Margin="0,0,0,2" Text="{TemplateBinding InputGestureText}" DockPanel.Dock="Right"/>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Icon" Value="{x:Null}">
+                <Setter TargetName="Icon" Property="Visibility" Value="Hidden"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
+            </Trigger>
+            <Trigger Property="IsCheckable" Value="True">
+                <Setter TargetName="Check" Property="Visibility" Value="Visible"/>
+                <Setter TargetName="Icon" Property="Visibility" Value="Hidden"/>
+            </Trigger>
+            <Trigger Property="IsHighlighted" Value="True">
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource ContextMenu.Background.Hover}"/>
+                <Setter TargetName="Check" Property="Background" Value="{StaticResource ContextMenu.Background.Hover}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource ContextMenu.Background.Pressed}"/>
+                <Setter TargetName="Check" Property="Background" Value="{StaticResource ContextMenu.Background.Pressed}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="DarkGray"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
 </ResourceDictionary>
