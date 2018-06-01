@@ -381,19 +381,19 @@
                 <Button.ContextMenu>
                     <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
                         <MenuItem Name="SortChronologicalMenuItem" Header="{Binding Localize[Chronological]}" Command="{Binding ChangeSortMode}"
-                                  IsCheckable="True" Checked="SortModeItem_Checked" Template="{StaticResource RadioMenuItemTemplate}"
+                                  IsCheckable="True" Click="SortModeItem_Click" Template="{StaticResource RadioMenuItemTemplate}"
                                   CommandParameter="{x:Static Libraries:LibrarySortMode.Chronological}"/>
 
                         <MenuItem Name="SortFrequencyMenuItem" Header="{Binding Localize[FrequencyOfUse]}" Command="{Binding ChangeSortMode}"
-                                  IsCheckable="True" Checked="SortModeItem_Checked" Template="{StaticResource RadioMenuItemTemplate}"
+                                  IsCheckable="True" Click="SortModeItem_Click" Template="{StaticResource RadioMenuItemTemplate}"
                                   CommandParameter="{x:Static Libraries:LibrarySortMode.FrequencyOfUse}"/>
 
                         <MenuItem Name="SortRatingMenuItem" Header="{Binding Localize[Rating]}" Command="{Binding ChangeSortMode}"
-                                  IsCheckable="True" Checked="SortModeItem_Checked" Template="{StaticResource RadioMenuItemTemplate}"
+                                  IsCheckable="True" Click="SortModeItem_Click" Template="{StaticResource RadioMenuItemTemplate}"
                                   CommandParameter="{x:Static Libraries:LibrarySortMode.Rating}"/>
 
                         <MenuItem Name="SortNamesMenuItem" Header="{Binding Localize[Names]}" Command="{Binding ChangeSortMode}"
-                                  IsCheckable="True" Checked="SortModeItem_Checked" Template="{StaticResource RadioMenuItemTemplate}"
+                                  IsCheckable="True" Click="SortModeItem_Click" Template="{StaticResource RadioMenuItemTemplate}"
                                   CommandParameter="{x:Static Libraries:LibrarySortMode.Names}"/>
                     </ContextMenu>
                 </Button.ContextMenu>

@@ -556,7 +556,7 @@ namespace ActivFlex
             SortModeButton.ContextMenu.IsOpen = true;
         }
 
-        private void SortModeItem_Checked(object sender, RoutedEventArgs e)
+        private void SortModeItem_Click(object sender, RoutedEventArgs e)
         {
             //Uncheck all other items to make sure that only 1 item is checked
             if (sortModeMenuItems != null) {
@@ -565,6 +565,12 @@ namespace ActivFlex
                         curItem.IsChecked = false;
                     }
                 }
+            }
+
+            //Make sure there is at least one item checked
+            MenuItem senderitem = sender as MenuItem;
+            if (!senderitem.IsChecked) {
+                senderitem.IsChecked = true;
             }
         }
 
