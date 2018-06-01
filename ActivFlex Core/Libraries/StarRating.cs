@@ -1,6 +1,6 @@
 ﻿#region License
-// ActivFlex Core - Core logic module for ActivFlex
-// Copyright(C) 2017 Henrik Peters
+// ActivFlex Media - Manage your media libraries
+// Copyright(C) 2018 Henrik Peters
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,54 +15,41 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see<http://www.gnu.org/licenses/>.
 #endregion
-using System;
-
 namespace ActivFlex.Libraries
 {
     /// <summary>
-    /// Defines all operations for media items
-    /// used by media libraries and containers.
+    /// Different rating states for a library item.
     /// </summary>
-    public interface ILibraryItem
+    public enum StarRating
     {
         /// <summary>
-        /// Unique global identifier of the item.
+        /// The item has not been rated yet
         /// </summary>
-        int ItemID { get; set; }
+        NoRating = 0,
 
         /// <summary>
-        /// Media container that stores this item.
+        /// 1 star (lowest) rating
         /// </summary>
-        MediaContainer Container { get; }
+        OneStar = 1,
 
         /// <summary>
-        /// Short text to describe this item.
+        /// 2 stars rating
         /// </summary>
-        string Name { get; set; }
+        TwoStars = 2,
 
         /// <summary>
-        /// Absolute filesystem path of this item.
+        /// 3 stars rating
         /// </summary>
-        string Path { get; }
+        ThreeStars = 3,
 
         /// <summary>
-        /// Number of opening accesses of this item.
+        /// 4 stars rating
         /// </summary>
-        ulong AccessCount { get; set; }
+        FourStars = 4,
 
         /// <summary>
-        /// Rating of the item in stars.
+        /// 5 stars (highest) rating
         /// </summary>
-        StarRating Rating { get; set; }
-
-        /// <summary>
-        /// Time of adding this item to the container.
-        /// </summary>
-        DateTime CreationTime { get; }
-
-        /// <summary>
-        /// Time of the last opening accesses.
-        /// </summary>
-        DateTime LastAccessTime { get; set; }
+        FiveStars = 5
     }
 }

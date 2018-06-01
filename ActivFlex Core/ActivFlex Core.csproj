@@ -58,6 +58,7 @@
     <Compile Include="Libraries\LibraryVideo.cs" />
     <Compile Include="Libraries\MediaContainer.cs" />
     <Compile Include="Libraries\MediaLibrary.cs" />
+    <Compile Include="Libraries\StarRating.cs" />
     <Compile Include="Media\ImageLoadState.cs" />
     <Compile Include="Media\MediaImage.cs" />
     <Compile Include="Media\MediaMusic.cs" />

@@ -976,8 +976,7 @@ namespace ActivFlex.ViewModels
                         break;
 
                     case LibrarySortMode.Rating:
-                        //TODO use rating
-                        sortedItems = sortedItems.OrderBy(item => item.Proxy.ItemID);
+                        sortedItems = sortedItems.OrderBy(item => item.Proxy.Rating);
                         break;
 
                     default:

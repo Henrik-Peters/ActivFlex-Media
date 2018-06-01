@@ -120,6 +120,7 @@ namespace ActivFlex.Storage
                 path VARCHAR(255),
                 thumbnail BLOB,
                 accessCount LONG,
+                rating INT,
                 creationTime TEXT,
                 lastAccessTime TEXT
             )";
@@ -341,8 +342,8 @@ namespace ActivFlex.Storage
 
         public ILibraryItem CreateLibraryItem(string name, string path, MediaContainer container, DateTime creationTime, BitmapFrame thumbnail)
         {
-            var sql = @"INSERT INTO Items(name, path, thumbnail, accessCount, creationTime, lastAccessTime)
-                        VALUES(@Name, @Path, @Thumbnail, @AccessCount, @CreationTime, @LastAccessTime);";
+            var sql = @"INSERT INTO Items(name, path, thumbnail, accessCount, rating, creationTime, lastAccessTime)
+                        VALUES(@Name, @Path, @Thumbnail, @AccessCount, @Rating, @CreationTime, @LastAccessTime);";
 
             //Create the thumbnail data
             byte[] thumbData = null;
@@ -363,6 +364,7 @@ namespace ActivFlex.Storage
             command.Parameters.AddWithValue("Path", path);
             command.Parameters.AddWithValue("Thumbnail", thumbData);
             command.Parameters.AddWithValue("AccessCount", 0);
+            command.Parameters.AddWithValue("Rating", (int)StarRating.NoRating);
             command.Parameters.AddWithValue("CreationTime", creationTime.ToString(DateTimeFormat));
             command.Parameters.AddWithValue("LastAccessTime", default(DateTime));
             command.ExecuteNonQuery();
@@ -380,14 +382,14 @@ namespace ActivFlex.Storage
             command.Parameters.AddWithValue("ContainerID", container.ContainerID);
             command.ExecuteNonQuery();
 
-            return LibraryItemFactory.CreateItemByExtension(itemID, name, path, container, creationTime, 0, default(DateTime), thumbnail);
+            return LibraryItemFactory.CreateItemByExtension(itemID, name, path, container, creationTime, 0, StarRating.NoRating, default(DateTime), thumbnail);
         }
 
         public List<ILibraryItem> ReadItemsFromContainer(MediaContainer container, bool loadThumbnails, LibrarySortMode sortMode, LibrarySortOrder sortOrder)
         {
             List<ILibraryItem> items = new List<ILibraryItem>();
 
-            string sql = @"SELECT Items.IID, name, path, " + (loadThumbnails ? "thumbnail, " : "") + "accessCount, creationTime, lastAccessTime " +
+            string sql = @"SELECT Items.IID, name, path, " + (loadThumbnails ? "thumbnail, " : "") + "accessCount, rating, creationTime, lastAccessTime " +
                         "FROM ContainerItems " +
                         "INNER JOIN Items ON Items.IID = ContainerItems.IID " +
                         "WHERE CID=@ContainerID ";
@@ -402,8 +404,7 @@ namespace ActivFlex.Storage
                     break;
 
                 case LibrarySortMode.Rating:
-                    //TODO use rating
-                    sql += "ORDER BY Items.IID";
+                    sql += "ORDER BY rating";
                     break;
 
                 case LibrarySortMode.Names:
@@ -427,6 +428,7 @@ namespace ActivFlex.Storage
                     string name = reader["name"] as string;
                     string path = reader["path"] as string;
                     ulong accessCount = Convert.ToUInt64(reader["accessCount"]);
+                    StarRating rating = (StarRating)reader["rating"];
                     DateTime creationTime = DateTime.ParseExact((string)reader["creationTime"], DateTimeFormat, CultureInfo.InvariantCulture);
                     DateTime lastAccessTime = DateTime.ParseExact((string)reader["lastAccessTime"], DateTimeFormat, CultureInfo.InvariantCulture);
 
@@ -443,7 +445,7 @@ namespace ActivFlex.Storage
                         }
                     }
 
-                    items.Add(LibraryItemFactory.CreateItemByExtension(itemID, name, path, container, creationTime, accessCount, lastAccessTime, thumbnailSource));
+                    items.Add(LibraryItemFactory.CreateItemByExtension(itemID, name, path, container, creationTime, accessCount, rating, lastAccessTime, thumbnailSource));
                 }
             }
 

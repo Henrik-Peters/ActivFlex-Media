@@ -36,22 +36,23 @@ namespace ActivFlex.Libraries
         /// <param name="container">Media container to store this item</param>
         /// <param name="creationTime">Time when the item was added to the container</param>
         /// <param name="accessCount">Number of opening accesses</param>
+        /// <param name="rating">Rating of the item in stars</param>
         /// <param name="lastAccessTime">Time of the last opening accesses</param>
         /// <param name="thumbnail">Optional thumbnail data</param>
         /// <returns>The concrete library item or null for an invalid path</returns>
         public static ILibraryItem CreateItemByExtension(int itemID, string name, string path, MediaContainer container, DateTime creationTime,
-                                                         ulong accessCount = 0, DateTime lastAccessTime = default(DateTime), BitmapSource thumbnail = null)
+                                                         ulong accessCount = 0, StarRating rating = StarRating.NoRating, DateTime lastAccessTime = default(DateTime), BitmapSource thumbnail = null)
         {
             ILibraryItem item = null;
 
             if (MediaImage.ImageExtensions.Contains(GetPathExtension(path))) {
-                item = new LibraryImage(itemID, name, path, container, accessCount, creationTime, lastAccessTime, thumbnail);
+                item = new LibraryImage(itemID, name, path, container, accessCount, rating, creationTime, lastAccessTime, thumbnail);
 
             } else if (MediaMusic.MusicExtensions.Contains(GetPathExtension(path))) {
-                item = new LibraryMusic(itemID, name, path, container, accessCount, creationTime, lastAccessTime);
+                item = new LibraryMusic(itemID, name, path, container, accessCount, rating, creationTime, lastAccessTime);
 
             } else if (MediaVideo.VideoExtensions.Contains(GetPathExtension(path))) {
-                item = new LibraryVideo(itemID, name, path, container, accessCount, creationTime, lastAccessTime, thumbnail);
+                item = new LibraryVideo(itemID, name, path, container, accessCount, rating, creationTime, lastAccessTime, thumbnail);
             }
 
             return item;

@@ -43,6 +43,11 @@ namespace ActivFlex.Libraries
         public ulong AccessCount { get; set; }
 
         /// <summary>
+        /// Rating of the item in stars.
+        /// </summary>
+        public StarRating Rating { get; set; }
+
+        /// <summary>
         /// Time of adding this item to the container.
         /// </summary>
         public DateTime CreationTime { get; }
@@ -67,6 +72,7 @@ namespace ActivFlex.Libraries
             this.ItemID = itemID;
             this.Container = container;
             this.AccessCount = 0;
+            this.Rating = StarRating.NoRating;
             this.CreationTime = DateTime.Now;
         }
 
@@ -79,15 +85,17 @@ namespace ActivFlex.Libraries
         /// <param name="path">Absolute filesystem path of the item</param>
         /// <param name="container">Media container to store this item</param>
         /// <param name="accessCount">Number of opening accesses</param>
+        /// <param name="rating">Rating of the item in stars</param>
         /// <param name="creationTime">Time when the item was added to the container</param>
         /// <param name="lastAccessTime">Time of the last opening accesses</param>
         /// <param name="thumbnail">Thumbnail data of the image (can be null)</param>
         public LibraryImage(int itemID, string name, string path, MediaContainer container,
-                            ulong accessCount, DateTime creationTime, DateTime lastAccessTime, BitmapSource thumbnail) : base(path, name)
+                            ulong accessCount, StarRating rating, DateTime creationTime, DateTime lastAccessTime, BitmapSource thumbnail) : base(path, name)
         {
             this.ItemID = itemID;
             this.Container = container;
             this.AccessCount = accessCount;
+            this.Rating = rating;
             this.CreationTime = creationTime;
             this.LastAccessTime = lastAccessTime;
             this.Thumbnail = thumbnail;
