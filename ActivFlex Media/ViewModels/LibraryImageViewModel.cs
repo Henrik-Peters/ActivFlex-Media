@@ -97,6 +97,7 @@ namespace ActivFlex.ViewModels
             set {
                 if (value && _proxy.Rating != StarRating.OneStar) {
                     _proxy.Rating = StarRating.OneStar;
+                    MainViewModel.StorageEngine.UpdateLibraryItemRating(ItemID, StarRating.OneStar);
                     NotifyPropertyChanged();
                 }
             }
@@ -110,6 +111,7 @@ namespace ActivFlex.ViewModels
             set {
                 if (value && _proxy.Rating != StarRating.TwoStars) {
                     _proxy.Rating = StarRating.TwoStars;
+                    MainViewModel.StorageEngine.UpdateLibraryItemRating(ItemID, StarRating.TwoStars);
                     NotifyPropertyChanged();
                 }
             }
@@ -123,6 +125,7 @@ namespace ActivFlex.ViewModels
             set {
                 if (value && _proxy.Rating != StarRating.ThreeStars) {
                     _proxy.Rating = StarRating.ThreeStars;
+                    MainViewModel.StorageEngine.UpdateLibraryItemRating(ItemID, StarRating.ThreeStars);
                     NotifyPropertyChanged();
                 }
             }
@@ -136,6 +139,7 @@ namespace ActivFlex.ViewModels
             set {
                 if (value && _proxy.Rating != StarRating.FourStars) {
                     _proxy.Rating = StarRating.FourStars;
+                    MainViewModel.StorageEngine.UpdateLibraryItemRating(ItemID, StarRating.FourStars);
                     NotifyPropertyChanged();
                 }
             }
@@ -149,6 +153,7 @@ namespace ActivFlex.ViewModels
             set {
                 if (value && _proxy.Rating != StarRating.FiveStars) {
                     _proxy.Rating = StarRating.FiveStars;
+                    MainViewModel.StorageEngine.UpdateLibraryItemRating(ItemID, StarRating.FiveStars);
                     NotifyPropertyChanged();
                 }
             }
@@ -162,6 +167,7 @@ namespace ActivFlex.ViewModels
             set {
                 if (value && _proxy.Rating != StarRating.NoRating) {
                     _proxy.Rating = StarRating.NoRating;
+                    MainViewModel.StorageEngine.UpdateLibraryItemRating(ItemID, StarRating.NoRating);
                     NotifyPropertyChanged();
                 }
             }

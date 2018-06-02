@@ -490,6 +490,18 @@ namespace ActivFlex.Storage
             command.ExecuteNonQuery();
         }
 
+        public void UpdateLibraryItemRating(int itemID, StarRating rating)
+        {
+            var sql = @"UPDATE Items
+                        SET rating=@Rating
+                        WHERE IID=@ItemID";
+
+            var command = new SQLiteCommand(sql, connection);
+            command.Parameters.AddWithValue("ItemID", itemID);
+            command.Parameters.AddWithValue("Rating", (int)rating);
+            command.ExecuteNonQuery();
+        }
+
         public void DeleteLibraryItem(int itemID)
         {
             var sql = @"DELETE FROM Items

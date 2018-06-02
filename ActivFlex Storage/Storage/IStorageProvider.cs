@@ -142,6 +142,13 @@ namespace ActivFlex.Storage
         void UpdateLibraryItemThumbnail(int itemID, BitmapFrame thumbnail);
 
         /// <summary>
+        /// Update a media library item with a new rating.
+        /// </summary>
+        /// <param name="itemID">ID of the library item</param>
+        /// <param name="rating">New rating for the item</param>
+        void UpdateLibraryItemRating(int itemID, StarRating rating);
+
+        /// <summary>
         /// Delete a media library item by the identifier.
         /// </summary>
         /// <param name="itemID">ID of the library item</param>
