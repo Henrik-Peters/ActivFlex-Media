@@ -574,6 +574,19 @@ namespace ActivFlex
             }
         }
 
+        private void StarRatingItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem clickedItem = sender as MenuItem;
+            MenuItem ratingItem = clickedItem.Parent as MenuItem;
+
+            //Uncheck all the old rating menu items
+            foreach (var curItem in ratingItem.Items) {
+                if (curItem is MenuItem curMenuItem && curMenuItem != clickedItem) {
+                    curMenuItem.IsChecked = false;
+                }
+            }
+        }
+
         private void MediaPresenter_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ChangeFullscreenMode(!Fullscreen);
