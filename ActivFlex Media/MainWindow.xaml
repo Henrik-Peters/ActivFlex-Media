@@ -710,28 +710,28 @@
                                               CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
 
                                     <Separator/>
-                                    <MenuItem Header="{Binding Localize[OpenInExplorer]}" 
+                                    <MenuItem Header="{Binding Localize[OpenInExplorer]}"
                                               Command="{Binding ExplorerItemLaunch}"
                                               CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
 
                                     <MenuItem Header="{Binding Localize[Rating]}">
-                                        <MenuItem Header="{Binding Localize[OneStar]}" Command=""
+                                        <MenuItem Header="{Binding Localize[OneStar]}" Template="{StaticResource OtherSizeGroupMenuItemTemplate}"
                                                   IsCheckable="True" CommandParameter="{x:Static Libraries:StarRating.OneStar}"/>
 
-                                        <MenuItem Header="{Binding Localize[TwoStars]}" Command=""
+                                        <MenuItem Header="{Binding Localize[TwoStars]}" Template="{StaticResource OtherSizeGroupMenuItemTemplate}"
                                                   IsCheckable="True" CommandParameter="{x:Static Libraries:StarRating.TwoStars}"/>
 
-                                        <MenuItem Header="{Binding Localize[ThreeStars]}" Command=""
+                                        <MenuItem Header="{Binding Localize[ThreeStars]}" Template="{StaticResource OtherSizeGroupMenuItemTemplate}"
                                                   IsCheckable="True" CommandParameter="{x:Static Libraries:StarRating.ThreeStars}"/>
 
-                                        <MenuItem Header="{Binding Localize[FourStars]}" Command=""
+                                        <MenuItem Header="{Binding Localize[FourStars]}" Template="{StaticResource OtherSizeGroupMenuItemTemplate}"
                                                   IsCheckable="True" CommandParameter="{x:Static Libraries:StarRating.FourStars}"/>
 
-                                        <MenuItem Header="{Binding Localize[FiveStars]}" Command=""
+                                        <MenuItem Header="{Binding Localize[FiveStars]}" Template="{StaticResource OtherSizeGroupMenuItemTemplate}"
                                                   IsCheckable="True" CommandParameter="{x:Static Libraries:StarRating.FiveStars}"/>
 
                                         <Separator/>
-                                        <MenuItem Header="{Binding Localize[NoRating]}" Command="{Binding ChangeSortMode}"
+                                        <MenuItem Header="{Binding Localize[NoRating]}" Template="{StaticResource OtherSizeGroupMenuItemTemplate}"
                                                   IsCheckable="True" CommandParameter="{x:Static Libraries:StarRating.NoRating}"/>
                                     </MenuItem>
 
