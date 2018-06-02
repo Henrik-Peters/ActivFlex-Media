@@ -716,23 +716,23 @@
 
                                     <MenuItem Header="{Binding Localize[Rating]}">
                                         <MenuItem Header="{Binding Localize[OneStar]}" Template="{StaticResource OtherSizeGroupMenuItemTemplate}"
-                                                  IsCheckable="True" CommandParameter="{x:Static Libraries:StarRating.OneStar}"/>
+                                                  IsCheckable="True" IsChecked="{Binding PlacementTarget.DataContext.RatingOneStar, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
 
                                         <MenuItem Header="{Binding Localize[TwoStars]}" Template="{StaticResource OtherSizeGroupMenuItemTemplate}"
-                                                  IsCheckable="True" CommandParameter="{x:Static Libraries:StarRating.TwoStars}"/>
+                                                  IsCheckable="True" IsChecked="{Binding PlacementTarget.DataContext.RatingTwoStars, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
 
                                         <MenuItem Header="{Binding Localize[ThreeStars]}" Template="{StaticResource OtherSizeGroupMenuItemTemplate}"
-                                                  IsCheckable="True" CommandParameter="{x:Static Libraries:StarRating.ThreeStars}"/>
+                                                  IsCheckable="True" IsChecked="{Binding PlacementTarget.DataContext.RatingThreeStars, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
 
                                         <MenuItem Header="{Binding Localize[FourStars]}" Template="{StaticResource OtherSizeGroupMenuItemTemplate}"
-                                                  IsCheckable="True" CommandParameter="{x:Static Libraries:StarRating.FourStars}"/>
+                                                  IsCheckable="True" IsChecked="{Binding PlacementTarget.DataContext.RatingFourStars, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
 
                                         <MenuItem Header="{Binding Localize[FiveStars]}" Template="{StaticResource OtherSizeGroupMenuItemTemplate}"
-                                                  IsCheckable="True" CommandParameter="{x:Static Libraries:StarRating.FiveStars}"/>
+                                                  IsCheckable="True" IsChecked="{Binding PlacementTarget.DataContext.RatingFiveStars, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
 
                                         <Separator/>
                                         <MenuItem Header="{Binding Localize[NoRating]}" Template="{StaticResource OtherSizeGroupMenuItemTemplate}"
-                                                  IsCheckable="True" CommandParameter="{x:Static Libraries:StarRating.NoRating}"/>
+                                                  IsCheckable="True" IsChecked="{Binding PlacementTarget.DataContext.RatingNotRated, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                                     </MenuItem>
 
                                     <MenuItem Header="{Binding Localize[Rename]}"

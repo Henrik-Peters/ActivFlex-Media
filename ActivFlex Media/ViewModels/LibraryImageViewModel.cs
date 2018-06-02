@@ -90,6 +90,84 @@ namespace ActivFlex.ViewModels
         }
 
         /// <summary>
+        /// Checks or sets the rating for one star.
+        /// </summary>
+        public bool RatingOneStar {
+            get => _proxy.Rating == StarRating.OneStar;
+            set {
+                if (value && _proxy.Rating != StarRating.OneStar) {
+                    _proxy.Rating = StarRating.OneStar;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks or sets the rating for two stars.
+        /// </summary>
+        public bool RatingTwoStars {
+            get => _proxy.Rating == StarRating.TwoStars;
+            set {
+                if (value && _proxy.Rating != StarRating.TwoStars) {
+                    _proxy.Rating = StarRating.TwoStars;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks or sets the rating for three stars.
+        /// </summary>
+        public bool RatingThreeStars {
+            get => _proxy.Rating == StarRating.ThreeStars;
+            set {
+                if (value && _proxy.Rating != StarRating.ThreeStars) {
+                    _proxy.Rating = StarRating.ThreeStars;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks or sets the rating for four stars.
+        /// </summary>
+        public bool RatingFourStars {
+            get => _proxy.Rating == StarRating.FourStars;
+            set {
+                if (value && _proxy.Rating != StarRating.FourStars) {
+                    _proxy.Rating = StarRating.FourStars;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks or sets the rating for five stars.
+        /// </summary>
+        public bool RatingFiveStars {
+            get => _proxy.Rating == StarRating.FiveStars;
+            set {
+                if (value && _proxy.Rating != StarRating.FiveStars) {
+                    _proxy.Rating = StarRating.FiveStars;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks or sets the rating for no rating.
+        /// </summary>
+        public bool RatingNotRated {
+            get => _proxy.Rating == StarRating.NoRating;
+            set {
+                if (value && _proxy.Rating != StarRating.NoRating) {
+                    _proxy.Rating = StarRating.NoRating;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
         /// Create a new view model for a library image item.
         /// </summary>
         /// <param name="proxy">The represented library image</param>
