@@ -86,7 +86,13 @@ namespace ActivFlex.Localization
             ["Chronological"] = new List<string> { "Chronological", "Chronologisch" },
             ["FrequencyOfUse"] = new List<string> { "Frequency of use", "Verwendungshäufigkeit" },
             ["Rating"] = new List<string> { "Rating", "Bewertung" },
-            ["Names"] = new List<string> { "Names", "Namen" }
+            ["Names"] = new List<string> { "Names", "Namen" },
+            ["OneStar"] = new List<string> { "1 star", "1 Stern" },
+            ["TwoStars"] = new List<string> { "2 stars", "2 Sterne" },
+            ["ThreeStars"] = new List<string> { "3 stars", "3 Sterne" },
+            ["FourStars"] = new List<string> { "4 stars", "4 Sterne" },
+            ["FiveStars"] = new List<string> { "5 stars", "5 Sterne" },
+            ["NoRating"] = new List<string> { "Not rated", "Nicht bewertet" }
         };
 
         /// <summary>

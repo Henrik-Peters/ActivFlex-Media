@@ -714,6 +714,27 @@
                                               Command="{Binding ExplorerItemLaunch}"
                                               CommandParameter="{Binding PlacementTarget.Proxy, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
 
+                                    <MenuItem Header="{Binding Localize[Rating]}">
+                                        <MenuItem Header="{Binding Localize[OneStar]}" Command=""
+                                                  IsCheckable="True" CommandParameter="{x:Static Libraries:StarRating.OneStar}"/>
+
+                                        <MenuItem Header="{Binding Localize[TwoStars]}" Command=""
+                                                  IsCheckable="True" CommandParameter="{x:Static Libraries:StarRating.TwoStars}"/>
+
+                                        <MenuItem Header="{Binding Localize[ThreeStars]}" Command=""
+                                                  IsCheckable="True" CommandParameter="{x:Static Libraries:StarRating.ThreeStars}"/>
+
+                                        <MenuItem Header="{Binding Localize[FourStars]}" Command=""
+                                                  IsCheckable="True" CommandParameter="{x:Static Libraries:StarRating.FourStars}"/>
+
+                                        <MenuItem Header="{Binding Localize[FiveStars]}" Command=""
+                                                  IsCheckable="True" CommandParameter="{x:Static Libraries:StarRating.FiveStars}"/>
+
+                                        <Separator/>
+                                        <MenuItem Header="{Binding Localize[NoRating]}" Command="{Binding ChangeSortMode}"
+                                                  IsCheckable="True" CommandParameter="{x:Static Libraries:StarRating.NoRating}"/>
+                                    </MenuItem>
+
                                     <MenuItem Header="{Binding Localize[Rename]}"
                                               Command="{Binding RenameLibraryItem}"
                                               CommandParameter="{Binding PlacementTarget.ClickParameter, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
