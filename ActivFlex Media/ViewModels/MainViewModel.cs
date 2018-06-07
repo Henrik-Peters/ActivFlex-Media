@@ -1791,7 +1791,34 @@ namespace ActivFlex.ViewModels
                     } else {
                         StorageEngine.UpdateLibraryItemName(item.ItemID, item.Name);
                     }
-                    
+
+                    //Update the sorting order
+                    if (sortMode == LibrarySortMode.Names) {
+
+                        string newName = item.Name;
+                        int itemCount = LibraryItems.Count;
+                        int oldIndex = LibraryItems.IndexOf(item);
+                        bool iteratedOverOldItem = false;
+                        bool swapDone = false;
+
+                        for (int i = 0; i < itemCount && !swapDone; i++) {
+                            ILibraryItemViewModel cmpItem = LibraryItems.ElementAt(i);
+                            int val = StringComparer.OrdinalIgnoreCase.Compare(newName, cmpItem.Name);
+
+                            if (val == 0) {
+                                iteratedOverOldItem = true;
+                            }
+
+                            if (val < 0) {
+                                LibraryItems.Move(oldIndex, iteratedOverOldItem ? i - 1 : i);
+                                swapDone = true;
+                            }
+                        }
+
+                        if (!swapDone) {
+                            LibraryItems.Move(oldIndex, itemCount - 1);
+                        }
+                    }
                 }
 
                 renameItem = null;
