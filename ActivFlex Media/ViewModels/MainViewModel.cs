@@ -762,6 +762,11 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public ICommand ToggleSortOrder { get; set; }
 
+        /// <summary>
+        /// Update the sorting by stars for a specific item.
+        /// </summary>
+        public ICommand UpdateStarSort { get; set; }
+
         #endregion
 
         /// <summary>
@@ -893,6 +898,7 @@ namespace ActivFlex.ViewModels
             this.FileMusicClick = new RelayCommand<MusicItemViewModel>(MusicFileItemClick);
             this.FileVideoClick = new RelayCommand<VideoItemViewModel>(VideoFileItemClick);
             this.FileItemMouseDown = new RelayCommand<IThumbnailViewModel>(FileItemDragInit);
+            this.UpdateStarSort = new RelayCommand<ILibraryItemViewModel>(UpdateStarSorting);
             this.ChangeSortMode = new RelayCommand<LibrarySortMode>(ApplySortMode);
             this.ToggleSortOrder = new RelayCommand(SwapSortOrder);
             this.LaunchDefault = new RelayCommand<IFileObject>(media => {
@@ -926,6 +932,53 @@ namespace ActivFlex.ViewModels
             this.Stop = new RelayCommand(StopCurrentPlayback);
             this.Next = new RelayCommand(() => ChangeActiveImage(true));
             this.Previous = new RelayCommand(() => ChangeActiveImage(false));
+        }
+
+        /// <summary>
+        /// Update the sorting after a library item has changed its rating.
+        /// </summary>
+        /// <param name="item">The item that has changed</param>
+        public void UpdateStarSorting(ILibraryItemViewModel item)
+        {
+            if (sortMode == LibrarySortMode.Rating) {
+
+                StarRating newRating = item.Proxy.Rating;
+                int itemID = item.ItemID;
+
+                int itemCount = LibraryItems.Count;
+                int oldIndex = LibraryItems.IndexOf(item);
+                bool iteratedOverOldItem = false;
+                bool swapDone = false;
+
+                for (int i = 0; i < itemCount && !swapDone; i++) {
+                    ILibraryItemViewModel cmpItem = LibraryItems.ElementAt(i);
+                    int ratingCmp = newRating.CompareTo(cmpItem.Proxy.Rating);
+                    int chronoCmp = itemID.CompareTo(cmpItem.ItemID);
+
+                    if (cmpItem.ItemID == itemID) {
+                        iteratedOverOldItem = true;
+                    }
+
+                    if (ratingCmp == 0) {
+                        if ((sortOrder == LibrarySortOrder.Ascending  && chronoCmp < 0) ||
+                            (sortOrder == LibrarySortOrder.Descending && chronoCmp > 0)) {
+                            LibraryItems.Move(oldIndex, iteratedOverOldItem ? i - 1 : i);
+                            swapDone = true;
+                        }
+
+                    } else {
+                        if ((sortOrder == LibrarySortOrder.Ascending  && ratingCmp < 0) ||
+                            (sortOrder == LibrarySortOrder.Descending && ratingCmp > 0)) {
+                            LibraryItems.Move(oldIndex, iteratedOverOldItem ? i - 1 : i);
+                            swapDone = true;
+                        }
+                    }
+                }
+
+                if (!swapDone) {
+                    LibraryItems.Move(oldIndex, itemCount - 1);
+                }
+            }
         }
 
         /// <summary>
