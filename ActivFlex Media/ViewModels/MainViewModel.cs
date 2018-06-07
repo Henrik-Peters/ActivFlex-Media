@@ -1809,7 +1809,8 @@ namespace ActivFlex.ViewModels
                                 iteratedOverOldItem = true;
                             }
 
-                            if (val < 0) {
+                            if ((sortOrder == LibrarySortOrder.Ascending  && val < 0) ||
+                                (sortOrder == LibrarySortOrder.Descending && val > 0)) {
                                 LibraryItems.Move(oldIndex, iteratedOverOldItem ? i - 1 : i);
                                 swapDone = true;
                             }
