@@ -149,6 +149,14 @@ namespace ActivFlex.Storage
         void UpdateLibraryItemRating(int itemID, StarRating rating);
 
         /// <summary>
+        /// Increment the access counter of a specic
+        /// library item by the amount delta.
+        /// </summary>
+        /// <param name="itemID">ID of the library item</param>
+        /// <param name="delta">Number to increase with</param>
+        void IncreaseAccessCounter(int itemID, int delta = 1);
+
+        /// <summary>
         /// Delete a media library item by the identifier.
         /// </summary>
         /// <param name="itemID">ID of the library item</param>

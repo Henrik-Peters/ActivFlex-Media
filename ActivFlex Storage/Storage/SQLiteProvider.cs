@@ -512,6 +512,18 @@ namespace ActivFlex.Storage
             command.ExecuteNonQuery();
         }
 
+        public void IncreaseAccessCounter(int itemID, int delta = 1)
+        {
+            var sql = @"UPDATE Items
+                        SET accessCount = accessCount + @Amount
+                        WHERE IID=@ItemID";
+
+            var command = new SQLiteCommand(sql, connection);
+            command.Parameters.AddWithValue("ItemID", itemID);
+            command.Parameters.AddWithValue("Amount", delta);
+            command.ExecuteNonQuery();
+        }
+
         public void Dispose()
         {
             if (connection != null) {
