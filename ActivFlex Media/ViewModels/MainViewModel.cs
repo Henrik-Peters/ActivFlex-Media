@@ -1085,6 +1085,7 @@ namespace ActivFlex.ViewModels
         {
             if (!HandleItemSelection(image)) {
                 DefaultImageLaunch.Execute(image.Proxy);
+                StorageEngine.IncreaseAccessCounter(image.ItemID);
             }
         }
 
@@ -1095,6 +1096,7 @@ namespace ActivFlex.ViewModels
         {
             if (!HandleItemSelection(music)) {
                 DefaultMusicLaunch.Execute(music.Proxy);
+                StorageEngine.IncreaseAccessCounter(music.ItemID);
             }
         }
 
@@ -1105,6 +1107,7 @@ namespace ActivFlex.ViewModels
         {
             if (!HandleItemSelection(video)) {
                 DefaultVideoLaunch.Execute(video.Proxy);
+                StorageEngine.IncreaseAccessCounter(video.ItemID);
             }
         }
 
