@@ -953,8 +953,14 @@ namespace ActivFlex.ViewModels
             };
 
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                var libraryItems = StorageEngine.ReadItemsFromContainer(container, false, sortMode, sortOrder);
                 String exportPath = dialog.SelectedPath;
-                Console.WriteLine("Export <" + container.Name + "> to: <" + exportPath + ">!");
+
+                foreach (ILibraryItem item in libraryItems) {
+                    File.Copy(item.Path, exportPath + "/" + item.Name + "." + FileSystemBrowser.GetExtension(item.Path));
+                }
+
+                MessageBox.Show(Localize["MediaExportDone"], Localize["ExportMedia"], MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
