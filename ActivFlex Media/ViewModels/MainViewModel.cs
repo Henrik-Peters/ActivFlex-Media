@@ -1598,40 +1598,42 @@ namespace ActivFlex.ViewModels
                 parentItem.NavChildren.Remove(navItem);
 
                 //When the the active container is deleted try to browse up
-                bool activeContainerDelete = false;
-                MediaContainer curContainer = ActiveContainer;
+                if (LibraryBrowsing && ActiveContainer != null) {
+                    bool activeContainerDelete = false;
+                    MediaContainer curContainer = ActiveContainer;
 
-                while (curContainer.Parent != null) {
+                    while (curContainer.Parent != null) {
 
-                    if (curContainer == container) {
-                        activeContainerDelete = true;
-                        break;
-                    }
-
-                    curContainer = curContainer.Parent;
-                }
-
-                if (activeContainerDelete && container.Parent != null) {
-                    SelectMediaContainer.Execute(container.Parent);
-                }
-
-                //When the deleted container is visible in the current browsing view remove it
-                if (Config.ShowMediaContainers && LibraryItems != null) {
-
-                    LibraryContainerViewModel targetViewModel = null;
-
-                    foreach (var item in LibraryItems) {
-
-                        if (item is LibraryContainerViewModel containerViewModel &&
-                            containerViewModel.ItemID == container.ContainerID) {
-
-                            targetViewModel = containerViewModel;
+                        if (curContainer == container) {
+                            activeContainerDelete = true;
                             break;
                         }
+
+                        curContainer = curContainer.Parent;
                     }
 
-                    if (targetViewModel != null) {
-                        LibraryItems.Remove(targetViewModel);
+                    if (activeContainerDelete && container.Parent != null) {
+                        SelectMediaContainer.Execute(container.Parent);
+                    }
+
+                    //When the deleted container is visible in the current browsing view remove it
+                    if (Config.ShowMediaContainers && LibraryItems != null) {
+
+                        LibraryContainerViewModel targetViewModel = null;
+
+                        foreach (var item in LibraryItems) {
+
+                            if (item is LibraryContainerViewModel containerViewModel &&
+                                containerViewModel.ItemID == container.ContainerID) {
+
+                                targetViewModel = containerViewModel;
+                                break;
+                            }
+                        }
+
+                        if (targetViewModel != null) {
+                            LibraryItems.Remove(targetViewModel);
+                        }
                     }
                 }
             }
