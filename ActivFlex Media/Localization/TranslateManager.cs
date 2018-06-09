@@ -59,6 +59,8 @@ namespace ActivFlex.Localization
             ["Owner:"] = new List<string> { "Owner:", "Besitzer:" },
             ["Configure"] = new List<string> { "Configure", "Konfigurieren" },
             ["ImportMedia"] = new List<string> { "Import media", "Medienimport" },
+            ["ExportMedia"] = new List<string> { "Export media", "Medienexport" },
+            ["ExportDescription"] = new List<string> { "Select the destination for media export:", "Ziel für den Medienexport auswählen:" },
             ["ImportDialogTitle"] = new List<string> { "Import media files", "Mediendateien importieren" },
             ["DeleteDialogTitle"] = new List<string> { "Confirm deletion", "Löschvorgang bestätigen" },
             ["Yes"] = new List<string> { "Yes", "Ja" },

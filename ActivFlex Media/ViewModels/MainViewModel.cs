@@ -767,6 +767,11 @@ namespace ActivFlex.ViewModels
         /// </summary>
         public ICommand UpdateStarSort { get; set; }
 
+        /// <summary>
+        /// Start the media export dialog for a media container.
+        /// </summary>
+        public ICommand StartMediaExport { get; set; }
+
         #endregion
 
         /// <summary>
@@ -899,6 +904,7 @@ namespace ActivFlex.ViewModels
             this.FileVideoClick = new RelayCommand<VideoItemViewModel>(VideoFileItemClick);
             this.FileItemMouseDown = new RelayCommand<IThumbnailViewModel>(FileItemDragInit);
             this.UpdateStarSort = new RelayCommand<ILibraryItemViewModel>(UpdateStarSorting);
+            this.StartMediaExport = new RelayCommand<MediaContainer>(ExportMediaContainer);
             this.ChangeSortMode = new RelayCommand<LibrarySortMode>(ApplySortMode);
             this.ToggleSortOrder = new RelayCommand(SwapSortOrder);
             this.LaunchDefault = new RelayCommand<IFileObject>(media => {
@@ -935,10 +941,28 @@ namespace ActivFlex.ViewModels
         }
 
         /// <summary>
+        /// Start the media export dialog for a media container.
+        /// </summary>
+        /// <param name="container">Container for the export</param>
+        private void ExportMediaContainer(MediaContainer container)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog {
+                RootFolder = Environment.SpecialFolder.Desktop,
+                SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                Description = Localize["ExportDescription"]
+            };
+
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                String exportPath = dialog.SelectedPath;
+                Console.WriteLine("Export <" + container.Name + "> to: <" + exportPath + ">!");
+            }
+        }
+
+        /// <summary>
         /// Update the sorting after a library item has changed its rating.
         /// </summary>
         /// <param name="item">The item that has changed</param>
-        public void UpdateStarSorting(ILibraryItemViewModel item)
+        private void UpdateStarSorting(ILibraryItemViewModel item)
         {
             if (sortMode == LibrarySortMode.Rating) {
 
