@@ -957,7 +957,9 @@ namespace ActivFlex.ViewModels
                 String exportPath = dialog.SelectedPath;
 
                 foreach (ILibraryItem item in libraryItems) {
-                    File.Copy(item.Path, exportPath + "/" + item.Name + "." + FileSystemBrowser.GetExtension(item.Path));
+                    try {
+                        File.Copy(item.Path, exportPath + "/" + item.Name + "." + FileSystemBrowser.GetExtension(item.Path));
+                    } catch { }
                 }
 
                 Views.MessageBox exportInfo = new Views.MessageBox(Localize);
