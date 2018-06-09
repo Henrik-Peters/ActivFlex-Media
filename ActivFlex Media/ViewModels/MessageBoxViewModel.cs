@@ -1,6 +1,6 @@
 ﻿#region License
 // ActivFlex Media - Manage your media libraries
-// Copyright(C) 2017 Henrik Peters
+// Copyright(C) 2018 Henrik Peters
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,10 +21,7 @@ using ActivFlex.Localization;
 
 namespace ActivFlex.ViewModels
 {
-    /// <summary>
-    /// ViewModel implementation for the delete dialog window.
-    /// </summary>
-    public class DeleteDialogViewModel : ViewModel
+    public class MessageBoxViewModel : ViewModel
     {
         /// <summary>
         /// Reference to the localization manager.
@@ -36,22 +33,21 @@ namespace ActivFlex.ViewModels
         }
 
         /// <summary>
-        /// The name of the object that should be deleted.
+        /// The text displayed in the titlebar of the messagebox.
         /// </summary>
-        private string _deleteName;
-        public string DeleteName {
-            get => _deleteName;
-            set => SetProperty(ref _deleteName, value);
+        private string _title;
+        public string Title {
+            get => _title;
+            set => SetProperty(ref _title, value);
         }
 
         /// <summary>
-        /// True when the user has pressed the yes 
-        /// button to confirm the delete process.
+        /// The text displayed in the main box.
         /// </summary>
-        private bool _deleteConfirm = false;
-        public bool DeleteConfirm {
-            get => _deleteConfirm;
-            set => SetProperty(ref _deleteConfirm, value);
+        private string _message;
+        public string Message {
+            get => _message;
+            set => SetProperty(ref _message, value);
         }
 
         /// <summary>
@@ -60,26 +56,14 @@ namespace ActivFlex.ViewModels
         public ICommand Close { get; set; }
 
         /// <summary>
-        /// Confirm the delete request and close the window.
-        /// </summary>
-        public ICommand Confirm { get; set; }
-
-        /// <summary>
         /// Create a new view model instance for
-        /// the delete dialog window view.
+        /// the message box window view.
         /// </summary>
         /// <param name="localizeManager">Reference to the current localization</param>
-        public DeleteDialogViewModel(TranslateManager localizeManager)
+        public MessageBoxViewModel(TranslateManager localizeManager)
         {
             this.Localize = localizeManager;
-            this.Confirm = new RelayCommand<Window>(ConfirmDelete);
             this.Close = new RelayCommand<Window>(CloseWindow);
-        }
-
-        private void ConfirmDelete(Window window)
-        {
-            DeleteConfirm = true;
-            CloseWindow(window);
         }
 
         private void CloseWindow(Window window)

@@ -960,7 +960,11 @@ namespace ActivFlex.ViewModels
                     File.Copy(item.Path, exportPath + "/" + item.Name + "." + FileSystemBrowser.GetExtension(item.Path));
                 }
 
-                MessageBox.Show(Localize["MediaExportDone"], Localize["ExportMedia"], MessageBoxButton.OK, MessageBoxImage.Information);
+                Views.MessageBox exportInfo = new Views.MessageBox(Localize);
+                var deleteContext = exportInfo.DataContext as MessageBoxViewModel;
+                deleteContext.Title = Localize["ExportMedia"];
+                deleteContext.Message = Localize["MediaExportDone"];
+                exportInfo.ShowDialog();
             }
         }
 
